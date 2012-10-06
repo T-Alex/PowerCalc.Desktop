@@ -1,11 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F99AB0A1-D30E-4886-BAFB-EE4AA8AB4217}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCalc", "PowerCalc\PowerCalc.csproj", "{8227565C-A20E-44C0-9D34-187F2E645593}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCore.Test", "MathCore\Test\MathCore.Test.csproj", "{A121F933-8FA1-4B56-8A16-E9A2BFF49352}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.Test", "MathCore\MathCore\Test\TAlex.MathCore.Test.csproj", "{A121F933-8FA1-4B56-8A16-E9A2BFF49352}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGen", "KeyGen\KeyGen.csproj", "{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}"
 EndProject
@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6C57B8C6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{19A7DBA7-55FE-4212-AA78-BEE7D26EA1DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCore", "MathCore\MathCore.csproj", "{92058732-3733-492C-B463-60C919951471}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore", "MathCore\MathCore\TAlex.MathCore.csproj", "{92058732-3733-492C-B463-60C919951471}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MathCore", "MathCore", "{317721B9-8D35-441D-8AB9-20AA42DAFC89}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -51,5 +53,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A121F933-8FA1-4B56-8A16-E9A2BFF49352} = {6C57B8C6-0DB1-4253-86BE-470084E602C7}
 		{C214B159-B7B1-4A59-8B88-89B40FCFBF2E} = {19A7DBA7-55FE-4212-AA78-BEE7D26EA1DC}
+		{92058732-3733-492C-B463-60C919951471} = {317721B9-8D35-441D-8AB9-20AA42DAFC89}
 	EndGlobalSection
 EndGlobal

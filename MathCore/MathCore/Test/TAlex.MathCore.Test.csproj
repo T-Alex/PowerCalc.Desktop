@@ -97,9 +97,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MathCore.csproj">
+    <ProjectReference Include="..\TAlex.MathCore.csproj">
       <Project>{92058732-3733-492C-B463-60C919951471}</Project>
-      <Name>MathCore</Name>
+      <Name>TAlex.MathCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
