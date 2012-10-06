@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 
 
-namespace Test
+namespace TAlex.MathCore.ExpressionEvaluation.Test
 {
     [TestClass]
     public class StandardExpressionTokenizerTest
