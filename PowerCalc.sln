@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F99AB0A1-D30E-4886-BAFB-EE4AA8AB4217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCalc", "PowerCalc\PowerCalc.csproj", "{8227565C-A20E-44C0-9D34-187F2E645593}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCore.Test", "MathCore\Test\MathCore.Test.csproj", "{A121F933-8FA1-4B56-8A16-E9A2BFF49352}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGen", "KeyGen\KeyGen.csproj", "{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PowerCalcSetup", "PowerCalcSetup\PowerCalcSetup.vdproj", "{B315B623-7C14-4753-AAD1-FD4FAD43379F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6C57B8C6-0DB1-4253-86BE-470084E602C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{19A7DBA7-55FE-4212-AA78-BEE7D26EA1DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCore", "MathCore\MathCore.csproj", "{92058732-3733-492C-B463-60C919951471}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = PowerCalc.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8227565C-A20E-44C0-9D34-187F2E645593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8227565C-A20E-44C0-9D34-187F2E645593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8227565C-A20E-44C0-9D34-187F2E645593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8227565C-A20E-44C0-9D34-187F2E645593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A121F933-8FA1-4B56-8A16-E9A2BFF49352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A121F933-8FA1-4B56-8A16-E9A2BFF49352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A121F933-8FA1-4B56-8A16-E9A2BFF49352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A121F933-8FA1-4B56-8A16-E9A2BFF49352}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B315B623-7C14-4753-AAD1-FD4FAD43379F}.Debug|Any CPU.ActiveCfg = Debug
+		{B315B623-7C14-4753-AAD1-FD4FAD43379F}.Release|Any CPU.ActiveCfg = Release
+		{92058732-3733-492C-B463-60C919951471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92058732-3733-492C-B463-60C919951471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92058732-3733-492C-B463-60C919951471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92058732-3733-492C-B463-60C919951471}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A121F933-8FA1-4B56-8A16-E9A2BFF49352} = {6C57B8C6-0DB1-4253-86BE-470084E602C7}
+		{C214B159-B7B1-4A59-8B88-89B40FCFBF2E} = {19A7DBA7-55FE-4212-AA78-BEE7D26EA1DC}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,2362 @@
+﻿<Window x:Class="TAlex.PowerCalc.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:tools="clr-namespace:_3DTools"
+    xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls"
+    WindowStartupLocation="CenterScreen" Width="700" Height="575" MinWidth="700" MinHeight="550" Loaded="Window_Loaded" >
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="CommandBindingNew_Executed"/>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="CommandBindingOpen_Executed"/>
+        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="CommandBindingSaveAs_Executed"/>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBindingHelp_Executed"/>
+    </Window.CommandBindings>
+
+    <!-- Resources -->
+    <Window.Resources>
+        <ContextMenu x:Key="mainContextMenu">
+            <MenuItem Header="Insert function">
+                <MenuItem Header="Basic">
+                    <MenuItem Header="Signature" InputGestureText="sign" Tag="sign()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sign(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Absolute value" InputGestureText="abs" Tag="abs()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    abs(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Inverse" InputGestureText="inv" Tag="inv()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    inv(<Italic>complex</Italic> c)<LineBreak/>
+                                    inv(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Square" InputGestureText="sqr" Tag="sqr()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sqr(<Italic>complex</Italic> c)<LineBreak/>
+                                    sqr(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cube" InputGestureText="cube" Tag="cube()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cube(<Italic>complex</Italic> c)<LineBreak/>
+                                    cube(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Square root" InputGestureText="sqrt" Tag="sqrt()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sqrt(<Italic>complex</Italic> c)<LineBreak/>
+                                    sqrt(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Nth root" InputGestureText="nthroot" Tag="nthroot(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    nthroot(<Italic>complex</Italic> c, <Italic>complex</Italic> n)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Pow ten" InputGestureText="powten" Tag="powten()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    powten(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Modulo" InputGestureText="mod" Tag="mod(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    mod(<Italic>real</Italic> x, <Italic>real</Italic> y)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Integer part" InputGestureText="int" Tag="int()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    int(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Fractional part" InputGestureText="frac" Tag="frac()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    frac(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Floor" InputGestureText="floor" Tag="floor()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    floor(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Ceiling" InputGestureText="ceil" Tag="ceil()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    ceil(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Round" InputGestureText="round" Tag="round()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    round(<Italic>complex</Italic> c)<LineBreak/>
+                                    round(<Italic>complex</Italic> c, <Italic>integer</Italic> digits)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Truncate" InputGestureText="trunc" Tag="trunc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    trunc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Complex numbers">
+                    <MenuItem Header="Real part" InputGestureText="Re" Tag="Re()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    Re(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Imaginary part" InputGestureText="Im" Tag="Im()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    Im(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Argument" InputGestureText="arg" Tag="arg()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    arg(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Conjugation number" InputGestureText="conj" Tag="conj()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    conj(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Graphing">
+                    <MenuItem Header="Cartesian to polar" InputGestureText="cart2pol" Tag="cart2pol(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cart2pol(<Italic>real</Italic> x, <Italic>real</Italic> y)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Polar to Cartesian" InputGestureText="pol2cart" Tag="pol2cart(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    pol2cart(<Italic>real</Italic> r, <Italic>real</Italic> θ)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Cartesian to spherical" InputGestureText="cart2sph" Tag="cart2sph(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cart2sph(<Italic>real</Italic> x, <Italic>real</Italic> y, <Italic>real</Italic> z)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Spherical to Cartesian" InputGestureText="sph2cart" Tag="sph2cart(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sph2cart(<Italic>real</Italic> r, <Italic>real</Italic> θ, <Italic>real</Italic> φ)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Cartesian to cylindrical" InputGestureText="cart2cyl" Tag="cart2cyl(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cart2cyl(<Italic>real</Italic> x, <Italic>real</Italic> y, <Italic>real</Italic> z)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cylindrical to Cartesian" InputGestureText="cyl2cart" Tag="cyl2cart(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cyl2cart(<Italic>real</Italic> r, <Italic>real</Italic> θ, <Italic>real</Italic> z)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="Interpolation">
+                    <MenuItem Header="Linear" InputGestureText="linterp" Tag="linterp(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    linterp(<Italic>real vector</Italic> xValues, <Italic>real vector</Italic> yValues, <Italic>real</Italic> x)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Polynomial" InputGestureText="interp" Tag="interp(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    interp(<Italic>real vector</Italic> xValues, <Italic>real vector</Italic> yValues, <Italic>real</Italic> x)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="Statistics">
+                    <MenuItem Header="Distributions">
+                        <MenuItem Header="Uniform PDF" InputGestureText="unifpdf" Tag="unifpdf(,,)" Click="insertFunctionMenuItem_Click">
+                            <MenuItem.ToolTip>
+                                <ToolTip>
+                                    <TextBlock>
+                                        <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                        unifpdf(<Italic>real</Italic> a, <Italic>real</Italic> b, <Italic>real</Italic> x)
+                                    </TextBlock>
+                                </ToolTip>
+                            </MenuItem.ToolTip>
+                        </MenuItem>
+
+                        <MenuItem Header="Uniform CDF" InputGestureText="unifcdf" Tag="unifcdf(,,)" Click="insertFunctionMenuItem_Click">
+                            <MenuItem.ToolTip>
+                                <ToolTip>
+                                    <TextBlock>
+                                        <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                        unifcdf(<Italic>real</Italic> a, <Italic>real</Italic> b, <Italic>real</Italic> x)
+                                    </TextBlock>
+                                </ToolTip>
+                            </MenuItem.ToolTip>
+                        </MenuItem>
+
+                        <MenuItem Header="Uniform random" InputGestureText="unifrnd" Tag="unifrnd(,)" Click="insertFunctionMenuItem_Click">
+                        </MenuItem>
+
+                        <MenuItem Header="Uniform random" InputGestureText="rnd" Tag="rnd()" Click="insertFunctionMenuItem_Click">
+                            <MenuItem.ToolTip>
+                                <ToolTip>
+                                    <TextBlock>
+                                        <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                        rnd(<Italic>real</Italic> x)<LineBreak/>
+                                        rnd(<Italic>real</Italic> a, <Italic>real</Italic> b)
+                                    </TextBlock>
+                                </ToolTip>
+                            </MenuItem.ToolTip>
+                        </MenuItem>
+                        
+                        <Separator />
+
+                        <MenuItem Header="Normal PDF" InputGestureText="normpdf" Tag="normpdf(,,)" Click="insertFunctionMenuItem_Click">
+                            <MenuItem.ToolTip>
+                                <ToolTip>
+                                    <TextBlock>
+                                        <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                        normpdf(<Italic>real</Italic> mean, <Italic>real</Italic> stdev, <Italic>real</Italic> x)
+                                    </TextBlock>
+                                </ToolTip>
+                            </MenuItem.ToolTip>
+                        </MenuItem>
+
+                        <MenuItem Header="Normal CDF" InputGestureText="normcdf" Tag="normcdf(,,)" Click="insertFunctionMenuItem_Click">
+                            <MenuItem.ToolTip>
+                                <ToolTip>
+                                    <TextBlock>
+                                        <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                        normcdf(<Italic>real</Italic> mean, <Italic>real</Italic> stdev, <Italic>real</Italic> x)
+                                    </TextBlock>
+                                </ToolTip>
+                            </MenuItem.ToolTip>
+                        </MenuItem>
+
+                        <MenuItem Header="Normal random" InputGestureText="normrnd" Tag="normrnd(,)" Click="insertFunctionMenuItem_Click">
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Header="Exponential PDF" InputGestureText="exppdf" Tag="exppdf(,)" Click="insertFunctionMenuItem_Click">
+                            <MenuItem.ToolTip>
+                                <ToolTip>
+                                    <TextBlock>
+                                        <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                        exppdf(<Italic>real</Italic> rate, <Italic>real</Italic> x)
+                                    </TextBlock>
+                                </ToolTip>
+                            </MenuItem.ToolTip>
+                        </MenuItem>
+
+                        <MenuItem Header="Exponential CDF" InputGestureText="expcdf" Tag="expcdf(,)" Click="insertFunctionMenuItem_Click">
+                            <MenuItem.ToolTip>
+                                <ToolTip>
+                                    <TextBlock>
+                                        <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                        expcdf(<Italic>real</Italic> rate, <Italic>real</Italic> x)
+                                    </TextBlock>
+                                </ToolTip>
+                            </MenuItem.ToolTip>
+                        </MenuItem>
+
+                        <MenuItem Header="Exponential random" InputGestureText="exprnd" Tag="exprnd()" Click="insertFunctionMenuItem_Click">
+                        </MenuItem>
+                    </MenuItem>
+
+                    <MenuItem Header="Median" InputGestureText="median" Tag="median()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    median(<Italic>real matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Mean" InputGestureText="mean" Tag="mean()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    mean(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Geometric mean" InputGestureText="gmean" Tag="gmean()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    gmean(<Italic>real matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Harmonic mean" InputGestureText="hmean" Tag="hmean()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    hmean(<Italic>real matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Mode" InputGestureText="mode" Tag="mode()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    mode(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Population variance" InputGestureText="pvar" Tag="pvar()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    pvar(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Sample variance" InputGestureText="svar" Tag="svar()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    svar(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Population std. deviation" InputGestureText="pstdev" Tag="pstdev()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    pstdev(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Sample std. deviation" InputGestureText="sstdev" Tag="sstdev()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sstdev(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Population skewness" InputGestureText="pskew" Tag="pskew()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    pskew(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Sample skewness" InputGestureText="sskew" Tag="sskew()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sskew(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Population kurtosis" InputGestureText="pkurt" Tag="pkurt()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    pkurt(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Sample kurtosis" InputGestureText="skurt" Tag="skurt()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    skurt(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Moment" InputGestureText="moment" Tag="moment(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    moment(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> order)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Central moment" InputGestureText="cmoment" Tag="cmoment(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cmoment(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> order)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Population covariance" InputGestureText="pcov" Tag="pcov(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    pcov(<Italic>complex matrix</Italic> m1, <Italic>complex matrix</Italic> m2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Sample covariance" InputGestureText="scov" Tag="scov(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    scov(<Italic>complex matrix</Italic> m1, <Italic>complex matrix</Italic> m2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Correlation" InputGestureText="corr" Tag="corr(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    corr(<Italic>complex matrix</Italic> m1, <Italic>complex matrix</Italic> m2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Sum" InputGestureText="sum" Tag="sum()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sum(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Sum of squares" InputGestureText="sumsq" Tag="sumsq()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sumsq(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Product" InputGestureText="prod" Tag="prod()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    prod(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Histogram" InputGestureText="hist" Tag="hist()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    hist(<Italic>real vector</Italic> v)<LineBreak/>
+                                    hist(<Italic>real vector</Italic> v, <Italic>integer</Italic> intvals)<LineBreak/>
+                                    hist(<Italic>real vector</Italic> v, <Italic>real vector</Italic> intvals)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Calculus">
+                    <MenuItem Header="Integration" InputGestureText="integ" Tag="integ(,,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    integ(<Italic>string</Italic> expr, <Italic>real</Italic> a, <Italic>real</Italic> b, <Italic>string</Italic> var)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator />
+                    <MenuItem Header="1st derivation" InputGestureText="derive" Tag="derive(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    derive(<Italic>string</Italic> expr, <Italic>complex</Italic> x, <Italic>string</Italic> var)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="2nd derivation" InputGestureText="derive2" Tag="derive2(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    derive2(<Italic>string</Italic> expr, <Italic>complex</Italic> x, <Italic>string</Italic> var)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="3rd derivation" InputGestureText="derive3" Tag="derive3(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    derive3(<Italic>string</Italic> expr, <Italic>complex</Italic> x, <Italic>string</Italic> var)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="4th derivation" InputGestureText="derive4" Tag="derive4(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    derive4(<Italic>string</Italic> expr, <Italic>complex</Italic> x, <Italic>string</Italic> var)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Summation of a sequence" InputGestureText="sums" Tag="sums(,,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sums(<Italic>string</Italic> expr, <Italic>integer</Italic> m, <Italic>integer</Italic> n, <Italic>string</Italic> var)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Product of a sequence" InputGestureText="prods" Tag="prods(,,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    prods(<Italic>string</Italic> expr, <Italic>integer</Italic> m, <Italic>integer</Italic> n, <Italic>string</Italic> var)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Polynomials">
+                    <MenuItem Header="Evaluation" InputGestureText="polyval" Tag="polyval(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polyval(<Italic>complex vector</Italic> poly, <Italic>complex</Italic> x)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Finding Roots" InputGestureText="polyroots" Tag="polyroots()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polyroots(<Italic>complex vector</Italic> poly)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Derivative" InputGestureText="polydr" Tag="polydr()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polydr(<Italic>complex vector</Italic> poly)<LineBreak/>
+                                    polydr(<Italic>complex vector</Italic> poly, <Italic>integer</Italic> order)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Antiderivative" InputGestureText="polyadr" Tag="polyadr()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polyadr(<Italic>complex vector</Italic> poly)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Interpolating polynomial" InputGestureText="polyinterp" Tag="polyinterp(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polyinterp(<Italic>real vector</Italic> xValues, <Italic>real vector</Italic> yValues)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="From roots" InputGestureText="fromroots" Tag="fromroots()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    fromroots(<Italic>complex vector</Italic> roots)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator />
+                    
+                    <MenuItem Header="Addition" InputGestureText="polyadd" Tag="polyadd(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polyadd(<Italic>complex vector</Italic> poly1, <Italic>complex vector</Italic> poly2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Subtraction" InputGestureText="polysub" Tag="polysub(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polysub(<Italic>complex vector</Italic> poly1, <Italic>complex vector</Italic> poly2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Multiplication" InputGestureText="polymul" Tag="polymul(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polymul(<Italic>complex vector</Italic> poly1, <Italic>complex vector</Italic> poly2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Division" InputGestureText="polydiv" Tag="polydiv(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polydiv(<Italic>complex vector</Italic> poly1, <Italic>complex vector</Italic> poly2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Remainder" InputGestureText="polyrem" Tag="polyrem(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    polyrem(<Italic>complex vector</Italic> poly1, <Italic>complex vector</Italic> poly2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Solving">
+                    <MenuItem Header="Finding Root" InputGestureText="root" Tag="root(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    root(<Italic>string</Italic> expr, <Italic>complex</Italic> x, <Italic>string</Italic> var)<LineBreak/>
+                                    root(<Italic>string</Italic> expr, <Italic>real</Italic> a, <Italic>real</Italic> b, <Italic>string</Italic> var)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Trigonometric">
+                    <MenuItem Header="Sine" InputGestureText="sin" Tag="sin()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sin(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cosine" InputGestureText="cos" Tag="cos()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cos(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Tangent" InputGestureText="tan" Tag="tan()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    tan(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cotangent" InputGestureText="cot" Tag="cot()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cot(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Secant" InputGestureText="sec" Tag="sec()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sec(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cosecant" InputGestureText="csc" Tag="csc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    csc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Inverse sine" InputGestureText="asin" Tag="asin()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    asin(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse cosine" InputGestureText="acos" Tag="acos()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    acos(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse tangent" InputGestureText="atan" Tag="atan()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    atan(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse cotangent" InputGestureText="acot" Tag="acot()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    acot(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse secant" InputGestureText="asec" Tag="asec()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    asec(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse cosecant" InputGestureText="acsc" Tag="acsc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    acsc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Angle" InputGestureText="atan2" Tag="atan2(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    atan2(<Italic>real</Italic> y, <Italic>real</Italic> x)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem Header="Versine" InputGestureText="vers" Tag="vers()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    vers(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Coversine" InputGestureText="cvs" Tag="cvs()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cvs(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Haversine" InputGestureText="hav" Tag="hav()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    hav(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Exsecant" InputGestureText="exsec" Tag="exsec()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    exsec(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Excosecant" InputGestureText="excsc" Tag="excsc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    excsc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Sine cardinal" InputGestureText="sinc" Tag="sinc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sinc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Tangent cardinal" InputGestureText="tanc" Tag="tanc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    tanc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <Separator/>
+
+                    <MenuItem Header="Degrees to radians" InputGestureText="rad" Tag="rad()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    rad(<Italic>real</Italic> degree)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Radians to degrees" InputGestureText="deg" Tag="deg()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    deg(<Italic>real</Italic> radian)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Hyperbolic">
+                    <MenuItem Header="Sine" InputGestureText="sinh" Tag="sinh()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sinh(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cosine" InputGestureText="cosh" Tag="cosh()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cosh(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Tangent" InputGestureText="tanh" Tag="tanh()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    tanh(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cotangent" InputGestureText="coth" Tag="coth()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    coth(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Secant" InputGestureText="sech" Tag="sech()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sech(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cosecant" InputGestureText="csch" Tag="csch()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    csch(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Inverse sine" InputGestureText="asinh" Tag="asinh()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    asinh(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse cosine" InputGestureText="acosh" Tag="acosh()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    acosh(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse tangent" InputGestureText="atanh" Tag="atanh()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    atanh(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse cotangent" InputGestureText="acoth" Tag="acoth()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    acoth(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse secant" InputGestureText="asech" Tag="asech()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    asech(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse cosecant" InputGestureText="acsch" Tag="acsch()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    acsch(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Sine cardinal" InputGestureText="sinhc" Tag="sinhc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sinhc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Tangent cardinal" InputGestureText="tanhc" Tag="tanhc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    tanhc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Log and Exponential">
+                    <MenuItem Header="Natural logarithm" InputGestureText="ln" Tag="ln()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    ln(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Logarithm" InputGestureText="log" Tag="log()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    log(<Italic>complex</Italic> c)<LineBreak/>
+                                    log(<Italic>complex</Italic> c, <Italic>integer</Italic> base)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Exponential" InputGestureText="exp" Tag="exp()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    exp(<Italic>complex</Italic> c)<LineBreak/>
+                                    exp(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                </MenuItem>
+                
+                <MenuItem Header="Special functions">
+                    <MenuItem Header="Factorial" InputGestureText="fact" Tag="fact()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    fact(<Italic>integer</Italic> n)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Combinations" InputGestureText="combin" Tag="combin(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    combin(<Italic>integer</Italic> n, <Italic>integer</Italic> k)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Permutations" InputGestureText="permut" Tag="permut(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    permut(<Italic>integer</Italic> n, <Italic>integer</Italic> k)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Fibonacci" InputGestureText="fib" Tag="fib()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    fib(<Italic>integer</Italic> n)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Greatest common divisor" InputGestureText="gcd" Tag="gcd(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    gcd(<Italic>integer</Italic> n1, <Italic>integer</Italic> n2, ...)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Least common multiple" InputGestureText="lcm" Tag="lcm(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    lcm(<Italic>integer</Italic> n1, <Italic>integer</Italic> n2, ...)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Error function" InputGestureText="erf" Tag="erf()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    erf(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Complementary error function" InputGestureText="erfc" Tag="erfc()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    erfc(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+                    
+                    <MenuItem Header="Sine integral" InputGestureText="Si" Tag="Si()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    Si(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cosine integral" InputGestureText="Ci" Tag="Ci()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    Ci(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Hyperbolic sine integral" InputGestureText="Shi" Tag="Shi()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    Shi(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Hyperbolic cosine integral" InputGestureText="Chi" Tag="Chi()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    Chi(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Exponential integral" InputGestureText="Ei" Tag="Ei()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    Ei(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Logarithmic integral" InputGestureText="li" Tag="li()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    li(<Italic>complex</Italic> c)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+                
+                <MenuItem Header="Linear Algebra">
+                    <MenuItem Header="Matrix" InputGestureText="matrix" Tag="matrix(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    matrix(<Italic>integer</Italic> rows, <Italic>integer</Italic> cols)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Diagonal" InputGestureText="diag" Tag="diag()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    diag(<Italic>complex matrix</Italic> m)<LineBreak/>
+                                    diag(<Italic>complex vector</Italic> v)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Identity" InputGestureText="identity" Tag="identity()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    identity(<Italic>integer</Italic> n)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Augment concat" InputGestureText="augment" Tag="augment(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    augment(<Italic>complex matrix</Italic> m1, <Italic>complex matrix</Italic> m2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Stack concat" InputGestureText="stack" Tag="stack(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    stack(<Italic>complex matrix</Italic> m1, <Italic>complex matrix</Italic> m2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Submatrix" InputGestureText="submatrix" Tag="submatrix(,,,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    submatrix(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> r1, <Italic>integer</Italic> r2, <Italic>integer</Italic> c1, <Italic>integer</Italic> c2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Get row" InputGestureText="row" Tag="row(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    row(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> index)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Get column" InputGestureText="col" Tag="col(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    col(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> index)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Get element" InputGestureText="elem" Tag="elem(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    elem(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> row_index)<LineBreak/>
+                                    elem(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> row_index, <Italic>integer</Italic> col_index)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem Header="Index of last element" InputGestureText="last" Tag="last()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    last(<Italic>complex vector</Italic> v)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Length" InputGestureText="length" Tag="length()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    length(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Row count" InputGestureText="rows" Tag="rows()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    rows(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Column count" InputGestureText="cols" Tag="cols()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cols(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Maximum" InputGestureText="max" Tag="max()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    max(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Minimum" InputGestureText="min" Tag="min()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    min(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Trace" InputGestureText="tr" Tag="tr()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    tr(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Rank" InputGestureText="rank" Tag="rank()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    rank(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Determinant" InputGestureText="det" Tag="det()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    det(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Linear system solve" InputGestureText="lsolve" Tag="lsolve(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    lsolve(<Italic>complex matrix</Italic> a, <Italic>complex vector</Italic> b)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Inverse" InputGestureText="inv" Tag="inv()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    inv(<Italic>complex</Italic> c)<LineBreak/>
+                                    inv(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Pseudo inverse" InputGestureText="pinv" Tag="pinv()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    pinv(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Dot product" InputGestureText="dot" Tag="dot(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    dot(<Italic>complex vector</Italic> v1, <Italic>complex vector</Italic> v2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Cross product" InputGestureText="cross" Tag="cross(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cross(<Italic>complex vector</Italic> v1, <Italic>complex vector</Italic> v2)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="One norm" InputGestureText="onenorm" Tag="onenorm()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    onenorm(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Infinity norm" InputGestureText="infnorm" Tag="infnorm()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    infnorm(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Frobenius norm" InputGestureText="fronorm" Tag="fronorm()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    fronorm(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="P-Norm" InputGestureText="pnorm" Tag="pnorm(,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    pnorm(<Italic>complex matrix</Italic> m, <Italic>real</Italic> p)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+                    
+                    <MenuItem Header="Cofactor" InputGestureText="cofactor" Tag="cofactor(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    cofactor(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> row_idx, <Italic>integer</Italic> col_idx)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Minor" InputGestureText="minor" Tag="minor(,,)" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    minor(<Italic>complex matrix</Italic> m, <Italic>integer</Italic> row_idx, <Italic>integer</Italic> col_idx)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    
+                    <Separator/>
+
+                    <MenuItem Header="Eigenvalues" InputGestureText="eigvals" Tag="eigvals()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    eigvals(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Eigenvectors" InputGestureText="eigvecs" Tag="eigvecs()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    eigvecs(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Left eigenvectors" InputGestureText="leigvecs" Tag="leigvecs()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    leigvecs(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="Singularvalues" InputGestureText="sngvals" Tag="sngvals()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    sngvals(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Characteristic polynomial" InputGestureText="char" Tag="char()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    char(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Cholesky Decomposition" InputGestureText="chol" Tag="chol()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    chol(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="LU Decomposition" InputGestureText="lu" Tag="lu()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    lu(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="QR Decomposition" InputGestureText="qr" Tag="qr()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    qr(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+
+                    <MenuItem Header="SVD" InputGestureText="svd" Tag="svd()" Click="insertFunctionMenuItem_Click">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <TextBlock>
+                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
+                                    svd(<Italic>complex matrix</Italic> m)
+                                </TextBlock>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            
+            <MenuItem Header="Constants">
+                <MenuItem Header="Number 'pi'" InputGestureText="pi" Tag="pi" ToolTip="3.1415926535897931..." Click="insertFunctionMenuItem_Click" />
+                <MenuItem Header="Number 'e'" InputGestureText="e" Tag="e" ToolTip="2.7182818284590451..." Click="insertFunctionMenuItem_Click" />
+                <MenuItem Header="Golden ratio" InputGestureText="goldrat" Tag="goldrat" ToolTip="1.6180339887498949..." Click="insertFunctionMenuItem_Click" />
+                <MenuItem Header="Euler's constant" InputGestureText="euler" Tag="euler" ToolTip="0.57721566490153287..." Click="insertFunctionMenuItem_Click" />
+                <MenuItem Header="Catalan's constant" InputGestureText="catalan" Tag="catalan" ToolTip="0.91596559417721901..." Click="insertFunctionMenuItem_Click" />
+                <MenuItem Header="Square root of 2" InputGestureText="sqrt2" Tag="sqrt2" ToolTip="1.4142135623730952..." Click="insertFunctionMenuItem_Click" />
+                <MenuItem Header="Square root of 3" InputGestureText="sqrt3" Tag="sqrt3" ToolTip="1.7320508075688772..." Click="insertFunctionMenuItem_Click"  />
+                <Separator />
+                <MenuItem Header="Infinity" InputGestureText="inf" Tag="inf" ToolTip="Infinity" Click="insertFunctionMenuItem_Click" />
+                <MenuItem Header="Maximum value" InputGestureText="maxval" Tag="maxval" ToolTip="1E+307" Click="insertFunctionMenuItem_Click" />
+                <MenuItem Header="Minimum value" InputGestureText="minval" Tag="minval" ToolTip="-1E+307" Click="insertFunctionMenuItem_Click" />
+            </MenuItem>
+            <Separator/>
+            <MenuItem Command="Cut"/>
+            <MenuItem Command="Copy"/>
+            <MenuItem Command="Paste"/>
+        </ContextMenu>
+    </Window.Resources>
+
+    <Grid Background="{DynamicResource MainWindowBgBrush}">
+        <Menu Height="22" VerticalAlignment="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Command="ApplicationCommands.New" />
+                <MenuItem Header="_Open..." Command="ApplicationCommands.Open" />
+                <MenuItem Header="Save _As..." Command="ApplicationCommands.SaveAs" />
+                <Separator />
+                <MenuItem Header="E_xit" Click="exitMenuItem_Click" InputGestureText="Alt+F4" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Command="Undo" Header="_Undo" />
+                <MenuItem Command="Redo" Header="_Redo" />
+                <Separator />
+                <MenuItem Command="Cut" Header="Cu_t" />
+                <MenuItem Command="Copy" Header="_Copy" />
+                <MenuItem Command="Paste" Header="_Paste" />
+                <Separator />
+                <MenuItem Command="SelectAll" Header="Select _All" />
+            </MenuItem>
+            <MenuItem Header="_View" SubmenuOpened="viewMenuItem_SubmenuOpened">
+                <MenuItem Header="_Worksheet" IsCheckable="True" Tag="0" Click="viewMenuItems_Click" />
+                <MenuItem Header="_Matrices" IsCheckable="True" Tag="1" Click="viewMenuItems_Click" />
+                <MenuItem Header="_2D Plot" IsCheckable="True" Tag="2" Click="viewMenuItems_Click" />
+                <MenuItem Header="_3D Plot" IsCheckable="True" Tag="3" Click="viewMenuItems_Click" />
+                <Separator />
+                <MenuItem Header="_Color Scheme" SubmenuOpened="colorSchemeMenuItem_SubmenuOpened">
+                    <MenuItem Header="Blue" IsCheckable="True" Tag="Blue" Click="applyColorSchemeMenuItem_Click" />
+                    <MenuItem Header="Silver" IsCheckable="True" Tag="Silver" Click="applyColorSchemeMenuItem_Click" />
+                    <MenuItem Header="Black" IsCheckable="True" Tag="Black" Click="applyColorSchemeMenuItem_Click" />
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Preferences..." Click="preferencesMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Command="ApplicationCommands.Help" Header="_View Help" />
+                <Separator />
+                <MenuItem Header="T-Alex Software _Homepage" Click="navHomepageMenuItem_Click" />
+                <MenuItem Header="_Registration..." Click="registrationMenuItem_Click" />
+                <Separator />
+                <MenuItem Name="aboutMenuItem" Header="_About" Click="aboutMenuItem_Click" />
+            </MenuItem>
+        </Menu>
+
+        <TabControl Margin="-1,22,-1,20" Name="mainTabControl" SelectedIndex="0" TabStripPlacement="Top" Background="{DynamicResource MainTabControlBgBrush}">
+            <TabItem Header="Worksheet">
+                <DockPanel>
+                    <Expander Background="{DynamicResource GradBrush}" ExpandDirection="Up" IsExpanded="True" DockPanel.Dock="Bottom">
+                        <Canvas Height="156" Width="651" HorizontalAlignment="Center">
+                            <GroupBox Canvas.Left="4" Canvas.Top="5" Header="Calc" Height="146" Width="52">
+                                <Canvas>
+                                    <Button ToolTip="Numerical integration" Tag="integ(,,,)" Canvas.Left="4" Canvas.Top="4" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">integ</Button>
+                                    <Button ToolTip="Numerical differentiation" Tag="derive(,,)" Canvas.Left="4" Canvas.Top="34" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">d/dx</Button>
+                                    <Button ToolTip="Summation of a sequence" Tag="sums(,,,)" Canvas.Left="4" Canvas.Top="64" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">sum</Button>
+                                    <Button ToolTip="Product of a sequence" Tag="prods(,,,)" Canvas.Left="4" Canvas.Top="94" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">prod</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Header="Statistics" Width="89" Height="146" Canvas.Left="63" Canvas.Top="5">
+                                <Canvas>
+                                    <Button ToolTip="Mean" Tag="mean()" Canvas.Left="4" Canvas.Top="4" Height="25" Width="32" Click="buttonInsertText_Click">
+                                        <Grid>
+                                            <Label Padding="0">x</Label>
+                                            <Label Padding="0">&#175;</Label>
+                                        </Grid>
+                                    </Button>
+                                    <Button ToolTip="Median" Tag="median()" Canvas.Left="41" Canvas.Top="4" Height="25" Width="32" Click="buttonInsertText_Click">
+                                        <Grid>
+                                            <Label Padding="0">x</Label>
+                                            <Label Padding="0">&#732;</Label>
+                                        </Grid>
+                                    </Button>
+                                    <Button ToolTip="Sum of the values" Tag="sum()" Canvas.Left="4" Canvas.Top="34" Height="25" Width="32" Click="buttonInsertText_Click">Ʃx</Button>
+                                    <Button ToolTip="Sum of the square of the values" Tag="sumsq()" Canvas.Left="41" Canvas.Top="34" Height="25" Width="32" Click="buttonInsertText_Click">Ʃx²</Button>
+                                    <Button ToolTip="Population standard deviation" Tag="pstdev()" Canvas.Left="4" Canvas.Top="64" Height="25" Width="32" Click="buttonInsertText_Click">
+                                        <TextBlock>σ<Span BaselineAlignment="Subscript" FontSize="8">n</Span></TextBlock>
+                                    </Button>
+                                    <Button ToolTip="Sample standard deviation" Tag="sstdev()" Canvas.Left="41" Canvas.Top="64" Height="25" Width="32" Click="buttonInsertText_Click">
+                                        <TextBlock>σ<Span BaselineAlignment="Subscript" FontSize="8">n-1</Span></TextBlock>
+                                    </Button>
+                                    <Button ToolTip="Product of the values" Tag="prod()" Canvas.Left="4" Canvas.Top="94" Height="25" Width="32" Click="buttonInsertText_Click">
+                                        <TextBlock><Span>Π</Span>x</TextBlock>
+                                    </Button>
+                                    <Button ToolTip="Length" Tag="length()" Canvas.Left="41" Canvas.Top="94" Height="25" Width="32" Click="buttonInsertText_Click">n</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Header="Log" Width="52" Height="146" Canvas.Left="159" Canvas.Top="5">
+                                <Canvas>
+                                    <Button ToolTip="Number 'E'" Tag="e" Width="32" Height="25" Click="buttonInsertText_Click" Canvas.Left="4" Canvas.Top="4">e</Button>
+                                    <Button ToolTip="Exponential" Tag="exp()" Width="32" Height="25" Click="buttonInsertText_Click" Canvas.Left="4" Canvas.Top="34">
+                                        <Canvas Width="11" Height="17">
+                                            <TextBlock><Span FontSize="6.5">    x</Span></TextBlock>
+                                            <TextBlock><Span BaselineAlignment="Center">e</Span></TextBlock>
+                                        </Canvas>
+                                    </Button>
+                                    <Button ToolTip="Natural logarithm" Tag="ln()" Width="32" Height="25" Click="buttonInsertText_Click" Canvas.Left="4" Canvas.Top="64">ln</Button>
+                                    <Button ToolTip="Logarithm" Tag="log()" Width="32" Height="25" Click="buttonInsertText_Click" Canvas.Left="4" Canvas.Top="94">log</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Header="Trigonometry" Width="126" Height="146" Canvas.Left="218" Canvas.Top="5">
+                                <Canvas>
+                                    <CheckBox Name="invCheckBox" ToolTip="Inverse functions" Canvas.Left="4" Canvas.Top="9" Height="16" Width="40">Inv</CheckBox>
+                                    <CheckBox Name="hypCheckBox" ToolTip="Hyperbolic functions" Canvas.Left="44" Canvas.Top="9">Hyp</CheckBox>
+                                    <Button ToolTip="Sine" Tag="sin()" Width="32" Height="25" Canvas.Left="4" Canvas.Top="34" Click="buttonInsertText_Click">sin</Button>
+                                    <Button ToolTip="Cosine" Tag="cos()" Width="32" Height="25" Canvas.Left="41" Canvas.Top="34" Click="buttonInsertText_Click">cos</Button>
+                                    <Button ToolTip="Number 'Pi'" Tag="pi" Width="32" Height="25" Canvas.Left="78" Canvas.Top="34" Click="buttonInsertText_Click">π</Button>
+                                    <Button ToolTip="Tangent" Tag="tan()" Width="32" Height="25" Canvas.Left="4" Canvas.Top="64" Click="buttonInsertText_Click">tan</Button>
+                                    <Button ToolTip="Cotangent" Tag="cot()" Width="32" Height="25" Canvas.Left="41" Canvas.Top="64" Click="buttonInsertText_Click">cot</Button>
+                                    <Button ToolTip="Converts degrees to radians" Tag="rad()" Width="32" Height="25" Canvas.Left="78" Canvas.Top="64" Click="buttonInsertText_Click">rad</Button>
+                                    <Button ToolTip="Secant" Tag="sec()" Width="32" Height="25" Canvas.Left="4" Canvas.Top="94" Click="buttonInsertText_Click">sec</Button>
+                                    <Button ToolTip="Cosecant" Tag="csc()" Height="25" Canvas.Left="41" Canvas.Top="94" Width="32" Click="buttonInsertText_Click">csc</Button>
+                                    <Button ToolTip="Converts radians into degrees" Tag="deg()" Width="32" Height="25" Canvas.Left="78" Canvas.Top="94" Click="buttonInsertText_Click">deg</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Header="Digits" Width="126" Height="146" Canvas.Left="351" Canvas.Top="5">
+                                <Canvas>
+                                    <Button ToolTip="Number 'seven'" Tag="7" Height="25" Width="32" Canvas.Left="4" Canvas.Top="4" Click="buttonInsertText_Click">7</Button>
+                                    <Button ToolTip="Number 'eight'" Tag="8" Height="25" Width="32" Canvas.Left="41" Canvas.Top="4" Click="buttonInsertText_Click">8</Button>
+                                    <Button ToolTip="Number 'nine'" Tag="9" Height="25" Width="32" Canvas.Left="78" Canvas.Top="4" Click="buttonInsertText_Click">9</Button>
+                                    <Button ToolTip="Number 'four'" Tag="4" Width="32" Height="25" Canvas.Left="4" Canvas.Top="34" Click="buttonInsertText_Click">4</Button>
+                                    <Button ToolTip="Number 'five'" Tag="5" Width="32" Height="25" Canvas.Left="41" Canvas.Top="34" Click="buttonInsertText_Click">5</Button>
+                                    <Button ToolTip="Number 'six'" Tag="6" Width="32" Height="25" Canvas.Left="78" Canvas.Top="34" Click="buttonInsertText_Click">6</Button>
+                                    <Button ToolTip="Number 'one'" Tag="1" Width="32" Height="25" Canvas.Left="4" Canvas.Top="64" Click="buttonInsertText_Click">1</Button>
+                                    <Button ToolTip="Number 'two'" Tag="2" Width="32" Height="25" Canvas.Left="41" Canvas.Top="64" Click="buttonInsertText_Click">2</Button>
+                                    <Button ToolTip="Number 'three'" Tag="3" Width="32" Height="25" Canvas.Left="78" Canvas.Top="64" Click="buttonInsertText_Click">3</Button>
+                                    <Button ToolTip="Number 'zero'" Tag="0" Height="25" Width="32" Canvas.Left="4" Canvas.Top="94" Click="buttonInsertText_Click">0</Button>
+                                    <Button ToolTip="Imaginary Unit i" Tag="1i" Height="25" Width="32" Canvas.Left="41" Canvas.Top="94" Click="buttonInsertText_Click">i</Button>
+                                    <Button ToolTip="Decimal point" Tag="." Height="25" Width="32" Canvas.Left="78" Canvas.Top="94" Click="buttonInsertText_Click">.</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Header="Operations" Width="163" Height="146" Canvas.Left="484" Canvas.Top="5">
+                                <Canvas>
+                                    <Button ToolTip="Division" Tag="/" Width="32" Height="25" Canvas.Left="4" Canvas.Top="4" Click="buttonInsertText_Click">/</Button>
+                                    <Button ToolTip="Factorial" Tag="fact()" Width="32" Height="25" Click="buttonInsertText_Click" Canvas.Left="41" Canvas.Top="4">n!</Button>
+                                    <Button ToolTip="Opening bracket" Tag="(" Width="32" Height="25" Canvas.Left="78" Canvas.Top="4" Click="buttonInsertText_Click">(</Button>
+                                    <Button ToolTip="Closing bracket" Tag=")" Width="32" Height="25" Canvas.Left="115" Canvas.Top="4" Click="buttonInsertText_Click">)</Button>
+                                    <Button ToolTip="Multiplication" Tag="*" Width="32" Height="25" Canvas.Left="4" Canvas.Top="34" Click="buttonInsertText_Click">*</Button>
+                                    <Button ToolTip="Inverse" Tag="inv()" Width="32" Height="25" Click="buttonInsertText_Click" Canvas.Left="41" Canvas.Top="34">1/x</Button>
+                                    <Button ToolTip="Absolute value" Tag="abs()" Width="32" Height="25" Canvas.Left="78" Canvas.Top="34" Click="buttonInsertText_Click">abs</Button>
+                                    <Button ToolTip="Signature" Tag="sign()" Width="32" Height="25" Click="buttonInsertText_Click" Canvas.Left="115" Canvas.Top="34">sign</Button>
+                                    <Button ToolTip="Subtraction" Tag="-" Width="32" Height="25" Canvas.Left="4" Canvas.Top="64" Click="buttonInsertText_Click">-</Button>
+                                    <Button ToolTip="Evaluate" Tag="=" Width="32" Height="55" Canvas.Left="41" Canvas.Top="64" Click="buttonEvaluate_Click">=</Button>
+                                    <Button ToolTip="Raise to power" Tag="^" Width="32" Height="25" Canvas.Left="78" Canvas.Top="64" Click="buttonInsertText_Click">xⁿ</Button>
+                                    <Button ToolTip="Square" Tag="sqr()" Width="32" Height="25" Canvas.Left="115" Canvas.Top="64" Click="buttonInsertText_Click">x²</Button>
+                                    <Button ToolTip="Addition" Tag="+" Width="32" Height="25" Canvas.Left="4" Canvas.Top="94" Click="buttonInsertText_Click">+</Button>
+                                    <Button ToolTip="Square root" Tag="sqrt()" Width="32" Height="25" Canvas.Left="78" Canvas.Top="94" Click="buttonInsertText_Click">√x</Button>
+                                    <Button ToolTip="Nth root" Tag="nthroot(,)" Width="32" Height="25" Canvas.Left="115" Canvas.Top="94" Click="buttonInsertText_Click">
+                                        <Canvas Width="14" Height="17">
+                                            <TextBlock><Span FontSize="6.5">n</Span></TextBlock>
+                                            <TextBlock><Span BaselineAlignment="Center">√x</Span></TextBlock>
+                                        </Canvas>
+                                    </Button>
+                                </Canvas>
+                            </GroupBox>
+                        </Canvas>
+                    </Expander>
+
+                    <TextBox x:Name="worksheetTextBox" Background="{DynamicResource WorksheetTextBoxBgBrush}"
+                             VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto"
+                             AcceptsTab="True" AcceptsReturn="True" FontFamily="Consolas, Courier New"
+                             PreviewTextInput="worksheetTextBox_PreviewTextInput"
+                             PreviewKeyDown="worksheetTextBox_PreviewKeyDown" DataObject.Pasting="worksheetTextBox_Pasting"
+                             DockPanel.Dock="Top" FontSize="12"
+                             ContextMenu="{StaticResource mainContextMenu}" Focusable="True">
+                    </TextBox>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="Matrices">
+                <DockPanel>
+                    <Expander Background="{DynamicResource GradBrush}" IsExpanded="True" DockPanel.Dock="Bottom" ExpandDirection="Up">
+                        <Canvas Height="156" Width="651" HorizontalAlignment="Center">
+                            <GroupBox Canvas.Left="4" Canvas.Top="5" Header="Dec" Height="146" Width="52">
+                                <Canvas>
+                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="lu()" ToolTip="LU Decomposition" Width="32" Click="insertTextToFormulaBar_Click">lu</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="qr()" ToolTip="QR Decomposition" Width="32" Click="insertTextToFormulaBar_Click">qr</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="chol()" ToolTip="Cholesky Decomposition" Width="32" Click="insertTextToFormulaBar_Click">chol</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="svd()" ToolTip="Singular Value Decomposition" Width="32" Click="insertTextToFormulaBar_Click">svd</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Canvas.Left="63" Canvas.Top="5" Header="Lin. Algebra" Height="146" Width="89">
+                                <Canvas>
+                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="cofactor(,,)" ToolTip="Cofactor" Width="32" Click="insertTextToFormulaBar_Click">
+                                        <TextBlock>C<Span BaselineAlignment="Subscript" FontSize="8"><Italic>ij</Italic></Span></TextBlock>
+                                    </Button>
+                                    <Button Canvas.Left="41" Canvas.Top="4" FontSize="10" Height="25" Tag="minor(,,)" ToolTip="Minor" Width="32" Click="insertTextToFormulaBar_Click">
+                                        <TextBlock>M<Span BaselineAlignment="Subscript" FontSize="8"><Italic>ij</Italic></Span></TextBlock>
+                                    </Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="eigvals()" ToolTip="Eigenvalues" Width="32" Click="insertTextToFormulaBar_Click">eig</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="34" FontSize="10" Height="25" Tag="sngvals()" ToolTip="Singularvalues" Width="32" Click="insertTextToFormulaBar_Click">sng</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="eigvecs()" ToolTip="Eigenvectors" Width="32" Click="insertTextToFormulaBar_Click">eigv</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" FontSize="10" Height="25" Tag="leigvecs()" ToolTip="Left eigenvectors" Width="32" Click="insertTextToFormulaBar_Click">leigv</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="lsolve(,)" ToolTip="Linear system solve" Width="32" Click="insertTextToFormulaBar_Click">solve</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" FontSize="10" Height="25" Tag="char()" ToolTip="Characteristic polynomial" Width="32" Click="insertTextToFormulaBar_Click">char</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Canvas.Left="159" Canvas.Top="5" Header="Behaviors" Height="146" Width="89">
+                                <Canvas>
+                                    <Button Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="last()" ToolTip="Index of the last element" Width="32">last</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="length()" ToolTip="Length" Width="32">len</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="rows()" ToolTip="Rows count" Width="32">rows</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="34" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="cols()" ToolTip="Columns count" Width="32">cols</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="max()" ToolTip="Maximum value" Width="32">max</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="min()" ToolTip="Minimum value" Width="32">min</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="tr()" ToolTip="Trace matrix" Width="32">tr</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="rank()" ToolTip="Rank of matrix" Width="32">rank</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Header="Creation" Height="146" Width="89" Canvas.Left="255" Canvas.Top="5">
+                                <Canvas>
+                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="matrix(,)" ToolTip="Create matrix" Width="32" Click="insertTextToFormulaBar_Click">M</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="4" Height="25" Tag="diag()" ToolTip="Diagonal" Width="32" Click="insertTextToFormulaBar_Click" FontSize="10">diag</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="identity()" ToolTip="Identity matrix" Width="32" Click="insertTextToFormulaBar_Click">ident</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="34" FontSize="10" Height="25" Tag="submatrix(,,,,)" ToolTip="Submatrix" Width="32" Click="insertTextToFormulaBar_Click">sub</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="stack()" ToolTip="Vertical concatenating" Width="32" Click="insertTextToFormulaBar_Click">stack</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" FontSize="9" Height="25" Tag="augment()" ToolTip="Horizontal concatenating" Width="32" Click="insertTextToFormulaBar_Click">augm</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="row(,)" ToolTip="Get row" Width="32" Click="insertTextToFormulaBar_Click">row</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" FontSize="10" Height="25" Tag="col(,)" ToolTip="Get column" Width="32" Click="insertTextToFormulaBar_Click">col</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Canvas.Left="351" Canvas.Top="5" Header="Digits" Height="146" Width="126">
+                                <Canvas>
+                                    <Button Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="7" ToolTip="Number 'seven'" Width="32">7</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="8" ToolTip="Number 'eight'" Width="32">8</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="9" ToolTip="Number 'nine'" Width="32">9</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="4" ToolTip="Number 'four'" Width="32">4</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="5" ToolTip="Number 'five'" Width="32">5</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="6" ToolTip="Number 'six'" Width="32">6</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="1" ToolTip="Number 'one'" Width="32">1</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="2" ToolTip="Number 'two'" Width="32">2</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="3" ToolTip="Number 'three'" Width="32">3</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="0" ToolTip="Number 'zero'" Width="32">0</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="1i" ToolTip="Imaginary Unit i" Width="32">i</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="." ToolTip="Decimal point" Width="32">.</Button>
+                                </Canvas>
+                            </GroupBox>
+                            <GroupBox Canvas.Left="484" Canvas.Top="5" Header="Operations" Height="146" Width="163">
+                                <Canvas>
+                                    <Button ToolTip="Division" Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="/" Width="32">/</Button>
+                                    <Button ToolTip="Inverse matrix" Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="inv()" Width="32">
+                                        <Grid VerticalAlignment="Center" Width="14" Height="17">
+                                            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="6.5">-1</TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10">M</TextBlock>
+                                        </Grid>
+                                    </Button>
+                                    <Button ToolTip="Opening bracket" Canvas.Left="78" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="(" Width="32">(</Button>
+                                    <Button ToolTip="Closing bracket" Canvas.Left="115" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag=")" Width="32">)</Button>
+                                    <Button ToolTip="Multiplication" Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="*" Width="32">*</Button>
+                                    <Button ToolTip="Cross product" Canvas.Left="41" Canvas.Top="34" Height="25" Tag="cross(,)" Width="32" Click="insertTextToFormulaBar_Click">×</Button>
+                                    <Button ToolTip="Frobenius norm" Canvas.Left="78" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="fronorm()" FontSize="10" Width="32">||M||</Button>
+                                    <Button ToolTip="Determinant" Canvas.Left="115" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="det()" Width="32">det</Button>
+                                    <Button ToolTip="Subtraction" Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="-" Width="32">-</Button>
+                                    <Button ToolTip="Evaluate" Canvas.Left="41" Canvas.Top="64" Click="evaluateMatricesButton_Click" Height="55" Tag="=" Width="32">=</Button>
+                                    <Button ToolTip="Raise to power" Canvas.Left="78" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="^" Width="32" FontSize="10">
+                                        <Grid VerticalAlignment="Center"  Width="13" Height="20">
+                                            <TextBlock Padding="0" Margin="0" VerticalAlignment="Center"  HorizontalAlignment="Left" FontSize="10">M</TextBlock>
+                                            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="8.5">n</TextBlock>
+                                        </Grid>
+                                    </Button>
+                                    <Button ToolTip="Square" Canvas.Left="115" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="sqr()" Width="32" FontSize="10">
+                                        <Grid VerticalAlignment="Center" Width="12" Height="17">
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10">M</TextBlock>
+                                            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="7">2</TextBlock>
+                                        </Grid>
+                                    </Button>
+                                    <Button ToolTip="Addition" Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="+" Width="32">+</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="tran()" ToolTip="Transpose matrix" Width="32">
+                                        <Grid VerticalAlignment="Center" Width="12" Height="17">
+                                            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="6.5">T</TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10">M</TextBlock>
+                                        </Grid>
+                                    </Button>
+                                    <Button Canvas.Left="115" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="adjoint()" ToolTip="Conjugate transpose matrix" Width="32">
+                                        <Grid VerticalAlignment="Center" Width="12" Height="17">
+                                            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="6.5">H</TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10">M</TextBlock>
+                                        </Grid>
+                                    </Button>
+                                </Canvas>
+                            </GroupBox>
+                        </Canvas>
+                    </Expander>
+
+                    <controls:WorksheetMatrix x:Name="worksheetMatrix" DockPanel.Dock="Top" FormulaBarContextMenu="{StaticResource mainContextMenu}" />
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="2D Plot">
+                <DockPanel>
+                    <Expander Background="{DynamicResource GradBrush}" DockPanel.Dock="Bottom" ExpandDirection="Up" IsExpanded="True">
+                        <Canvas Height="156" Width="651" HorizontalAlignment="Center">
+                            <GroupBox Canvas.Left="60" Canvas.Top="5" Header="X-Y Function" Height="55" Width="530">
+                                <Canvas>
+                                    <Label Canvas.Left="3" Canvas.Top="1">f(x):</Label>
+                                    <TextBox Canvas.Left="43" Canvas.Top="3" Height="23" Name="textBoxPlot2D" ContextMenu="{StaticResource mainContextMenu}" Width="390" KeyDown="textBoxPlot2D_KeyDown" FontFamily="Consolas, Courier New" Background="{DynamicResource textBoxBgBrush2}" />
+                                    <Button Canvas.Left="442" Canvas.Top="3" Height="23" Name="buttonPlot2DDraw" Width="65" Click="buttonPlot2DDraw_Click">Draw</Button>
+                                </Canvas>
+                            </GroupBox>
+                        </Canvas>
+                    </Expander>
+
+                    <controls:Plot2D x:Name="plot2D" Background="AliceBlue" MouseMove="plot2D_MouseMove" MouseLeave="plot2D_MouseLeave">
+                        <controls:Plot2D.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Fullscreen" Click="fullscreenPlot2DMenuItem_Click" />
+                                <Separator />
+                                <MenuItem Header="Copy to clipboard" Click="copyPlotMenuItem_Click" />
+                                <MenuItem Header="Save image as..." Click="saveAsPlotMenuItem_Click" />
+                                <Separator />
+                                <MenuItem Header="Undo Zoom/Pan" Click="undoZoomPanMenuItem_Click" />
+                                <MenuItem Header="Reset Viewport" Click="resetViewportMenuItem_Click" />
+                                <Separator />
+                                <MenuItem Header="Properties..." Click="plot2DPropertiesMenuItem_Click" />
+                            </ContextMenu>
+                        </controls:Plot2D.ContextMenu>
+                    </controls:Plot2D>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="3D Plot">
+                <DockPanel>
+                    <Expander Background="{DynamicResource GradBrush}" DockPanel.Dock="Bottom" ExpandDirection="Up" IsExpanded="True">
+                        <Canvas Height="156" Width="651" HorizontalAlignment="Center">
+                            <GroupBox Header="Surface" Height="55" Canvas.Left="60" Canvas.Top="5" Width="530">
+                                <Canvas>
+                                    <Label Canvas.Left="3" Canvas.Top="1">f(x,y):</Label>
+                                    <TextBox Canvas.Left="43" Canvas.Top="3" Height="23" Name="textBoxSurface" ContextMenu="{StaticResource mainContextMenu}" Width="390" FontFamily="Consolas, Courier New" Background="{DynamicResource textBoxBgBrush2}" KeyDown="textBoxSurface_KeyDown" />
+                                    <Button Canvas.Left="442" Canvas.Top="3" Height="23" Name="surfaceRenderButton" Width="65" Click="surfaceRenderButton_Click">Render</Button>
+                                </Canvas>
+                            </GroupBox>
+                        </Canvas>
+                    </Expander>
+
+                    <Grid Name="plot3DGrid" Background="AliceBlue">
+                        <tools:TrackballDecorator x:Name="trackball" DockPanel.Dock="Top" MouseLeftButtonDown="trackball_MouseLeftButtonDown">
+                            <tools:TrackballDecorator.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Fullscreen" />
+                                    <Separator />
+                                    <MenuItem Header="Copy to clipboard" Click="copyPlot3DMenuItem_Click" />
+                                    <MenuItem Header="Save image as..." Click="saveAsPlot3DMenuItem_Click" />
+                                    <Separator />
+                                    <MenuItem Header="Properties..." Click="plot3DPropertiesMenuItem_Click" />
+                                </ContextMenu>
+                            </tools:TrackballDecorator.ContextMenu>
+                            
+                            <Viewport3D Name="viewPort3D">
+                                <Viewport3D.Camera>
+                                    <!--<PerspectiveCamera x:Name="camera" Position="-10,10,10" LookDirection="1,-1,-1" UpDirection="0,1,0" />-->
+                                    <PerspectiveCamera x:Name="camera" Position="15,15,15" LookDirection="-1,-1,-1" UpDirection="0,0,1" />
+                                </Viewport3D.Camera>
+
+                                <Viewport3D.Children>
+                                    <ModelVisual3D>
+                                        <ModelVisual3D.Content>
+                                            <Model3DGroup>
+                                                <DirectionalLight Color="Wheat" Direction="0,0,-5"/>
+                                                <DirectionalLight Color="Wheat" Direction="0,0,5"/>
+                                                
+                                                <GeometryModel3D x:Name="surface">
+                                                    <GeometryModel3D.Material>
+                                                        <DiffuseMaterial Brush="Green" />
+                                                    </GeometryModel3D.Material>
+                                                    <GeometryModel3D.BackMaterial>
+                                                        <DiffuseMaterial Brush="Green" />
+                                                    </GeometryModel3D.BackMaterial>
+                                                </GeometryModel3D>
+                                            </Model3DGroup>
+                                        </ModelVisual3D.Content>
+                                    </ModelVisual3D>
+                                </Viewport3D.Children>
+                            </Viewport3D>
+                        </tools:TrackballDecorator>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+        
+        <StatusBar Height="23" Name="mainStatusBar" VerticalAlignment="Bottom" Background="{DynamicResource StatusBarBgBrush}">
+            <StatusBarItem Name="xyCoordTitleStatusBarItem" Visibility="Hidden" Margin="0">xy:</StatusBarItem>
+            <StatusBarItem Name="xyCoordStatusBarItem" MinWidth="50" Margin="0" Padding="0" Visibility="Hidden" />
+        </StatusBar>
+    </Grid>
+</Window>
