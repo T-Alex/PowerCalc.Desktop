@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore", "MathCore\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MathCore", "MathCore", "{317721B9-8D35-441D-8AB9-20AA42DAFC89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ExpressionsBase", "MathCore\MathCore.ExpressionsBase\TAlex.MathCore.ExpressionsBase.csproj", "{6E352411-FA60-4400-92C1-706323A0CC4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ExpressionsBase.Test", "MathCore\MathCore.ExpressionsBase\Test\TAlex.MathCore.ExpressionsBase.Test.csproj", "{CF9DDC54-EB24-4AA0-B38D-8F51E948DD12}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = PowerCalc.vsmdi
@@ -46,13 +50,23 @@ Global
 		{92058732-3733-492C-B463-60C919951471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92058732-3733-492C-B463-60C919951471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92058732-3733-492C-B463-60C919951471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E352411-FA60-4400-92C1-706323A0CC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E352411-FA60-4400-92C1-706323A0CC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E352411-FA60-4400-92C1-706323A0CC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E352411-FA60-4400-92C1-706323A0CC4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF9DDC54-EB24-4AA0-B38D-8F51E948DD12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF9DDC54-EB24-4AA0-B38D-8F51E948DD12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF9DDC54-EB24-4AA0-B38D-8F51E948DD12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF9DDC54-EB24-4AA0-B38D-8F51E948DD12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A121F933-8FA1-4B56-8A16-E9A2BFF49352} = {6C57B8C6-0DB1-4253-86BE-470084E602C7}
+		{CF9DDC54-EB24-4AA0-B38D-8F51E948DD12} = {6C57B8C6-0DB1-4253-86BE-470084E602C7}
 		{C214B159-B7B1-4A59-8B88-89B40FCFBF2E} = {19A7DBA7-55FE-4212-AA78-BEE7D26EA1DC}
 		{92058732-3733-492C-B463-60C919951471} = {317721B9-8D35-441D-8AB9-20AA42DAFC89}
+		{6E352411-FA60-4400-92C1-706323A0CC4A} = {317721B9-8D35-441D-8AB9-20AA42DAFC89}
 	EndGlobalSection
 EndGlobal
