@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCalc", "PowerCalc\Powe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.Test", "MathCore\MathCore\Test\TAlex.MathCore.Test.csproj", "{A121F933-8FA1-4B56-8A16-E9A2BFF49352}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGen", "KeyGen\KeyGen.csproj", "{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGenerator", "KeyGen\KeyGenerator.csproj", "{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PowerCalcSetup", "PowerCalcSetup\PowerCalcSetup.vdproj", "{B315B623-7C14-4753-AAD1-FD4FAD43379F}"
 EndProject
