@@ -50,12 +50,12 @@ namespace TAlex.PowerCalc.KeyGenerator
 
             if (posEqual > 0)
             {
-                string akey = line.Remove(posEqual, line.Length - posEqual);
-                string avalue = line.Substring(posEqual + 1);
+                string key = line.Remove(posEqual, line.Length - posEqual);
+                string value = line.Substring(posEqual + 1);
 
-                if (avalue.Length > 0)
+                if (value.Length > 0)
                 {
-                    inputs.Add(akey, avalue);
+                    inputs.Add(key, value);
                 }
             }
         }
@@ -64,27 +64,20 @@ namespace TAlex.PowerCalc.KeyGenerator
         /// Read the input file and parse its lines into the Inputs[] list.
         /// </summary>
         /// <param name="pathname"></param>
-        public static IDictionary<string, string> ReadInput(string pathname)
+        public static IDictionary<string, string> ReadInputValues()
         {
             IDictionary<string, string> inputs = new Dictionary<string, string>();
 
-            // attempt to open the input file for read-only access
-            FileStream fsIn = new FileStream(pathname, FileMode.Open, FileAccess.Read, FileShare.Read);
-            StreamReader sr = new StreamReader(fsIn, _fileEncoding, true);
-
             // process every line in the file
-            for (String Line = sr.ReadLine(); Line != null; Line = sr.ReadLine())
+            for (String line = Console.ReadLine(); !String.IsNullOrEmpty(line); line = Console.ReadLine())
             {
-                AddInputLine(inputs, Line.Trim());
+                AddInputLine(inputs, line.Trim());
             }
 
-            // explicitly close the StreamReader to properly flush all buffers
-            sr.Close(); // this also closes the FileStream (fsIn)
-
             // check the input encoding
-            string EncName = GetValue(inputs, "ENCODING");
+            string encName = GetValue(inputs, "ENCODING");
 
-            if (EncName != String.Empty && EncName != "UTF8")
+            if (encName != String.Empty && encName != "UTF8")
             {
                 throw new KeyGeneratorException("bad input encoding, expected UTF-8", KeyGeneratorReturnCode.ERC_BAD_INPUT);
             }
@@ -103,30 +96,23 @@ namespace TAlex.PowerCalc.KeyGenerator
         {
             try
             {
-                if (args.Length == 1)
-                {
-                    IDictionary<string, string> inputs = ReadInput(args[0]);
+                Console.InputEncoding = _fileEncoding;
+                IDictionary<string, string> inputs = ReadInputValues();
 
-                    Console.Write(KeyGenerator.Generate(inputs));
-                    Environment.ExitCode = (int)KeyGeneratorReturnCode.ERC_SUCCESS;
-                }
-                else
-                {
-                    Console.WriteLine("Usage: <input> <output1> <output2>");
-                    Environment.ExitCode = (int)KeyGeneratorReturnCode.ERC_BAD_ARGS;
-                }
+                Console.Write(KeyGenerator.Generate(inputs));
+                Environment.ExitCode = (int)KeyGeneratorReturnCode.ERC_SUCCESS;
             }
             catch (KeyGeneratorException e)
             {
                 // set the exit code to the ERC of the exception object
+                Console.Error.WriteLine(e.Message);
                 Environment.ExitCode = (int)e.ERC;
-                Console.WriteLine(e.Message);
             }
             catch (Exception e)
             {
                 // for general exceptions return ERC_ERROR
+                Console.Error.WriteLine(e.Message);
                 Environment.ExitCode = (int)KeyGeneratorReturnCode.ERC_ERROR;
-                Console.WriteLine(e.Message);
             }
         }
 
