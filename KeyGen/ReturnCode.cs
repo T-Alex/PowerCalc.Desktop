@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TAlex.PowerCalc.KeyGenerator
 {
     /// <summary>
     /// Possible key generator exit codes.
     /// </summary>
-    public enum KeyGeneratorReturnCode : int
+    public enum ReturnCode : int
     {
         // Success
         ERC_SUCCESS = 00,

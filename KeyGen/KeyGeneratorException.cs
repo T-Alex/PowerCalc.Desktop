@@ -11,16 +11,16 @@ namespace TAlex.PowerCalc.KeyGenerator
     {
         #region Fields
 
-        public KeyGeneratorReturnCode ERC;
+        public readonly ReturnCode ReturnCode;
 
         #endregion
 
         #region Constructors
 
-        public KeyGeneratorException(string message, KeyGeneratorReturnCode e)
+        public KeyGeneratorException(string message, ReturnCode e)
             : base(message)
         {
-            ERC = e;
+            ReturnCode = e;
         }
 
         #endregion

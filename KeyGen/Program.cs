@@ -7,9 +7,6 @@ using System.Collections.Generic;
 
 namespace TAlex.PowerCalc.KeyGenerator
 {
-    /// <summary>
-    /// This class implemens the key generator for PowerCalc.
-    /// </summary>
     class Program
     {
         #region Fields
@@ -74,19 +71,11 @@ namespace TAlex.PowerCalc.KeyGenerator
                 AddInputLine(inputs, line.Trim());
             }
 
-            // check the input encoding
-            string encName = GetValue(inputs, "ENCODING");
-
-            if (encName != String.Empty && encName != "UTF8")
-            {
-                throw new KeyGeneratorException("bad input encoding, expected UTF-8", KeyGeneratorReturnCode.ERC_BAD_INPUT);
-            }
-
             // check for valid input
             string regName = GetValue(inputs, "REG_NAME");
             if (regName.Length < 8)
             {
-                throw new KeyGeneratorException("REG_NAME must have at least 8 characters", KeyGeneratorReturnCode.ERC_BAD_INPUT);
+                throw new KeyGeneratorException("REG_NAME must have at least 8 characters", ReturnCode.ERC_BAD_INPUT);
             }
 
             return inputs;
@@ -100,19 +89,19 @@ namespace TAlex.PowerCalc.KeyGenerator
                 IDictionary<string, string> inputs = ReadInputValues();
 
                 Console.Write(KeyGenerator.Generate(inputs));
-                Environment.ExitCode = (int)KeyGeneratorReturnCode.ERC_SUCCESS;
+                Environment.ExitCode = (int)ReturnCode.ERC_SUCCESS;
             }
             catch (KeyGeneratorException e)
             {
                 // set the exit code to the ERC of the exception object
                 Console.Error.WriteLine(e.Message);
-                Environment.ExitCode = (int)e.ERC;
+                Environment.ExitCode = (int)e.ReturnCode;
             }
             catch (Exception e)
             {
                 // for general exceptions return ERC_ERROR
                 Console.Error.WriteLine(e.Message);
-                Environment.ExitCode = (int)KeyGeneratorReturnCode.ERC_ERROR;
+                Environment.ExitCode = (int)ReturnCode.ERC_ERROR;
             }
         }
 
