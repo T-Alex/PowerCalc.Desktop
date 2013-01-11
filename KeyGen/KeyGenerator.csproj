@@ -61,7 +61,7 @@
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="IKeyGenerator.cs" />
     <Compile Include="KeyGeneratorException.cs" />
-    <Compile Include="KeyGeneratorReturnCode.cs" />
+    <Compile Include="ReturnCode.cs" />
     <Compile Include="PowerCalcKeyGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
