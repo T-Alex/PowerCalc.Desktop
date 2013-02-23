@@ -70,14 +70,6 @@ namespace TAlex.PowerCalc.KeyGenerator
             {
                 AddInputLine(inputs, line.Trim());
             }
-
-            // check for valid input
-            string regName = GetValue(inputs, "REG_NAME");
-            if (regName.Length < 8)
-            {
-                throw new KeyGeneratorException("REG_NAME must have at least 8 characters", ReturnCode.ERC_BAD_INPUT);
-            }
-
             return inputs;
         }
 

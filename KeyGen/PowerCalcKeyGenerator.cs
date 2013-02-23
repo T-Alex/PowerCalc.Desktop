@@ -56,7 +56,12 @@ namespace TAlex.PowerCalc.KeyGenerator
         {
             SHA512 sha = new SHA512Managed();
 
-            string regName = inputs["REG_NAME"];
+            string regName = inputs["REGNAME"];
+            if (regName.Length < 8)
+            {
+                throw new KeyGeneratorException("REGNAME must have at least 8 characters", ReturnCode.ERC_BAD_INPUT);
+            }
+
             string regNameHash = CryptoHelper.SHA512Base64(regName, new UTF8Encoding());
 
             const int linHashStartIndex = 10;
