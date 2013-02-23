@@ -16,7 +16,7 @@ namespace TAlex.PowerCalc.KeyGenerator
         /// </summary>
         private static Encoding _fileEncoding = new UTF8Encoding();
 
-        private static readonly IKeyGenerator KeyGenerator = new PowerCalcKeyGenerator();
+        private static readonly IKeyGenerator KeyGenerator = new KeyGenerator();
 
         #endregion
 
@@ -80,8 +80,7 @@ namespace TAlex.PowerCalc.KeyGenerator
                 Console.InputEncoding = _fileEncoding;
                 IDictionary<string, string> inputs = ReadInputValues();
 
-                Console.Write(KeyGenerator.Generate(inputs));
-                Environment.ExitCode = (int)ReturnCode.ERC_SUCCESS;
+                HandleWriteKey(KeyGenerator.Generate(inputs));
             }
             catch (KeyGeneratorException e)
             {
@@ -94,6 +93,28 @@ namespace TAlex.PowerCalc.KeyGenerator
                 // for general exceptions return ERC_ERROR
                 Console.Error.WriteLine(e.Message);
                 Environment.ExitCode = (int)ReturnCode.ERC_ERROR;
+            }
+        }
+
+        private static void HandleWriteKey(object key)
+        {
+            if (key is String)
+            {
+                Console.Write((string)key);
+                Environment.ExitCode = (int)ReturnCode.ERC_SUCCESS;
+            }
+            else if (key is byte[])
+            {
+                MemoryStream data = new MemoryStream((byte[])key);
+                using (Stream console = Console.OpenStandardOutput())
+                {
+                    data.WriteTo(console);
+                    Environment.ExitCode = (int)ReturnCode.ERC_SUCCESS_BIN;
+                }
+            }
+            else
+            {
+                throw new KeyGeneratorException("Key type is not supported.", ReturnCode.ERC_INTERNAL);
             }
         }
 

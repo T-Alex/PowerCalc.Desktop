@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("KeyGen")]
+[assembly: AssemblyTitle("Power Calc Key Generator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("T-Alex Software")]
-[assembly: AssemblyProduct("KeyGen")]
-[assembly: AssemblyCopyright("Copyright ©  2011 T-Alex Software")]
+[assembly: AssemblyProduct("Power Calc Key Generator")]
+[assembly: AssemblyCopyright("Copyright © 2013 T-Alex Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

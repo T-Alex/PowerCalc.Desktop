@@ -4,9 +4,10 @@ using System.Security.Cryptography;
 using System.Text;
 using TAlex.PowerCalc.KeyGenerator.Helpers;
 
+
 namespace TAlex.PowerCalc.KeyGenerator
 {
-    internal class PowerCalcKeyGenerator : IKeyGenerator
+    internal class KeyGenerator : IKeyGenerator
     {
         #region Fields
 
@@ -52,14 +53,14 @@ namespace TAlex.PowerCalc.KeyGenerator
 
         #region IKeyGenerator Members
 
-        public string Generate(IDictionary<string, string> inputs)
+        public object Generate(IDictionary<string, string> inputs)
         {
             SHA512 sha = new SHA512Managed();
 
-            string regName = inputs["REGNAME"];
-            if (regName.Length < 8)
+            string regName = inputs[LicenseData.RegistrationNameParam];
+            if (regName.Length < 5)
             {
-                throw new KeyGeneratorException("REGNAME must have at least 8 characters", ReturnCode.ERC_BAD_INPUT);
+                throw new KeyGeneratorException("REGNAME must have at least 5 characters", ReturnCode.ERC_BAD_INPUT);
             }
 
             string regNameHash = CryptoHelper.SHA512Base64(regName, new UTF8Encoding());

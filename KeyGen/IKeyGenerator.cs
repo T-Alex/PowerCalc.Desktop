@@ -6,6 +6,6 @@ namespace TAlex.PowerCalc.KeyGenerator
 {
     public interface IKeyGenerator
     {
-        string Generate(IDictionary<string, string> inputs);
+        object Generate(IDictionary<string, string> inputs);
     }
 }
