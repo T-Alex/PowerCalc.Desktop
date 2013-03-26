@@ -54,12 +54,6 @@
     <Compile Include="StandardExpressionTokenizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TAlex.MathCore.ExpressionsBase.csproj">
-      <Project>{6e352411-fa60-4400-92c1-706323a0cc4a}</Project>
-      <Name>TAlex.MathCore.ExpressionsBase</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
