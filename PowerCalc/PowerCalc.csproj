@@ -87,7 +87,7 @@
       <HintPath>..\packages\TAlex.MathCore.Statistics.1.0.4871.34047\lib\net45\TAlex.MathCore.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.WPF.Controls">
-      <HintPath>..\Binaries\TAlex.WPF.Controls.dll</HintPath>
+      <HintPath>..\packages\TAlex.WPF.Controls.1.4.2.0\lib\net35\TAlex.WPF.Controls.dll</HintPath>
     </Reference>
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>

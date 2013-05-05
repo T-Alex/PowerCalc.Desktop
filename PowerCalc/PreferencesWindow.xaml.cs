@@ -11,7 +11,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Globalization;
 
-using TAlex.WPF.Controls.CommonDialogs;
+using TAlex.WPF.Controls;
+using TAlex.WPF.CommonDialogs;
 
 namespace TAlex.PowerCalc
 {
