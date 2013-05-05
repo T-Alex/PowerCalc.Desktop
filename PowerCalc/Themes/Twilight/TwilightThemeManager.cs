@@ -55,7 +55,7 @@ namespace TAlex.WPFThemes.Twilight
             resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "Shared.xaml"), UriKind.Relative)) as ResourceDictionary);
             resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "NumericUpDown.xaml"), UriKind.Relative)) as ResourceDictionary);
 
-            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "DataGrid.xaml"), UriKind.Relative)) as ResourceDictionary);
+            //resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "DataGrid.xaml"), UriKind.Relative)) as ResourceDictionary);
 
             return true;
         }

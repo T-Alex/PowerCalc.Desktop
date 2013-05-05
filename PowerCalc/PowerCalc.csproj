@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TAlex.PowerCalc</RootNamespace>
     <AssemblyName>PowerCalc</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -65,6 +65,27 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="TAlex.MathCore">
+      <HintPath>..\packages\TAlex.MathCore.1.0.4871.34044\lib\net45\TAlex.MathCore.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.MathCore.ComplexExpressions">
+      <HintPath>..\packages\TAlex.MathCore.ComplexExpressions.1.0.4871.35633\lib\net45\TAlex.MathCore.ComplexExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.MathCore.ExpressionsBase">
+      <HintPath>..\packages\TAlex.MathCore.ExpressionsBase.1.0.4871.37291\lib\net45\TAlex.MathCore.ExpressionsBase.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.MathCore.LinearAlgebra">
+      <HintPath>..\packages\TAlex.MathCore.LinearAlgebra.1.0.4871.34046\lib\net45\TAlex.MathCore.LinearAlgebra.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.MathCore.NumericalAnalysis">
+      <HintPath>..\packages\TAlex.MathCore.NumericalAnalysis.1.0.4871.34048\lib\net45\TAlex.MathCore.NumericalAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.MathCore.SpecialFunctions">
+      <HintPath>..\packages\TAlex.MathCore.SpecialFunctions.1.0.4871.34045\lib\net45\TAlex.MathCore.SpecialFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.MathCore.Statistics">
+      <HintPath>..\packages\TAlex.MathCore.Statistics.1.0.4871.34047\lib\net45\TAlex.MathCore.Statistics.dll</HintPath>
+    </Reference>
     <Reference Include="TAlex.WPF.Controls">
       <HintPath>..\Binaries\TAlex.WPF.Controls.dll</HintPath>
     </Reference>
@@ -91,12 +112,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\WorksheetMatrix.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,12 +119,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Twilight\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -179,43 +188,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\Converters.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\ClipboardHelper.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\ColumnHeaderCollection.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\ContainerTracking.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGrid.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridBoundColumn.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridCell.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridCellInfo.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridCellsPanel.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridClipboardCellContent.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridColumn.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridColumnCollection.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridHelper.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridItemAttachedStorage.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridLength.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridLengthConverter.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridRow.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DataGridTextColumn.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\DoubleUtil.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\Enums.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\EventArgs.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\IProvideDataGridColumn.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\MultipleCopiesCollection.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\Primitives\DataGridCellsPresenter.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\Primitives\DataGridColumnHeader.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\Primitives\DataGridColumnHeadersPresenter.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\Primitives\DataGridRowHeader.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\Primitives\DataGridRowsPresenter.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\Primitives\SelectiveScrollingGrid.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\RealizedColumnsBlock.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\SelectedCellsCollection.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\VirtualizedCellInfoCollection.cs" />
-    <Compile Include="Controls\DataGrid\Microsoft\Windows\Controls\WeakHashtable.cs" />
     <Compile Include="Controls\Plot2D.cs" />
-    <Compile Include="Controls\WorksheetMatrix.xaml.cs">
-      <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\A1ReferenceHelper.cs" />
     <Compile Include="Licensing\SecretFileTrialPeriodDataProvider.cs" />
     <Compile Include="Licensing\License.cs" />
@@ -275,6 +248,7 @@
     <None Include="Help.chm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -326,12 +300,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\MathCore\MathCore\TAlex.MathCore.csproj">
-      <Project>{92058732-3733-492C-B463-60C919951471}</Project>
-      <Name>TAlex.MathCore</Name>
-    </ProjectReference>
+    <Content Include="Extensions\TAlex.MathCore.ComplexExpressions.Extensions.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

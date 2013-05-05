@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-
 using TAlex.MathCore.ExpressionEvaluation;
+using TAlex.MathCore.ExpressionEvaluation.Trees;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 
 namespace TAlex.PowerCalc.Helpers
 {
@@ -76,7 +77,7 @@ namespace TAlex.PowerCalc.Helpers
             return result.ToString();
         }
 
-        public static Dictionary<string, Object> CalculateVariables(string[] lines)
+        public static Dictionary<string, Object> CalculateVariables(IExpressionTreeBuilder<Object> builder, string[] lines)
         {
             Dictionary<string, Object> vars = new Dictionary<string, Object>();
 
@@ -92,8 +93,19 @@ namespace TAlex.PowerCalc.Helpers
                     {
                         try
                         {
-                            ComplexMathEvaluator evaluator = new ComplexMathEvaluator(match.Groups["expr"].Value, vars);
-                            vars[varName] = evaluator.Evaluate();
+                            Expression<Object> expression = builder.BuildTree(match.Groups["expr"].Value);
+                            foreach (var var in expression.FindAllVariables())
+                            {
+                                object value;
+                                if (vars.TryGetValue(var.VariableName, out value))
+                                {
+                                    var.Value = value;
+                                }
+                            }
+                            
+                            //ComplexMathEvaluator evaluator = new ComplexMathEvaluator(, vars);
+                            
+                            vars[varName] = expression.Evaluate();
                         }
                         catch (Exception)
                         {

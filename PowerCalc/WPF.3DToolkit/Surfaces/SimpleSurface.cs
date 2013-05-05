@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Media.Media3D;
 
-using TAlex.MathCore;
 
 namespace TAlex.WPF3DToolkit.Surfaces
 {
@@ -25,7 +24,7 @@ namespace TAlex.WPF3DToolkit.Surfaces
 
         private double _zmax = 5;
 
-        private Function2Real _func;
+        private Func<double, double, double> _func;
 
         #endregion
 
@@ -67,7 +66,7 @@ namespace TAlex.WPF3DToolkit.Surfaces
             set { _zmax = value; }
         }
 
-        public Function2Real Function
+        public Func<double, double, double> Function
         {
             get
             {
@@ -84,7 +83,7 @@ namespace TAlex.WPF3DToolkit.Surfaces
 
         #region Constructors
 
-        public SimpleSurface(Function2Real function)
+        public SimpleSurface(Func<double, double, double> function)
         {
             _func = function;
         }

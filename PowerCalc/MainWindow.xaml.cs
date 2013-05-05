@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -20,11 +23,19 @@ using TAlex.MathCore.ExpressionEvaluation;
 using TAlex.MathCore.LinearAlgebra;
 using TAlex.WPF3DToolkit;
 using TAlex.WPF3DToolkit.Surfaces;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
+using TAlex.MathCore.ExpressionEvaluation.Trees;
+
 
 namespace TAlex.PowerCalc
 {
     public partial class MainWindow : Window
     {
+        private IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
+
+
+
         #region Constructors
 
         public MainWindow()
@@ -41,11 +52,40 @@ namespace TAlex.PowerCalc
                 Title = productTitle;
 
             aboutMenuItem.Header = "_About " + productTitle;
+
+            InitEvaluator();
         }
 
         #endregion
 
         #region Methods
+
+        private void InitEvaluator()
+        {
+            ConstantFlyweightFactory<Object> constantFactory = new ConstantFlyweightFactory<Object>();
+            constantFactory.AddFromAssemblies(GetAssembliesFromPath("Extensions"));
+
+
+            FunctionFactory<Object> functionFactory = new FunctionFactory<Object>();
+            functionFactory.AddFromAssemblies(GetAssembliesFromPath("Extensions"));
+
+            ExpressionTreeBuilder = new ComplexExpressionTreeBuilder
+            {
+                ConstantFactory = constantFactory,
+                FunctionFactory = functionFactory
+            };
+        }
+
+        private static IEnumerable<Assembly> GetAssembliesFromPath(string path)
+        {
+            string[] files = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), "*.dll", SearchOption.TopDirectoryOnly);
+
+            foreach (string filePath in files)
+            {
+                yield return Assembly.LoadFile(filePath);
+            }
+        }
+
 
         private void LoadSettings(bool isStarting)
         {
@@ -282,7 +322,7 @@ namespace TAlex.PowerCalc
                         lines[i] = worksheetTextBox.GetLineText(i).Trim();
                     }
 
-                    Dictionary<string, Object> variables = Helpers.WorksheetHelper.CalculateVariables(lines);
+                    Dictionary<string, Object> variables = Helpers.WorksheetHelper.CalculateVariables(ExpressionTreeBuilder, lines);
 
 
                     System.Text.RegularExpressions.Match match = Helpers.WorksheetHelper.GetMatch(currentLineString);
@@ -292,7 +332,7 @@ namespace TAlex.PowerCalc
                     try
                     {
                         if (!match.Success)
-                            throw new SyntaxException();
+                            throw new FormatException();
 
                         resultString = match.Value.Trim();
                         string expr = match.Groups["expr"].Value;
@@ -302,8 +342,17 @@ namespace TAlex.PowerCalc
                         watch.Start();
 
                         // Evaluation expression
-                        ComplexMathEvaluator evaluator = new ComplexMathEvaluator(expr, variables);
-                        Object result = evaluator.Evaluate();
+                        Expression<Object> expression = ExpressionTreeBuilder.BuildTree(expr);
+                        foreach (var var in expression.FindAllVariables())
+                        {
+                            object value;
+                            if (variables.TryGetValue(var.VariableName, out value))
+                            {
+                                var.Value = value;
+                            }
+                        }
+
+                        Object result = expression.Evaluate();
 
                         watch.Stop();
 
@@ -312,7 +361,7 @@ namespace TAlex.PowerCalc
                         if (result is IFormattable)
                         {
                             if (result is Complex) result = NumericUtil.ComplexZeroThreshold((Complex)result, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-                            if (result is CMatrix) result = NumericUtil.ComplexZeroThreshold((CMatrix)result, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
+                            if (result is CMatrix) result = TAlex.MathCore.LinearAlgebra.NumericUtilExtensions.ComplexZeroThreshold((CMatrix)result, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
                             resultString += String.Format(" = {0}", ((IFormattable)result).ToString(Properties.Settings.Default.NumericFormat, CultureInfo.InvariantCulture));
                         }
                         else
@@ -320,7 +369,7 @@ namespace TAlex.PowerCalc
                             resultString += String.Format(" = {0}", result);
                         }
                     }
-                    catch (SyntaxException exc)
+                    catch (FormatException exc)
                     {
                         resultString += String.Format(" = syntax_error ({0})", exc.Message);
                     }
@@ -455,13 +504,13 @@ namespace TAlex.PowerCalc
 
         private void insertTextToFormulaBar_Click(object sender, RoutedEventArgs e)
         {
-            worksheetMatrix.FormulaBar.Focus();
-            InsertFunctionHeaderToIInputElement(worksheetMatrix.FormulaBar, (string)(((Control)sender).Tag));
+            //worksheetMatrix.FormulaBar.Focus();
+            //InsertFunctionHeaderToIInputElement(worksheetMatrix.FormulaBar, (string)(((Control)sender).Tag));
         }
 
         private void evaluateMatricesButton_Click(object sender, RoutedEventArgs e)
         {
-            worksheetMatrix.CommitEdit();
+            //worksheetMatrix.CommitEdit();
         }
 
         #endregion
@@ -618,7 +667,10 @@ namespace TAlex.PowerCalc
             {
                 try
                 {
-                    Function1Real func = ComplexMathEvaluator.CreateRealFunction(expr, "x");
+                    Expression<Object> expression = ExpressionTreeBuilder.BuildTree(expr);
+
+                    Func<Object, Object> f = ParametricFunctionCreator.CreateOneParametricFunction(expression, "x");
+                    Func<double, double> func = (x) => { Complex res = (Complex)f((Complex)x); return res.IsReal ? res.Re : double.NaN; };
                     func(0.0);
                     plot2D.SetTrace(func);
                 }
@@ -640,7 +692,10 @@ namespace TAlex.PowerCalc
             {
                 try
                 {
-                    Function2Real func = ComplexMathEvaluator.CreateBivariateRealFunction(expr, "x", "y");
+                    Expression<Object> expression = ExpressionTreeBuilder.BuildTree(expr);
+                    Func<Object, Object, Object> f = ParametricFunctionCreator.CreateTwoParametricFunction(expression, "x", "y");
+
+                    Func<double, double, double> func = (x, y) => { var res = (Complex)f((Complex)x, (Complex)y); return res.IsReal ? res.Re : double.NaN; };
                     surface.Geometry = new SimpleSurface(func).BuildGeometry();
                 }
                 catch (Exception exc)

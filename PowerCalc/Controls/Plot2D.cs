@@ -700,7 +700,7 @@ namespace TAlex.PowerCalc.Controls
 
                         int points = (int)Math.Round((x_max - x_min) / x_step);
 
-                        MathCore.Function1Real function = trace.Function;
+                        Func<double, double> function = trace.Function;
                         yTemp = function(x_min);
 
                         for (int i = 0; i < points; i++)
@@ -812,7 +812,7 @@ namespace TAlex.PowerCalc.Controls
 
         #region Helpers
 
-        public void SetTrace(MathCore.Function1Real function)
+        public void SetTrace(Func<double, double> function)
         {
             if (_traces.Count == 0)
                 _traces.Add(new SimpleTrace(function));
@@ -1122,7 +1122,7 @@ namespace TAlex.PowerCalc.Controls
 
             private string _title;
 
-            private MathCore.Function1Real _function;
+            private Func<double, double> _function;
 
             #endregion
 
@@ -1193,7 +1193,7 @@ namespace TAlex.PowerCalc.Controls
                 }
             }
 
-            public MathCore.Function1Real Function
+            public Func<double, double> Function
             {
                 get
                 {
@@ -1210,12 +1210,12 @@ namespace TAlex.PowerCalc.Controls
 
             #region Constructors
 
-            public SimpleTrace(MathCore.Function1Real function)
+            public SimpleTrace(Func<double, double> function)
             {
                 _function = function;
             }
 
-            public SimpleTrace(MathCore.Function1Real function, Pen pen, double lowerBound, double upperBound)
+            public SimpleTrace(Func<double, double> function, Pen pen, double lowerBound, double upperBound)
             {
                 _function = function;
                 _pen = pen;

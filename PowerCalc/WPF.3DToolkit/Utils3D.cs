@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Windows.Media.Media3D;
-using TAlex.MathCore;
-using _3DTools;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
+using _3DTools;
+
 
 namespace TAlex.WPF3DToolkit
 {
@@ -131,7 +131,7 @@ namespace TAlex.WPF3DToolkit
         }
 
         public static Point3DCollection GetHodographPoints(
-            Function1Real fn1, Function1Real fn2, Function1Real fn3,
+            Func<double, double> fn1, Func<double, double> fn2, Func<double, double> fn3,
             double dt, double t0, double t1)
         {
             Point3DCollection points = new Point3DCollection();
@@ -150,7 +150,7 @@ namespace TAlex.WPF3DToolkit
         }
 
         public static Point3DCollection GetTrackPoints(
-            Function1Real fn1, Function1Real fn2, Function2Real fn3,
+            Func<double, double> fn1, Func<double, double> fn2, Func<double, double, double> fn3,
             double dt, double t0, double t1)
         {
             Point3DCollection points = new Point3DCollection();

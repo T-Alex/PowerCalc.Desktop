@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:tools="clr-namespace:_3DTools"
     xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls"
-    WindowStartupLocation="CenterScreen" Width="700" Height="575" MinWidth="700" MinHeight="550" Loaded="Window_Loaded" >
+    WindowStartupLocation="CenterScreen" Width="700" Height="575" MinWidth="700" MinHeight="550" Loaded="Window_Loaded">
 
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="CommandBindingNew_Executed"/>
@@ -2259,7 +2259,7 @@
                         </Canvas>
                     </Expander>
 
-                    <controls:WorksheetMatrix x:Name="worksheetMatrix" DockPanel.Dock="Top" FormulaBarContextMenu="{StaticResource mainContextMenu}" />
+                    <!--<controls:WorksheetMatrix x:Name="worksheetMatrix" DockPanel.Dock="Top" FormulaBarContextMenu="{StaticResource mainContextMenu}" />-->
                 </DockPanel>
             </TabItem>
 
