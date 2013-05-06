@@ -2259,7 +2259,7 @@
                         </Canvas>
                     </Expander>
 
-                    <!--<controls:WorksheetMatrix x:Name="worksheetMatrix" DockPanel.Dock="Top" FormulaBarContextMenu="{StaticResource mainContextMenu}" />-->
+                    <controls:WorksheetMatrix x:Name="worksheetMatrix" DockPanel.Dock="Top" FormulaBarContextMenu="{StaticResource mainContextMenu}" />
                 </DockPanel>
             </TabItem>
 

@@ -5,6 +5,7 @@ using System.Windows.Data;
 using System.Reflection;
 using System.Diagnostics;
 using System.Windows.Media.Animation;
+using TAlex.Common.Environment;
 
 namespace TAlex.PowerCalc
 {
@@ -36,7 +37,7 @@ namespace TAlex.PowerCalc
         {
             get
             {
-                return GetAssemblyProperty<AssemblyTitleAttribute>(propertyNameTitle);
+                return ApplicationInfo.Title;
             }
         }
 
@@ -47,7 +48,7 @@ namespace TAlex.PowerCalc
         {
             get
             {
-                return GetAssemblyProperty<AssemblyDescriptionAttribute>(propertyNameDescription);
+                return ApplicationInfo.Description;
             }
         }
 
@@ -58,7 +59,7 @@ namespace TAlex.PowerCalc
         {
             get
             {
-                return GetAssemblyProperty<AssemblyCompanyAttribute>(propertyNameCompany);
+                return ApplicationInfo.Company;
             }
         }
 
@@ -69,7 +70,7 @@ namespace TAlex.PowerCalc
         {
             get
             {
-                return GetAssemblyProperty<AssemblyProductAttribute>(propertyNameProduct);
+                return ApplicationInfo.Product;
             }
         }
 
@@ -80,8 +81,7 @@ namespace TAlex.PowerCalc
         {
             get
             {
-                return String.Format("{0}. All rights reserved.",
-                    GetAssemblyProperty<AssemblyCopyrightAttribute>(propertyNameCopyright));
+                return String.Format("{0}. All rights reserved.", ApplicationInfo.Copyright);
             }
         }
 
@@ -260,26 +260,6 @@ namespace TAlex.PowerCalc
                 Process.Start(new ProcessStartInfo(uri));
                 e.Handled = true;
             }
-        }
-
-        private static string GetAssemblyProperty<T>(string propertyName)
-        {
-            string result = String.Empty;
-
-            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(T), false);
-
-            if (attributes.Length > 0)
-            {
-                T attribute = (T)attributes[0];
-                PropertyInfo property = attribute.GetType().GetProperty(propertyName);
-
-                if (property != null)
-                {
-                    result = property.GetValue(attributes[0], null) as string;
-                }
-            }
-
-            return result;
         }
 
         #endregion
