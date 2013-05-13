@@ -16,5 +16,22 @@ namespace TAlex.PowerCalc.Locators
                 return new AboutWindowViewModel();
             }
         }
+
+        public RegistrationWindowViewModel RegistrationWindowViewModel
+        {
+            get
+            {
+                return new RegistrationWindowViewModel();
+            }
+        }
+
+
+        public ConstantsContextMenuViewModel ConstantsContextMenuViewModel
+        {
+            get
+            {
+                return new ConstantsContextMenuViewModel() { Constants = new List<ConstantViewModel> { new ConstantViewModel { DisplayName = "Number 'pi'" } } };
+            }
+        }
     }
 }
