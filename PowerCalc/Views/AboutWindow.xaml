@@ -1,19 +1,23 @@
 ﻿<Window x:Class="TAlex.PowerCalc.AboutWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="About" Height="300" Width="400"
+    DataContext="{Binding Source={StaticResource viewModelLocator}, Path=AboutWindowViewModel, Mode=OneTime}"
+    Title="{Binding WindowTitle}" Height="300" Width="400"
     WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
     Background="{DynamicResource AboutBgBrush}">
     
-    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Mode=OneTime}">
+    <Grid>
         <Rectangle VerticalAlignment="Top" Height="100" Fill="{DynamicResource AboutLogoBgBrush}" />
         
+        <!-- Logo -->
         <Label Margin="0,25,0,0" FontSize="36" FontWeight="600" FontFamily="Segoe UI, Arial" VerticalAlignment="Top" HorizontalContentAlignment="Center"
                Content="{Binding Mode=OneTime, Path=ProductTitle}" Foreground="{DynamicResource AboutLogoTextBrush}" >
             <Label.BitmapEffect>
                 <DropShadowBitmapEffect Color="White" Direction="270" ShadowDepth="1" Softness="0" />
             </Label.BitmapEffect>
         </Label>
+        
+        <!-- Version -->
         <Label Margin="0,17,47,0" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="500"
                Foreground="{DynamicResource AboutVersionTextBrush}"
                Content="{Binding Mode=OneTime, Path=Version}">
@@ -22,15 +26,16 @@
             </Label.BitmapEffect>
         </Label>
 
-        <Label Name="licTextLabel" Margin="60,115,0,0" Padding="0" VerticalAlignment="Top" HorizontalAlignment="Left"
-               Visibility="{Binding Mode=OneTime, Path=LicenseInfoVisibility}">
-            This product is licensed to:
-        </Label>
-        <Label Name="licNameLabel" Margin="60,0,0,123" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="800"
-               Visibility="{Binding Mode=OneTime, Path=LicenseInfoVisibility}"
-               Content="{Binding Mode=OneTime, Path=LicenseName}">
-        </Label>
-        
+        <!-- License Info -->
+        <StackPanel Margin="60,115,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Mode=OneTime, Path=LicenseInfoVisibility}">
+            <Label Name="licTextLabel" Padding="0">
+                This product is licensed to:
+            </Label>
+            <Label Name="licNameLabel" Padding="0" FontWeight="800" Content="{Binding Mode=OneTime, Path=LicenseName}">
+            </Label>
+        </StackPanel>
+
+        <!-- Unregistered Text -->
         <Label Name="unregTextLabel" Margin="60,115,0,0" Padding="0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" FontWeight="800"  Foreground="DarkRed"
                Visibility="{Binding Mode=OneTime, Path=UnregisteredTextVisibility}">
             Unregistered evaluation copy
@@ -81,6 +86,5 @@
                 <Label Name="SavitskayaLabel" Padding="2" Opacity="0">Savitskaya</Label>
             </WrapPanel>
         </Grid>
-        
     </Grid>
 </Window>

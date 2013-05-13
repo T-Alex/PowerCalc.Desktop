@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Windows.Media.Animation;
 using TAlex.Common.Environment;
 
+
 namespace TAlex.PowerCalc
 {
     /// <summary>
@@ -14,174 +15,11 @@ namespace TAlex.PowerCalc
     /// </summary>
     public partial class AboutWindow : Window
     {
-        #region Fields
-
-        private const string propertyNameTitle = "Title";
-
-        private const string propertyNameDescription = "Description";
-
-        private const string propertyNameCompany = "Company";
-
-        private const string propertyNameProduct = "Product";
-
-        private const string propertyNameCopyright = "Copyright";
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the application's title.
-        /// </summary>
-        public static string ProductTitle
-        {
-            get
-            {
-                return ApplicationInfo.Title;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's description.
-        /// </summary>
-        public static string Description
-        {
-            get
-            {
-                return ApplicationInfo.Description;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's company.
-        /// </summary>
-        public static string Company
-        {
-            get
-            {
-                return ApplicationInfo.Company;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's product.
-        /// </summary>
-        public static string Product
-        {
-            get
-            {
-                return ApplicationInfo.Product;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's copyright.
-        /// </summary>
-        public static string Copyright
-        {
-            get
-            {
-                return String.Format("{0}. All rights reserved.", ApplicationInfo.Copyright);
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's version.
-        /// </summary>
-        public static Version Version
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version;
-            }
-        }
-
-        /// <summary>
-        /// Gets the email support title for this product.
-        /// </summary>
-        public static string EmailTitle
-        {
-            get
-            {
-                return EmailAddress.Replace("mailto:", String.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets the email support for this product.
-        /// </summary>
-        public static string EmailAddress
-        {
-            get
-            {
-                return PowerCalc.Properties.Resources.SupportEmail;
-            }
-        }
-
-        /// <summary>
-        /// Gets the homepage title of this product.
-        /// </summary>
-        public static string HomepageTitle
-        {
-            get
-            {
-                return HomepageUrl.Replace("http://", String.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets the homepage url of this product.
-        /// </summary>
-        public static string HomepageUrl
-        {
-            get
-            {
-                return PowerCalc.Properties.Resources.HomepageUrl;
-            }
-        }
-
-        /// <summary>
-        /// Gets the license name for this product.
-        /// </summary>
-        public static string LicenseName
-        {
-            get
-            {
-                return PowerCalc.Licensing.License.LicenseName;
-            }
-        }
-
-        public static Visibility LicenseInfoVisibility
-        {
-            get
-            {
-                if (PowerCalc.Licensing.License.IsLicensed)
-                    return Visibility.Visible;
-                else
-                    return Visibility.Hidden;
-            }
-        }
-
-        public static Visibility UnregisteredTextVisibility
-        {
-            get
-            {
-                if (LicenseInfoVisibility == Visibility.Visible)
-                    return Visibility.Hidden;
-                else
-                    return Visibility.Visible;
-            }
-        }
-
-        #endregion
-
         #region Constructors
 
         protected AboutWindow()
         {
             InitializeComponent();
-
-            Title = "About " + ProductTitle;
         }
 
         public AboutWindow(Window parent) : this()
@@ -254,7 +92,7 @@ namespace TAlex.PowerCalc
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            if (e.Uri != null && string.IsNullOrEmpty(e.Uri.OriginalString) == false)
+            if (e.Uri != null && !String.IsNullOrEmpty(e.Uri.OriginalString))
             {
                 string uri = e.Uri.AbsoluteUri;
                 Process.Start(new ProcessStartInfo(uri));

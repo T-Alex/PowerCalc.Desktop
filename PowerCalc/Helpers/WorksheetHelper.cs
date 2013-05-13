@@ -49,34 +49,6 @@ namespace TAlex.PowerCalc.Helpers
             return match.Success;
         }
 
-        public static string FormattingExpressions(string expression)
-        {
-            expression = expression.Trim();
-            expression = expression.Replace(" ", String.Empty);
-            expression = expression.Replace("\t", String.Empty);
-
-            StringBuilder result = new StringBuilder();
-
-            for (int i = 0; i < expression.Length; i++)
-            {
-                if (("*/".IndexOf(expression[i]) != -1) ||
-                    (i > 0 && "-+".IndexOf(expression[i]) != -1 && "({,".IndexOf(expression[i - 1]) == -1))
-                {
-                    result.AppendFormat(" {0} ", expression[i]);
-                }
-                else if (",;:".IndexOf(expression[i]) != -1)
-                {
-                    result.AppendFormat("{0} ", expression[i]);
-                }
-                else
-                {
-                    result.Append(expression[i]);
-                }
-            }
-
-            return result.ToString();
-        }
-
         public static Dictionary<string, Object> CalculateVariables(IExpressionTreeBuilder<Object> builder, string[] lines)
         {
             Dictionary<string, Object> vars = new Dictionary<string, Object>();

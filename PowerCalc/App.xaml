@@ -1,14 +1,17 @@
 ﻿<Application x:Class="TAlex.PowerCalc.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    StartupUri="MainWindow.xaml">
+    xmlns:locators="clr-namespace:TAlex.PowerCalc.Locators"
+    StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
+        <locators:ViewModelLocator x:Key="viewModelLocator" />
+
+        <!--<ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="Themes/Twilight/ColorSchemes/Blue.xaml" />
+                <ResourceDictionary Source="Themes/Twilight/ColorSchemes/Blue.xaml" />
                 <ResourceDictionary Source="Themes/Twilight/Shared.xaml"/>
-                <ResourceDictionary Source="Themes/Twilight/NumericUpDown.xaml" />-->
+                <ResourceDictionary Source="Themes/Twilight/NumericUpDown.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary>-->
     </Application.Resources>
 </Application>

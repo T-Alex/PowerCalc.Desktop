@@ -26,6 +26,7 @@ using TAlex.WPF3DToolkit.Surfaces;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
+using TAlex.Common.Environment;
 
 
 namespace TAlex.PowerCalc
@@ -44,7 +45,7 @@ namespace TAlex.PowerCalc
 
             LoadSettings(true);
 
-            string productTitle = AboutWindow.ProductTitle;
+            string productTitle = ApplicationInfo.Title;
 
             if (Licensing.License.IsTrial)
                 Title = String.Format("{0} - Evaluation version (days left: {1})", productTitle, Licensing.License.TrialDaysLeft);
@@ -355,8 +356,6 @@ namespace TAlex.PowerCalc
                         Object result = expression.Evaluate();
 
                         watch.Stop();
-
-                        resultString = Helpers.WorksheetHelper.FormattingExpressions(resultString);
 
                         if (result is IFormattable)
                         {
