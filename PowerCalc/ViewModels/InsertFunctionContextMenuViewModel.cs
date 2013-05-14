@@ -28,6 +28,6 @@ namespace TAlex.PowerCalc.ViewModels
     {
         public string DisplayName { get; set; }
 
-        public string Name { get; set; }
+        public string FunctionName { get; set; }
     }
 }

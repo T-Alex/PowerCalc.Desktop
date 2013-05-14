@@ -24,7 +24,7 @@
                             <Setter.Value>
                                 <Style TargetType="MenuItem">
                                     <Setter Property="Header" Value="{Binding DisplayName}" />
-                                    <Setter Property="InputGestureText" Value="{Binding Name}" />
+                                    <Setter Property="InputGestureText" Value="{Binding FunctionName}" />
                                 </Style>
                             </Setter.Value>
                         </Setter>
@@ -82,23 +82,13 @@
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="MenuItem">
                         <Setter Property="Header" Value="{Binding DisplayName}"/>
-                        <Setter Property="InputGestureText" Value="{Binding Value}"/>
-                        <Setter Property="Tag" Value="{Binding Value}"/>
-                        <Setter Property="ToolTip" Value="{Binding NumericValue}"/>
+                        <Setter Property="InputGestureText" Value="{Binding ConstantName}"/>
+                        <Setter Property="Tag" Value="{Binding ConstantName}"/>
+                        <Setter Property="ToolTip" Value="{Binding Value}"/>
+                        <!--<Setter Property="Command" Value="insertFunctionMenuItem_Click" />
+                        <Setter Property="CommandParameter" Value="{Binding ConstantName}" />-->
                     </Style>
                 </MenuItem.ItemContainerStyle>
-
-                <!--<MenuItem Header="Number 'pi'" InputGestureText="pi" Tag="pi" ToolTip="3.1415926535897931..." Click="insertFunctionMenuItem_Click" />
-                <MenuItem Header="Number 'e'" InputGestureText="e" Tag="e" ToolTip="2.7182818284590451..." Click="insertFunctionMenuItem_Click" />
-                <MenuItem Header="Golden ratio" InputGestureText="goldrat" Tag="goldrat" ToolTip="1.6180339887498949..." Click="insertFunctionMenuItem_Click" />
-                <MenuItem Header="Euler's constant" InputGestureText="euler" Tag="euler" ToolTip="0.57721566490153287..." Click="insertFunctionMenuItem_Click" />
-                <MenuItem Header="Catalan's constant" InputGestureText="catalan" Tag="catalan" ToolTip="0.91596559417721901..." Click="insertFunctionMenuItem_Click" />
-                <MenuItem Header="Square root of 2" InputGestureText="sqrt2" Tag="sqrt2" ToolTip="1.4142135623730952..." Click="insertFunctionMenuItem_Click" />
-                <MenuItem Header="Square root of 3" InputGestureText="sqrt3" Tag="sqrt3" ToolTip="1.7320508075688772..." Click="insertFunctionMenuItem_Click"  />
-                <Separator />
-                <MenuItem Header="Infinity" InputGestureText="inf" Tag="inf" ToolTip="Infinity" Click="insertFunctionMenuItem_Click" />
-                <MenuItem Header="Maximum value" InputGestureText="maxval" Tag="maxval" ToolTip="1E+307" Click="insertFunctionMenuItem_Click" />
-                <MenuItem Header="Minimum value" InputGestureText="minval" Tag="minval" ToolTip="-1E+307" Click="insertFunctionMenuItem_Click" />-->
             </MenuItem>
             <Separator/>
             <MenuItem Command="Cut"/>

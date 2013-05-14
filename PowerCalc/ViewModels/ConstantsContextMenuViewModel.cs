@@ -19,8 +19,8 @@ namespace TAlex.PowerCalc.ViewModels
     {
         public string DisplayName { get; set; }
 
-        public string Value { get; set; }
+        public string ConstantName { get; set; }
 
-        public string NumericValue { get; set; }
+        public string Value { get; set; }
     }
 }

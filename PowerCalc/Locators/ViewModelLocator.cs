@@ -57,7 +57,7 @@ namespace TAlex.PowerCalc.Locators
                             Functions = x.Select(f => new FunctionViewModel
                             {
                                 DisplayName = f.DisplayName,
-                                Name = f.Signatures.First().Name
+                                FunctionName = f.Signatures.First().Name
                             }).ToList()
                         }).ToList()
                 };
@@ -74,8 +74,9 @@ namespace TAlex.PowerCalc.Locators
                 {
                     Constants = metadata.Select(x => new ConstantViewModel
                     {
-                        DisplayName = x.Name,
-                        NumericValue = x.Value
+                        DisplayName = x.DisplayName,
+                        ConstantName = x.Name,
+                        Value = x.Value
                     }).ToList()
                 };
             }
