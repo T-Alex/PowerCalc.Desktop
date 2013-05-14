@@ -64,11 +64,11 @@ namespace TAlex.PowerCalc
         private void InitEvaluator()
         {
             ConstantFlyweightFactory<Object> constantFactory = new ConstantFlyweightFactory<Object>();
-            constantFactory.AddFromAssemblies(GetAssembliesFromPath("Extensions"));
+            constantFactory.AddFromAssemblies(GetAssembliesFromPath(Properties.Settings.Default.ExtensionsPath));
 
 
             FunctionFactory<Object> functionFactory = new FunctionFactory<Object>();
-            functionFactory.AddFromAssemblies(GetAssembliesFromPath("Extensions"));
+            functionFactory.AddFromAssemblies(GetAssembliesFromPath(Properties.Settings.Default.ExtensionsPath));
 
             ExpressionTreeBuilder = new ComplexExpressionTreeBuilder
             {
@@ -720,7 +720,7 @@ namespace TAlex.PowerCalc
 
             if (match.Success)
             {
-                if (selectedText.Length != 0)
+                if (!String.IsNullOrEmpty(selectedText))
                 {
                     functionHeader = functionHeader.Replace("(", String.Format("({0}", selectedText));
 
@@ -743,7 +743,7 @@ namespace TAlex.PowerCalc
             }
             else
             {
-                if (selectedText.Length != 0)
+                if (!String.IsNullOrEmpty(selectedText))
                     EditingCommands.MoveLeftByCharacter.Execute(null, target);
 
                 Clipboard.SetText(functionHeader);

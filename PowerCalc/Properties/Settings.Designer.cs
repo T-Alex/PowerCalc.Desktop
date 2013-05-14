@@ -178,5 +178,14 @@ namespace TAlex.PowerCalc.Properties {
                 this["WindowBounds"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Extensions")]
+        public string ExtensionsPath {
+            get {
+                return ((string)(this["ExtensionsPath"]));
+            }
+        }
     }
 }
