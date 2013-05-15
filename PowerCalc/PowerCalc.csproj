@@ -196,6 +196,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\InsertFunctionCommand.cs" />
     <Compile Include="Controls\WorksheetMatrix.xaml.cs">
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>

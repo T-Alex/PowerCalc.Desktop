@@ -27,6 +27,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.Common.Environment;
+using TAlex.PowerCalc.Commands;
 
 
 namespace TAlex.PowerCalc
@@ -283,15 +284,6 @@ namespace TAlex.PowerCalc
 
         #endregion
 
-        #region mainContextMenu
-
-        private void insertFunctionMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            InsertFunctionHeaderToIInputElement(null, ((Control)sender).Tag as String);
-        }
-
-        #endregion
-
         #region Worksheet
 
         private void worksheetTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -485,7 +477,8 @@ namespace TAlex.PowerCalc
                 }
             }
 
-            InsertFunctionHeaderToIInputElement(worksheetTextBox, text);
+            new InsertFunctionCommand().Execute(text);
+            //InsertFunctionHeaderToIInputElement(worksheetTextBox, text);
         }
 
         private void buttonEvaluate_Click(object sender, RoutedEventArgs e)
@@ -706,52 +699,6 @@ namespace TAlex.PowerCalc
             {
                 surface.Geometry = null;
             }
-        }
-
-        private static void InsertFunctionHeaderToIInputElement(IInputElement target, string functionHeader)
-        {
-            string tempText = Clipboard.GetText();
-            Clipboard.SetText(String.Empty);
-            ApplicationCommands.Copy.Execute(null, target);
-            string selectedText = Clipboard.GetText();
-
-            const string pattern = @"\A(?<name>[a-zA-Z_][a-zA-Z_0-9]*)\((?<separates>[,]*)\)\Z";
-            Match match = new Regex(pattern).Match(functionHeader);
-
-            if (match.Success)
-            {
-                if (!String.IsNullOrEmpty(selectedText))
-                {
-                    functionHeader = functionHeader.Replace("(", String.Format("({0}", selectedText));
-
-                    Clipboard.SetText(functionHeader);
-                    ApplicationCommands.Paste.Execute(null, target);
-
-                    for (int i = 0; i < functionHeader.Length; i++)
-                        EditingCommands.SelectLeftByCharacter.Execute(null, target);
-                }
-                else
-                {
-                    Clipboard.SetText(functionHeader);
-                    ApplicationCommands.Paste.Execute(null, target);
-
-                    int args = match.Groups["separates"].Value.Length + 1;
-
-                    for (int i = 0; i < args; i++)
-                        EditingCommands.MoveLeftByCharacter.Execute(null, target);
-                }
-            }
-            else
-            {
-                if (!String.IsNullOrEmpty(selectedText))
-                    EditingCommands.MoveLeftByCharacter.Execute(null, target);
-
-                Clipboard.SetText(functionHeader);
-                ApplicationCommands.Paste.Execute(null, target);
-            }
-
-            Clipboard.SetText(tempText);
-            if (target != null) target.Focus();
         }
 
         #endregion

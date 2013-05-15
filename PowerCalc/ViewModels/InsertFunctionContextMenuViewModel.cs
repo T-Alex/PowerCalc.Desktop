@@ -8,12 +8,12 @@ namespace TAlex.PowerCalc.ViewModels
 {
     public class InsertFunctionContextMenuViewModel
     {
-        public List<FunctionCategoryViewModel> Functions { get; set; }
+        public List<FunctionCategoryViewModel> Categories { get; set; }
 
 
         public InsertFunctionContextMenuViewModel()
         {
-            Functions = new List<FunctionCategoryViewModel>();
+            Categories = new List<FunctionCategoryViewModel>();
         }
     }
 
@@ -29,5 +29,7 @@ namespace TAlex.PowerCalc.ViewModels
         public string DisplayName { get; set; }
 
         public string FunctionName { get; set; }
+
+        public string InsertValue { get; set; }
     }
 }

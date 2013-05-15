@@ -49,19 +49,32 @@ namespace TAlex.PowerCalc.Locators
 
                 return new InsertFunctionContextMenuViewModel()
                 {
-                    Functions = metadata
+                    Categories = metadata
                         .GroupBy(x => x.Category)
                         .Select(x => new FunctionCategoryViewModel()
                         {
                             CategoryName = x.Key,
-                            Functions = x.Select(f => new FunctionViewModel
-                            {
-                                DisplayName = f.DisplayName,
-                                FunctionName = f.Signatures.First().Name
-                            }).ToList()
+                            Functions = x.Select(f => ConvertToFunctionViewModel(f)).ToList()
                         }).ToList()
                 };
             }
+        }
+
+        private FunctionViewModel ConvertToFunctionViewModel(FunctionMetadata metadata)
+        {
+            FunctionSignature sign = metadata.Signatures.First();
+            string s = String.Empty;
+            for (int i = 0; i < sign.ArgumentCount - 1; i++)
+            {
+                s += ",";
+            }
+
+            return new FunctionViewModel
+            {
+                DisplayName = metadata.DisplayName,
+                FunctionName = sign.Name,
+                InsertValue = String.Format("{0}({1})", sign.Name, s)
+            };
         }
 
         public ConstantsContextMenuViewModel ConstantsContextMenuViewModel
