@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:tools="clr-namespace:_3DTools"
     xmlns:commands="clr-namespace:TAlex.PowerCalc.Commands"
+    xmlns:converters="clr-namespace:TAlex.PowerCalc.Converters"
     xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls"
     WindowStartupLocation="CenterScreen" Width="700" Height="575" MinWidth="700" MinHeight="550" Loaded="Window_Loaded">
 
@@ -15,6 +16,8 @@
 
     <!-- Resources -->
     <Window.Resources>
+        <converters:FunctionSignaturesToTooltipConverter x:Key="FunctionSignaturesToTooltipConverter" />
+
         <commands:InsertFunctionCommand x:Key="InsertFunctionCommand" />
         
         <ContextMenu x:Key="mainContextMenu">
@@ -28,15 +31,7 @@
                                 <Style TargetType="MenuItem">
                                     <Setter Property="Header" Value="{Binding DisplayName}" />
                                     <Setter Property="InputGestureText" Value="{Binding FunctionName}" />
-                                    <Setter Property="ToolTip">
-                                        <Setter.Value>
-                                            <ToolTip>
-                                                <TextBlock>
-                                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
-                                                </TextBlock>
-                                            </ToolTip>
-                                        </Setter.Value>
-                                    </Setter>
+                                    <Setter Property="ToolTip" Value="{Binding Signatures, Converter={StaticResource FunctionSignaturesToTooltipConverter}}" />
                                     <Setter Property="CommandParameter" Value="{Binding InsertValue}" />
                                     <Setter Property="Command" Value="{StaticResource InsertFunctionCommand}" />
                                 </Style>
@@ -44,52 +39,6 @@
                         </Setter>
                     </Style>
                 </MenuItem.ItemContainerStyle>
-                
-                <!--<MenuItem Header="Basic">
-                    <MenuItem Header="Signature" InputGestureText="sign" Tag="sign()" Click="insertFunctionMenuItem_Click">
-                        <MenuItem.ToolTip>
-                            <ToolTip>
-                                <TextBlock>
-                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
-                                    sign(<Italic>complex</Italic> c)
-                                </TextBlock>
-                            </ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>
-
-                    <MenuItem Header="Absolute value" InputGestureText="abs" Tag="abs()" Click="insertFunctionMenuItem_Click">
-                        <MenuItem.ToolTip>
-                            <ToolTip>
-                                <TextBlock>
-                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
-                                    abs(<Italic>complex</Italic> c)
-                                </TextBlock>
-                            </ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>
-                    
-                    <MenuItem Header="Inverse" InputGestureText="inv" Tag="inv()" Click="insertFunctionMenuItem_Click">
-                        <MenuItem.ToolTip>
-                            <ToolTip>
-                                <TextBlock>
-                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
-                                    inv(<Italic>complex</Italic> c)<LineBreak/>
-                                    inv(<Italic>complex matrix</Italic> m)
-                                </TextBlock>
-                            </ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>
-
-                    <MenuItem Header="Nth root" InputGestureText="nthroot" Tag="nthroot(,)" Click="insertFunctionMenuItem_Click">
-                        <MenuItem.ToolTip>
-                            <ToolTip>
-                                <TextBlock>
-                                    <Bold><Italic>Overload(s)</Italic></Bold><LineBreak/>
-                                    nthroot(<Italic>complex</Italic> c, <Italic>complex</Italic> n)
-                                </TextBlock>
-                            </ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>-->
             </MenuItem>
 
             <MenuItem Header="Constants" DataContext="{Binding Source={StaticResource viewModelLocator}, Path=ConstantsContextMenuViewModel}" ItemsSource="{Binding Constants}">
@@ -103,7 +52,9 @@
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
+            
             <Separator/>
+            
             <MenuItem Command="Cut"/>
             <MenuItem Command="Copy"/>
             <MenuItem Command="Paste"/>
@@ -161,7 +112,11 @@
                         <Canvas Height="156" Width="651" HorizontalAlignment="Center">
                             <GroupBox Canvas.Left="4" Canvas.Top="5" Header="Calc" Height="146" Width="52">
                                 <Canvas>
-                                    <Button ToolTip="Numerical integration" Tag="integ(,,,)" Canvas.Left="4" Canvas.Top="4" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">integ</Button>
+                                    <Button ToolTip="Numerical integration" Content="integ" Canvas.Left="4" Canvas.Top="4" Height="25" Width="32" FontSize="10" CommandTarget="{Binding ElementName=worksheetTextBox}" Command="{StaticResource InsertFunctionCommand}">
+                                        <Button.CommandParameter>
+                                            <commands:InsertFunctionParameter FunctionHeader="integ(,,,)" Target="{Binding ElementName=worksheetTextBox, Mode=OneWay}" />
+                                        </Button.CommandParameter>
+                                    </Button>
                                     <Button ToolTip="Numerical differentiation" Tag="derive(,,)" Canvas.Left="4" Canvas.Top="34" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">d/dx</Button>
                                     <Button ToolTip="Summation of a sequence" Tag="sums(,,,)" Canvas.Left="4" Canvas.Top="64" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">sum</Button>
                                     <Button ToolTip="Product of a sequence" Tag="prods(,,,)" Canvas.Left="4" Canvas.Top="94" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">prod</Button>

@@ -73,7 +73,13 @@ namespace TAlex.PowerCalc.Locators
             {
                 DisplayName = metadata.DisplayName,
                 FunctionName = sign.Name,
-                InsertValue = String.Format("{0}({1})", sign.Name, s)
+                InsertValue = String.Format("{0}({1})", sign.Name, s),
+                Signatures = metadata.Signatures.Select(x => new SignatureViewModel
+                {
+                    Name = x.Name,
+                    Arguments = x.Arguments.Select(a => new KeyValuePair<string, string>(a.Type, a.Name)).ToList(),
+                    ArgumentsCount = x.ArgumentCount
+                }).ToList()
             };
         }
 

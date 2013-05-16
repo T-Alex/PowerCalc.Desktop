@@ -200,6 +200,7 @@
     <Compile Include="Controls\WorksheetMatrix.xaml.cs">
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
     <Compile Include="Locators\ViewModelLocator.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\ConstantsContextMenuViewModel.cs" />
@@ -328,9 +329,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

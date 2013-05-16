@@ -31,5 +31,14 @@ namespace TAlex.PowerCalc.ViewModels
         public string FunctionName { get; set; }
 
         public string InsertValue { get; set; }
+
+        public IList<SignatureViewModel> Signatures { get; set; }
+    }
+
+    public class SignatureViewModel
+    {
+        public string Name { get; set; }
+        public IList<KeyValuePair<string, string>> Arguments { get; set; }
+        public int ArgumentsCount { get; set; }
     }
 }
