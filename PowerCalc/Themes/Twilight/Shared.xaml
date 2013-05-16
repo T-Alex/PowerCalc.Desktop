@@ -3874,7 +3874,7 @@
                             <Path Fill="{DynamicResource TextBrush}" FlowDirection="LeftToRight" x:Name="Glyph" Width="9" Height="11" Data="{StaticResource Checkmark}" />
                         </Border>
                         <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Column="2" ContentSource="Header" RecognizesAccessKey="True" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        <TextBlock Margin="{TemplateBinding Padding}" Grid.Column="4" Foreground="{DynamicResource TextBrush}" Text="{TemplateBinding InputGestureText}" />
+                        <TextBlock Margin="{TemplateBinding Padding}" VerticalAlignment="Center" Grid.Column="4" Foreground="{DynamicResource TextBrush}" Text="{TemplateBinding InputGestureText}" />
                     </Grid>
                 </Grid>
                 <ControlTemplate.Triggers>
@@ -4133,7 +4133,7 @@
                         <Border Margin="1" x:Name="GlyphPanel" Width="22" Height="22" Visibility="Hidden" Background="#E6EFF4" BorderBrush="#CDD3E6" BorderThickness="1" CornerRadius="3">
                             <Path Fill="#0C12A1" FlowDirection="LeftToRight" x:Name="Glyph" Width="9" Height="11" Data="{StaticResource Checkmark}" />
                         </Border>
-                        <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Column="2" ContentSource="Header" RecognizesAccessKey="True" />
+                        <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Column="2" VerticalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True" />
                         <TextBlock Margin="{TemplateBinding Padding}" Visibility="Collapsed" Grid.Column="4" Text="{TemplateBinding InputGestureText}" />
                         <Path Fill="{TemplateBinding Foreground}" Margin="4,0,0,0" VerticalAlignment="Center" Grid.Column="5" Data="{StaticResource RightArrow}" />
                     </Grid>
