@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using TAlex.Common.Environment;
 
 
@@ -135,25 +131,19 @@ namespace TAlex.PowerCalc.ViewModels
             }
         }
 
-        public Visibility LicenseInfoVisibility
+        public bool LicenseInfoVisibility
         {
             get
             {
-                if (PowerCalc.Licensing.License.IsLicensed)
-                    return Visibility.Visible;
-                else
-                    return Visibility.Hidden;
+                return PowerCalc.Licensing.License.IsLicensed;
             }
         }
 
-        public Visibility UnregisteredTextVisibility
+        public bool UnregisteredTextVisibility
         {
             get
             {
-                if (LicenseInfoVisibility == Visibility.Visible)
-                    return Visibility.Hidden;
-                else
-                    return Visibility.Visible;
+                return !LicenseInfoVisibility;
             }
         }
 

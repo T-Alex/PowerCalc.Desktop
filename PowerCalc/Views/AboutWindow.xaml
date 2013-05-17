@@ -1,10 +1,15 @@
 ﻿<Window x:Class="TAlex.PowerCalc.AboutWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
     DataContext="{Binding Source={StaticResource viewModelLocator}, Path=AboutWindowViewModel, Mode=OneTime}"
     Title="{Binding WindowTitle}" Height="300" Width="400"
     WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
     Background="{DynamicResource AboutBgBrush}">
+    
+    <Window.Resources>
+        <talex:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     
     <Grid>
         <Rectangle VerticalAlignment="Top" Height="100" Fill="{DynamicResource AboutLogoBgBrush}" />
@@ -27,7 +32,7 @@
         </Label>
 
         <!-- License Info -->
-        <StackPanel Margin="60,115,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Mode=OneTime, Path=LicenseInfoVisibility}">
+        <StackPanel Margin="60,115,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Mode=OneTime, Path=LicenseInfoVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Label Name="licTextLabel" Padding="0">
                 This product is licensed to:
             </Label>
@@ -37,7 +42,7 @@
 
         <!-- Unregistered Text -->
         <Label Name="unregTextLabel" Margin="60,115,0,0" Padding="0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" FontWeight="800"  Foreground="DarkRed"
-               Visibility="{Binding Mode=OneTime, Path=UnregisteredTextVisibility}">
+               Visibility="{Binding Mode=OneTime, Path=UnregisteredTextVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
             Unregistered evaluation copy
         </Label>
         

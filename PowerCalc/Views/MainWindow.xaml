@@ -112,9 +112,9 @@
                         <Canvas Height="156" Width="651" HorizontalAlignment="Center">
                             <GroupBox Canvas.Left="4" Canvas.Top="5" Header="Calc" Height="146" Width="52">
                                 <Canvas>
-                                    <Button ToolTip="Numerical integration" Content="integ" Canvas.Left="4" Canvas.Top="4" Height="25" Width="32" FontSize="10" CommandTarget="{Binding ElementName=worksheetTextBox}" Command="{StaticResource InsertFunctionCommand}">
+                                    <Button ToolTip="Numerical integration" Content="integ" Canvas.Left="4" Canvas.Top="4" Height="25" Width="32" FontSize="10" Command="{StaticResource InsertFunctionCommand}">
                                         <Button.CommandParameter>
-                                            <commands:InsertFunctionParameter FunctionHeader="integ(,,,)" Target="{Binding ElementName=worksheetTextBox, Mode=OneWay}" />
+                                            <commands:InsertFunctionParameter FunctionHeader="integ(,,,)" Target="{Binding ElementName=worksheetTextBox}" />
                                         </Button.CommandParameter>
                                     </Button>
                                     <Button ToolTip="Numerical differentiation" Tag="derive(,,)" Canvas.Left="4" Canvas.Top="34" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">d/dx</Button>
