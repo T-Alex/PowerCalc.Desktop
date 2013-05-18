@@ -112,11 +112,7 @@
                         <Canvas Height="156" Width="651" HorizontalAlignment="Center">
                             <GroupBox Canvas.Left="4" Canvas.Top="5" Header="Calc" Height="146" Width="52">
                                 <Canvas>
-                                    <Button ToolTip="Numerical integration" Content="integ" Canvas.Left="4" Canvas.Top="4" Height="25" Width="32" FontSize="10" Command="{StaticResource InsertFunctionCommand}">
-                                        <Button.CommandParameter>
-                                            <commands:InsertFunctionParameter FunctionHeader="integ(,,,)" Target="{Binding ElementName=worksheetTextBox}" />
-                                        </Button.CommandParameter>
-                                    </Button>
+                                    <Button ToolTip="Numerical integration" Tag="integ(,,,)" Canvas.Left="4" Canvas.Top="4" Click="buttonInsertText_Click"  Height="25" Width="32" FontSize="10">integ</Button>
                                     <Button ToolTip="Numerical differentiation" Tag="derive(,,)" Canvas.Left="4" Canvas.Top="34" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">d/dx</Button>
                                     <Button ToolTip="Summation of a sequence" Tag="sums(,,,)" Canvas.Left="4" Canvas.Top="64" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">sum</Button>
                                     <Button ToolTip="Product of a sequence" Tag="prods(,,,)" Canvas.Left="4" Canvas.Top="94" Click="buttonInsertText_Click" Height="25" Width="32" FontSize="10">prod</Button>
@@ -190,7 +186,7 @@
                                     <Button ToolTip="Number 'two'" Tag="2" Width="32" Height="25" Canvas.Left="41" Canvas.Top="64" Click="buttonInsertText_Click">2</Button>
                                     <Button ToolTip="Number 'three'" Tag="3" Width="32" Height="25" Canvas.Left="78" Canvas.Top="64" Click="buttonInsertText_Click">3</Button>
                                     <Button ToolTip="Number 'zero'" Tag="0" Height="25" Width="32" Canvas.Left="4" Canvas.Top="94" Click="buttonInsertText_Click">0</Button>
-                                    <Button ToolTip="Imaginary Unit i" Tag="1i" Height="25" Width="32" Canvas.Left="41" Canvas.Top="94" Click="buttonInsertText_Click">i</Button>
+                                    <Button ToolTip="Imaginary Unit i" Tag="i" Height="25" Width="32" Canvas.Left="41" Canvas.Top="94" Click="buttonInsertText_Click">i</Button>
                                     <Button ToolTip="Decimal point" Tag="." Height="25" Width="32" Canvas.Left="78" Canvas.Top="94" Click="buttonInsertText_Click">.</Button>
                                 </Canvas>
                             </GroupBox>
@@ -296,7 +292,7 @@
                                     <Button Canvas.Left="41" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="2" ToolTip="Number 'two'" Width="32">2</Button>
                                     <Button Canvas.Left="78" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="3" ToolTip="Number 'three'" Width="32">3</Button>
                                     <Button Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="0" ToolTip="Number 'zero'" Width="32">0</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="1i" ToolTip="Imaginary Unit i" Width="32">i</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="i" ToolTip="Imaginary Unit i" Width="32">i</Button>
                                     <Button Canvas.Left="78" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="." ToolTip="Decimal point" Width="32">.</Button>
                                 </Canvas>
                             </GroupBox>

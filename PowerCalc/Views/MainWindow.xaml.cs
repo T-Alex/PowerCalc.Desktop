@@ -37,7 +37,6 @@ namespace TAlex.PowerCalc
         private IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
 
-
         #region Constructors
 
         public MainWindow()
@@ -477,8 +476,7 @@ namespace TAlex.PowerCalc
                 }
             }
 
-            new InsertFunctionCommand().Execute(text);
-            //InsertFunctionHeaderToIInputElement(worksheetTextBox, text);
+            new InsertFunctionCommand().Execute(new InsertFunctionParameter(text, worksheetTextBox));
         }
 
         private void buttonEvaluate_Click(object sender, RoutedEventArgs e)
@@ -496,8 +494,9 @@ namespace TAlex.PowerCalc
 
         private void insertTextToFormulaBar_Click(object sender, RoutedEventArgs e)
         {
-            //worksheetMatrix.FormulaBar.Focus();
-            //InsertFunctionHeaderToIInputElement(worksheetMatrix.FormulaBar, (string)(((Control)sender).Tag));
+            worksheetMatrix.FormulaBar.Focus();
+            string functionHeader = (string)(((Control)sender).Tag);
+            new InsertFunctionCommand().Execute(new InsertFunctionParameter(functionHeader, worksheetMatrix.FormulaBar));
         }
 
         private void evaluateMatricesButton_Click(object sender, RoutedEventArgs e)

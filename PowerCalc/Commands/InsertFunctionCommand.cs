@@ -21,8 +21,7 @@ namespace TAlex.PowerCalc.Commands
 
         public bool CanExecute(object parameter)
         {
-            //return (parameter is String && !String.IsNullOrEmpty((string)parameter)) || parameter is InsertFunctionParameter;
-            return true;
+            return (parameter is String && !String.IsNullOrEmpty((string)parameter)) || parameter is InsertFunctionParameter;
         }
 
         public virtual event EventHandler CanExecuteChanged;
@@ -125,6 +124,16 @@ namespace TAlex.PowerCalc.Commands
         static InsertFunctionParameter()
         {
             TargetProperty = DependencyProperty.Register("Target", typeof(IInputElement), typeof(InsertFunctionParameter));
+        }
+
+        public InsertFunctionParameter()
+        {
+        }
+
+        public InsertFunctionParameter(string functionHeader, IInputElement target)
+        {
+            FunctionHeader = functionHeader;
+            Target = target;
         }
     }
 }
