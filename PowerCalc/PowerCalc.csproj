@@ -201,10 +201,12 @@
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
+    <Compile Include="Helpers\ExpressionExtensions.cs" />
     <Compile Include="Locators\ViewModelLocator.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\ConstantsContextMenuViewModel.cs" />
     <Compile Include="ViewModels\InsertFunctionContextMenuViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\RegistrationWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

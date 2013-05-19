@@ -24,6 +24,14 @@ namespace TAlex.PowerCalc.Locators
         }
 
 
+        public MainWindowViewModel MainWindowViewModel
+        {
+            get
+            {
+                return _kernel.Get<MainWindowViewModel>();
+            }
+        }
+
         public AboutWindowViewModel AboutWindowViewModel
         {
             get
@@ -146,6 +154,7 @@ namespace TAlex.PowerCalc.Locators
     {
         public override void Load()
         {
+            Bind<MainWindowViewModel>().ToSelf();
             Bind<AboutWindowViewModel>().ToSelf().InSingletonScope();
             Bind<RegistrationWindowViewModel>().ToSelf();
         }

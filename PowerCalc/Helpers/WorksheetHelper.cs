@@ -16,11 +16,11 @@ namespace TAlex.PowerCalc.Helpers
 
         public const string SymbolEquality = "=";
 
-        private const string VariableNamePattern = @"(?<var>[a-zA-Z_][a-zA-Z_0-9]*)";
+        private static readonly string VariableNamePattern = @"(?<var>[a-zA-Z_][a-zA-Z_0-9]*)";
+        private static readonly string ExpressionPattern = @"(?<expr>[^=]+)";
 
-        private const string ExpressionPattern = @"(?<expr>[^=]+)";
-
-        private const string LinePattern = "(" + VariableNamePattern + @"\s*\:)?" + ExpressionPattern;
+        private static readonly string LinePattern = "(" + VariableNamePattern + @"\s*\:)?" + ExpressionPattern;
+        private static readonly Regex LineRegex = new Regex(LinePattern, RegexOptions.Compiled);
 
         #endregion
 
@@ -53,30 +53,21 @@ namespace TAlex.PowerCalc.Helpers
         {
             Dictionary<string, Object> vars = new Dictionary<string, Object>();
 
-            for (int i = 0; i < lines.Length; i++)
+            foreach (string line in lines)
             {
-                Match match = Regex.Match(lines[i], LinePattern);
+                Match match = LineRegex.Match(line);
 
                 if (match.Success)
                 {
                     string varName = match.Groups["var"].Value;
 
-                    if (varName != String.Empty)
+                    if (!String.IsNullOrEmpty(varName))
                     {
                         try
                         {
                             Expression<Object> expression = builder.BuildTree(match.Groups["expr"].Value);
-                            foreach (var var in expression.FindAllVariables())
-                            {
-                                object value;
-                                if (vars.TryGetValue(var.VariableName, out value))
-                                {
-                                    var.Value = value;
-                                }
-                            }
-                            
-                            //ComplexMathEvaluator evaluator = new ComplexMathEvaluator(, vars);
-                            
+                            expression.SetAllVariables(vars);
+                                                                                    
                             vars[varName] = expression.Evaluate();
                         }
                         catch (Exception)

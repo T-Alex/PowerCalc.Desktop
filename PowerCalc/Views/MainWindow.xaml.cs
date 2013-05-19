@@ -15,78 +15,48 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Data;
 using Microsoft.Win32;
-
 using TAlex.PowerCalc.Helpers;
-
 using TAlex.MathCore;
-using TAlex.MathCore.ExpressionEvaluation;
 using TAlex.MathCore.LinearAlgebra;
-using TAlex.WPF3DToolkit;
-using TAlex.WPF3DToolkit.Surfaces;
+using TAlex.MathCore.ExpressionEvaluation;
+using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
-using TAlex.MathCore.ExpressionEvaluation.Trees;
+using TAlex.MathCore.ExpressionEvaluation.Tokenize;
+using TAlex.WPF3DToolkit;
+using TAlex.WPF3DToolkit.Surfaces;
 using TAlex.Common.Environment;
 using TAlex.PowerCalc.Commands;
+using TAlex.PowerCalc.ViewModels;
 
 
 namespace TAlex.PowerCalc
 {
     public partial class MainWindow : Window
     {
-        private IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
+        #region Properties
 
+        public IExpressionTreeBuilder<Object> ExpressionTreeBuilder
+        {
+            get
+            {
+                return ((MainWindowViewModel)DataContext).ExpressionTreeBuilder;
+            }
+        }
 
+        #endregion
+        
         #region Constructors
 
         public MainWindow()
         {
             InitializeComponent();
-
             LoadSettings(true);
-
-            string productTitle = ApplicationInfo.Title;
-
-            if (Licensing.License.IsTrial)
-                Title = String.Format("{0} - Evaluation version (days left: {1})", productTitle, Licensing.License.TrialDaysLeft);
-            else
-                Title = productTitle;
-
-            aboutMenuItem.Header = "_About " + productTitle;
-
-            InitEvaluator();
         }
 
         #endregion
 
         #region Methods
-
-        private void InitEvaluator()
-        {
-            ConstantFlyweightFactory<Object> constantFactory = new ConstantFlyweightFactory<Object>();
-            constantFactory.AddFromAssemblies(GetAssembliesFromPath(Properties.Settings.Default.ExtensionsPath));
-
-
-            FunctionFactory<Object> functionFactory = new FunctionFactory<Object>();
-            functionFactory.AddFromAssemblies(GetAssembliesFromPath(Properties.Settings.Default.ExtensionsPath));
-
-            ExpressionTreeBuilder = new ComplexExpressionTreeBuilder
-            {
-                ConstantFactory = constantFactory,
-                FunctionFactory = functionFactory
-            };
-        }
-
-        private static IEnumerable<Assembly> GetAssembliesFromPath(string path)
-        {
-            string[] files = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path), "*.dll", SearchOption.TopDirectoryOnly);
-
-            foreach (string filePath in files)
-            {
-                yield return Assembly.LoadFile(filePath);
-            }
-        }
-
 
         private void LoadSettings(bool isStarting)
         {
@@ -308,58 +278,28 @@ namespace TAlex.PowerCalc
                         return;
                     }
 
-                    string[] lines = new string[currentLineIndex];
-                    for (int i = 0; i < lines.Length; i++)
-                    {
-                        lines[i] = worksheetTextBox.GetLineText(i).Trim();
-                    }
-
-                    Dictionary<string, Object> variables = Helpers.WorksheetHelper.CalculateVariables(ExpressionTreeBuilder, lines);
-
-
                     System.Text.RegularExpressions.Match match = Helpers.WorksheetHelper.GetMatch(currentLineString);
-
                     string resultString = currentLineString;
                     
                     try
                     {
                         if (!match.Success)
-                            throw new FormatException();
+                            throw new SyntaxException();
 
                         resultString = match.Value.Trim();
-                        string expr = match.Groups["expr"].Value;
-
-                        
-                        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-                        watch.Start();
+                        string expressionString = match.Groups["expr"].Value;
 
                         // Evaluation expression
-                        Expression<Object> expression = ExpressionTreeBuilder.BuildTree(expr);
-                        foreach (var var in expression.FindAllVariables())
+                        string[] lines = new string[currentLineIndex];
+                        for (int i = 0; i < lines.Length; i++)
                         {
-                            object value;
-                            if (variables.TryGetValue(var.VariableName, out value))
-                            {
-                                var.Value = value;
-                            }
+                            lines[i] = worksheetTextBox.GetLineText(i).Trim();
                         }
-
-                        Object result = expression.Evaluate();
-
-                        watch.Stop();
-
-                        if (result is IFormattable)
-                        {
-                            if (result is Complex) result = NumericUtil.ComplexZeroThreshold((Complex)result, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-                            if (result is CMatrix) result = TAlex.MathCore.LinearAlgebra.NumericUtilExtensions.ComplexZeroThreshold((CMatrix)result, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-                            resultString += String.Format(" = {0}", ((IFormattable)result).ToString(Properties.Settings.Default.NumericFormat, CultureInfo.InvariantCulture));
-                        }
-                        else
-                        {
-                            resultString += String.Format(" = {0}", result);
-                        }
+                        Dictionary<string, Object> variables = Helpers.WorksheetHelper.CalculateVariables(ExpressionTreeBuilder, lines);
+                        Object result = EvaluationExpression(expressionString, variables);
+                        resultString += String.Format(" = {0}", GetFormatedResult(result));
                     }
-                    catch (FormatException exc)
+                    catch (SyntaxException exc)
                     {
                         resultString += String.Format(" = syntax_error ({0})", exc.Message);
                     }
@@ -395,6 +335,31 @@ namespace TAlex.PowerCalc
                     break;
             }
         }
+
+        private object EvaluationExpression(string expressionString, IDictionary<string, object> variables)
+        {
+            Expression<object> expression = ExpressionTreeBuilder.BuildTree(expressionString);
+            expression.SetAllVariables(variables);
+            
+            return expression.Evaluate();
+        }
+
+        private string GetFormatedResult(Object result)
+        {
+            if (result is IFormattable)
+            {
+                Properties.Settings settings = Properties.Settings.Default;
+
+                if (result is Complex) result = NumericUtil.ComplexZeroThreshold((Complex)result, settings.ComplexThreshold, settings.ZeroThreshold);
+                if (result is CMatrix) result = NumericUtilExtensions.ComplexZeroThreshold((CMatrix)result, settings.ComplexThreshold, settings.ZeroThreshold);
+                return ((IFormattable)result).ToString(settings.NumericFormat, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                return result.ToString();
+            }
+        }
+
 
         private void worksheetTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {

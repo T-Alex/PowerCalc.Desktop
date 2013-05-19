@@ -5,7 +5,10 @@
     xmlns:commands="clr-namespace:TAlex.PowerCalc.Commands"
     xmlns:converters="clr-namespace:TAlex.PowerCalc.Converters"
     xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls"
-    WindowStartupLocation="CenterScreen" Width="700" Height="575" MinWidth="700" MinHeight="550" Loaded="Window_Loaded">
+    DataContext="{Binding Source={StaticResource viewModelLocator}, Path=MainWindowViewModel, Mode=OneTime}"
+    WindowStartupLocation="CenterScreen" Width="700" Height="575" MinWidth="700" MinHeight="550"
+    Title="{Binding WindowTitle}"
+    Loaded="Window_Loaded">
 
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="CommandBindingNew_Executed"/>
@@ -101,7 +104,7 @@
                 <MenuItem Header="T-Alex Software _Homepage" Click="navHomepageMenuItem_Click" />
                 <MenuItem Header="_Registration..." Click="registrationMenuItem_Click" />
                 <Separator />
-                <MenuItem Name="aboutMenuItem" Header="_About" Click="aboutMenuItem_Click" />
+                <MenuItem Header="{Binding AboutMenuItemHeader}" Click="aboutMenuItem_Click" />
             </MenuItem>
         </Menu>
 
