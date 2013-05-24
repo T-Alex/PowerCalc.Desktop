@@ -45,7 +45,7 @@ namespace TAlex.PowerCalc
         protected override void OnNavigating(System.Windows.Navigation.NavigatingCancelEventArgs e)
         {
             base.OnNavigating(e);
-
+            
             TAlex.WPFThemes.Twilight.TwilightThemeManager.ApplyTheme(PowerCalc.Properties.Settings.Default.ColorScheme);
 
             if (License.IsTrial && License.TrialHasExpired)

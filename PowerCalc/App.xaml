@@ -4,14 +4,13 @@
     xmlns:locators="clr-namespace:TAlex.PowerCalc.Locators"
     StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
-        <locators:ViewModelLocator x:Key="viewModelLocator" />
-
-        <!--<ResourceDictionary>
+        <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Twilight/ColorSchemes/Blue.xaml" />
-                <ResourceDictionary Source="Themes/Twilight/Shared.xaml"/>
-                <ResourceDictionary Source="Themes/Twilight/NumericUpDown.xaml" />
+                <ResourceDictionary  />
+                <ResourceDictionary>
+                    <locators:ViewModelLocator x:Key="viewModelLocator" />
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>-->
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

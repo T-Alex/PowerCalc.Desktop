@@ -5,15 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TAlex.Common.Environment;
+using TAlex.Common.Extensions;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.WPF.Mvvm;
 
 
 namespace TAlex.PowerCalc.ViewModels
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : ViewModelBase
     {
+        #region Fields
+
         public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
+        private bool _canShowXYCoords;
+        private double? _xCoordStatusBar;
+        private double? _yCoordStatusBar;
+
+        #endregion
+
+        #region Properties
 
         public virtual string WindowTitle
         {
@@ -37,10 +48,56 @@ namespace TAlex.PowerCalc.ViewModels
             }
         }
 
+        public bool CanShowXYCoords
+        {
+            get
+            {
+                return _canShowXYCoords;
+            }
+
+            set
+            {
+                Set<bool>(() => CanShowXYCoords, ref _canShowXYCoords, value);
+            }
+        }
+
+        public double? XCoord2dPlot
+        {
+            get
+            {
+                return _xCoordStatusBar;
+            }
+
+            set
+            {
+                _xCoordStatusBar = value;
+                RaisePropertyChanged(ExpressionExtensions.GetPropertyName<MainWindowViewModel>(x => x.XCoord2dPlot));
+            }
+        }
+
+        public double? YCoord2dPlot
+        {
+            get
+            {
+                return _yCoordStatusBar;
+            }
+
+            set
+            {
+                _yCoordStatusBar = value;
+                RaisePropertyChanged(ExpressionExtensions.GetPropertyName<MainWindowViewModel>(x => x.YCoord2dPlot));
+            }
+        }
+
+        #endregion
+
+        #region Constructors
 
         public MainWindowViewModel(IExpressionTreeBuilder<Object> treeBuilder)
         {
             ExpressionTreeBuilder = treeBuilder;
         }
+
+        #endregion
     }
 }

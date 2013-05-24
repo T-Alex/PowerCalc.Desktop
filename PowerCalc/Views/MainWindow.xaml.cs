@@ -346,18 +346,27 @@ namespace TAlex.PowerCalc
 
         private string GetFormatedResult(Object result)
         {
+            string stringResult = null;
+
             if (result is IFormattable)
             {
                 Properties.Settings settings = Properties.Settings.Default;
 
                 if (result is Complex) result = NumericUtil.ComplexZeroThreshold((Complex)result, settings.ComplexThreshold, settings.ZeroThreshold);
                 if (result is CMatrix) result = NumericUtilExtensions.ComplexZeroThreshold((CMatrix)result, settings.ComplexThreshold, settings.ZeroThreshold);
-                return ((IFormattable)result).ToString(settings.NumericFormat, CultureInfo.InvariantCulture);
+                stringResult = ((IFormattable)result).ToString(settings.NumericFormat, CultureInfo.InvariantCulture);
             }
             else
             {
-                return result.ToString();
+                stringResult = result.ToString();
             }
+
+            if (stringResult.Length > 1000)
+            {
+                throw new InvalidOperationException("The result is too long for display.");
+            }
+
+            return stringResult;
         }
 
 
@@ -475,21 +484,22 @@ namespace TAlex.PowerCalc
 
         private void plot2D_MouseMove(object sender, MouseEventArgs e)
         {
-            xyCoordTitleStatusBarItem.Visibility = Visibility.Visible;
-            xyCoordStatusBarItem.Visibility = Visibility.Visible;
-
             Point point = e.GetPosition((IInputElement)sender);
             point.X = Math.Round(point.X);
             point.Y = Math.Round(point.Y);
 
             Point coord = plot2D.PointToPlot2DCoordinate(point);
-            xyCoordStatusBarItem.Content = String.Format(CultureInfo.InvariantCulture, "{0:G14}, {1:G14}", coord.X, coord.Y);
+
+            MainWindowViewModel viewModel = DataContext as MainWindowViewModel;
+            viewModel.CanShowXYCoords = true;
+            viewModel.XCoord2dPlot = coord.X;
+            viewModel.YCoord2dPlot = coord.Y;
         }
 
         private void plot2D_MouseLeave(object sender, MouseEventArgs e)
         {
-            xyCoordTitleStatusBarItem.Visibility = Visibility.Collapsed;
-            xyCoordStatusBarItem.Visibility = Visibility.Collapsed;
+            MainWindowViewModel viewModel = DataContext as MainWindowViewModel;
+            viewModel.CanShowXYCoords = false;
         }
 
         private void buttonPlot2DDraw_Click(object sender, RoutedEventArgs e)

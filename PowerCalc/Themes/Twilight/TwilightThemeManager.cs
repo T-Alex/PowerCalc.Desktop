@@ -48,9 +48,8 @@ namespace TAlex.WPFThemes.Twilight
                 return false;
             }
 
-            ResourceDictionary resources = Application.Current.Resources;
-
-            //resources.Clear();
+            ResourceDictionary resources = Application.Current.Resources.MergedDictionaries[0];
+            resources.Clear();
             resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "ColorSchemes", colorScheme + ".xaml"), UriKind.Relative)) as ResourceDictionary);
             resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "Shared.xaml"), UriKind.Relative)) as ResourceDictionary);
             resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "NumericUpDown.xaml"), UriKind.Relative)) as ResourceDictionary);

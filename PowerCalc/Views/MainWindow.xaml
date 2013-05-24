@@ -5,6 +5,7 @@
     xmlns:commands="clr-namespace:TAlex.PowerCalc.Commands"
     xmlns:converters="clr-namespace:TAlex.PowerCalc.Converters"
     xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls"
+    xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
     DataContext="{Binding Source={StaticResource viewModelLocator}, Path=MainWindowViewModel, Mode=OneTime}"
     WindowStartupLocation="CenterScreen" Width="700" Height="575" MinWidth="700" MinHeight="550"
     Title="{Binding WindowTitle}"
@@ -19,8 +20,10 @@
 
     <!-- Resources -->
     <Window.Resources>
+        <talex:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:FunctionSignaturesToTooltipConverter x:Key="FunctionSignaturesToTooltipConverter" />
-
+        <converters:XYCoordsToStringConverter x:Key="XYCoordsToStringConverter" />
+        
         <commands:InsertFunctionCommand x:Key="InsertFunctionCommand" />
         
         <ContextMenu x:Key="mainContextMenu">
@@ -441,9 +444,16 @@
             </TabItem>
         </TabControl>
         
-        <StatusBar Height="23" Name="mainStatusBar" VerticalAlignment="Bottom" Background="{DynamicResource StatusBarBgBrush}">
-            <StatusBarItem Name="xyCoordTitleStatusBarItem" Visibility="Hidden" Margin="0">xy:</StatusBarItem>
-            <StatusBarItem Name="xyCoordStatusBarItem" MinWidth="50" Margin="0" Padding="0" Visibility="Hidden" />
+        <StatusBar Height="23" VerticalAlignment="Bottom" Background="{DynamicResource StatusBarBgBrush}">
+            <StatusBarItem Margin="0" Visibility="{Binding CanShowXYCoords, Converter={StaticResource BooleanToVisibilityConverter}}">xy:</StatusBarItem>
+            <StatusBarItem MinWidth="50" Margin="0" Padding="0" Visibility="{Binding CanShowXYCoords, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StatusBarItem.Content>
+                    <MultiBinding Converter="{StaticResource XYCoordsToStringConverter}">
+                        <Binding Path="XCoord2dPlot" />
+                        <Binding Path="YCoord2dPlot" />
+                    </MultiBinding>
+                </StatusBarItem.Content>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </Window>

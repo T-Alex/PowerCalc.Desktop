@@ -95,6 +95,9 @@
     <Reference Include="TAlex.WPF.Controls">
       <HintPath>..\packages\TAlex.WPF.Controls.1.4.2.0\lib\net35\TAlex.WPF.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="TAlex.WPF.Mvvm">
+      <HintPath>..\packages\TAlex.WPF.Mvvm.1.0.4891.40898\lib\net45\TAlex.WPF.Mvvm.dll</HintPath>
+    </Reference>
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -201,13 +204,16 @@
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
+    <Compile Include="Converters\XYCoordsToStringConverter.cs" />
     <Compile Include="Helpers\ExpressionExtensions.cs" />
     <Compile Include="Locators\ViewModelLocator.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\ConstantsContextMenuViewModel.cs" />
     <Compile Include="ViewModels\InsertFunctionContextMenuViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PreferencesWindowViewModel.cs" />
     <Compile Include="ViewModels\RegistrationWindowViewModel.cs" />
+    <Compile Include="ViewModels\WorksheetMatrixViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
