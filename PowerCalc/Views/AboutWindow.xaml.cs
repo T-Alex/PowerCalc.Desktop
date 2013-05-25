@@ -90,16 +90,6 @@ namespace TAlex.PowerCalc
             }
         }
 
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
-        {
-            if (e.Uri != null && !String.IsNullOrEmpty(e.Uri.OriginalString))
-            {
-                string uri = e.Uri.AbsoluteUri;
-                Process.Start(new ProcessStartInfo(uri));
-                e.Handled = true;
-            }
-        }
-
         #endregion
     }
 }

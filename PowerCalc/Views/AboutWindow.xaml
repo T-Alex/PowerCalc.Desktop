@@ -9,6 +9,7 @@
     
     <Window.Resources>
         <talex:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <talex:HyperlinkNavigateCommand x:Key="HyperlinkNavigateCommand" />
     </Window.Resources>
     
     <Grid>
@@ -52,7 +53,7 @@
         </Label>
         
         <Label Margin="150,0,0,80" Padding="0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding Mode=OneTime, Path=EmailAddress}"
+            <Hyperlink CommandParameter="{Binding Mode=OneTime, Path=EmailAddress}" Command="{StaticResource HyperlinkNavigateCommand}"
                        Foreground="{DynamicResource AboutHyperlinkForeground}">
                 <TextBlock Text="{Binding Mode=OneTime, Path=EmailTitle}" />
             </Hyperlink>
@@ -64,7 +65,7 @@
         </Label>
         
         <Label Margin="150,0,0,60" Padding="0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding Mode=OneTime, Path=HomepageUrl}"
+            <Hyperlink CommandParameter="{Binding Mode=OneTime, Path=HomepageUrl}" Command="{StaticResource HyperlinkNavigateCommand}"
                        Foreground="{DynamicResource AboutHyperlinkForeground}">
                 <TextBlock Text="{Binding Mode=OneTime, Path=HomepageTitle}" />
             </Hyperlink>
