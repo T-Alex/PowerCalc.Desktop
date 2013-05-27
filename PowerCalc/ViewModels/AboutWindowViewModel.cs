@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Resources;
 using System.Text;
 using TAlex.Common.Environment;
 
@@ -8,6 +9,13 @@ namespace TAlex.PowerCalc.ViewModels
 {
     public class AboutWindowViewModel
     {
+        #region Fields
+
+        protected readonly ApplicationInfo ApplicationInfo;
+        internal ResourceManager ResourcesManager;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -94,7 +102,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return PowerCalc.Properties.Resources.SupportEmail;
+                return ResourcesManager.GetString("SupportEmail"); //PowerCalc.Properties.Resources.SupportEmail;
             }
         }
 
@@ -116,7 +124,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return PowerCalc.Properties.Resources.HomepageUrl;
+                return ResourcesManager.GetString("HomepageUrl"); // PowerCalc.Properties.Resources.HomepageUrl;
             }
         }
 
@@ -153,6 +161,16 @@ namespace TAlex.PowerCalc.ViewModels
             {
                 return "About " + ProductTitle;
             }
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public AboutWindowViewModel(ApplicationInfo applicationInfo)
+        {
+            ApplicationInfo = applicationInfo;
+            ResourcesManager = new ResourceManager(typeof(Properties.Resources));
         }
 
         #endregion

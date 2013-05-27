@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TAlex.Common.Environment;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.PowerCalc.ViewModels;
@@ -154,6 +155,8 @@ namespace TAlex.PowerCalc.Locators
     {
         public override void Load()
         {
+            Bind<ApplicationInfo>().ToConstant(ApplicationInfo.Current);
+
             Bind<MainWindowViewModel>().ToSelf();
             Bind<AboutWindowViewModel>().ToSelf().InSingletonScope();
             Bind<RegistrationWindowViewModel>().ToSelf();

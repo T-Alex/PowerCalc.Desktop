@@ -16,6 +16,7 @@ namespace TAlex.PowerCalc.ViewModels
     {
         #region Fields
 
+        protected readonly ApplicationInfo ApplicationInfo;
         public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
         private bool _canShowXYCoords;
@@ -93,8 +94,9 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Constructors
 
-        public MainWindowViewModel(IExpressionTreeBuilder<Object> treeBuilder)
+        public MainWindowViewModel(ApplicationInfo applicationInfo, IExpressionTreeBuilder<Object> treeBuilder)
         {
+            ApplicationInfo = applicationInfo;
             ExpressionTreeBuilder = treeBuilder;
         }
 
