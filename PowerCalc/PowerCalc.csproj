@@ -208,6 +208,9 @@
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
     <Compile Include="Converters\XYCoordsToStringConverter.cs" />
     <Compile Include="Helpers\ExpressionExtensions.cs" />
+    <Compile Include="Locators\Modules\BaseServicesNinjectModule.cs" />
+    <Compile Include="Locators\Modules\MathCoreNinjectModule.cs" />
+    <Compile Include="Locators\Modules\ViewModelNinjectModule.cs" />
     <Compile Include="Locators\ViewModelLocator.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\ConstantsContextMenuViewModel.cs" />
