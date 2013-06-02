@@ -68,9 +68,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
-    <Reference Include="TAlex.Common, Version=1.4.4895.39370, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TAlex.Common, Version=1.4.4898.41164, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TAlex.Common.1.4.4895.39370\lib\net35\TAlex.Common.dll</HintPath>
+      <HintPath>..\packages\TAlex.Common.1.4.4898.41164\lib\net35\TAlex.Common.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.MathCore">
       <HintPath>..\packages\TAlex.MathCore.1.0.4871.34044\lib\net45\TAlex.MathCore.dll</HintPath>
@@ -208,6 +208,7 @@
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
     <Compile Include="Converters\XYCoordsToStringConverter.cs" />
     <Compile Include="Helpers\ExpressionExtensions.cs" />
+    <Compile Include="Locators\Modules\AppLicenseNinjectModule.cs" />
     <Compile Include="Locators\Modules\BaseServicesNinjectModule.cs" />
     <Compile Include="Locators\Modules\MathCoreNinjectModule.cs" />
     <Compile Include="Locators\Modules\ViewModelNinjectModule.cs" />
@@ -227,12 +228,9 @@
   <ItemGroup>
     <Compile Include="Controls\Plot2D.cs" />
     <Compile Include="Helpers\A1ReferenceHelper.cs" />
-    <Compile Include="Licensing\SecretFileTrialPeriodDataProvider.cs" />
-    <Compile Include="Licensing\License.cs" />
-    <Compile Include="Licensing\LicenseDataProvider.cs" />
-    <Compile Include="Licensing\LicFileLicenseDataProvider.cs" />
-    <Compile Include="Licensing\CryptoHelper.cs" />
-    <Compile Include="Licensing\TrialPeriodDataProvider.cs" />
+    <Compile Include="Services\Licensing\AppTrialPeriodDataProvider.cs" />
+    <Compile Include="Services\Licensing\AppLicense.cs" />
+    <Compile Include="Services\Licensing\AppLicenseDataManager.cs" />
     <Compile Include="Views\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
     </Compile>

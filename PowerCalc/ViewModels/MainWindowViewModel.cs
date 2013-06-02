@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TAlex.Common.Environment;
 using TAlex.Common.Extensions;
+using TAlex.Common.Licensing;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.WPF.Mvvm;
 
@@ -17,6 +18,7 @@ namespace TAlex.PowerCalc.ViewModels
         #region Fields
 
         protected readonly ApplicationInfo ApplicationInfo;
+        protected readonly LicenseBase AppLicense;
         public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
         private bool _canShowXYCoords;
@@ -33,8 +35,8 @@ namespace TAlex.PowerCalc.ViewModels
             {
                 string productTitle = ApplicationInfo.Title;
 
-                if (Licensing.License.IsTrial)
-                    return String.Format("{0} - Evaluation version (days left: {1})", productTitle, Licensing.License.TrialDaysLeft);
+                if (AppLicense.IsTrial)
+                    return String.Format("{0} - Evaluation version (days left: {1})", productTitle, AppLicense.TrialDaysLeft);
                 else
                     return productTitle;
             }
@@ -71,8 +73,7 @@ namespace TAlex.PowerCalc.ViewModels
 
             set
             {
-                _xCoordStatusBar = value;
-                RaisePropertyChanged(ExpressionExtensions.GetPropertyName<MainWindowViewModel>(x => x.XCoord2dPlot));
+                Set<double?>(() => XCoord2dPlot, ref _xCoordStatusBar, value);
             }
         }
 
@@ -94,9 +95,10 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Constructors
 
-        public MainWindowViewModel(ApplicationInfo applicationInfo, IExpressionTreeBuilder<Object> treeBuilder)
+        public MainWindowViewModel(ApplicationInfo applicationInfo, LicenseBase appLicense, IExpressionTreeBuilder<Object> treeBuilder)
         {
             ApplicationInfo = applicationInfo;
+            AppLicense = appLicense;
             ExpressionTreeBuilder = treeBuilder;
         }
 

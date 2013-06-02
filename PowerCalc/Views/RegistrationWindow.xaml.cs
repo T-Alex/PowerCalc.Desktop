@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using TAlex.Common.Licensing;
 using TAlex.PowerCalc.Licensing;
 
 namespace TAlex.PowerCalc
@@ -48,10 +48,8 @@ namespace TAlex.PowerCalc
 
             MessageBox.Show(this, "Please restart this program to verify your license data.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            LicenseDataProvider licData = new LicFileLicenseDataProvider();
-            licData.LicenseName = lin;
-            licData.LicenseKey = lik;
-            licData.Save();
+            ILicenseDataManager licData = new AppLicenseDataManager();
+            licData.Save(new LicenseData() { LicenseName = lin, LicenseKey = lik });
 
             DialogResult = true;
             App.Current.Shutdown();

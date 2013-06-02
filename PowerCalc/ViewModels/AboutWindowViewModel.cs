@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using TAlex.Common.Environment;
+using TAlex.Common.Licensing;
 
 
 namespace TAlex.PowerCalc.ViewModels
@@ -12,6 +13,7 @@ namespace TAlex.PowerCalc.ViewModels
         #region Fields
 
         protected readonly ApplicationInfo ApplicationInfo;
+        protected readonly LicenseBase AppLicense;
         internal ResourceManager ResourcesManager;
 
         #endregion
@@ -135,7 +137,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return PowerCalc.Licensing.License.LicenseName;
+                return AppLicense.LicenseName;
             }
         }
 
@@ -143,7 +145,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return PowerCalc.Licensing.License.IsLicensed;
+                return AppLicense.IsLicensed;
             }
         }
 
@@ -167,9 +169,10 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Constructors
 
-        public AboutWindowViewModel(ApplicationInfo applicationInfo)
+        public AboutWindowViewModel(ApplicationInfo applicationInfo, LicenseBase appLicense)
         {
             ApplicationInfo = applicationInfo;
+            AppLicense = appLicense;
             ResourcesManager = new ResourceManager(typeof(Properties.Resources));
         }
 

@@ -16,17 +16,13 @@ namespace TAlex.PowerCalc.Locators
 {
     public class ViewModelLocator
     {
+        #region Fields
+
         private IKernel _kernel;
 
+        #endregion
 
-        public ViewModelLocator()
-        {
-            _kernel = new StandardKernel(
-                new BaseServicesNinjectModule(),
-                new MathCoreNinjectModule(),
-                new ViewModelNinjectModule());
-        }
-
+        #region Properties
 
         public MainWindowViewModel MainWindowViewModel
         {
@@ -112,5 +108,29 @@ namespace TAlex.PowerCalc.Locators
                 };
             }
         }
+
+        #endregion
+
+        #region Constructors
+
+        public ViewModelLocator()
+        {
+            _kernel = new StandardKernel(
+                new BaseServicesNinjectModule(),
+                new AppLicenseNinjectModule(),
+                new MathCoreNinjectModule(),
+                new ViewModelNinjectModule());
+        }
+
+        #endregion
+
+        #region Methods
+
+        public T Get<T>()
+        {
+            return _kernel.Get<T>();
+        }
+
+        #endregion
     }
 }

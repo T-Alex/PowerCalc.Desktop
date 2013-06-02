@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using System.Diagnostics;
 
 using TAlex.PowerCalc.Licensing;
+using TAlex.PowerCalc.Locators;
 
 namespace TAlex.PowerCalc
 {
@@ -48,7 +49,10 @@ namespace TAlex.PowerCalc
             
             TAlex.WPFThemes.Twilight.TwilightThemeManager.ApplyTheme(PowerCalc.Properties.Settings.Default.ColorScheme);
 
-            if (License.IsTrial && License.TrialHasExpired)
+            ViewModelLocator locator = Resources["viewModelLocator"] as ViewModelLocator;
+            AppLicense license = locator.Get<AppLicense>();
+
+            if (license.IsTrial && license.TrialHasExpired)
             {
                 if (MessageBox.Show("Evaluation period has expired, please register.", "Information",
                     MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
