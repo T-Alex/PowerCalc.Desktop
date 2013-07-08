@@ -5,13 +5,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCalc", "PowerCalc\PowerCalc.csproj", "{8227565C-A20E-44C0-9D34-187F2E645593}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGenerator", "KeyGen\KeyGenerator.csproj", "{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCalc.KeyGenerator", "KeyGen\PowerCalc.KeyGenerator.csproj", "{C214B159-B7B1-4A59-8B88-89B40FCFBF2E}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PowerCalcSetup", "PowerCalcSetup\PowerCalcSetup.vdproj", "{B315B623-7C14-4753-AAD1-FD4FAD43379F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6C57B8C6-0DB1-4253-86BE-470084E602C7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{19A7DBA7-55FE-4212-AA78-BEE7D26EA1DC}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -35,8 +33,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{C214B159-B7B1-4A59-8B88-89B40FCFBF2E} = {19A7DBA7-55FE-4212-AA78-BEE7D26EA1DC}
 	EndGlobalSection
 EndGlobal

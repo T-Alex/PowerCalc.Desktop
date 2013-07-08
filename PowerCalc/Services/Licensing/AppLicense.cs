@@ -11,12 +11,12 @@ namespace TAlex.PowerCalc.Licensing
     {
         #region Fields
 
-        private static byte[] _SK = new byte[]
+        private static readonly byte[] _SK = new byte[]
         {
             18, 52, 75, 11, 76, 14, 195, 87
         };
 
-        private static byte[] _IV = new byte[]
+        private static readonly byte[] _IV = new byte[]
         {
             246, 198, 57, 228, 138, 4, 126, 118
         };

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using TAlex.PowerCalc.Licensing;
 using TAlex.PowerCalc.Locators;
 
+
 namespace TAlex.PowerCalc
 {
     /// <summary>
@@ -47,8 +48,15 @@ namespace TAlex.PowerCalc
         {
             base.OnNavigating(e);
             
+            // apply theme
             TAlex.WPFThemes.Twilight.TwilightThemeManager.ApplyTheme(PowerCalc.Properties.Settings.Default.ColorScheme);
 
+            // check license
+            CheckTrialExpiration();
+        }
+
+        private void CheckTrialExpiration()
+        {
             ViewModelLocator locator = Resources["viewModelLocator"] as ViewModelLocator;
             AppLicense license = locator.Get<AppLicense>();
 
