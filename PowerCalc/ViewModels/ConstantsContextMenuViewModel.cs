@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 
 namespace TAlex.PowerCalc.ViewModels
@@ -10,8 +11,22 @@ namespace TAlex.PowerCalc.ViewModels
         public List<ConstantViewModel> Constants { get; set; }
 
 
-        public ConstantsContextMenuViewModel()
+        public ConstantsContextMenuViewModel(IConstantsMetadataProvider constantsMetadataProvider)
         {
+            Init(constantsMetadataProvider);
+        }
+
+
+        private void Init(IConstantsMetadataProvider constantsMetadataProvider)
+        {
+            IList<ConstantMetadata> metadata = constantsMetadataProvider.GetMetadata().ToList();
+
+            Constants = metadata.Select(x => new ConstantViewModel
+                    {
+                        DisplayName = x.DisplayName,
+                        ConstantName = x.Name,
+                        Value = x.Value
+                    }).ToList();
         }
     }
 

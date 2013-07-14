@@ -16,6 +16,8 @@ namespace TAlex.PowerCalc.Locators.Modules
             Bind<MainWindowViewModel>().ToSelf();
             Bind<AboutWindowViewModel>().ToSelf().InSingletonScope();
             Bind<RegistrationWindowViewModel>().ToSelf();
+            Bind<InsertFunctionContextMenuViewModel>().ToSelf();
+            Bind<ConstantsContextMenuViewModel>().ToSelf();
         }
     }
 }

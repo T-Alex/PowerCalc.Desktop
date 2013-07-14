@@ -53,59 +53,15 @@ namespace TAlex.PowerCalc.Locators
         {
             get
             {
-                IList<FunctionMetadata> metadata = _kernel.Get<IFunctionsMetadataProvider>().GetMetadata().ToList();
-
-                return new InsertFunctionContextMenuViewModel()
-                {
-                    Categories = metadata
-                        .GroupBy(x => x.Category)
-                        .Select(x => new FunctionCategoryViewModel()
-                        {
-                            CategoryName = x.Key,
-                            Functions = x.Select(f => ConvertToFunctionViewModel(f)).ToList()
-                        }).ToList()
-                };
+                return _kernel.Get<InsertFunctionContextMenuViewModel>();
             }
-        }
-
-        private FunctionViewModel ConvertToFunctionViewModel(FunctionMetadata metadata)
-        {
-            FunctionSignature sign = metadata.Signatures.First();
-            string s = String.Empty;
-            for (int i = 0; i < sign.ArgumentCount - 1; i++)
-            {
-                s += ",";
-            }
-
-            return new FunctionViewModel
-            {
-                DisplayName = metadata.DisplayName,
-                FunctionName = sign.Name,
-                InsertValue = String.Format("{0}({1})", sign.Name, s),
-                Signatures = metadata.Signatures.Select(x => new SignatureViewModel
-                {
-                    Name = x.Name,
-                    Arguments = x.Arguments.Select(a => new KeyValuePair<string, string>(a.Type, a.Name)).ToList(),
-                    ArgumentsCount = x.ArgumentCount
-                }).ToList()
-            };
         }
 
         public ConstantsContextMenuViewModel ConstantsContextMenuViewModel
         {
             get
             {
-                IList<ConstantMetadata> metadata = _kernel.Get<IConstantsMetadataProvider>().GetMetadata().ToList();
-
-                return new ConstantsContextMenuViewModel()
-                {
-                    Constants = metadata.Select(x => new ConstantViewModel
-                    {
-                        DisplayName = x.DisplayName,
-                        ConstantName = x.Name,
-                        Value = x.Value
-                    }).ToList()
-                };
+                return _kernel.Get<ConstantsContextMenuViewModel>();
             }
         }
 
