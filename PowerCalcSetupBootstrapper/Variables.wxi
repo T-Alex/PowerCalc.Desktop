@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define ProductName = "PowerCalc" ?>
+  <?define ProductVersion="1.0.0" ?>
+  <?define Manufacturer = "T-Alex Software" ?>
+  <?define UpgradeCode="2ED4675F-A37D-421E-8144-C7DBD55C24C3" ?>
+
+  <?define HomePageUrl="http://talex-soft.com" ?>
+  <?define SupportLink="http://talex-soft.com" ?>
+  <?define HelpLink="http://talex-soft.com" ?>
+  <?define UpdateInformation="http://talex-soft.com" ?>
+  <?define Copyright="Copyright © 2014 T-Alex Software" ?>
+</Include>
