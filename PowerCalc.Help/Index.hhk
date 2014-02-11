@@ -1,0 +1,28 @@
+<HTML>
+ <HEAD>
+  <META name="GENERATOR" content="htm2chm 3.0.9.3">
+  <!-- Sitemap 1.0 -->
+ </HEAD>
+<BODY>
+ <OBJECT type="text/site properties">
+ </OBJECT>
+<UL>
+ <LI><OBJECT type="text/sitemap">
+  <PARAM name="Name" value="About PowerCalc">
+  <PARAM name="Local" value="General information/About PowerCalc.html">
+ </OBJECT>
+ <LI><OBJECT type="text/sitemap">
+  <PARAM name="Name" value="Features overview">
+  <PARAM name="Local" value="General information/Features overview.html">
+ </OBJECT>
+ <LI><OBJECT type="text/sitemap">
+  <PARAM name="Name" value="Installation and system requirements">
+  <PARAM name="Local" value="General information/Installation and system requirements.html">
+ </OBJECT>
+ <LI><OBJECT type="text/sitemap">
+  <PARAM name="Name" value="PowerCalc License">
+  <PARAM name="Local" value="Copyright and License/PowerCalc License.html">
+ </OBJECT>
+</UL>
+</BODY>
+</HTML>

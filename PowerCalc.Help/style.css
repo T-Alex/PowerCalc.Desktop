@@ -1,0 +1,119 @@
+html, body
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+body
+{
+	position:relative;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	
+	font: 12px verdana;
+	line-height: 1.3;
+	color: #707070;
+}
+
+h3
+{
+	margin: 0px;
+	padding: 0px;
+	font-size: 14px;
+	color: #51a2f4;
+}
+
+h4
+{
+	font-size: 10px;
+}
+
+hr
+{
+	margin: 0px;
+	padding: 0px;
+	height: 1px;
+	color: #dedede;
+}
+
+a, a:visited
+{
+	color: #3d8aeb;
+}
+
+a:hover
+{
+	color: Black;
+}
+
+#wrapper
+{
+}
+
+#header
+{
+	height: 60px;
+	width: 100%;
+	border-bottom: solid 1px #84bdf7;
+	background: Blue url("images/header-bg.png") repeat-x;
+}
+
+#header #logo
+{
+	float: left;
+	margin-left: 20px;
+	background: url("images/logo.png") no-repeat;
+	width: 140px;
+	height: 60px;
+}
+
+#header h2
+{
+	color: Azure;
+	text-align: right;
+	padding-top: 20px;
+	margin: 0px;
+	margin-right: 20px;
+	font-size: 18px;
+}
+
+#content
+{
+	padding: 15px;
+	padding-bottom: 50px;
+	text-align: justify;
+}
+
+#footer
+{
+	height: 40px;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	border-top: solid 1px #dedede;
+	background: Silver url("images/footer-bg.png") repeat-x;
+}
+
+#footer p
+{
+	text-align: right;
+	margin-top: 15px;
+	margin-right: 20px;
+	font-size: 10px;
+	color: #303030;
+}
+
+#footer a
+{
+	text-decoration: none;
+	color: #303030;
+}
+
+#footer a:hover
+{
+	color: Gray;
+}
