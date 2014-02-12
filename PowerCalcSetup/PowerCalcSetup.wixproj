@@ -21,13 +21,51 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Features.wxs" />
+    <Compile Include="Files.wxs" />
     <Compile Include="Product.wxs" />
+    <Compile Include="Shortcuts.wxs" />
+    <Compile Include="UI\AdditionalTasksDlg.wxs" />
+    <Compile Include="UI\WixUI_InstallDirEx.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Localization" />
+    <Folder Include="UI" />
     <Folder Include="Resources" />
+    <Folder Include="Resources\Images" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Images\Banner.bmp" />
+    <Content Include="Resources\Images\Dialog.bmp" />
     <Content Include="Resources\License.rtf" />
+    <Content Include="Variables.wxi" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PowerCalc\PowerCalc.csproj">
+      <Name>PowerCalc</Name>
+      <Project>{8227565c-a20e-44c0-9d34-187f2e645593}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\WixUI_en-us.wxl" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

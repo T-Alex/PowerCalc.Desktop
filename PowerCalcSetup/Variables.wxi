@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define ProductName = "PowerCalc" ?>
+  <?define ProductVersion="1.0.0" ?>
+  <?define Manufacturer = "T-Alex Software" ?>
+  <?define ProductCode="871E3C38-4796-4E33-AF0C-FF9843300695" ?>
+  <?define UpgradeCode="3F8898AB-7AC7-4272-8EA7-99905BCC9498" ?>
+
+  <?define HomePageUrl="http://talex-soft.com" ?>
+  <?define SupportLink="http://talex-soft.com" ?>
+  <?define HelpLink="http://talex-soft.com" ?>
+  <?define UpdateInformation="http://talex-soft.com" ?>
+
+  <?define FrameworkVersion="NETFRAMEWORK45" ?>
+  <?define FrameworkVersionText="4.5" ?>
+</Include>

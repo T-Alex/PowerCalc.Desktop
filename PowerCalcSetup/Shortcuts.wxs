@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"  xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Variables.wxi ?>
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="CMP_ProgramsMenuShortcuts" Guid="49CF9962-B650-4A74-B5F9-24079E13893A">
+        <Shortcut Id="ProductExecutableShortcut" Name="$(var.ProductName)" Target="[#ProductExecutableFile]" Description="PowerCalc" WorkingDirectory="INSTALLLOCATION" Icon="ProductIcon.exe" />
+        <util:InternetShortcut Id="HomePageInternetShortcut" Name="$(var.ProductName) on the Web" Target="$(var.HomePageUrl)" />
+
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductName)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+        <Condition>SHORTCUT_PROGRAMMENU</Condition>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="CMP_ProductExecutableDesktopShorctut" Guid="78BA5B0E-FB7A-4E6E-BE14-43CEA91639F6">
+        <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductName)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+        <Shortcut Id="ProductExecutableDesktopShorctut" Name="$(var.ProductName)" Description="PowerCalc" WorkingDirectory="INSTALLLOCATION"
+                  Directory="DesktopFolder" Advertise="no" Icon="ProductIcon.exe" Target="[#ProductExecutableFile]"></Shortcut>
+        <Condition>SHORTCUT_DESKTOP</Condition>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

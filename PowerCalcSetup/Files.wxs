@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include Variables.wxi ?>
+
+  <Fragment>
+    <DirectoryRef Id="INSTALLLOCATION">
+      <!-- Product Executable file -->
+      <Component Id="CMP_ProductExecutable" Guid="FBF1CF0F-5980-4443-B715-20E354EF7C0C">
+        <File Id="ProductExecutableFile" Name="$(var.PowerCalc.TargetFileName)" Source="$(var.PowerCalc.TargetPath)" DiskId="1" KeyPath="yes"></File>
+
+        <!--<ProgId Id="Tester.BinaryTest" Description="Binary file test" Advertise="yes" Icon="BinaryTestFile.ico">
+          <Extension Id="tst">
+            <Verb Id="open" Command="Open" Argument='"%1"' />
+          </Extension>
+        </ProgId>-->
+      </Component>
+      <!-- TAlex.Common -->
+      <Component Id="CMP_TAlexCommon" Guid="448491D1-3810-4811-913E-02C108F4A176">
+        <File Id="FILE_TAlexCommon" Name="TAlex.Common.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.WPF.Controls -->
+      <Component Id="CMP_TAlexWPFControls" Guid="0B005407-D39A-4D29-9703-4AF79E23132B">
+        <File Id="FILE_TAlexWPFControls" Name="TAlex.WPF.Controls.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.WPF.Mvvm -->
+      <Component Id="CMP_TAlexWPFMvvm" Guid="7D27AF12-541B-42B1-AB58-6140AD4C5EDA">
+        <File Id="FILE_TAlexWPFMvvm" Name="TAlex.WPF.Mvvm.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- Ninject -->
+      <Component Id="CMP_Ninject" Guid="C76B9053-F128-4694-A565-5160A179ADAA">
+        <File Id="FILE_Ninject" Name="Ninject.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="CommonDocumentsTestsFolder">
+      <!--<Component Id="CMP_SimpleTest" Guid="EB2920D9-0879-428A-8520-40258D592F62">
+        <File Id="FILE_SimpleTest" Name="Simple Test.tst" Source="$(var.Testcheck.Tester.ProjectDir)Tests\Simple Test.tst" DiskId="1" KeyPath="yes" />
+      </Component>-->
+    </DirectoryRef>
+  </Fragment>
+</Wix>

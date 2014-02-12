@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include Variables.wxi ?>
+
+  <Fragment>
+    <Feature Id="Complete" Title="$(var.ProductName)" Description="Complete setup" Display="expand" Level="1" ConfigurableDirectory="INSTALLLOCATION" AllowAdvertise="no" Absent="disallow" InstallDefault="local">
+      <Feature Id="PowerCalc" Title="PowerCalc" Description="PowerCalc" Level="1" AllowAdvertise="no" Absent="disallow" InstallDefault="local">
+        <ComponentRef Id="CMP_ProductExecutable" />
+        
+        <ComponentRef Id="CMP_TAlexCommon" />
+        <ComponentRef Id="CMP_TAlexWPFMvvm" />
+        <ComponentRef Id="CMP_TAlexWPFControls" />
+        <ComponentRef Id="CMP_Ninject" />
+
+        <ComponentRef Id="CMP_ProgramsMenuShortcuts" />
+        <ComponentRef Id="CMP_ProductExecutableDesktopShorctut" />
+
+        <!--<Feature Id="TestExamples" Title="Test Examples" Description="Test Examples" Level="1" AllowAdvertise="no" Absent="allow" InstallDefault="local">
+          <ComponentRef Id="CMP_SimpleTest" />
+        </Feature>-->
+      </Feature>
+    </Feature>
+  </Fragment>
+</Wix>

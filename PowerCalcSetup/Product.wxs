@@ -1,30 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="PowerCalcSetup" Language="1033" Version="1.0.0.0" Manufacturer="T-Alex Software" UpgradeCode="2d516ca2-237f-4ae9-8767-436e051c5667">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+  <?include Variables.wxi ?>
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+  <Product Id="$(var.ProductCode)" UpgradeCode="$(var.UpgradeCode)" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-		<Feature Id="ProductFeature" Title="PowerCalcSetup" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
+    <!-- Detecting installed version of .NET Framework -->
+    <PropertyRef Id="$(var.FrameworkVersion)"/>
+    <PropertyRef Id="WIX_DIR_COMMON_DOCUMENTS"/>
+    <Condition Message="This application requires .NET Framework $(var.FrameworkVersionText). Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR $(var.FrameworkVersion)]]>
+    </Condition>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="PowerCalcSetup" />
-			</Directory>
-		</Directory>
-	</Fragment>
+    <!-- Upgrading -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-		</ComponentGroup>
-	</Fragment>
+    <!-- Properties for UI -->
+    <Property Id="SHORTCUT_PROGRAMMENU">1</Property>
+    <Property Id="SHORTCUT_DESKTOP">1</Property>
+
+    <!--Directory structure-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="ManufacturerFolder" Name="$(var.Manufacturer)">
+          <Directory Id="INSTALLLOCATION" Name="$(var.ProductName)"></Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.ProductName)" />
+      </Directory>
+
+      <Directory Id="DesktopFolder" />
+
+      <Directory Id="WIX_DIR_COMMON_DOCUMENTS">
+        <Directory Id="CommonDocumentsFolder" Name="$(var.ProductName)">
+          <Directory Id="CommonDocumentsTestsFolder" Name="Tests"></Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <FeatureRef Id="Complete"/>
+
+    <!-- Icons -->
+    <Icon Id="ProductIcon.exe" SourceFile="$(var.PowerCalc.TargetPath)" />
+    <!--<Icon Id="BinaryTestFile.ico" SourceFile="$(var.Testcheck.Tester.ProjectDir)Resources\Icons\testfile.ico" />--> <!-- TODO: Need to remove -->
+
+    <Property Id="ARPPRODUCTICON" Value="ProductIcon.exe" />
+    <Property Id="ARPHELPLINK" Value="$(var.HelpLink)" />
+    <Property Id="ARPURLINFOABOUT" Value="$(var.SupportLink)" />
+    <Property Id="ARPURLUPDATEINFO" Value="$(var.UpdateInformation)" />
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION"></Property>
+
+    <WixVariable Id="WixUIBannerBmp" Overridable="yes" Value="Resources/Images/Banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Overridable="yes" Value="Resources/Images/Dialog.bmp" />
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="Resources/License.rtf" />
+
+    <UIRef Id="WixUI_InstallDirEx" />
+  </Product>
 </Wix>
