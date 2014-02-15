@@ -6,12 +6,21 @@
     <Feature Id="Complete" Title="$(var.ProductName)" Description="Complete setup" Display="expand" Level="1" ConfigurableDirectory="INSTALLLOCATION" AllowAdvertise="no" Absent="disallow" InstallDefault="local">
       <Feature Id="PowerCalc" Title="PowerCalc" Description="PowerCalc" Level="1" AllowAdvertise="no" Absent="disallow" InstallDefault="local">
         <ComponentRef Id="CMP_ProductExecutable" />
+        <ComponentRef Id="CMP_ProductExecutableConfig" />
         
         <ComponentRef Id="CMP_TAlexCommon" />
         <ComponentRef Id="CMP_TAlexWPFMvvm" />
         <ComponentRef Id="CMP_TAlexWPFControls" />
         <ComponentRef Id="CMP_Ninject" />
 
+        <ComponentRef Id="CMP_TAlexMathCore" />
+        <ComponentRef Id="CMP_TAlexMathCore_ExpressionsBase" />
+        <ComponentRef Id="CMP_TAlexMathCore_ComplexExpressions" />
+        <ComponentRef Id="CMP_TAlexMathCore_LinearAlgebra" />
+        <ComponentRef Id="CMP_TAlexMathCore_NumericalAnalysis" />
+        <ComponentRef Id="CMP_TAlexMathCore_SpecialFunctions" />
+        <ComponentRef Id="CMP_TAlexMathCore_Statistics" />
+        
         <ComponentRef Id="CMP_ProgramsMenuShortcuts" />
         <ComponentRef Id="CMP_ProductExecutableDesktopShorctut" />
 

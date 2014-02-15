@@ -35,7 +35,7 @@
     <Folder Include="Resources\Images" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Images\Banner.bmp" />
+    <Content Include="Resources\Images\banner.bmp" />
     <Content Include="Resources\Images\Dialog.bmp" />
     <Content Include="Resources\License.rtf" />
     <Content Include="Variables.wxi" />

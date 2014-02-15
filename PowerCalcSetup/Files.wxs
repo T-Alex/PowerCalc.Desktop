@@ -6,14 +6,18 @@
     <DirectoryRef Id="INSTALLLOCATION">
       <!-- Product Executable file -->
       <Component Id="CMP_ProductExecutable" Guid="FBF1CF0F-5980-4443-B715-20E354EF7C0C">
-        <File Id="ProductExecutableFile" Name="$(var.PowerCalc.TargetFileName)" Source="$(var.PowerCalc.TargetPath)" DiskId="1" KeyPath="yes"></File>
-
+        <File Id="ProductExecutableFile" Name="$(var.PowerCalc.TargetFileName)" Source="$(var.PowerCalc.TargetPath)" DiskId="1" KeyPath="yes" />
         <!--<ProgId Id="Tester.BinaryTest" Description="Binary file test" Advertise="yes" Icon="BinaryTestFile.ico">
           <Extension Id="tst">
             <Verb Id="open" Command="Open" Argument='"%1"' />
           </Extension>
         </ProgId>-->
       </Component>
+      <!-- Configuration file -->
+      <Component Id="CMP_ProductExecutableConfig" Guid="26FEFE6E-2783-4C07-8DBE-523B5B5903FE">
+        <File Id="FILE_ProductExecutableConfig" Name="$(var.PowerCalc.TargetFileName).config" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      
       <!-- TAlex.Common -->
       <Component Id="CMP_TAlexCommon" Guid="448491D1-3810-4811-913E-02C108F4A176">
         <File Id="FILE_TAlexCommon" Name="TAlex.Common.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
@@ -29,6 +33,35 @@
       <!-- Ninject -->
       <Component Id="CMP_Ninject" Guid="C76B9053-F128-4694-A565-5160A179ADAA">
         <File Id="FILE_Ninject" Name="Ninject.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+
+      <!-- TAlex.MathCore -->
+      <Component Id="CMP_TAlexMathCore" Guid="0E1B3BAF-7093-4E2D-B82C-6E4DA4D995BF">
+        <File Id="FILE_TAlexMathCore" Name="TAlex.MathCore.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.MathCore.ExpressionsBase -->
+      <Component Id="CMP_TAlexMathCore_ExpressionsBase" Guid="1017C4CF-0643-478C-B32E-039A8FE1DB34">
+        <File Id="FILE_TAlexMathCore_ExpressionsBase" Name="TAlex.MathCore.ExpressionsBase.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.MathCore.ComplexExpressions -->
+      <Component Id="CMP_TAlexMathCore_ComplexExpressions" Guid="858FA297-CA63-4B6A-8746-E24961C6ED72">
+        <File Id="FILE_TAlexMathCore_ComplexExpressions" Name="TAlex.MathCore.ComplexExpressions.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.MathCore.LinearAlgebra -->
+      <Component Id="CMP_TAlexMathCore_LinearAlgebra" Guid="86432BB0-0671-4C7C-9BF7-D6A51567EDF2">
+        <File Id="FILE_TAlexMathCore_LinearAlgebra" Name="TAlex.MathCore.LinearAlgebra.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.MathCore.NumericalAnalysis -->
+      <Component Id="CMP_TAlexMathCore_NumericalAnalysis" Guid="DDD2D174-76FC-4055-9236-7F5CC33CE069">
+        <File Id="FILE_TAlexMathCore_NumericalAnalysis" Name="TAlex.MathCore.NumericalAnalysis.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.MathCore.SpecialFunctions -->
+      <Component Id="CMP_TAlexMathCore_SpecialFunctions" Guid="27835BB9-F1AB-475F-918A-6ECD845B94B3">
+        <File Id="FILE_TAlexMathCore_SpecialFunctions" Name="TAlex.MathCore.SpecialFunctions.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.MathCore.Statistics -->
+      <Component Id="CMP_TAlexMathCore_Statistics" Guid="27E7D596-E6F6-49A1-B3FA-B9B261729E57">
+        <File Id="FILE_TAlexMathCore_Statistics" Name="TAlex.MathCore.Statistics.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
       </Component>
     </DirectoryRef>
 
