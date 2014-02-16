@@ -24,7 +24,9 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="ManufacturerFolder" Name="$(var.Manufacturer)">
-          <Directory Id="INSTALLLOCATION" Name="$(var.ProductName)"></Directory>
+          <Directory Id="INSTALLLOCATION" Name="$(var.ProductName)">
+            <Directory Id="ExtensionsFolder" Name="Extensions"></Directory>
+          </Directory>
         </Directory>
       </Directory>
 

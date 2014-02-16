@@ -20,6 +20,8 @@
         <ComponentRef Id="CMP_TAlexMathCore_NumericalAnalysis" />
         <ComponentRef Id="CMP_TAlexMathCore_SpecialFunctions" />
         <ComponentRef Id="CMP_TAlexMathCore_Statistics" />
+
+        <ComponentRef Id="CMP_TAlexMathCore_ComplexExpressions_Extensions" />
         
         <ComponentRef Id="CMP_ProgramsMenuShortcuts" />
         <ComponentRef Id="CMP_ProductExecutableDesktopShorctut" />

@@ -65,6 +65,13 @@
       </Component>
     </DirectoryRef>
 
+    <DirectoryRef Id="ExtensionsFolder">
+      <!-- TAlex.MathCore.ComplexExpressions.Extensions -->
+      <Component Id="CMP_TAlexMathCore_ComplexExpressions_Extensions" Guid="A132D519-5375-4161-8B06-E26CF98C02AF">
+        <File Id="FILE_TAlexMathCore_ComplexExpressions_Extensions" Name="TAlex.MathCore.ComplexExpressions.Extensions.dll" Source="$(var.PowerCalc.TargetDir)Extensions\" DiskId="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    
     <DirectoryRef Id="CommonDocumentsTestsFolder">
       <!--<Component Id="CMP_SimpleTest" Guid="EB2920D9-0879-428A-8520-40258D592F62">
         <File Id="FILE_SimpleTest" Name="Simple Test.tst" Source="$(var.Testcheck.Tester.ProjectDir)Tests\Simple Test.tst" DiskId="1" KeyPath="yes" />
