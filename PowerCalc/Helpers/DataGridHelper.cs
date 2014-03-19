@@ -50,6 +50,10 @@ namespace TAlex.PowerCalc.Helpers
 
         public static DataGridCell TryToFindGridCell(this DataGrid grid, object item, DataGridColumn column)
         {
+            if (item == null || column == null)
+            {
+                return null;
+            }
             return TryToFindGridCell(grid, new DataGridCellInfo(item, column));
         }
 

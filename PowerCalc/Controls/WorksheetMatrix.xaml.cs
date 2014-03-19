@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -36,9 +37,8 @@ namespace TAlex.PowerCalc.Controls
         private static readonly int DefaultColumnCount = 256;
         private static readonly int DefaultRowCount = 256;
 
-        private static readonly string CellErrorText = "#ERROR";
-
-        private static Random _rand = new Random();
+        private bool _formulaBarEdit = false;
+        private DataGridCell _lastEditedCellViaFormulaBar = null;
 
         #endregion
 
@@ -79,16 +79,6 @@ namespace TAlex.PowerCalc.Controls
         #endregion
 
         #region Methods
-
-        public DataCell GetDataCell(int column, int row)
-        {
-            return (dataGrid.Items[row] as DataRow)[column];
-        }
-
-        private DataCell GetDataCell(DataGridCellInfo cellInfo)
-        {
-            return (cellInfo.Item as DataRow)[cellInfo.Column.DisplayIndex];
-        }
 
         public void Initialize()
         {
@@ -131,57 +121,52 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
-        private void dataGrid_CurrentCellChanged(object sender, EventArgs e)
-        {
-            if (lastEditedCell != null && !formulaBarTextBox.IsFocused)
-            {
-                lastEditedCell.IsEditing = false;
-                lastEditedCell = null;
-            }
-        }
-
-        // TODO: Need refactoring
+        /// <summary>
+        /// 1. Commit editing if last editing was via formula bar
+        /// 2. Set binding (Expression property) between formula bar text box and selected cell.
+        /// 3. Display cell range.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            int selectedCells = dataGrid.SelectedCells.Count;
+            if (_lastEditedCellViaFormulaBar != null && _lastEditedCellViaFormulaBar != dataGrid.TryToFindGridCell(dataGrid.CurrentItem, dataGrid.CurrentColumn))
+            {
+                _lastEditedCellViaFormulaBar.IsEditing = false;
+                _lastEditedCellViaFormulaBar = null;
+            }
 
+            int selectedCells = dataGrid.SelectedCells.Count;
             if (selectedCells > 0)
             {
-                DataGridCellInfo firstCellInfo1 = dataGrid.SelectedCells[0];
-                formulaBarTextBox.SetBinding(TextBox.TextProperty, new Binding("Expression") { Source = GetDataCell(firstCellInfo1), Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+                DataGridCellInfo firstCellInfo = dataGrid.SelectedCells[0];
+                formulaBarTextBox.SetBinding(TextBox.TextProperty, new Binding("Expression") { Source = GetDataCell(firstCellInfo), Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
 
                 if (selectedCells == 1)
                 {
-                    nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo1.Column.DisplayIndex, dataGrid.Items.IndexOf(firstCellInfo1.Item) + 1);
+                    nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(firstCellInfo.Item) + 1);
                 }
                 else
                 {
-                    DataGridCellInfo firstCellInfo = dataGrid.SelectedCells[0];
                     DataGridCellInfo lastCellInfo = dataGrid.SelectedCells[selectedCells - 1];
 
-                    //nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.ColumnIndex, firstCellInfo.RowIndex + 1,
-                    //    lastCellInfo.ColumnIndex, lastCellInfo.RowIndex + 1);
+                    nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(firstCellInfo.Item) + 1,
+                        lastCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(lastCellInfo.Item) + 1);
                 }
             }
-        }
-
-        // TODO: Need refactoring
-        private void dataGrid_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
-        {
-            //DataCell cell = (e.Row.Item as DataRow)[e.Column.DisplayIndex];
         }
 
         // TODO: Need refactoring
         private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            FrameworkElement elem = e.EditingElement;
-            
-            if (formulaBarEdit)
+            if (_formulaBarEdit)
             {
                 e.Cancel = true;
-                lastEditedCell = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
-                formulaBarEdit = false;
+                _formulaBarEdit = false;
+                _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
             }
+
+            //FrameworkElement elem = e.EditingElement;
 
             //if (elem is TextBox)
             //{
@@ -298,22 +283,17 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
-        bool formulaBarEdit = false;
-        DataGridCell lastEditedCell = null;
-
         // TODO: Need refactoring
         private void formulaBarTextBox_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            bool? focused = e.NewValue as bool?;
-            
-            if (focused == true)
+            if ((bool?)e.NewValue == true)
             {
-                if (dataGrid.SelectedCells.Count == 0)
+                if (!dataGrid.SelectedCells.Any())
                 {
-                    SelectFirstCell();
+                    SelectFirstCell(true);
                 }
 
-                formulaBarEdit = true;
+                _formulaBarEdit = true;
                 dataGrid.BeginEdit();
                 formulaBarTextBox.Focus();
             }
@@ -335,13 +315,27 @@ namespace TAlex.PowerCalc.Controls
 
         #region Helpers
 
-        // TODO: Need refactoring
-        private void SelectFirstCell()
+        public DataCell GetDataCell(int column, int row)
+        {
+            return (dataGrid.Items[row] as DataRow)[column];
+        }
+
+        private DataCell GetDataCell(DataGridCellInfo cellInfo)
+        {
+            return (cellInfo.Item as DataRow)[cellInfo.Column.DisplayIndex];
+        }
+
+        private void SelectFirstCell(bool isEditing)
         {
             DataGridCellInfo firstCellInfo = new DataGridCellInfo(dataGrid.Items[0], dataGrid.Columns[0]);
             
-            //dataGrid.CurrentCellContainer = dataGrid.TryFindCell(firstCellInfo.Item, firstCellInfo.Column);
             dataGrid.SelectedCells.Add(firstCellInfo);
+
+            if (isEditing)
+            {
+                _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(firstCellInfo);
+                _lastEditedCellViaFormulaBar.IsEditing = isEditing;
+            }
         }
 
         #endregion
@@ -396,7 +390,9 @@ namespace TAlex.PowerCalc.Controls
         {
             #region Fields
 
-            private string _expression;
+            private static readonly string CellErrorText = "#ERROR";
+
+            private static Random _rand = new Random();
 
             #endregion
 

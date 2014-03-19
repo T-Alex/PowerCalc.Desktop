@@ -64,7 +64,7 @@ namespace TAlex.PowerCalc.Controls
 
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            TextBlock textBlock = new TextBlock();
+            TextBlock textBlock = new TextBlock { VerticalAlignment = VerticalAlignment.Center };
             if (Binding == null)
                 BindingOperations.ClearBinding(textBlock, TextBlock.TextProperty);
             else
