@@ -13,9 +13,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
 
+using TAlex.PowerCalc.Locators;
+using TAlex.PowerCalc.Helpers;
+
 using TAlex.MathCore;
 using TAlex.MathCore.LinearAlgebra;
 using TAlex.MathCore.ExpressionEvaluation;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.MathCore.ExpressionEvaluation.Trees;
+using TAlex.PowerCalc.ViewModels;
 
 
 namespace TAlex.PowerCalc.Controls
@@ -27,10 +33,10 @@ namespace TAlex.PowerCalc.Controls
     {
         #region Fields
 
-        private const int DefaultColumnCount = 256;
-        private const int DefaultRowCount = 256;
+        private static readonly int DefaultColumnCount = 256;
+        private static readonly int DefaultRowCount = 256;
 
-        private const string CellErrorText = "#ERROR";
+        private static readonly string CellErrorText = "#ERROR";
 
         private static Random _rand = new Random();
 
@@ -74,76 +80,112 @@ namespace TAlex.PowerCalc.Controls
 
         #region Methods
 
-        public void CommitEdit()
+        public DataCell GetDataCell(int column, int row)
         {
-            dataGrid.CommitEdit();
+            return (dataGrid.Items[row] as DataRow)[column];
+        }
+
+        private DataCell GetDataCell(DataGridCellInfo cellInfo)
+        {
+            return (cellInfo.Item as DataRow)[cellInfo.Column.DisplayIndex];
+        }
+
+        public void Initialize()
+        {
+            int colCount = DefaultColumnCount;
+            int rowCount = DefaultRowCount;
+
+            dataGrid.Columns.Clear();
+            for (int i = 0; i < colCount; i++)
+            {
+                dataGrid.Columns.Add(new DataGridTextColumnEx
+                {
+                    Header = Helpers.A1ReferenceHelper.IntegerToA1ReferenceColumn(i),
+                    Binding = new Binding(String.Format("[{0}].FormattedValue", i)) { ValidatesOnExceptions = true },
+                    EditingBinding = new Binding(String.Format("[{0}].Expression", i)) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged }
+                });
+            }
+
+            DataTable dataTable = new DataTable(((WorksheetMatrixViewModel)DataContext).ExpressionTreeBuilder);
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                dataTable.Rows.Add(new DataRow(dataTable, colCount) { RowNumber = i + 1 });
+            }
+
+            dataGrid.ItemsSource = dataTable.Rows;
         }
 
         #region Event Handlers
 
+        /// <summary>
+        /// Auto switching to edit mode after typing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGrid_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (DataGridHelper.HasNonEscapeCharacters(e))
+            {
+                ((DataGrid)sender).BeginEdit(e);
+            }
+        }
+
+        private void dataGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            if (lastEditedCell != null && !formulaBarTextBox.IsFocused)
+            {
+                lastEditedCell.IsEditing = false;
+                lastEditedCell = null;
+            }
+        }
+
         // TODO: Need refactoring
         private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            //int selectedCells = dataGrid.SelectedCells.Count;
+            int selectedCells = dataGrid.SelectedCells.Count;
 
-            //if (selectedCells > 0)
-            //{
-            //    if (selectedCells == 1)
-            //    {
-            //        DataGridCellInfo firstCellInfo = dataGrid.SelectedCells[0];
-            //        nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.ColumnIndex, firstCellInfo.RowIndex + 1);
-            //    }
-            //    else
-            //    {
-            //        DataGridCellInfo firstCellInfo = dataGrid.SelectedCells[0];
-            //        DataGridCellInfo lastCellInfo = dataGrid.SelectedCells[selectedCells - 1];
-
-            //        nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.ColumnIndex, firstCellInfo.RowIndex + 1,
-            //            lastCellInfo.ColumnIndex, lastCellInfo.RowIndex + 1);
-            //    }
-
-            //    formulaBarTextBox.TextChanged -= new TextChangedEventHandler(formulaBarTextBox_TextChanged);
-
-            //    DataGridCellInfo currentCellInfo = dataGrid.CurrentCell;
-            //    DataCell dataCell = GetDataCell(currentCellInfo);
-            //    formulaBarTextBox.Text = dataCell.Expression;
-
-            //    formulaBarTextBox.TextChanged += new TextChangedEventHandler(formulaBarTextBox_TextChanged);
-            //}
-        }
-
-        private void dataGrid_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
-        {
-            DataCell cell = (e.Row.Item as DataRow)[e.Column.DisplayIndex];
-
-            if (e.EditingElement is TextBox)
+            if (selectedCells > 0)
             {
-                TextBox textBox = e.EditingElement as TextBox;
+                DataGridCellInfo firstCellInfo1 = dataGrid.SelectedCells[0];
+                formulaBarTextBox.SetBinding(TextBox.TextProperty, new Binding("Expression") { Source = GetDataCell(firstCellInfo1), Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
 
-                if (!String.IsNullOrEmpty(cell.Expression))
+                if (selectedCells == 1)
                 {
-                    textBox.Text = cell.Expression;
+                    nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo1.Column.DisplayIndex, dataGrid.Items.IndexOf(firstCellInfo1.Item) + 1);
                 }
                 else
                 {
-                    formulaBarTextBox.Text = textBox.Text;
-                }
+                    DataGridCellInfo firstCellInfo = dataGrid.SelectedCells[0];
+                    DataGridCellInfo lastCellInfo = dataGrid.SelectedCells[selectedCells - 1];
 
-                textBox.TextChanged += new TextChangedEventHandler(editingTextBox_TextChanged);
+                    //nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.ColumnIndex, firstCellInfo.RowIndex + 1,
+                    //    lastCellInfo.ColumnIndex, lastCellInfo.RowIndex + 1);
+                }
             }
+        }
+
+        // TODO: Need refactoring
+        private void dataGrid_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
+        {
+            //DataCell cell = (e.Row.Item as DataRow)[e.Column.DisplayIndex];
         }
 
         // TODO: Need refactoring
         private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            //FrameworkElement elem = e.EditingElement;
+            FrameworkElement elem = e.EditingElement;
+            
+            if (formulaBarEdit)
+            {
+                e.Cancel = true;
+                lastEditedCell = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
+                formulaBarEdit = false;
+            }
 
             //if (elem is TextBox)
             //{
             //    TextBox textBox = elem as TextBox;
-
-            //    textBox.TextChanged -= new TextChangedEventHandler(editingTextBox_TextChanged);
-
             //    string expression = textBox.Text.Trim();
             //    DataCell dataCell = (e.Row.Item as DataRow)[e.Column.DisplayIndex];
 
@@ -235,263 +277,71 @@ namespace TAlex.PowerCalc.Controls
         // TODO: Need refactoring
         private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            //switch (e.Key)
-            //{
-            //    case Key.Delete:
-            //        if (!dataGrid.CurrentCellContainer.IsEditing)
-            //        {
-            //            int selectedCells = dataGrid.SelectedCells.Count;
+            switch (e.Key)
+            {
+                case Key.Delete:
+                    //if (!dataGrid.CurrentCellContainer.IsEditing)
+                    //{
+                    //    int selectedCells = dataGrid.SelectedCells.Count;
 
-            //            for (int i = 0; i < selectedCells; i++)
-            //            {
-            //                DataGridCellInfo cellInfo = dataGrid.SelectedCells[i];
-            //                DataCell dataCell = GetDataCell(cellInfo);
+                    //    for (int i = 0; i < selectedCells; i++)
+                    //    {
+                    //        DataGridCellInfo cellInfo = dataGrid.SelectedCells[i];
+                    //        DataCell dataCell = GetDataCell(cellInfo);
+                    //        dataCell.Clear();
+                    //    }
 
-            //                cellInfo.Value = null;
-            //                dataCell.FormattedValue = null;
-            //                dataCell.Expression = null;
-            //                dataCell.Value = null;
+                    //    formulaBarTextBox.Text = String.Empty;
+                    //}
 
-            //                DataGridCell cell = dataGrid.TryFindCell(cellInfo.Item, cellInfo.Column);
-            //                if (cell != null) cell.ToolTip = null;
-            //            }
-
-            //            formulaBarTextBox.Text = String.Empty;
-            //        }
-
-            //        break;
-            //}
+                    break;
+            }
         }
+
+        bool formulaBarEdit = false;
+        DataGridCell lastEditedCell = null;
 
         // TODO: Need refactoring
         private void formulaBarTextBox_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //bool? focused = e.NewValue as bool?;
+            bool? focused = e.NewValue as bool?;
+            
+            if (focused == true)
+            {
+                if (dataGrid.SelectedCells.Count == 0)
+                {
+                    SelectFirstCell();
+                }
 
-            //if (focused == true)
-            //{
-            //    if (dataGrid.SelectedCells.Count == 0)
-            //    {
-            //        SelectFirstCell();
-            //    }
-
-            //    dataGrid.BeginEdit();
-            //    formulaBarTextBox.Focus();
-
-            //    DataGridCellInfo cellInfo = new DataGridCellInfo(dataGrid.CurrentCellContainer);
-            //    DataCell dataCell = GetDataCell(cellInfo);
-
-            //    cellInfo.Value = dataCell.Expression;
-            //}
-        }
-
-        // TODO: Need refactoring
-        private void formulaBarTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //if (dataGrid.SelectedCells.Count > 0)
-            //{
-            //    string expression = formulaBarTextBox.Text;
-
-            //    DataGridCellInfo cellInfo = new DataGridCellInfo(dataGrid.CurrentCellContainer);
-            //    cellInfo.Value = expression;
-
-            //    DataCell dataCell = GetDataCell(cellInfo);
-            //    dataCell.FormattedValue = expression;
-            //    dataCell.Expression = expression;
-            //}
+                formulaBarEdit = true;
+                dataGrid.BeginEdit();
+                formulaBarTextBox.Focus();
+            }
         }
 
         // TODO: Need refactoring
         private void formulaBarTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            //switch (e.Key)
-            //{
-            //    case Key.Enter:
-            //        dataGrid.CurrentCellContainer.Focus();
-            //        dataGrid.OnEnterKeyDown(e);
-            //        break;
-            //}
-        }
-
-        private void editingTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            formulaBarTextBox.Text = ((TextBox)sender).Text;
+        { 
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    dataGrid.GetCurrentDataGridCell().Focus(); //dataGrid.Focus(); //dataGrid.CurrentCellContainer.Focus();
+                    dataGrid.RaiseEvent(new KeyEventArgs(e.KeyboardDevice, e.InputSource, e.Timestamp, Key.Enter)); //dataGrid.OnEnterKeyDown(e);
+                    break;
+            }
         }
 
         #endregion
 
         #region Helpers
 
-        public void Initialize()
-        {
-            int colCount = DefaultColumnCount;
-            int rowCount = DefaultRowCount;
-
-            for (int i = 0; i < colCount; i++)
-            {
-                dataGrid.Columns.Add(new DataGridTextColumn
-                {
-                    Header = Helpers.A1ReferenceHelper.IntegerToA1ReferenceColumn(i),
-                    Binding = new Binding(string.Format("[{0}].FormattedValue", i))
-                });
-            }
-
-            List<DataRow> rows = new List<DataRow>(rowCount);
-
-            for (int i = 0; i < rowCount; i++)
-            {
-                rows.Add(new DataRow(colCount));
-            }
-
-            dataGrid.ItemsSource = rows;
-        }
-
-        private int StringLengthComparison(string str1, string str2)
-        {
-            int len1 = str1.Length;
-            int len2 = str2.Length;
-
-            if (len1 < len2) return 1;
-            else if (len1 > len2) return -1;
-            else return 0;
-        }
-
-        private Complex GetSingleCellValue(string a1Reference)
-        {
-            int row, column;
-            Helpers.A1ReferenceHelper.Parse(a1Reference, out column, out row);
-
-            return (Complex)GetDataCell(column, row).Value;
-        }
-
-        private CMatrix GetRangeOfCellValues(string a1Reference)
-        {
-            int row1Idx, col1Idx, row2Idx, col2Idx;
-            Helpers.A1ReferenceHelper.Parse(a1Reference, out col1Idx, out row1Idx, out col2Idx, out row2Idx);
-
-            int n = row2Idx - row1Idx;
-            int m = col2Idx - col1Idx;
-
-            CMatrix matrix = new CMatrix(n, m);
-
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < m; j++)
-                {
-                    if (GetDataCell(j + col1Idx, i + row1Idx).Value != null)
-                        matrix[i, j] = (Complex)GetDataCell(j + col1Idx, i + row1Idx).Value;
-                    else
-                        matrix[i, j] = Complex.Zero;
-                }
-            }
-
-            return matrix;
-        }
-
-        // TODO: Need refactoring
-        private Object EvaluateMatrixExpression(string expression)
-        {
-            //// Preparation variables
-            //Dictionary<string, Object> vars = new Dictionary<string, object>();
-
-            //MatchCollection matches = Regex.Matches(expression, Helpers.A1ReferenceHelper.A1ReferenceRangeOfCellsPattern);
-            //List<string> references = new List<string>();
-
-            //foreach (Match match in matches)
-            //{
-            //    string reference = match.Value;
-
-            //    if (!references.Contains(reference))
-            //        references.Add(reference);
-            //}
-
-            //references.Sort(StringLengthComparison);
-
-            //foreach (string reference in references)
-            //{
-            //    string varName = GetRandomVariableName();
-            //    vars.Add(varName, GetRangeOfCellValues(reference));
-            //    expression = expression.Replace(reference, varName);
-            //}
-
-            //matches = Regex.Matches(expression, Helpers.A1ReferenceHelper.A1ReferenceSingleCellPattern);
-            //references.Clear();
-
-            //foreach (Match match in matches)
-            //{
-            //    string reference = match.Value;
-
-            //    if (!references.Contains(reference))
-            //        references.Add(reference);
-            //}
-
-            //references.Sort(StringLengthComparison);
-
-            //foreach (string reference in references)
-            //{
-            //    string varName = GetRandomVariableName();
-            //    vars.Add(varName, GetSingleCellValue(reference));
-            //    expression = expression.Replace(reference, varName);
-            //}
-
-            //// Evaluation the expression
-            //Object obj = new ComplexMathEvaluator(expression, vars).Evaluate();
-
-            //// Normalize the result
-            //if (obj is Complex)
-            //{
-            //    obj = NumericUtil.ComplexZeroThreshold((Complex)obj, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-            //}
-            //else if (obj is CMatrix)
-            //{
-            //    obj = TAlex.MathCore.LinearAlgebra.NumericUtilExtensions.ComplexZeroThreshold((CMatrix)obj, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-            //}
-
-            //return obj;
-
-            return null;
-        }
-
-
         // TODO: Need refactoring
         private void SelectFirstCell()
         {
-            //DataGridCellInfo firstCellInfo = new DataGridCellInfo(dataGrid.Items[0], dataGrid.Columns[0]);
-
+            DataGridCellInfo firstCellInfo = new DataGridCellInfo(dataGrid.Items[0], dataGrid.Columns[0]);
+            
             //dataGrid.CurrentCellContainer = dataGrid.TryFindCell(firstCellInfo.Item, firstCellInfo.Column);
-            //dataGrid.SelectedCells.Add(firstCellInfo);
-        }
-
-        public DataCell GetDataCell(DataGridCellInfo cellInfo)
-        {
-            return (cellInfo.Item as DataRow)[cellInfo.Column.DisplayIndex /*.ColumnIndex*/];
-        }
-
-        public DataCell GetDataCell(int column, int row)
-        {
-            return (dataGrid.Items[row] as DataRow)[column];
-        }
-
-        private static string GetRandomVariableName()
-        {
-            return GetRandomVariableName(15);
-        }
-
-        private static string GetRandomVariableName(int length)
-        {
-            string name = String.Empty;
-
-            for (int i = 0; i < length; i++)
-            {
-                bool upperCase = (_rand.Next(0, 2) == 0) ? false : true;
-
-                if (upperCase)
-                    name += (Char)('A' + _rand.Next(0, 26));
-                else
-                    name += (Char)('a' + _rand.Next(0, 26));
-            }
-
-            return name;
+            dataGrid.SelectedCells.Add(firstCellInfo);
         }
 
         #endregion
@@ -500,9 +350,25 @@ namespace TAlex.PowerCalc.Controls
 
         #region Nested types
 
-        private class DataRow
+        public class DataTable
+        {
+            public IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
+
+            public List<DataRow> Rows { get; private set; }
+
+
+            public DataTable(IExpressionTreeBuilder<Object> expressionTreeBuilder)
+            {
+                Rows = new List<DataRow>();
+                ExpressionTreeBuilder = expressionTreeBuilder;
+            }
+        }
+
+        public class DataRow
         {
             private DataCell[] _cells;
+
+            public int RowNumber { get; set; }
 
             public DataCell this[int i]
             {
@@ -517,20 +383,194 @@ namespace TAlex.PowerCalc.Controls
                 }
             }
 
-            public DataRow(int cellCount)
+            public DataRow(DataTable dataTable, int cellCount)
             {
                 _cells = new DataCell[cellCount];
 
                 for (int i = 0; i < cellCount; i++)
-                    _cells[i] = new DataCell();
+                    _cells[i] = new DataCell(dataTable);
             }
         }
 
         public class DataCell
         {
+            #region Fields
+
+            private string _expression;
+
+            #endregion
+
+            #region Properties
+
+            public DataTable DataTable { get; private set; }
+
             public Object Value { get; set; }
-            public string FormattedValue { get; set; }
-            public string Expression { get; set; }
+
+            public string FormattedValue
+            {
+                get
+                {
+                    if (!String.IsNullOrEmpty(Expression))
+                    {
+                        return EvaluateExpression(Expression).ToString();
+                    }
+                    return null;
+                }
+            }
+
+            public string Expression
+            {
+                get;
+                set;
+            }
+
+            #endregion
+
+            #region Constructors
+
+            public DataCell(DataTable dataTable)
+            {
+                DataTable = dataTable;
+            }
+
+            #endregion
+
+            #region Methods
+
+            public void Clear()
+            {
+                Expression = null;
+                Value = null;
+            }
+
+            private Object EvaluateExpression(string expression)
+            {
+                // Preparation variables
+                IDictionary<string, Object> vars = new Dictionary<string, object>();
+
+                MatchCollection referenceMatches = Regex.Matches(expression, Helpers.A1ReferenceHelper.A1ReferenceRangeOfCellsPattern);
+                List<string> references = new List<string>();
+
+                foreach (Match match in referenceMatches)
+                {
+                    string reference = match.Value;
+
+                    if (!references.Contains(reference))
+                        references.Add(reference);
+                }
+
+                references.Sort(StringLengthComparison);
+
+                foreach (string reference in references)
+                {
+                    string varName = GetRandomVariableName();
+                    vars.Add(varName, GetRangeOfCellValues(reference));
+                    expression = expression.Replace(reference, varName);
+                }
+
+                referenceMatches = Regex.Matches(expression, Helpers.A1ReferenceHelper.A1ReferenceSingleCellPattern);
+                references.Clear();
+
+                foreach (Match match in referenceMatches)
+                {
+                    string reference = match.Value;
+
+                    if (!references.Contains(reference))
+                        references.Add(reference);
+                }
+
+                references.Sort(StringLengthComparison);
+
+                foreach (string reference in references)
+                {
+                    string varName = GetRandomVariableName();
+                    vars.Add(varName, GetSingleCellValue(reference));
+                    expression = expression.Replace(reference, varName);
+                }
+
+                // Evaluation the expression
+                Expression<Object> expr = DataTable.ExpressionTreeBuilder.BuildTree(expression);
+                expr.SetAllVariables(vars);
+                Object obj = expr.Evaluate();
+
+                // Normalize the result
+                if (obj is Complex)
+                {
+                    obj = NumericUtil.ComplexZeroThreshold((Complex)obj, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
+                }
+                else if (obj is CMatrix)
+                {
+                    obj = TAlex.MathCore.LinearAlgebra.NumericUtilExtensions.ComplexZeroThreshold((CMatrix)obj, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
+                }
+
+                return obj;
+            }
+
+            private static string GetRandomVariableName()
+            {
+                return GetRandomVariableName(15);
+            }
+
+            private static string GetRandomVariableName(int length)
+            {
+                string name = String.Empty;
+
+                for (int i = 0; i < length; i++)
+                {
+                    bool upperCase = (_rand.Next(0, 2) == 0) ? false : true;
+
+                    if (upperCase)
+                        name += (Char)('A' + _rand.Next(0, 26));
+                    else
+                        name += (Char)('a' + _rand.Next(0, 26));
+                }
+
+                return name;
+            }
+
+            private int StringLengthComparison(string str1, string str2)
+            {
+                int len1 = str1.Length;
+                int len2 = str2.Length;
+
+                if (len1 < len2) return 1;
+                else if (len1 > len2) return -1;
+                else return 0;
+            }
+
+            private Complex GetSingleCellValue(string a1Reference)
+            {
+                int row, column;
+                Helpers.A1ReferenceHelper.Parse(a1Reference, out column, out row);
+
+                return (Complex)DataTable.Rows[row][column].Value;
+            }
+
+            private CMatrix GetRangeOfCellValues(string a1Reference)
+            {
+                int row1Idx, col1Idx, row2Idx, col2Idx;
+                Helpers.A1ReferenceHelper.Parse(a1Reference, out col1Idx, out row1Idx, out col2Idx, out row2Idx);
+
+                int n = row2Idx - row1Idx;
+                int m = col2Idx - col1Idx;
+
+                CMatrix matrix = new CMatrix(n, m);
+
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        if (DataTable.Rows[i + row1Idx][j + col1Idx].Value != null)
+                            matrix[i, j] = (Complex)DataTable.Rows[i + row1Idx][j + col1Idx].Value;
+                        else
+                            matrix[i, j] = Complex.Zero;
+                    }
+                }
+
+                return matrix;
+            }
+
+            #endregion
         }
 
         #endregion

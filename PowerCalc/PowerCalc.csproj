@@ -204,11 +204,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\InsertFunctionCommand.cs" />
+    <Compile Include="Controls\DataGridTextColumnEx.cs" />
     <Compile Include="Controls\WorksheetMatrix.xaml.cs">
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
     <Compile Include="Converters\XYCoordsToStringConverter.cs" />
+    <Compile Include="Helpers\DataGridHelper.cs" />
     <Compile Include="Helpers\ExpressionExtensions.cs" />
     <Compile Include="Locators\Modules\AppLicenseNinjectModule.cs" />
     <Compile Include="Locators\Modules\BaseServicesNinjectModule.cs" />

@@ -49,6 +49,15 @@ namespace TAlex.PowerCalc.Locators
         }
 
 
+        public WorksheetMatrixViewModel WorksheetMatrixViewModel
+        {
+            get
+            {
+                return _kernel.Get<WorksheetMatrixViewModel>();
+            }
+        }
+
+
         public InsertFunctionContextMenuViewModel InsertFunctionContextMenuViewModel
         {
             get
