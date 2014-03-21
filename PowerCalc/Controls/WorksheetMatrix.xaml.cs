@@ -91,7 +91,7 @@ namespace TAlex.PowerCalc.Controls
                 dataGrid.Columns.Add(new DataGridTextColumnEx
                 {
                     Header = Helpers.A1ReferenceHelper.IntegerToA1ReferenceColumn(i),
-                    Binding = new Binding(String.Format("[{0}].FormattedValue", i)) { ValidatesOnExceptions = true },
+                    Binding = new Binding(String.Format("[{0}].FormattedValue", i)) { ValidatesOnExceptions = true, NotifyOnValidationError = true },
                     EditingBinding = new Binding(String.Format("[{0}].Expression", i)) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged }
                 });
             }
@@ -283,14 +283,13 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
-        // TODO: Need refactoring
         private void formulaBarTextBox_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool?)e.NewValue == true)
             {
                 if (!dataGrid.SelectedCells.Any())
                 {
-                    SelectFirstCell(true);
+                    SelectFirstCell();
                 }
 
                 _formulaBarEdit = true;
@@ -299,14 +298,24 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
-        // TODO: Need refactoring
         private void formulaBarTextBox_KeyDown(object sender, KeyEventArgs e)
-        { 
+        {
             switch (e.Key)
             {
-                case Key.Enter:
-                    dataGrid.GetCurrentDataGridCell().Focus(); //dataGrid.Focus(); //dataGrid.CurrentCellContainer.Focus();
-                    dataGrid.RaiseEvent(new KeyEventArgs(e.KeyboardDevice, e.InputSource, e.Timestamp, Key.Enter)); //dataGrid.OnEnterKeyDown(e);
+                case Key.Return:
+                    if (dataGrid.SelectedCells.Any())
+                    {
+                        DataGridCell editingCell = dataGrid.GetSelectedDataCells().FirstOrDefault(x => x.IsEditing);
+                        
+                        if (editingCell != null)
+                        {
+                            e.Handled = true;
+                            editingCell.Focus();
+
+                            var keyEventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Return) { RoutedEvent = Keyboard.KeyDownEvent };
+                            editingCell.RaiseEvent(keyEventArgs);
+                        }
+                    }
                     break;
             }
         }
@@ -325,17 +334,13 @@ namespace TAlex.PowerCalc.Controls
             return (cellInfo.Item as DataRow)[cellInfo.Column.DisplayIndex];
         }
 
-        private void SelectFirstCell(bool isEditing)
+        private void SelectFirstCell()
         {
             DataGridCellInfo firstCellInfo = new DataGridCellInfo(dataGrid.Items[0], dataGrid.Columns[0]);
-            
-            dataGrid.SelectedCells.Add(firstCellInfo);
 
-            if (isEditing)
-            {
-                _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(firstCellInfo);
-                _lastEditedCellViaFormulaBar.IsEditing = isEditing;
-            }
+            dataGrid.UnselectAllCells();
+            dataGrid.SelectedCells.Add(firstCellInfo);
+            dataGrid.CurrentCell = firstCellInfo;
         }
 
         #endregion

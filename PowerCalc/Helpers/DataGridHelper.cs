@@ -62,6 +62,11 @@ namespace TAlex.PowerCalc.Helpers
             return TryToFindGridCell(grid, grid.CurrentCell);
         }
 
+        public static IList<DataGridCell> GetSelectedDataCells(this DataGrid grid)
+        {
+            return grid.SelectedCells.Select(x => TryToFindGridCell(grid, x)).ToList();
+        }
+
 
         private static T GetVisualChild<T>(Visual parent) where T : Visual
         {
