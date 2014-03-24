@@ -23,6 +23,8 @@ using TAlex.MathCore.ExpressionEvaluation;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.PowerCalc.ViewModels;
+using TAlex.WPF.Mvvm;
+using System.ComponentModel;
 
 
 namespace TAlex.PowerCalc.Controls
@@ -122,9 +124,21 @@ namespace TAlex.PowerCalc.Controls
         }
 
         /// <summary>
+        /// Set binding (Expression property) between formula bar text box and selected cell.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            if (dataGrid.CurrentCell.Column != null)
+            {
+                formulaBarTextBox.SetBinding(TextBox.TextProperty, new Binding("Expression") { Source = GetDataCell(dataGrid.CurrentCell), Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+            }
+        }
+
+        /// <summary>
         /// 1. Commit editing if last editing was via formula bar
-        /// 2. Set binding (Expression property) between formula bar text box and selected cell.
-        /// 3. Display cell range.
+        /// 2. Display cell range.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -135,12 +149,11 @@ namespace TAlex.PowerCalc.Controls
                 _lastEditedCellViaFormulaBar.IsEditing = false;
                 _lastEditedCellViaFormulaBar = null;
             }
-
+            
             int selectedCells = dataGrid.SelectedCells.Count;
             if (selectedCells > 0)
             {
                 DataGridCellInfo firstCellInfo = dataGrid.SelectedCells[0];
-                formulaBarTextBox.SetBinding(TextBox.TextProperty, new Binding("Expression") { Source = GetDataCell(firstCellInfo), Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
 
                 if (selectedCells == 1)
                 {
@@ -259,26 +272,12 @@ namespace TAlex.PowerCalc.Controls
             //}
         }
 
-        // TODO: Need refactoring
         private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
                 case Key.Delete:
-                    //if (!dataGrid.CurrentCellContainer.IsEditing)
-                    //{
-                    //    int selectedCells = dataGrid.SelectedCells.Count;
-
-                    //    for (int i = 0; i < selectedCells; i++)
-                    //    {
-                    //        DataGridCellInfo cellInfo = dataGrid.SelectedCells[i];
-                    //        DataCell dataCell = GetDataCell(cellInfo);
-                    //        dataCell.Clear();
-                    //    }
-
-                    //    formulaBarTextBox.Text = String.Empty;
-                    //}
-
+                    OnDataGridDeleteKeyDown(e);
                     break;
             }
         }
@@ -303,20 +302,44 @@ namespace TAlex.PowerCalc.Controls
             switch (e.Key)
             {
                 case Key.Return:
-                    if (dataGrid.SelectedCells.Any())
-                    {
-                        DataGridCell editingCell = dataGrid.GetSelectedDataCells().FirstOrDefault(x => x.IsEditing);
-                        
-                        if (editingCell != null)
-                        {
-                            e.Handled = true;
-                            editingCell.Focus();
-
-                            var keyEventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Return) { RoutedEvent = Keyboard.KeyDownEvent };
-                            editingCell.RaiseEvent(keyEventArgs);
-                        }
-                    }
+                    OnFormulaBarEnterKeyDown(e);
                     break;
+            }
+        }
+
+
+        //TODO: Need refactoring
+        protected void OnDataGridDeleteKeyDown(KeyEventArgs e)
+        {
+            //if (!dataGrid.CurrentCellContainer.IsEditing)
+            //{
+            //    int selectedCells = dataGrid.SelectedCells.Count;
+
+            //    for (int i = 0; i < selectedCells; i++)
+            //    {
+            //        DataGridCellInfo cellInfo = dataGrid.SelectedCells[i];
+            //        DataCell dataCell = GetDataCell(cellInfo);
+            //        dataCell.Clear();
+            //    }
+
+            //    formulaBarTextBox.Text = String.Empty;
+            //}
+        }
+
+        protected void OnFormulaBarEnterKeyDown(KeyEventArgs e)
+        {
+            if (dataGrid.SelectedCells.Any())
+            {
+                DataGridCell editingCell = dataGrid.GetSelectedDataCells().FirstOrDefault(x => x.IsEditing);
+
+                if (editingCell != null)
+                {
+                    e.Handled = true;
+                    editingCell.Focus();
+
+                    var keyEventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Return) { RoutedEvent = Keyboard.KeyDownEvent };
+                    editingCell.RaiseEvent(keyEventArgs);
+                }
             }
         }
 
@@ -397,6 +420,7 @@ namespace TAlex.PowerCalc.Controls
 
             private static readonly string CellErrorText = "#ERROR";
 
+            private string _expression;
             private static Random _rand = new Random();
 
             #endregion
@@ -421,8 +445,16 @@ namespace TAlex.PowerCalc.Controls
 
             public string Expression
             {
-                get;
-                set;
+                get
+                {
+                    return _expression;
+                }
+
+                set
+                {
+                    _expression = value;
+                    //RaisePropertyChanged(() => FormattedValue);
+                }
             }
 
             #endregion

@@ -28,6 +28,7 @@
                      SelectionUnit="Cell" SelectionMode="Extended" EnableColumnVirtualization="True" EnableRowVirtualization="True"
                      RowBackground="{DynamicResource DataGridRowBackground}"
                      AlternatingRowBackground="{DynamicResource DataGridAlternatingRowBackground}"
+                     CurrentCellChanged="dataGrid_CurrentCellChanged"
                      CellEditEnding="dataGrid_CellEditEnding"
                      PreviewKeyDown="dataGrid_PreviewKeyDown"
                      SelectedCellsChanged="dataGrid_SelectedCellsChanged"
