@@ -169,7 +169,6 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
-        // TODO: Need refactoring
         private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (_formulaBarEdit)
@@ -179,97 +178,38 @@ namespace TAlex.PowerCalc.Controls
                 _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
             }
 
-            //FrameworkElement elem = e.EditingElement;
+            //---------------------------------------------------------------
+            var currentDataCell = GetDataCell(new DataGridCellInfo(e.Row.Item, e.Column));
 
-            //if (elem is TextBox)
-            //{
-            //    TextBox textBox = elem as TextBox;
-            //    string expression = textBox.Text.Trim();
-            //    DataCell dataCell = (e.Row.Item as DataRow)[e.Column.DisplayIndex];
+            if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            {
+                DataGridCellInfo firstCell = dataGrid.SelectedCells[0];
+                DataGridCellInfo lastCell = dataGrid.SelectedCells[dataGrid.SelectedCells.Count - 1];
 
-            //    if (String.IsNullOrEmpty(expression))
-            //    {
-            //        dataCell.FormattedValue = null;
-            //        dataCell.Expression = null;
-            //        dataCell.Value = null;
-            //        dataGrid.CurrentCellContainer.ToolTip = null;
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        dataCell.Expression = expression;
+                int firstSelectedItemIndex = dataGrid.Items.IndexOf(firstCell.Item);
+                int lastSelectedItemIndex = dataGrid.Items.IndexOf(lastCell.Item);
+                int firstSelectedColumnIndex = firstCell.Column.DisplayIndex;
+                int lastSelectedColumnIndex = lastCell.Column.DisplayIndex;
 
-            //        try
-            //        {
-            //            Object result = EvaluateMatrixExpression(expression);
+                int rows = Math.Abs(firstSelectedItemIndex - lastSelectedItemIndex) + 1;
+                int cols = Math.Abs(firstSelectedColumnIndex - lastSelectedColumnIndex) + 1;
 
-            //            dataGrid.CurrentCellContainer.ToolTip = null;
+                int rowOffset = Math.Min(firstSelectedItemIndex, lastSelectedItemIndex);
+                int colOffset = Math.Min(firstSelectedColumnIndex, lastSelectedColumnIndex);
 
-            //            if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
-            //            {
-            //                int selectedCells = dataGrid.SelectedCells.Count;
-
-            //                if (selectedCells > 1)
-            //                {
-            //                    if (result is CMatrix)
-            //                    {
-            //                        string format = Properties.Settings.Default.NumericFormat;
-            //                        DataGridCellInfo firstCell = dataGrid.SelectedCells[0];
-            //                        DataGridCellInfo lastCell = dataGrid.SelectedCells[selectedCells - 1];
-
-            //                        CMatrix m = (CMatrix)result;
-
-            //                        int firstSelectedItemIndex = dataGrid.Items.IndexOf(firstCell.Item);
-            //                        int lastSelectedItemIndex = dataGrid.Items.IndexOf(lastCell.Item);
-            //                        int firstSelectedColumnIndex = firstCell.Column.DisplayIndex;
-            //                        int lastSelectedColumnIndex = lastCell.Column.DisplayIndex;
-
-            //                        int rows = Math.Min(m.RowCount, Math.Abs(firstSelectedItemIndex - lastSelectedItemIndex) + 1);
-            //                        int cols = Math.Min(m.ColumnCount, Math.Abs(firstSelectedColumnIndex - lastSelectedColumnIndex) + 1);
-
-            //                        int row_offset = Math.Min(firstSelectedItemIndex, lastSelectedItemIndex);
-            //                        int col_offset = Math.Min(firstSelectedColumnIndex, lastSelectedColumnIndex);
-
-            //                        for (int i = 0; i < rows; i++)
-            //                        {
-            //                            for (int j = 0; j < cols; j++)
-            //                            {
-            //                                Complex num = m[i, j];
-
-            //                                DataGridCellInfo currCellInfo = new DataGridCellInfo(dataGrid.Items[row_offset + i], dataGrid.Columns[col_offset + j]);
-            //                                currCellInfo.Value = num.ToString(format, CultureInfo.InvariantCulture);
-
-            //                                DataCell dataCell2 = GetDataCell(currCellInfo);
-            //                                dataCell2.Value = num;
-
-            //                                if (dataGrid.CurrentCellContainer.Column.DisplayIndex == currCellInfo.ColumnIndex &&
-            //                                    dataGrid.CurrentCellContainer.RowDataItem == currCellInfo.Item)
-            //                                    continue;
-
-            //                                dataCell2.FormattedValue = num.ToString(Properties.Settings.Default.NumericFormat, CultureInfo.InvariantCulture);
-            //                                dataCell2.Expression = num.ToString(CultureInfo.InvariantCulture);
-            //                            }
-            //                        }
-
-            //                        return;
-            //                    }
-            //                }
-            //            }
-
-            //            dataCell.Value = result;
-            //            dataCell.FormattedValue = ((IFormattable)result).ToString(Properties.Settings.Default.NumericFormat, CultureInfo.InvariantCulture);
-            //            textBox.Text = dataCell.FormattedValue;
-            //        }
-            //        catch (Exception exc)
-            //        {
-            //            dataCell.FormattedValue = CellErrorText;
-            //            dataCell.Value = null;
-            //            textBox.Text = dataCell.FormattedValue;
-
-            //            dataGrid.CurrentCellContainer.ToolTip = exc.Message;
-            //        }
-            //    }
-            //}
+                //if (currentDataCell.Parent == null)
+                    new DataArray(currentDataCell, colOffset, rowOffset, rows, cols);
+                //else
+                //    currentDataCell.Parent.Expand(colOffset, rowOffset, rows, cols);
+            }
+            else
+            {
+                if (!Keyboard.IsKeyDown(Key.Escape) && currentDataCell.Parent != null)
+                {
+                    MessageBox.Show("You can't edit part of array", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    e.Cancel = true;
+                }
+            }
         }
 
         private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -308,22 +248,19 @@ namespace TAlex.PowerCalc.Controls
         }
 
 
-        //TODO: Need refactoring
         protected void OnDataGridDeleteKeyDown(KeyEventArgs e)
         {
-            //if (!dataGrid.CurrentCellContainer.IsEditing)
-            //{
-            //    int selectedCells = dataGrid.SelectedCells.Count;
+            if (!dataGrid.GetCurrentDataGridCell().IsEditing)
+            { 
+                int selectedCells = dataGrid.SelectedCells.Count;
 
-            //    for (int i = 0; i < selectedCells; i++)
-            //    {
-            //        DataGridCellInfo cellInfo = dataGrid.SelectedCells[i];
-            //        DataCell dataCell = GetDataCell(cellInfo);
-            //        dataCell.Clear();
-            //    }
-
-            //    formulaBarTextBox.Text = String.Empty;
-            //}
+                for (int i = 0; i < selectedCells; i++)
+                {
+                    DataGridCellInfo cellInfo = dataGrid.SelectedCells[i];
+                    DataCell dataCell = GetDataCell(cellInfo);
+                    dataCell.Clear();
+                }
+            }
         }
 
         protected void OnFormulaBarEnterKeyDown(KeyEventArgs e)
@@ -378,6 +315,14 @@ namespace TAlex.PowerCalc.Controls
 
             public List<DataRow> Rows { get; private set; }
 
+            public DataCell this[int row, int col]
+            {
+                get
+                {
+                    return Rows[row][col];
+                }
+            }
+
 
             public DataTable(IExpressionTreeBuilder<Object> expressionTreeBuilder)
             {
@@ -414,70 +359,31 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
-        public class DataCell
+
+        public abstract class DataUnit : ViewModelBase
         {
             #region Fields
 
-            private static readonly string CellErrorText = "#ERROR";
-
-            private string _expression;
             private static Random _rand = new Random();
 
             #endregion
 
             #region Properties
 
-            public DataTable DataTable { get; private set; }
+            public virtual DataTable DataTable { get; protected set; }
 
-            public Object Value { get; set; }
+            public virtual string Expression { get; set; }
 
-            public string FormattedValue
-            {
-                get
-                {
-                    if (!String.IsNullOrEmpty(Expression))
-                    {
-                        return EvaluateExpression(Expression).ToString();
-                    }
-                    return null;
-                }
-            }
-
-            public string Expression
-            {
-                get
-                {
-                    return _expression;
-                }
-
-                set
-                {
-                    _expression = value;
-                    //RaisePropertyChanged(() => FormattedValue);
-                }
-            }
-
-            #endregion
-
-            #region Constructors
-
-            public DataCell(DataTable dataTable)
-            {
-                DataTable = dataTable;
-            }
+            public abstract Object CachedValue { get; }
 
             #endregion
 
             #region Methods
 
-            public void Clear()
+            protected Object EvaluateExpression()
             {
-                Expression = null;
-                Value = null;
-            }
+                string expression = Expression;
 
-            private Object EvaluateExpression(string expression)
-            {
                 // Preparation variables
                 IDictionary<string, Object> vars = new Dictionary<string, object>();
 
@@ -524,20 +430,9 @@ namespace TAlex.PowerCalc.Controls
                 // Evaluation the expression
                 Expression<Object> expr = DataTable.ExpressionTreeBuilder.BuildTree(expression);
                 expr.SetAllVariables(vars);
-                Object obj = expr.Evaluate();
-
-                // Normalize the result
-                if (obj is Complex)
-                {
-                    obj = NumericUtil.ComplexZeroThreshold((Complex)obj, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-                }
-                else if (obj is CMatrix)
-                {
-                    obj = TAlex.MathCore.LinearAlgebra.NumericUtilExtensions.ComplexZeroThreshold((CMatrix)obj, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-                }
-
-                return obj;
+                return expr.Evaluate();
             }
+
 
             private static string GetRandomVariableName()
             {
@@ -576,7 +471,7 @@ namespace TAlex.PowerCalc.Controls
                 int row, column;
                 Helpers.A1ReferenceHelper.Parse(a1Reference, out column, out row);
 
-                return (Complex)DataTable.Rows[row][column].Value;
+                return (Complex)DataTable[row, column].CachedValue;
             }
 
             private CMatrix GetRangeOfCellValues(string a1Reference)
@@ -593,14 +488,212 @@ namespace TAlex.PowerCalc.Controls
                 {
                     for (int j = 0; j < m; j++)
                     {
-                        if (DataTable.Rows[i + row1Idx][j + col1Idx].Value != null)
-                            matrix[i, j] = (Complex)DataTable.Rows[i + row1Idx][j + col1Idx].Value;
+                        if (DataTable[i + row1Idx, j + col1Idx].CachedValue != null)
+                            matrix[i, j] = (Complex)DataTable[i + row1Idx, j + col1Idx].CachedValue;
                         else
                             matrix[i, j] = Complex.Zero;
                     }
                 }
 
                 return matrix;
+            }
+
+            #endregion
+        }
+
+        public class DataArray : DataUnit
+        {
+            #region Fields
+
+            private string _expression;
+            private Object _cachedValue;
+
+            #endregion
+
+            #region Properties
+
+            public override string Expression
+            {
+                get
+                {
+                    return _expression;
+                }
+
+                set
+                {
+                    _expression = value;
+
+                }
+            }
+
+            public override Object CachedValue
+            {
+                get
+                {
+                    return _cachedValue ?? EvaluateExpression();
+                }
+            }
+
+            public DataCell[,] Array { get; set; }
+
+            #endregion
+
+
+            public DataArray(DataCell currentCell, int x, int y, int rows, int cols)
+            {
+                Expression = currentCell.Expression;
+                DataTable = currentCell.DataTable;
+                Array = new DataCell[rows, cols];
+
+                for (int row = 0; row < rows; row++)
+                {
+                    for (int col = 0; col < cols; col++)
+                    {
+                        Array[row, col] = currentCell.DataTable[y + row, x + col];
+                        Array[row, col].Parent = this;
+                        Array[row, col].RefreshValue();
+                    }
+                }
+            }
+
+
+            public object FindValue(DataCell cell, Object cachedValue)
+            {
+                if (cachedValue is CMatrix)
+                {
+                    CMatrix matrix = cachedValue as CMatrix;
+                    for (int i = 0; i < Array.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < Array.GetLength(1); j++)
+                        {
+                            if (this.Array[i, j] == cell)
+                            {
+                                return matrix[i, j];
+                            }
+                        }
+                    }
+                }
+                else if (cachedValue is Complex)
+                {
+                    return cachedValue;
+                }
+
+                throw new ArgumentException();
+            }
+
+            public virtual void Expand(int x, int y, int rows, int cols)
+            {
+
+            }
+        }
+
+        public class DataCell : DataUnit
+        {
+            #region Fields
+
+            private static readonly string CellErrorText = "#ERROR";
+
+            private string _expression;
+            private Object _cachedValue;
+
+            #endregion
+
+            #region Properties
+
+            public DataArray Parent { get; set; }
+
+            public override Object CachedValue
+            {
+                get
+                {
+                    if (Parent == null)
+                    {
+                        Object value = _cachedValue ?? EvaluateExpression();
+                        if (value is CMatrix)
+                        {
+                            return ((CMatrix)value)[0, 0];
+                        }
+                        return value;
+                    }
+
+                    return Parent.FindValue(this, Parent.CachedValue);
+                }
+            }
+
+            public string FormattedValue
+            {
+                get
+                {
+                    if (!String.IsNullOrEmpty(Expression))
+                    {
+                        return ValueToStirng(CachedValue);
+                    }
+                    return null;
+                }
+            }
+
+            public override string Expression
+            {
+                get
+                {
+                    return (Parent == null) ? _expression : Parent.Expression;
+                }
+
+                set
+                {
+                    if (Parent == null)
+                    {
+                        _expression = value;
+                        _cachedValue = null;
+                    }
+                    else
+                    {
+                        Parent.Expression = value;
+                    }
+
+                    RaisePropertyChanged(() => Expression);
+                    RefreshValue();
+                }
+            }
+
+            #endregion
+
+            #region Constructors
+
+            public DataCell(DataTable dataTable)
+            {
+                DataTable = dataTable;
+            }
+
+            #endregion
+
+            #region Methods
+
+            public void Clear()
+            {
+                Expression = null;
+            }
+
+            public void RefreshValue()
+            {
+                RaisePropertyChanged(() => FormattedValue);
+            }
+
+            private string ValueToStirng(Object value)
+            {
+                Object normilizedValue = null;
+
+                // Normalize the result
+                if (value is Complex)
+                {
+                    normilizedValue = NumericUtil.ComplexZeroThreshold((Complex)value, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
+                }
+                else if (value is CMatrix)
+                {
+                    normilizedValue = TAlex.MathCore.LinearAlgebra.NumericUtilExtensions.ComplexZeroThreshold((CMatrix)value, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
+                }
+
+                return normilizedValue.ToString();
             }
 
             #endregion
