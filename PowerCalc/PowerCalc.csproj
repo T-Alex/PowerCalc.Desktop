@@ -78,9 +78,9 @@
     <Reference Include="TAlex.MathCore.ComplexExpressions">
       <HintPath>..\packages\TAlex.MathCore.ComplexExpressions.1.0.4871.35633\lib\net45\TAlex.MathCore.ComplexExpressions.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.MathCore.ExpressionsBase, Version=1.0.4931.39868, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TAlex.MathCore.ExpressionsBase, Version=1.0.5206.896, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TAlex.MathCore.ExpressionsBase.1.0.4931.39868\lib\net45\TAlex.MathCore.ExpressionsBase.dll</HintPath>
+      <HintPath>..\packages\TAlex.MathCore.ExpressionsBase.1.0.5206.896\lib\net45\TAlex.MathCore.ExpressionsBase.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.MathCore.LinearAlgebra">
       <HintPath>..\packages\TAlex.MathCore.LinearAlgebra.1.0.4871.34046\lib\net45\TAlex.MathCore.LinearAlgebra.dll</HintPath>
@@ -94,13 +94,13 @@
     <Reference Include="TAlex.MathCore.Statistics">
       <HintPath>..\packages\TAlex.MathCore.Statistics.1.0.4871.34047\lib\net45\TAlex.MathCore.Statistics.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.WPF.Controls, Version=1.8.5128.39856, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TAlex.WPF.Controls, Version=1.8.5188.34346, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TAlex.WPF.Controls.1.8.5128.39856\lib\net40\TAlex.WPF.Controls.dll</HintPath>
+      <HintPath>..\packages\TAlex.WPF.Controls.1.8.5188.34346\lib\net40\TAlex.WPF.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.WPF.Mvvm, Version=1.1.5131.38598, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TAlex.WPF.Mvvm, Version=1.1.5201.39558, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TAlex.WPF.Mvvm.1.1.5131.38598\lib\net45\TAlex.WPF.Mvvm.dll</HintPath>
+      <HintPath>..\packages\TAlex.WPF.Mvvm.1.1.5201.39558\lib\net45\TAlex.WPF.Mvvm.dll</HintPath>
     </Reference>
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -217,6 +217,7 @@
     <Compile Include="Locators\Modules\MathCoreNinjectModule.cs" />
     <Compile Include="Locators\Modules\ViewModelNinjectModule.cs" />
     <Compile Include="Locators\ViewModelLocator.cs" />
+    <Compile Include="TemplateSelectors\WorksheetItemTemplateSelector.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\ConstantsContextMenuViewModel.cs" />
     <Compile Include="ViewModels\InsertFunctionContextMenuViewModel.cs" />
@@ -224,6 +225,13 @@
     <Compile Include="ViewModels\PreferencesWindowViewModel.cs" />
     <Compile Include="ViewModels\RegistrationWindowViewModel.cs" />
     <Compile Include="ViewModels\WorksheetMatrixViewModel.cs" />
+    <Compile Include="ViewModels\Matrices\DataArray.cs" />
+    <Compile Include="ViewModels\Matrices\DataCell.cs" />
+    <Compile Include="ViewModels\Matrices\DataRow.cs" />
+    <Compile Include="ViewModels\Matrices\DataTable.cs" />
+    <Compile Include="ViewModels\Matrices\DataUnit.cs" />
+    <Compile Include="ViewModels\Worksheet\WorksheetModel.cs" />
+    <Compile Include="ViewModels\Worksheet\WorksheetItem.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

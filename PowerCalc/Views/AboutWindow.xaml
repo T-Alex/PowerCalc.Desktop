@@ -16,7 +16,7 @@
         <Rectangle VerticalAlignment="Top" Height="100" Fill="{DynamicResource AboutLogoBgBrush}" />
         
         <!-- Logo -->
-        <Label Margin="0,25,0,0" FontSize="36" FontWeight="600" FontFamily="Segoe UI, Arial" VerticalAlignment="Top" HorizontalContentAlignment="Center"
+        <Label Margin="0,20,0,0" FontSize="48" FontWeight="600" FontFamily="Segoe UI, Arial" VerticalAlignment="Top" HorizontalContentAlignment="Center"
                Content="{Binding Mode=OneTime, Path=ProductTitle}" Foreground="{DynamicResource AboutLogoTextBrush}" >
             <Label.BitmapEffect>
                 <DropShadowBitmapEffect Color="White" Direction="270" ShadowDepth="1" Softness="0" />
@@ -24,7 +24,7 @@
         </Label>
         
         <!-- Version -->
-        <Label Margin="0,17,47,0" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="500"
+        <Label Margin="0,17,78,0" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="500"
                Foreground="{DynamicResource AboutVersionTextBrush}"
                Content="{Binding Mode=OneTime, Path=Version}">
             <Label.BitmapEffect>

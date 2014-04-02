@@ -5,6 +5,7 @@
     xmlns:commands="clr-namespace:TAlex.PowerCalc.Commands"
     xmlns:converters="clr-namespace:TAlex.PowerCalc.Converters"
     xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls"
+    xmlns:selectors="clr-namespace:TAlex.PowerCalc.TemplateSelectors"
     xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
     DataContext="{Binding Source={StaticResource viewModelLocator}, Path=MainWindowViewModel, Mode=OneTime}"
     WindowStartupLocation="CenterScreen" Width="700" Height="575" MinWidth="700" MinHeight="550"
@@ -113,8 +114,78 @@
 
         <TabControl Margin="-1,22,-1,20" Name="mainTabControl" SelectedIndex="0" TabStripPlacement="Top" Background="{DynamicResource MainTabControlBgBrush}">
             <TabItem Header="Worksheet">
+                <TabItem.Resources>
+                    <DataTemplate x:Key="NewItemTemplate">
+                        <TextBox x:Name="worksheetTextBox" Margin="6,3" Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Background="Transparent"
+                                 ContextMenu="{StaticResource mainContextMenu}" Focusable="True">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Return" Command="{Binding DataContext.EvaluateCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" />
+                            </TextBox.InputBindings>
+                            
+                            <TextBox.Template>
+                                <ControlTemplate>
+                                    <Border BorderThickness="0,0,0,1" BorderBrush="Gray">
+                                        <ScrollViewer x:Name="PART_ContentHost"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+                    </DataTemplate>
+                    
+                    <DataTemplate x:Key="HistoryItemTemplate">
+                        <Grid Margin="3">
+                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                <Border.Background>
+                                    <LinearGradientBrush Opacity="0.8" EndPoint="0,1">
+                                        <GradientStop Offset="0" Color="#ffffff" />
+                                        <GradientStop Offset="0.7" Color="#f8f8f8" />
+                                        <GradientStop Offset="1" Color="#e0e0e0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="1" Color="Gray" />
+                                </Border.Effect>
+                                
+                                <StackPanel Margin="7,3">
+                                    <TextBlock Text="{Binding Expression}" />
+                                    <Line Stretch="Fill" Stroke="Silver" X2="1"/>
+                                    <Label Margin="0" Padding="0" Foreground="DarkGreen" Content="{Binding Result}" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+
+                    <!-- Comment item template -->
+                    <DataTemplate x:Key="CommentItemTemplate">
+                        <Grid Margin="3">
+                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                <Border.Background>
+                                    <LinearGradientBrush Opacity="0.8" EndPoint="0,1">
+                                        <GradientStop Offset="0" Color="#ffffff" />
+                                        <GradientStop Offset="0.7" Color="#f8f8f8" />
+                                        <GradientStop Offset="1" Color="#e0e0e0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="1" Color="Gray" />
+                                </Border.Effect>
+
+                                <StackPanel Margin="7,3">
+                                    <Label Margin="0" Padding="0" FontWeight="Bold" Foreground="Gray" Content="{Binding Result}" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+
+                    <selectors:WorksheetItemTemplateSelector x:Key="WorksheetTemplateSelector"
+                                                             NewItemTemplate="{StaticResource NewItemTemplate}"
+                                                             HistoryItemTemplate="{StaticResource HistoryItemTemplate}"
+                                                             CommentItemTemplate="{StaticResource CommentItemTemplate}" />
+                </TabItem.Resources>
+                
                 <DockPanel>
-                    <Expander Background="{DynamicResource GradBrush}" ExpandDirection="Up" IsExpanded="True" DockPanel.Dock="Bottom">
+                    <Expander Background="{DynamicResource GradBrush}" ExpandDirection="Up" IsExpanded="True" DockPanel.Dock="Bottom">                      
                         <Canvas Height="156" Width="651" HorizontalAlignment="Center">
                             <GroupBox Canvas.Left="4" Canvas.Top="5" Header="Calc" Height="146" Width="52">
                                 <Canvas>
@@ -207,7 +278,7 @@
                                     <Button ToolTip="Absolute value" Tag="abs()" Width="32" Height="25" Canvas.Left="78" Canvas.Top="34" Click="buttonInsertText_Click">abs</Button>
                                     <Button ToolTip="Signature" Tag="sign()" Width="32" Height="25" Click="buttonInsertText_Click" Canvas.Left="115" Canvas.Top="34">sign</Button>
                                     <Button ToolTip="Subtraction" Tag="-" Width="32" Height="25" Canvas.Left="4" Canvas.Top="64" Click="buttonInsertText_Click">-</Button>
-                                    <Button ToolTip="Evaluate" Tag="=" Width="32" Height="55" Canvas.Left="41" Canvas.Top="64" Click="buttonEvaluate_Click">=</Button>
+                                    <Button ToolTip="Evaluate" Tag="=" Width="32" Height="55" Canvas.Left="41" Canvas.Top="64" Command="{Binding Worksheet.EvaluateCommand}">=</Button>
                                     <Button ToolTip="Raise to power" Tag="^" Width="32" Height="25" Canvas.Left="78" Canvas.Top="64" Click="buttonInsertText_Click">xⁿ</Button>
                                     <Button ToolTip="Square" Tag="sqr()" Width="32" Height="25" Canvas.Left="115" Canvas.Top="64" Click="buttonInsertText_Click">x²</Button>
                                     <Button ToolTip="Addition" Tag="+" Width="32" Height="25" Canvas.Left="4" Canvas.Top="94" Click="buttonInsertText_Click">+</Button>
@@ -223,14 +294,26 @@
                         </Canvas>
                     </Expander>
 
-                    <TextBox x:Name="worksheetTextBox" Background="{DynamicResource WorksheetTextBoxBgBrush}"
-                             VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto"
-                             AcceptsTab="True" AcceptsReturn="True" FontFamily="Consolas, Courier New"
-                             PreviewTextInput="worksheetTextBox_PreviewTextInput"
-                             PreviewKeyDown="worksheetTextBox_PreviewKeyDown" DataObject.Pasting="worksheetTextBox_Pasting"
-                             DockPanel.Dock="Top" FontSize="12"
-                             ContextMenu="{StaticResource mainContextMenu}" Focusable="True">
-                    </TextBox>
+                    <ListView Name="WorksheetListView" Background="{DynamicResource WorksheetTextBoxBgBrush}"
+                              DockPanel.Dock="Top" FontSize="12"
+                              HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              DataContext="{Binding Worksheet}" ItemsSource="{Binding Items}"
+                              ItemTemplateSelector="{StaticResource WorksheetTemplateSelector}"
+                              SelectionChanged="WorksheetListView_SelectionChanged">
+
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                
+                            </Style>
+                        </ListView.Resources>
+                    </ListView>
                 </DockPanel>
             </TabItem>
 

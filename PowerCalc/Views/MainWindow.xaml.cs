@@ -28,6 +28,7 @@ using TAlex.WPF3DToolkit.Surfaces;
 using TAlex.Common.Environment;
 using TAlex.PowerCalc.Commands;
 using TAlex.PowerCalc.ViewModels;
+using System.Collections.Specialized;
 
 
 namespace TAlex.PowerCalc
@@ -52,6 +53,8 @@ namespace TAlex.PowerCalc
         {
             InitializeComponent();
             LoadSettings(true);
+
+            ((INotifyCollectionChanged)WorksheetListView.Items).CollectionChanged += Worksheet_CollectionChanged;
         }
 
         #endregion
@@ -77,12 +80,13 @@ namespace TAlex.PowerCalc
                 }
             }
 
-            worksheetTextBox.FontFamily = settings.WorksheetFontFamily;
-            worksheetTextBox.FontWeight = settings.WorksheetFontWeight;
-            worksheetTextBox.FontStyle = settings.WorksheetFontStyle;
-            worksheetTextBox.FontStretch = settings.WorksheetFontStretch;
-            worksheetTextBox.FontSize = settings.WorksheetFontSize;
-            worksheetTextBox.Foreground = new SolidColorBrush(settings.WorksheetForeground);
+            // TODO: Need refactoring
+            //worksheetTextBox.FontFamily = settings.WorksheetFontFamily;
+            //worksheetTextBox.FontWeight = settings.WorksheetFontWeight;
+            //worksheetTextBox.FontStyle = settings.WorksheetFontStyle;
+            //worksheetTextBox.FontStretch = settings.WorksheetFontStretch;
+            //worksheetTextBox.FontSize = settings.WorksheetFontSize;
+            //worksheetTextBox.Foreground = new SolidColorBrush(settings.WorksheetForeground);
 
             plot2D.Background = new SolidColorBrush(settings.Plot2DBackground);
         }
@@ -103,15 +107,16 @@ namespace TAlex.PowerCalc
 
         private void CommandBindingNew_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(worksheetTextBox.Text))
-            {
-                return;
-            }
+            // TODO: Need refactoring
+            //if (String.IsNullOrEmpty(worksheetTextBox.Text))
+            //{
+            //    return;
+            //}
 
-            if (MessageBox.Show(this, "", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                worksheetTextBox.Text = String.Empty;
-            }
+            //if (MessageBox.Show(this, "", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            //{
+            //    worksheetTextBox.Text = String.Empty;
+            //}
         }
 
         private void CommandBindingOpen_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -121,7 +126,8 @@ namespace TAlex.PowerCalc
 
             if (ofd.ShowDialog(this) == true)
             {
-                worksheetTextBox.Text = System.IO.File.ReadAllText(ofd.FileName);
+                // TODO: Need refactoring.
+                //worksheetTextBox.Text = System.IO.File.ReadAllText(ofd.FileName);
             }
         }
 
@@ -132,7 +138,8 @@ namespace TAlex.PowerCalc
 
             if (sfd.ShowDialog(this) == true)
             {
-                System.IO.File.WriteAllText(sfd.FileName, worksheetTextBox.Text);
+                // TODO: Need refactoring.
+                //System.IO.File.WriteAllText(sfd.FileName, worksheetTextBox.Text);
             }
         }
 
@@ -153,7 +160,8 @@ namespace TAlex.PowerCalc
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Worksheet
-            worksheetTextBox.Focus();
+            // TODO: Need refactoring
+            //worksheetTextBox.Focus();
 
             // 3D Plot
             viewPort3D.Children.Add(Utils3D.GetCubeRectCoordSystem(10, 2));
@@ -255,95 +263,6 @@ namespace TAlex.PowerCalc
 
         #region Worksheet
 
-        private void worksheetTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            int caretIndex = worksheetTextBox.CaretIndex;
-            int currentLineIndex = worksheetTextBox.GetLineIndexFromCharacterIndex(caretIndex);
-            int currentLineLength = worksheetTextBox.GetLineLength(currentLineIndex);
-
-            if (worksheetTextBox.GetLineText(currentLineIndex).EndsWith(Environment.NewLine))
-                currentLineLength -= Environment.NewLine.Length;
-
-            int currentLineCharacterIndex = worksheetTextBox.GetCharacterIndexFromLineIndex(currentLineIndex);
-
-
-            switch (e.Text)
-            {
-                case "=":
-                    string currentLineString = worksheetTextBox.GetLineText(currentLineIndex).Trim();
-
-                    if (String.IsNullOrEmpty(currentLineString))
-                    {
-                        e.Handled = true;
-                        return;
-                    }
-
-                    System.Text.RegularExpressions.Match match = Helpers.WorksheetHelper.GetMatch(currentLineString);
-                    string resultString = currentLineString;
-                    
-                    try
-                    {
-                        if (!match.Success)
-                            throw new SyntaxException();
-
-                        resultString = match.Value.Trim();
-                        string expressionString = match.Groups["expr"].Value;
-
-                        // Evaluation expression
-                        string[] lines = new string[currentLineIndex];
-                        for (int i = 0; i < lines.Length; i++)
-                        {
-                            lines[i] = worksheetTextBox.GetLineText(i).Trim();
-                        }
-                        Dictionary<string, Object> variables = Helpers.WorksheetHelper.CalculateVariables(ExpressionTreeBuilder, lines);
-                        Object result = EvaluationExpression(expressionString, variables);
-                        resultString += String.Format(" = {0}", GetFormatedResult(result));
-                    }
-                    catch (SyntaxException exc)
-                    {
-                        resultString += String.Format(" = syntax_error ({0})", exc.Message);
-                    }
-                    catch (Exception exc)
-                    {
-                        resultString += String.Format(" = calc_error ({0})", exc.Message);
-                    }
-
-                    StringBuilder sb = new StringBuilder(worksheetTextBox.Text);
-
-                    sb.Remove(currentLineCharacterIndex, currentLineLength);
-                    sb.Insert(currentLineCharacterIndex, resultString);
-
-                    worksheetTextBox.Text = sb.ToString();
-                    worksheetTextBox.CaretIndex = currentLineCharacterIndex + resultString.Length;
-
-                    e.Handled = true;
-                    break;
-
-
-                default:
-                    string currentFullLineString = worksheetTextBox.GetLineText(currentLineIndex);
-
-                    string secondPart = String.Empty;
-                    if (!String.IsNullOrEmpty(currentFullLineString))
-                        secondPart = currentFullLineString.Substring(0, caretIndex - currentLineCharacterIndex);
-
-                    if (secondPart.Contains("="))
-                    {
-                        e.Handled = true;
-                    }
-
-                    break;
-            }
-        }
-
-        private object EvaluationExpression(string expressionString, IDictionary<string, object> variables)
-        {
-            Expression<object> expression = ExpressionTreeBuilder.BuildTree(expressionString);
-            expression.SetAllVariables(variables);
-            
-            return expression.Evaluate();
-        }
-
         private string GetFormatedResult(Object result)
         {
             string stringResult = null;
@@ -369,68 +288,6 @@ namespace TAlex.PowerCalc
             return stringResult;
         }
 
-
-        private void worksheetTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            int caretIndex = worksheetTextBox.CaretIndex;
-            int currentLineIndex = worksheetTextBox.GetLineIndexFromCharacterIndex(caretIndex);
-            int currentLineLength = worksheetTextBox.GetLineLength(currentLineIndex);
-
-            if (worksheetTextBox.GetLineText(currentLineIndex).EndsWith(Environment.NewLine))
-                currentLineLength -= Environment.NewLine.Length;
-
-            int currentLineCharacterIndex = worksheetTextBox.GetCharacterIndexFromLineIndex(currentLineIndex);
-
-            string currentLineString = worksheetTextBox.GetLineText(currentLineIndex);
-
-            string secondPart = String.Empty;
-            if (!String.IsNullOrEmpty(currentLineString))
-                secondPart = currentLineString.Substring(0, caretIndex - currentLineCharacterIndex);
-
-            if (secondPart.Contains("="))
-            {
-                if (e.Key == Key.Back || e.Key == Key.Delete)
-                {
-                    StringBuilder sb = new StringBuilder(worksheetTextBox.Text);
-
-                    string result = currentLineString.Split('=')[0].TrimEnd();
-
-                    sb.Remove(currentLineCharacterIndex, currentLineLength);
-                    sb.Insert(currentLineCharacterIndex, result);
-
-                    worksheetTextBox.Text = sb.ToString();
-                    worksheetTextBox.CaretIndex = currentLineCharacterIndex + result.Length;
-
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void worksheetTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
-        {
-            int caretIndex = worksheetTextBox.CaretIndex;
-            int currentLineIndex = worksheetTextBox.GetLineIndexFromCharacterIndex(caretIndex);
-            int currentLineLength = worksheetTextBox.GetLineLength(currentLineIndex);
-
-            if (worksheetTextBox.GetLineText(currentLineIndex).EndsWith(Environment.NewLine))
-                currentLineLength -= Environment.NewLine.Length;
-
-            int currentLineCharacterIndex = worksheetTextBox.GetCharacterIndexFromLineIndex(currentLineIndex);
-
-
-            string currentFullLineString = worksheetTextBox.GetLineText(currentLineIndex);
-
-            string secondPart = String.Empty;
-            if (!String.IsNullOrEmpty(currentFullLineString))
-                secondPart = currentFullLineString.Substring(0, caretIndex - currentLineCharacterIndex);
-
-            if (secondPart.Contains("="))
-            {
-                e.CancelCommand();
-                e.Handled = true;
-            }
-        }
-
         private void buttonInsertText_Click(object sender, RoutedEventArgs e)
         {
             string text = (string)(((Control)sender).Tag);
@@ -450,16 +307,69 @@ namespace TAlex.PowerCalc
                 }
             }
 
-            new InsertFunctionCommand().Execute(new InsertFunctionParameter(text, worksheetTextBox));
+            new InsertFunctionCommand().Execute(new InsertFunctionParameter(text, null /*TODO: Need refactoring*/ /*worksheetTextBox*/));
         }
 
-        private void buttonEvaluate_Click(object sender, RoutedEventArgs e)
+        private void Worksheet_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            TextCompositionEventArgs args =
-                new TextCompositionEventArgs(null, new TextComposition(null, worksheetTextBox, "="));
-            args.RoutedEvent = e.RoutedEvent;
-            worksheetTextBox_PreviewTextInput(worksheetTextBox, args);
-            worksheetTextBox.Focus();
+            if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems.Count == 1)
+            {
+                object lastItem = e.NewItems[e.NewItems.Count - 1];
+                WorksheetListView.ScrollIntoView(lastItem);
+                WorksheetListView.SelectedItem = lastItem;
+                
+                //---------------------
+                ItemContainerGenerator generator = WorksheetListView.ItemContainerGenerator;
+                ListBoxItem selectedItem = (ListBoxItem)generator.ContainerFromItem(lastItem);
+                if (selectedItem != null)
+                {
+                    IInputElement firstFocusable = FindFirstFocusableElement(selectedItem);
+                    if (firstFocusable != null)
+                    {
+                        firstFocusable.Focus();
+                        Keyboard.Focus(firstFocusable);
+                    }
+                }
+            }
+        }
+
+        private void WorksheetListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListView listView = sender as ListView;
+
+            ItemContainerGenerator generator = listView.ItemContainerGenerator;
+            ListBoxItem selectedItem = (ListBoxItem)generator.ContainerFromIndex(listView.Items.Count - 1);
+            if (selectedItem != null)
+            {
+                IInputElement firstFocusable = FindFirstFocusableElement(selectedItem);
+                if (firstFocusable != null)
+                {
+                    firstFocusable.Focus();
+                    Keyboard.Focus(firstFocusable);
+                }
+            }
+        }
+
+        private IInputElement FindFirstFocusableElement(DependencyObject obj)
+        {
+            IInputElement firstFocusable = null;
+
+            int count = VisualTreeHelper.GetChildrenCount(obj);
+            for (int i = 0; i < count && null == firstFocusable; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                IInputElement inputElement = child as IInputElement;
+                if (null != inputElement && inputElement.Focusable)
+                {
+                    firstFocusable = inputElement;
+                }
+                else
+                {
+                    firstFocusable = FindFirstFocusableElement(child);
+                }
+            }
+
+            return firstFocusable;
         }
 
         #endregion
@@ -475,7 +385,7 @@ namespace TAlex.PowerCalc
 
         private void evaluateMatricesButton_Click(object sender, RoutedEventArgs e)
         {
-            //worksheetMatrix.CommitEdit();
+            worksheetMatrix.CommitEdit();
         }
 
         #endregion

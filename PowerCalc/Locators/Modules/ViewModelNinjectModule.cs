@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TAlex.PowerCalc.ViewModels;
+using TAlex.PowerCalc.ViewModels.Worksheet;
 
 
 namespace TAlex.PowerCalc.Locators.Modules
@@ -19,6 +20,7 @@ namespace TAlex.PowerCalc.Locators.Modules
             Bind<WorksheetMatrixViewModel>().ToSelf();
             Bind<InsertFunctionContextMenuViewModel>().ToSelf();
             Bind<ConstantsContextMenuViewModel>().ToSelf();
+            Bind<WorksheetModel>().ToSelf();
         }
     }
 }
