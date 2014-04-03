@@ -263,31 +263,6 @@ namespace TAlex.PowerCalc
 
         #region Worksheet
 
-        private string GetFormatedResult(Object result)
-        {
-            string stringResult = null;
-
-            if (result is IFormattable)
-            {
-                Properties.Settings settings = Properties.Settings.Default;
-
-                if (result is Complex) result = NumericUtil.ComplexZeroThreshold((Complex)result, settings.ComplexThreshold, settings.ZeroThreshold);
-                if (result is CMatrix) result = NumericUtilExtensions.ComplexZeroThreshold((CMatrix)result, settings.ComplexThreshold, settings.ZeroThreshold);
-                stringResult = ((IFormattable)result).ToString(settings.NumericFormat, CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                stringResult = result.ToString();
-            }
-
-            if (stringResult.Length > 1000)
-            {
-                throw new InvalidOperationException("The result is too long for display.");
-            }
-
-            return stringResult;
-        }
-
         private void buttonInsertText_Click(object sender, RoutedEventArgs e)
         {
             string text = (string)(((Control)sender).Tag);
@@ -307,7 +282,7 @@ namespace TAlex.PowerCalc
                 }
             }
 
-            new InsertFunctionCommand().Execute(new InsertFunctionParameter(text, null /*TODO: Need refactoring*/ /*worksheetTextBox*/));
+            new InsertFunctionCommand().Execute(new InsertFunctionParameter(text, GetWorksheetInput()));
         }
 
         private void Worksheet_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -323,7 +298,7 @@ namespace TAlex.PowerCalc
                 ListBoxItem selectedItem = (ListBoxItem)generator.ContainerFromItem(lastItem);
                 if (selectedItem != null)
                 {
-                    IInputElement firstFocusable = FindFirstFocusableElement(selectedItem);
+                    IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(selectedItem);
                     if (firstFocusable != null)
                     {
                         firstFocusable.Focus();
@@ -341,7 +316,7 @@ namespace TAlex.PowerCalc
             ListBoxItem selectedItem = (ListBoxItem)generator.ContainerFromIndex(listView.Items.Count - 1);
             if (selectedItem != null)
             {
-                IInputElement firstFocusable = FindFirstFocusableElement(selectedItem);
+                IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(selectedItem);
                 if (firstFocusable != null)
                 {
                     firstFocusable.Focus();
@@ -350,26 +325,22 @@ namespace TAlex.PowerCalc
             }
         }
 
-        private IInputElement FindFirstFocusableElement(DependencyObject obj)
+        private IInputElement GetWorksheetInput()
         {
-            IInputElement firstFocusable = null;
-
-            int count = VisualTreeHelper.GetChildrenCount(obj);
-            for (int i = 0; i < count && null == firstFocusable; i++)
+            ItemContainerGenerator generator = WorksheetListView.ItemContainerGenerator;
+            ListBoxItem lastItem = (ListBoxItem)generator.ContainerFromIndex(WorksheetListView.Items.Count - 1);
+            if (lastItem != null)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                IInputElement inputElement = child as IInputElement;
-                if (null != inputElement && inputElement.Focusable)
+                IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(lastItem);
+                if (firstFocusable != null)
                 {
-                    firstFocusable = inputElement;
-                }
-                else
-                {
-                    firstFocusable = FindFirstFocusableElement(child);
+                    WorksheetListView.ScrollIntoView(WorksheetListView.Items[WorksheetListView.Items.Count - 1]);
+                    firstFocusable.Focus();
+                    Keyboard.Focus(firstFocusable);
+                    return firstFocusable;
                 }
             }
-
-            return firstFocusable;
+            return null;
         }
 
         #endregion
@@ -534,6 +505,7 @@ namespace TAlex.PowerCalc
             if (window.ShowDialog() == true)
             {
                 LoadSettings(false);
+                WorksheetListView.Items.Refresh();
             }
         }
 

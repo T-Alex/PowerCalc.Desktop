@@ -21,6 +21,12 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
         public static readonly string ClearCommandString = "cls";
         public static readonly string CommentStatement = "//";
 
+        private static readonly string VariableNamePattern = @"(?<var>[a-zA-Z_][a-zA-Z_0-9]*)";
+        private static readonly string ExpressionPattern = @"(?<expr>[^=]+)";
+
+        private static readonly string StatementPattern = "(" + VariableNamePattern + @"\s*\:)?" + ExpressionPattern;
+        private static readonly Regex StatementRegex = new Regex(StatementPattern, RegexOptions.Compiled);
+
         protected readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
         #endregion
@@ -72,45 +78,13 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
 
             // Handle empty expression
             if (IsEmptyExpression(expression)) return;
-
-            // Handle clear screen expression
-            if (IsClearScreenExpression(expression))
-            {
+            
+            if (IsClearScreenExpression(expression)) // Handle clear screen expression
                 Clear();
-                return;
-            }
-
-            // Handle comments
-            if (IsCommentExpression(expression))
-            {
+            else if (IsCommentExpression(expression)) // Handle comments
                 HandleCommentExpression(lastItem);
-                return;
-            }
-
-            Match match = Helpers.WorksheetHelper.GetMatch(expression);
-            if (!match.Success)
-                throw new SyntaxException();
-            string expressionString = match.Groups["expr"].Value;
-
-            //------------------
-            var expressionTree = ExpressionTreeBuilder.BuildTree(expressionString);
-            expressionTree.SetAllVariables(Variables);
-
-            try
-            {
-                lastItem.Result = expressionTree.Evaluate();
-                string varName = match.Groups["var"].Value;
-                if (!String.IsNullOrEmpty(varName))
-                {
-                    Variables[varName] = lastItem.Result;
-                }
-            }
-            catch (Exception exc)
-            {
-                lastItem.Result = exc;
-            }
-
-            AddItem(lastItem);
+            else
+                HandleCalculatedExpression(lastItem); // Handle calculated expression
         }
 
 
@@ -174,6 +148,41 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
             lastItem.Expression = String.Empty;
             lastItem.Result = comment;
             AddItem(lastItem);
+        }
+
+        private void HandleCalculatedExpression(WorksheetItem item)
+        {
+            string expression = item.Expression.Trim();
+            Match match = Regex.Match(expression, StatementPattern);
+            
+            if (match.Success)
+            {
+                string expressionString = match.Groups["expr"].Value;
+                
+                try
+                {
+                    var expressionTree = ExpressionTreeBuilder.BuildTree(expressionString);
+                    expressionTree.SetAllVariables(Variables);
+                    item.Result = expressionTree.Evaluate();
+
+                    string varName = match.Groups["var"].Value;
+                    if (!String.IsNullOrEmpty(varName))
+                    {
+                        Variables[varName] = item.Result;
+                        item.Result = new KeyValuePair<string, object>(varName, item.Result);
+                    }
+                }
+                catch (Exception exc)
+                {
+                    item.Result = exc;
+                }
+            }
+            else
+            {
+                item.Result = new SyntaxException();
+            }
+            
+            AddItem(item);
         }
 
         #endregion

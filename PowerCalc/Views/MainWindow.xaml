@@ -24,6 +24,8 @@
         <talex:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:FunctionSignaturesToTooltipConverter x:Key="FunctionSignaturesToTooltipConverter" />
         <converters:XYCoordsToStringConverter x:Key="XYCoordsToStringConverter" />
+        <converters:WorksheetItemResultConverter x:Key="WorksheetItemResultConverter" />
+        <converters:WorksheetItemResultToForeground x:Key="WorksheetItemResultToForeground" />
         
         <commands:InsertFunctionCommand x:Key="InsertFunctionCommand" />
         
@@ -150,7 +152,7 @@
                                 <StackPanel Margin="7,3">
                                     <TextBlock Text="{Binding Expression}" />
                                     <Line Stretch="Fill" Stroke="Silver" X2="1"/>
-                                    <Label Margin="0" Padding="0" Foreground="DarkGreen" Content="{Binding Result}" />
+                                    <Label Margin="0" Padding="0" Foreground="{Binding Result, Converter={StaticResource WorksheetItemResultToForeground}}" Content="{Binding Result, Converter={StaticResource WorksheetItemResultConverter}}" />
                                 </StackPanel>
                             </Border>
                         </Grid>

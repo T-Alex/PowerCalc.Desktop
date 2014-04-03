@@ -209,9 +209,12 @@
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
+    <Compile Include="Converters\WorksheetItemResultConverter.cs" />
+    <Compile Include="Converters\WorksheetItemResultToForeground.cs" />
     <Compile Include="Converters\XYCoordsToStringConverter.cs" />
     <Compile Include="Helpers\DataGridHelper.cs" />
     <Compile Include="Helpers\ExpressionExtensions.cs" />
+    <Compile Include="Helpers\VisualHelper.cs" />
     <Compile Include="Locators\Modules\AppLicenseNinjectModule.cs" />
     <Compile Include="Locators\Modules\BaseServicesNinjectModule.cs" />
     <Compile Include="Locators\Modules\MathCoreNinjectModule.cs" />
@@ -255,7 +258,6 @@
     <Compile Include="WPF.3DToolkit\Sphere3D.cs" />
     <Compile Include="WPF.3DToolkit\Surfaces\SimpleSurface.cs" />
     <Compile Include="WPF.3DToolkit\Utils3D.cs" />
-    <Compile Include="Helpers\WorksheetHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
