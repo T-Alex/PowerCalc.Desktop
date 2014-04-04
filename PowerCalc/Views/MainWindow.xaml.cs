@@ -292,37 +292,18 @@ namespace TAlex.PowerCalc
                 object lastItem = e.NewItems[e.NewItems.Count - 1];
                 WorksheetListView.ScrollIntoView(lastItem);
                 WorksheetListView.SelectedItem = lastItem;
-                
-                //---------------------
+
                 ItemContainerGenerator generator = WorksheetListView.ItemContainerGenerator;
                 ListBoxItem selectedItem = (ListBoxItem)generator.ContainerFromItem(lastItem);
-                if (selectedItem != null)
-                {
-                    IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(selectedItem);
-                    if (firstFocusable != null)
-                    {
-                        firstFocusable.Focus();
-                        Keyboard.Focus(firstFocusable);
-                    }
-                }
+                selectedItem.Loaded += selectedItem_Loaded;
             }
         }
 
-        private void WorksheetListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void selectedItem_Loaded(object sender, RoutedEventArgs e)
         {
-            ListView listView = sender as ListView;
-
-            ItemContainerGenerator generator = listView.ItemContainerGenerator;
-            ListBoxItem selectedItem = (ListBoxItem)generator.ContainerFromIndex(listView.Items.Count - 1);
-            if (selectedItem != null)
-            {
-                IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(selectedItem);
-                if (firstFocusable != null)
-                {
-                    firstFocusable.Focus();
-                    Keyboard.Focus(firstFocusable);
-                }
-            }
+            ListBoxItem selectedItem = sender as ListBoxItem;
+            IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(selectedItem);
+            firstFocusable.Focus();
         }
 
         private IInputElement GetWorksheetInput()

@@ -74,7 +74,7 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
         public void Evaluate()
         {
             WorksheetItem lastItem = Items.Last();
-            string expression = lastItem.Expression.Trim();
+            string expression = (lastItem.Expression + String.Empty).Trim();
 
             // Handle empty expression
             if (IsEmptyExpression(expression)) return;

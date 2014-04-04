@@ -127,6 +127,6 @@
     <value>mailto:support@talex-soft.com</value>
   </data>
   <data name="VariableValueAssigned" xml:space="preserve">
-    <value>The variable '{0}' is assigned with value:</value>
+    <value>'{0}' is assigned with value:</value>
   </data>
 </root>

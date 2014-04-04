@@ -118,25 +118,47 @@
             <TabItem Header="Worksheet">
                 <TabItem.Resources>
                     <DataTemplate x:Key="NewItemTemplate">
-                        <TextBox x:Name="worksheetTextBox" Margin="6,3" Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Background="Transparent"
+                        <DataTemplate.Resources>
+                            <Style TargetType="TextBox" x:Key="stlHintbox">
+                                <Setter Property="Background" Value="Transparent" />
+                                
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="">
+                                        <Setter Property="TextBox.Background">
+                                            <Setter.Value>
+                                                <VisualBrush Stretch="None" AlignmentX="Left" AlignmentY="Center" Visual="{Binding ElementName=hintText}" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataTemplate.Resources>
+
+                        <Grid Margin="6,3" FocusManager.FocusedElement="{Binding ElementName=worksheetTextBox}">
+                            <TextBox x:Name="worksheetTextBox"  Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource stlHintbox}" Tag="Please type expression here..."
                                  ContextMenu="{StaticResource mainContextMenu}" Focusable="True">
-                            <TextBox.InputBindings>
-                                <KeyBinding Key="Return" Command="{Binding DataContext.EvaluateCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" />
-                            </TextBox.InputBindings>
-                            
-                            <TextBox.Template>
-                                <ControlTemplate>
-                                    <Border BorderThickness="0,0,0,1" BorderBrush="Gray">
-                                        <ScrollViewer x:Name="PART_ContentHost"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </TextBox.Template>
-                        </TextBox>
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Return" Command="{Binding DataContext.EvaluateCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" />
+                                </TextBox.InputBindings>
+
+                                <TextBox.Template>
+                                    <ControlTemplate>
+                                        <Border Background="{TemplateBinding Background}" BorderThickness="0,0,0,1" BorderBrush="Gray">
+                                            <ScrollViewer x:Name="PART_ContentHost"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+
+                            <Border Visibility="Hidden">
+                                <TextBlock Padding="2,0,0,3" Name="hintText" Background="{Binding Path=Background, ElementName=worksheetTextBox}" Text="{Binding Tag, ElementName=worksheetTextBox}" Foreground="Gray" VerticalAlignment="Center" />
+                            </Border>
+                        </Grid>
                     </DataTemplate>
                     
                     <DataTemplate x:Key="HistoryItemTemplate">
-                        <Grid Margin="3">
+                        <Grid Margin="3" Focusable="False">
                             <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
                                 <Border.Background>
                                     <LinearGradientBrush Opacity="0.8" EndPoint="0,1">
@@ -160,7 +182,7 @@
 
                     <!-- Comment item template -->
                     <DataTemplate x:Key="CommentItemTemplate">
-                        <Grid Margin="3">
+                        <Grid Margin="3" Focusable="False">
                             <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
                                 <Border.Background>
                                     <LinearGradientBrush Opacity="0.8" EndPoint="0,1">
@@ -300,8 +322,7 @@
                               DockPanel.Dock="Top" FontSize="12"
                               HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               DataContext="{Binding Worksheet}" ItemsSource="{Binding Items}"
-                              ItemTemplateSelector="{StaticResource WorksheetTemplateSelector}"
-                              SelectionChanged="WorksheetListView_SelectionChanged">
+                              ItemTemplateSelector="{StaticResource WorksheetTemplateSelector}">
 
                         <ListView.Resources>
                             <Style TargetType="ListViewItem">

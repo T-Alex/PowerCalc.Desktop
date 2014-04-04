@@ -50,6 +50,7 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
 
         public WorksheetItem()
         {
+            Expression = String.Empty;
         }
 
         public WorksheetItem(string expression, Object result)

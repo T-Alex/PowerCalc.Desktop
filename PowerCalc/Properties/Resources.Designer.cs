@@ -88,7 +88,7 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The variable &apos;{0}&apos; is assigned with value:.
+        ///   Looks up a localized string similar to &apos;{0}&apos; is assigned with value:.
         /// </summary>
         internal static string VariableValueAssigned {
             get {
