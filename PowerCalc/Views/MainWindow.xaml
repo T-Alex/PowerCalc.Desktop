@@ -320,6 +320,7 @@
 
                     <ListView Name="WorksheetListView" Background="{DynamicResource WorksheetTextBoxBgBrush}"
                               DockPanel.Dock="Top" FontSize="12"
+                              VirtualizingPanel.IsContainerVirtualizable="False" VirtualizingPanel.IsVirtualizing="False"
                               HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               DataContext="{Binding Worksheet}" ItemsSource="{Binding Items}"
                               ItemTemplateSelector="{StaticResource WorksheetTemplateSelector}">

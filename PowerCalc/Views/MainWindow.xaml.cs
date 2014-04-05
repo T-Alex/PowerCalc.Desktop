@@ -282,7 +282,7 @@ namespace TAlex.PowerCalc
                 }
             }
 
-            new InsertFunctionCommand().Execute(new InsertFunctionParameter(text, GetWorksheetInput()));
+            new InsertFunctionCommand().Execute(new InsertFunctionParameter(text, GetWorksheetInputElement()));
         }
 
         private void Worksheet_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -290,6 +290,7 @@ namespace TAlex.PowerCalc
             if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems.Count == 1)
             {
                 object lastItem = e.NewItems[e.NewItems.Count - 1];
+                WorksheetListView.UpdateLayout();
                 WorksheetListView.ScrollIntoView(lastItem);
                 WorksheetListView.SelectedItem = lastItem;
 
@@ -306,22 +307,16 @@ namespace TAlex.PowerCalc
             firstFocusable.Focus();
         }
 
-        private IInputElement GetWorksheetInput()
+        private IInputElement GetWorksheetInputElement()
         {
+            int itemIndex = WorksheetListView.Items.Count - 1;
             ItemContainerGenerator generator = WorksheetListView.ItemContainerGenerator;
-            ListBoxItem lastItem = (ListBoxItem)generator.ContainerFromIndex(WorksheetListView.Items.Count - 1);
-            if (lastItem != null)
-            {
-                IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(lastItem);
-                if (firstFocusable != null)
-                {
-                    WorksheetListView.ScrollIntoView(WorksheetListView.Items[WorksheetListView.Items.Count - 1]);
-                    firstFocusable.Focus();
-                    Keyboard.Focus(firstFocusable);
-                    return firstFocusable;
-                }
-            }
-            return null;
+            ListBoxItem lastItem = (ListBoxItem)generator.ContainerFromIndex(itemIndex);
+            IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(lastItem);
+
+            WorksheetListView.ScrollIntoView(WorksheetListView.Items[itemIndex]);
+            firstFocusable.Focus();
+            return firstFocusable;
         }
 
         #endregion
