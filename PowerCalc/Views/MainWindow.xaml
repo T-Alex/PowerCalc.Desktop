@@ -1,6 +1,7 @@
 ﻿<Window x:Class="TAlex.PowerCalc.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:tools="clr-namespace:_3DTools"
     xmlns:commands="clr-namespace:TAlex.PowerCalc.Commands"
     xmlns:converters="clr-namespace:TAlex.PowerCalc.Converters"
@@ -26,8 +27,10 @@
         <converters:XYCoordsToStringConverter x:Key="XYCoordsToStringConverter" />
         <converters:WorksheetItemResultConverter x:Key="WorksheetItemResultConverter" />
         <converters:WorksheetItemResultToForeground x:Key="WorksheetItemResultToForeground" />
+        <converters:CopyToClipboardParameterConverter x:Key="CopyToClipboardParameterConverter" />
         
         <commands:InsertFunctionCommand x:Key="InsertFunctionCommand" />
+        <commands:CopyToClipboardCommand x:Key="CopyToClipboardCommand" />
         
         <ContextMenu x:Key="mainContextMenu">
             <MenuItem Header="Insert function" DataContext="{Binding Source={StaticResource viewModelLocator}, Path=InsertFunctionContextMenuViewModel}" ItemsSource="{Binding Categories}">
@@ -136,7 +139,7 @@
 
                         <Grid Margin="6,3" FocusManager.FocusedElement="{Binding ElementName=worksheetTextBox}">
                             <TextBox x:Name="worksheetTextBox"  Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource stlHintbox}" Tag="Please type expression here..."
+                                 Style="{StaticResource stlHintbox}" Tag="Type expression here..."
                                  ContextMenu="{StaticResource mainContextMenu}" Focusable="True">
                                 <TextBox.InputBindings>
                                     <KeyBinding Key="Return" Command="{Binding DataContext.EvaluateCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" />
@@ -172,9 +175,30 @@
                                 </Border.Effect>
                                 
                                 <StackPanel Margin="7,3">
+                                    <StackPanel.ContextMenu>
+                                        <ContextMenu>                                            
+                                            <MenuItem Header="Copy Expression" Command="{StaticResource CopyToClipboardCommand}" CommandParameter="{Binding Expression}" />
+                                            <Separator />
+                                            <MenuItem Header="Copy Formatted Result" Command="{StaticResource CopyToClipboardCommand}">
+                                                <MenuItem.CommandParameter>
+                                                    <MultiBinding Converter="{StaticResource CopyToClipboardParameterConverter}">
+                                                        <Binding Path="Result" />
+                                                        <Binding><Binding.Source><sys:Boolean>true</sys:Boolean></Binding.Source></Binding>
+                                                    </MultiBinding>
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Header="Copy Raw Result" Command="{StaticResource CopyToClipboardCommand}" CommandParameter="{Binding Result}"  />
+                                        </ContextMenu>
+                                    </StackPanel.ContextMenu>
+                                    
                                     <TextBlock Text="{Binding Expression}" />
                                     <Line Stretch="Fill" Stroke="Silver" X2="1"/>
-                                    <Label Margin="0" Padding="0" Foreground="{Binding Result, Converter={StaticResource WorksheetItemResultToForeground}}" Content="{Binding Result, Converter={StaticResource WorksheetItemResultConverter}}" />
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                        <Label Margin="0" Padding="0" FontFamily="Consolas"
+                                           Foreground="{Binding Result, Converter={StaticResource WorksheetItemResultToForeground}}"
+                                           Content="{Binding Result, Converter={StaticResource WorksheetItemResultConverter}}" />
+                                    </ScrollViewer>
+                                    
                                 </StackPanel>
                             </Border>
                         </Grid>

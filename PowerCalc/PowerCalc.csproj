@@ -203,11 +203,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\CopyToClipboardCommand.cs" />
     <Compile Include="Commands\InsertFunctionCommand.cs" />
     <Compile Include="Controls\DataGridTextColumnEx.cs" />
     <Compile Include="Controls\WorksheetMatrix.xaml.cs">
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\CopyToClipboardParameterConverter.cs" />
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
     <Compile Include="Converters\WorksheetItemResultConverter.cs" />
     <Compile Include="Converters\WorksheetItemResultToForeground.cs" />
