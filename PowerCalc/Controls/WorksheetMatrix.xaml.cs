@@ -19,6 +19,7 @@ using TAlex.PowerCalc.Locators;
 using TAlex.PowerCalc.Helpers;
 using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
+using TAlex.PowerCalc.Converters;
 
 
 namespace TAlex.PowerCalc.Controls
@@ -81,6 +82,11 @@ namespace TAlex.PowerCalc.Controls
             return dataGrid.CommitEdit();
         }
 
+        public void Refresh()
+        {
+            dataGrid.Items.Refresh();
+        }
+
         public void Initialize()
         {
             int colCount = DefaultColumnCount;
@@ -92,7 +98,7 @@ namespace TAlex.PowerCalc.Controls
                 dataGrid.Columns.Add(new DataGridTextColumnEx
                 {
                     Header = Helpers.A1ReferenceHelper.IntegerToA1ReferenceColumn(i),
-                    Binding = new Binding(String.Format("[{0}].FormattedValue", i)) { ValidatesOnExceptions = true, NotifyOnValidationError = true },
+                    Binding = new Binding(String.Format("[{0}].CachedValue", i)) { ValidatesOnExceptions = true, NotifyOnValidationError = true, Converter = new WorksheetMatrixCachedValueToStringConverter() },
                     EditingBinding = new Binding(String.Format("[{0}].Expression", i)) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged }
                 });
             }
@@ -103,7 +109,7 @@ namespace TAlex.PowerCalc.Controls
             {
                 dataTable.Rows.Add(new DataRow(dataTable, colCount) { RowNumber = i + 1 });
             }
-
+            
             dataGrid.ItemsSource = dataTable.Rows;
         }
 

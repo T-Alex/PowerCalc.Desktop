@@ -42,18 +42,6 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             }
         }
 
-        public string FormattedValue
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(Expression))
-                {
-                    return ValueToStirng(CachedValue);
-                }
-                return null;
-            }
-        }
-
         public override string Expression
         {
             get
@@ -98,24 +86,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
         public void RefreshValue()
         {
-            RaisePropertyChanged(() => FormattedValue);
-        }
-
-        private string ValueToStirng(Object value)
-        {
-            Object normilizedValue = null;
-
-            // Normalize the result
-            if (value is Complex)
-            {
-                normilizedValue = NumericUtil.ComplexZeroThreshold((Complex)value, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-            }
-            else if (value is CMatrix)
-            {
-                normilizedValue = NumericUtilExtensions.ComplexZeroThreshold((CMatrix)value, Properties.Settings.Default.ComplexThreshold, Properties.Settings.Default.ZeroThreshold);
-            }
-
-            return normilizedValue.ToString();
+            RaisePropertyChanged(() => CachedValue);
         }
 
         #endregion

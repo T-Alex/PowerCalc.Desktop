@@ -25,6 +25,7 @@
 
         <DataGrid Grid.ColumnSpan="3" Grid.Row="1" x:Name="dataGrid" ColumnWidth="55.0" RowHeaderWidth="30"
                      HeadersVisibility="All" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"
+                  AutoGenerateColumns="False"
                      SelectionUnit="Cell" SelectionMode="Extended" EnableColumnVirtualization="True" EnableRowVirtualization="True"
                      RowBackground="{DynamicResource DataGridRowBackground}"
                      AlternatingRowBackground="{DynamicResource DataGridAlternatingRowBackground}"

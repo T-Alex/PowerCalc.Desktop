@@ -474,7 +474,10 @@ namespace TAlex.PowerCalc
             if (window.ShowDialog() == true)
             {
                 LoadSettings(false);
+
+                // Refresh numeric values
                 WorksheetListView.Items.Refresh();
+                worksheetMatrix.Refresh();
             }
         }
 

@@ -9,7 +9,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 {
     public class DataTable
     {
-        public IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
+        public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
         public List<DataRow> Rows { get; private set; }
 

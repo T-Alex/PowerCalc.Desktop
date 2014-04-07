@@ -46,6 +46,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
         #endregion
 
+        #region Constructors
 
         public DataArray(DataCell currentCell, int x, int y, int rows, int cols)
         {
@@ -64,6 +65,9 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             }
         }
 
+        #endregion
+
+        #region Methods
 
         public object FindValue(DataCell cell, Object cachedValue)
         {
@@ -93,5 +97,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
         {
 
         }
+
+        #endregion
     }
 }
