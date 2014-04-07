@@ -120,6 +120,7 @@
         <TabControl Margin="-1,22,-1,20" Name="mainTabControl" SelectedIndex="0" TabStripPlacement="Top" Background="{DynamicResource MainTabControlBgBrush}">
             <TabItem Header="Worksheet">
                 <TabItem.Resources>
+                    <!-- New Item Template -->
                     <DataTemplate x:Key="NewItemTemplate">
                         <DataTemplate.Resources>
                             <Style TargetType="TextBox" x:Key="stlHintbox">
@@ -140,6 +141,7 @@
                         <Grid Margin="6,3" FocusManager.FocusedElement="{Binding ElementName=worksheetTextBox}">
                             <TextBox x:Name="worksheetTextBox"  Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource stlHintbox}" Tag="Type expression here..."
+                                 Foreground="Black"
                                  ContextMenu="{StaticResource mainContextMenu}" Focusable="True">
                                 <TextBox.InputBindings>
                                     <KeyBinding Key="Return" Command="{Binding DataContext.EvaluateCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" />
@@ -147,7 +149,7 @@
 
                                 <TextBox.Template>
                                     <ControlTemplate>
-                                        <Border Background="{TemplateBinding Background}" BorderThickness="0,0,0,1" BorderBrush="Gray">
+                                        <Border Background="{TemplateBinding Background}" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource WorksheetInputBorderBrush}">
                                             <ScrollViewer x:Name="PART_ContentHost"/>
                                         </Border>
                                     </ControlTemplate>
@@ -155,21 +157,15 @@
                             </TextBox>
 
                             <Border Visibility="Hidden">
-                                <TextBlock Padding="2,0,0,3" Name="hintText" Background="{Binding Path=Background, ElementName=worksheetTextBox}" Text="{Binding Tag, ElementName=worksheetTextBox}" Foreground="Gray" VerticalAlignment="Center" />
+                                <TextBlock Padding="2,0,0,3" Name="hintText" Background="{Binding Path=Background, ElementName=worksheetTextBox}" Text="{Binding Tag, ElementName=worksheetTextBox}" Foreground="{Binding Path=Foreground, ElementName=worksheetTextBox}" VerticalAlignment="Center" />
                             </Border>
                         </Grid>
                     </DataTemplate>
                     
+                    <!-- History Item template -->
                     <DataTemplate x:Key="HistoryItemTemplate">
                         <Grid Margin="3" Focusable="False">
-                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
-                                <Border.Background>
-                                    <LinearGradientBrush Opacity="0.8" EndPoint="0,1">
-                                        <GradientStop Offset="0" Color="#ffffff" />
-                                        <GradientStop Offset="0.7" Color="#f8f8f8" />
-                                        <GradientStop Offset="1" Color="#e0e0e0" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
+                            <Border BorderBrush="{DynamicResource WorksheetItemBorderBrush}" Background="{DynamicResource WorksheetItemBg}" BorderThickness="1" CornerRadius="5">
                                 <Border.Effect>
                                     <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="1" Color="Gray" />
                                 </Border.Effect>
@@ -192,7 +188,7 @@
                                     </StackPanel.ContextMenu>
                                     
                                     <TextBlock Text="{Binding Expression}" />
-                                    <Line Stretch="Fill" Stroke="Silver" X2="1"/>
+                                    <Line Stretch="Fill" Stroke="{DynamicResource WorksheetItemSeparatorBrush}" X2="1"/>
                                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                         <Label Margin="0" Padding="0" FontFamily="Consolas"
                                            Foreground="{Binding Result, Converter={StaticResource WorksheetItemResultToForeground}}"
@@ -207,14 +203,7 @@
                     <!-- Comment item template -->
                     <DataTemplate x:Key="CommentItemTemplate">
                         <Grid Margin="3" Focusable="False">
-                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
-                                <Border.Background>
-                                    <LinearGradientBrush Opacity="0.8" EndPoint="0,1">
-                                        <GradientStop Offset="0" Color="#ffffff" />
-                                        <GradientStop Offset="0.7" Color="#f8f8f8" />
-                                        <GradientStop Offset="1" Color="#e0e0e0" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
+                            <Border BorderBrush="{DynamicResource WorksheetItemBorderBrush}" Background="{DynamicResource WorksheetItemBg}" BorderThickness="1" CornerRadius="5">
                                 <Border.Effect>
                                     <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="1" Color="Gray" />
                                 </Border.Effect>
@@ -342,7 +331,7 @@
                         </Canvas>
                     </Expander>
 
-                    <ListView Name="WorksheetListView" Background="{DynamicResource WorksheetTextBoxBgBrush}"
+                    <ListView Name="WorksheetListView" Background="{DynamicResource WorksheetBgBrush}" BorderBrush="{DynamicResource WorksheetBorderBrush}"
                               DockPanel.Dock="Top" FontSize="12"
                               VirtualizingPanel.IsContainerVirtualizable="False" VirtualizingPanel.IsVirtualizing="False"
                               HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"

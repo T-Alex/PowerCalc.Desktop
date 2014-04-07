@@ -88,12 +88,8 @@ namespace TAlex.PowerCalc
             }
 
             // Worksheet
-            _worksheetFontFamily = settings.WorksheetFontFamily;
-            _worksheetFontWeight = settings.WorksheetFontWeight;
-            _worksheetFontStyle = settings.WorksheetFontStyle;
-            _worksheetFontStretch = settings.WorksheetFontStretch;
-            _worksheetFontSize = settings.WorksheetFontSize;
-            _worksheetForeground = settings.WorksheetForeground;
+            worksheetMaxMatrixRows.Value = settings.WorksheetMaxMatrixRows;
+            worksheetMaxMatrixCols.Value = settings.WorksheetMaxMatrixCols;
 
             // 2D Plot
             plot2DBackgroundBrush.SelectedColor = settings.Plot2DBackground;
@@ -124,12 +120,8 @@ namespace TAlex.PowerCalc
             settings.NumericFormat = numFormat;
 
             // Worksheet
-            settings.WorksheetFontFamily = _worksheetFontFamily;
-            settings.WorksheetFontWeight = _worksheetFontWeight;
-            settings.WorksheetFontStyle = _worksheetFontStyle;
-            settings.WorksheetFontStretch = _worksheetFontStretch;
-            settings.WorksheetFontSize = _worksheetFontSize;
-            settings.WorksheetForeground = _worksheetForeground;
+            settings.WorksheetMaxMatrixRows = (int)worksheetMaxMatrixRows.Value;
+            settings.WorksheetMaxMatrixCols = (int)worksheetMaxMatrixCols.Value;
 
             // 2D Plot
             settings.Plot2DBackground = plot2DBackgroundBrush.SelectedColor;

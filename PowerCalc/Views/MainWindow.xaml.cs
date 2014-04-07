@@ -21,8 +21,6 @@ using TAlex.MathCore.LinearAlgebra;
 using TAlex.MathCore.ExpressionEvaluation;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
-using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
-using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 using TAlex.WPF3DToolkit;
 using TAlex.WPF3DToolkit.Surfaces;
 using TAlex.Common.Environment;
@@ -81,12 +79,7 @@ namespace TAlex.PowerCalc
             }
 
             // TODO: Need refactoring
-            //worksheetTextBox.FontFamily = settings.WorksheetFontFamily;
-            //worksheetTextBox.FontWeight = settings.WorksheetFontWeight;
-            //worksheetTextBox.FontStyle = settings.WorksheetFontStyle;
-            //worksheetTextBox.FontStretch = settings.WorksheetFontStretch;
             //worksheetTextBox.FontSize = settings.WorksheetFontSize;
-            //worksheetTextBox.Foreground = new SolidColorBrush(settings.WorksheetForeground);
 
             plot2D.Background = new SolidColorBrush(settings.Plot2DBackground);
         }

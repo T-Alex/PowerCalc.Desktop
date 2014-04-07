@@ -104,20 +104,33 @@
         <GradientStop Color="Azure" Offset="0"/>
         <GradientStop Color="#FF001B35" Offset="1"/>
     </LinearGradientBrush>
-
-    <SolidColorBrush x:Key="WorksheetTextBoxBgBrush" Color="#FFD6ECF3" />
-
+    
     <LinearGradientBrush x:Key="textBoxBgBrush2" EndPoint="0,1">
         <GradientStop Color="#FFACDBFA"  Offset="0" />
         <GradientStop Color="#FF6EB6FF" Offset="1" />
     </LinearGradientBrush>
-    
+    <!-- -->
+
+    <!-- Worksheet tab -->
+    <SolidColorBrush x:Key="WorksheetBgBrush" Color="#FFD6ECF3" />
+    <SolidColorBrush x:Key="WorksheetBorderBrush" Color="#b4dbe8" />
+    <SolidColorBrush x:Key="WorksheetItemBorderBrush" Color="#639eb6" />
+    <SolidColorBrush x:Key="WorksheetItemSeparatorBrush" Color="#bacfd8" />
+    <LinearGradientBrush x:Key="WorksheetItemBg" Opacity="1" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#f2f8fa" />
+        <GradientStop Offset="0.7" Color="#d9e7ec" />
+        <GradientStop Offset="1" Color="#bbdbe8" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="WorksheetInputBorderBrush" Color="#729aaa" />
+    <!-- -->
+
     <!-- PreferencesWindow -->
     <LinearGradientBrush x:Key="prefTabControlBgBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="White" Offset="0" />
         <GradientStop Color="#FFa4c0d1" Offset="1" />
     </LinearGradientBrush>
-
+    <!-- -->
+    
     <!-- AboutWindow -->
     <LinearGradientBrush x:Key="AboutBgBrush" EndPoint="0,1">
         <GradientStop Color="#FF2e7fd1" Offset="0"/>
@@ -138,4 +151,5 @@
     
     <SolidColorBrush x:Key="AboutVersionTextBrush" Color="AliceBlue" />
     <SolidColorBrush x:Key="AboutHyperlinkForeground" Color="#ff1460ad" />
+    <!-- -->
 </ResourceDictionary>

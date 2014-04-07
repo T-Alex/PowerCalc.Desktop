@@ -43,7 +43,24 @@
 
             <TabItem Header="Worksheet">
                 <Grid>
-                    <Button Height="25" Margin="14,14,0,0" Name="fontButton" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Click="fontButton_Click">Font...</Button>
+                    <GroupBox VerticalAlignment="Top" Header="Matrix display format" Height="74" Margin="7,6">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock VerticalAlignment="Center" Margin="9,0,0,0" Text="Maximum rows for display:" />
+                            <talex:NumericUpDown x:Name="worksheetMaxMatrixRows" Grid.Row="0" Grid.Column="1" Width="50" Height="22" Minimum="2" Maximum="100" />
+
+                            <TextBlock VerticalAlignment="Center" Margin="9,0,0,0" Grid.Row="1" Text="Maximum columns for display:" />
+                            <talex:NumericUpDown x:Name="worksheetMaxMatrixCols" Grid.Row="1" Grid.Column="1" Width="50" Height="22" Minimum="2" Maximum="100" />
+                        </Grid>
+                    </GroupBox>
                 </Grid>
             </TabItem>
             

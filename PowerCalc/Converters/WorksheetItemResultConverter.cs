@@ -50,28 +50,34 @@ namespace TAlex.PowerCalc.Converters
 
         private string MatrixToString(CMatrix m, string format)
         {
-            string[,] values = new string[m.RowCount, m.ColumnCount];
-            int[] maxLengths = new int[m.ColumnCount];
-            for (int i = 0; i < m.RowCount; i++)
+            int maxRows = Properties.Settings.Default.WorksheetMaxMatrixRows;
+            int maxCols = Properties.Settings.Default.WorksheetMaxMatrixCols;
+            int rows = Math.Min(maxRows + 1, m.RowCount);
+            int cols = Math.Min(maxCols + 1, m.ColumnCount);
+
+            string[,] values = new string[rows, cols];
+            int[] maxLengths = new int[cols];
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < m.ColumnCount; j++)
+                for (int j = 0; j < cols; j++)
                 {
-                    values[i, j] = m[i, j].ToString(format, CultureInfo.InvariantCulture);
+                    if ((i >= rows - 1 && maxRows < m.RowCount) || (j >= cols - 1 && maxCols < m.ColumnCount)) values[i, j] = "…";
+                    else values[i, j] = m[i, j].ToString(format, CultureInfo.InvariantCulture);
                     maxLengths[j] = Math.Max(values[i, j].Length, maxLengths[j]);
                 }
             }
 
             StringBuilder result = new StringBuilder();
             
-            for (int i = 0; i < m.RowCount; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < m.ColumnCount; j++)
+                for (int j = 0; j < cols; j++)
                 {
                     string stringFormat = String.Format("{{0,{0}}}", -(maxLengths[j] + 2));
                     result.AppendFormat(stringFormat, values[i, j]);
 
                 }
-                if (i < m.RowCount - 1) result.AppendLine();
+                if (i < rows - 1) result.AppendLine();
             }
 
             return result.ToString();

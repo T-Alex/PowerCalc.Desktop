@@ -17,23 +17,8 @@
     <Setting Name="WorksheetFontSize" Type="System.Double" Scope="User">
       <Value Profile="(Default)">12</Value>
     </Setting>
-    <Setting Name="WorksheetFontFamily" Type="System.Windows.Media.FontFamily" Scope="User">
-      <Value Profile="(Default)">Consolas, Courier New</Value>
-    </Setting>
-    <Setting Name="WorksheetFontWeight" Type="System.Windows.FontWeight" Scope="User">
-      <Value Profile="(Default)">Normal</Value>
-    </Setting>
-    <Setting Name="WorksheetFontStyle" Type="System.Windows.FontStyle" Scope="User">
-      <Value Profile="(Default)">Normal</Value>
-    </Setting>
-    <Setting Name="WorksheetFontStretch" Type="System.Windows.FontStretch" Scope="User">
-      <Value Profile="(Default)">Normal</Value>
-    </Setting>
     <Setting Name="Plot2DBackground" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FFF0F8FF</Value>
-    </Setting>
-    <Setting Name="WorksheetForeground" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FF000000</Value>
     </Setting>
     <Setting Name="WindowState" Type="System.Windows.WindowState" Scope="User">
       <Value Profile="(Default)">Normal</Value>
@@ -43,6 +28,12 @@
     </Setting>
     <Setting Name="ExtensionsPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Extensions</Value>
+    </Setting>
+    <Setting Name="WorksheetMaxMatrixRows" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="WorksheetMaxMatrixCols" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
     </Setting>
   </Settings>
 </SettingsFile>
