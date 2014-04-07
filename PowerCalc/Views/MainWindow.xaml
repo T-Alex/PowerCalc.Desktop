@@ -209,7 +209,7 @@
                                 </Border.Effect>
 
                                 <StackPanel Margin="7,3">
-                                    <Label Margin="0" Padding="0" FontWeight="Bold" Foreground="Gray" Content="{Binding Result}" />
+                                    <Label Margin="0" Padding="0" Foreground="#966F33" Content="{Binding Result}" />
                                 </StackPanel>
                             </Border>
                         </Grid>

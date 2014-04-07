@@ -20,6 +20,16 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
 
         public static readonly string ClearCommandString = "cls";
         public static readonly string CommentStatement = "//";
+        public static readonly string[] HelpCommands = new string[] { "?", "/?", "help" };
+        
+        private static readonly string HelpText =
+@"Commands list:
+<expression> – calculate expression
+<var>: <expression> – define variable
+cls – clear console
+// – add comments
+?, /?, help – show help
+";
 
         private static readonly string VariableNamePattern = @"(?<var>[a-zA-Z_][a-zA-Z_0-9]*)";
         private static readonly string ExpressionPattern = @"(?<expr>[^=]+)";
@@ -81,8 +91,11 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
             
             if (IsClearScreenExpression(expression)) // Handle clear screen expression
                 Clear();
-            else if (IsCommentExpression(expression)) // Handle comments
+            else if (IsCommentExpression(expression) || IsHelpExpression(expression)) // Handle comments and help
+            {
+                if (IsHelpExpression(expression)) HandleHelpExpression(lastItem);
                 HandleCommentExpression(lastItem);
+            }
             else
                 HandleCalculatedExpression(lastItem); // Handle calculated expression
         }
@@ -118,6 +131,11 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
             return String.Equals(ClearCommandString, expression, StringComparison.InvariantCultureIgnoreCase);
         }
 
+        private bool IsHelpExpression(string expression)
+        {
+            return HelpCommands.Contains(expression);
+        }
+
         private bool IsCommentExpression(string expression)
         {
             return expression.StartsWith(CommentStatement);
@@ -125,7 +143,10 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
 
         private string GetCommentFromExpression(string expression)
         {
-            return expression.Substring(CommentStatement.Length).Trim();
+            if (IsCommentExpression(expression))
+                return expression.Substring(CommentStatement.Length).Trim();
+            else
+                return expression.Trim();
         }
 
         private void HandleCommentExpression(WorksheetItem item)
@@ -134,7 +155,7 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
             string expression = lastItem.Expression.Trim();
             string comment = GetCommentFromExpression(expression);
 
-            if (Items.Count > 2)
+            if (Items.Count > 1)
             {
                 WorksheetItem prevItem = Items[Items.IndexOf(lastItem) - 1];
                 if (prevItem.Result is String)
@@ -148,6 +169,11 @@ namespace TAlex.PowerCalc.ViewModels.Worksheet
             lastItem.Expression = String.Empty;
             lastItem.Result = comment;
             AddItem(lastItem);
+        }
+
+        private void HandleHelpExpression(WorksheetItem item)
+        {
+            item.Expression = HelpText;
         }
 
         private void HandleCalculatedExpression(WorksheetItem item)
