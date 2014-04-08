@@ -31,6 +31,12 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
         #endregion
 
+        #region Events
+
+        public event EventHandler CachedValueChanged;
+
+        #endregion
+
         #region Methods
 
         protected Object EvaluateExpression()
@@ -86,6 +92,13 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             return expr.Evaluate();
         }
 
+        protected virtual void OnCachedValueChanged()
+        {
+            if (CachedValueChanged != null)
+            {
+                CachedValueChanged(this, new EventArgs());
+            }
+        }
 
         private static string GetRandomVariableName()
         {
@@ -120,8 +133,13 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             int row, column;
             Helpers.A1ReferenceHelper.Parse(a1Reference, out column, out row);
 
-            return (Complex)DataTable[row, column].CachedValue;
+            DataCell cell = DataTable[row, column];
+            cell.CachedValueChanged -= CachedValueChangedHandler;
+            cell.CachedValueChanged += CachedValueChangedHandler;
+            return (Complex)cell.CachedValue;
         }
+
+        protected abstract void CachedValueChangedHandler(object sender, EventArgs e);
 
         private CMatrix GetRangeOfCellValues(string a1Reference)
         {
@@ -137,8 +155,11 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             {
                 for (int j = 0; j < m; j++)
                 {
-                    if (DataTable[i + row1Idx, j + col1Idx].CachedValue != null)
-                        matrix[i, j] = (Complex)DataTable[i + row1Idx, j + col1Idx].CachedValue;
+                    DataCell cell = DataTable[i + row1Idx, j + col1Idx];
+                    cell.CachedValueChanged -= CachedValueChangedHandler;
+                    cell.CachedValueChanged += CachedValueChangedHandler;
+                    if (cell.CachedValue != null)
+                        matrix[i, j] = (Complex)cell.CachedValue;
                     else
                         matrix[i, j] = Complex.Zero;
                 }

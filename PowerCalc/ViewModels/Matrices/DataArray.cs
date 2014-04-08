@@ -38,7 +38,13 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
         {
             get
             {
-                return _cachedValue ?? EvaluateExpression();
+                if (_cachedValue == null)
+                {
+                    _cachedValue = EvaluateExpression();
+                    OnCachedValueChanged(); // ???
+                }
+
+                return _cachedValue;
             }
         }
 
@@ -58,9 +64,12 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             {
                 for (int col = 0; col < cols; col++)
                 {
-                    Array[row, col] = currentCell.DataTable[y + row, x + col];
-                    Array[row, col].Parent = this;
-                    Array[row, col].RefreshValue();
+                    DataCell cell = currentCell.DataTable[y + row, x + col];
+                    Array[row, col] = cell;
+                    cell.Parent = this;
+                    cell.RefreshValue();
+                    
+                    
                 }
             }
         }
@@ -96,6 +105,18 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
         public virtual void Expand(int x, int y, int rows, int cols)
         {
 
+        }
+
+        protected override void CachedValueChangedHandler(object sender, EventArgs e)
+        {
+            _cachedValue = null;
+            for (int i = 0; i < Array.GetLength(0); i++)
+            {
+                for (int j = 0; j < Array.GetLength(1); j++)
+                {
+                    Array[i, j].RefreshValue();
+                }
+            }
         }
 
         #endregion

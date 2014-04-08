@@ -30,12 +30,19 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             {
                 if (Parent == null)
                 {
-                    Object value = _cachedValue ?? EvaluateExpression();
-                    if (value is CMatrix)
+                    if (Expression == null) return null;
+
+                    if (_cachedValue == null)
                     {
-                        return ((CMatrix)value)[0, 0];
+                        _cachedValue = EvaluateExpression();
+                        OnCachedValueChanged();
                     }
-                    return value;
+
+                    if (_cachedValue is CMatrix)
+                    {
+                        return ((CMatrix)_cachedValue)[0, 0];
+                    }
+                    return _cachedValue;
                 }
 
                 return Parent.FindValue(this, Parent.CachedValue);
@@ -87,6 +94,15 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
         public void RefreshValue()
         {
             RaisePropertyChanged(() => CachedValue);
+        }
+
+        protected override void CachedValueChangedHandler(object sender, EventArgs e)
+        {
+            if (Parent == null)
+            {
+                _cachedValue = null;
+                RefreshValue();
+            }
         }
 
         #endregion
