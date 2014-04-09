@@ -114,7 +114,9 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             {
                 for (int j = 0; j < Array.GetLength(1); j++)
                 {
-                    Array[i, j].RefreshValue();
+                    DataCell cell = Array[i, j];
+                    cell.RefreshValue();
+                    cell.RaiseCachedValueChanged();
                 }
             }
         }

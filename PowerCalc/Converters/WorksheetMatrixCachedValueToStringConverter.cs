@@ -21,6 +21,10 @@ namespace TAlex.PowerCalc.Converters
                 Complex normilizedValue = NumericUtil.ComplexZeroThreshold((Complex)value, settings.ComplexThreshold, settings.ZeroThreshold);
                 return normilizedValue.ToString(settings.NumericFormat, CultureInfo.InvariantCulture);
             }
+            else if (value is Exception)
+            {
+                return "#ERROR";
+            }
 
             return null;
         }
