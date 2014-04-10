@@ -29,6 +29,8 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
         public abstract Object CachedValue { get; }
 
+        public IList<DataUnit> References { get; private set; }
+
         #endregion
 
         #region Events
@@ -37,10 +39,20 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
         #endregion
 
+        #region Constructors
+
+        public DataUnit()
+        {
+            References = new List<DataUnit>();
+        }
+
+        #endregion
+
         #region Methods
 
         protected Object EvaluateExpression()
         {
+            UnsubscripeReferences();
             string expression = Expression;
 
             // Preparation variables
@@ -100,6 +112,22 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             }
         }
 
+        protected void UnsubscripeReferences()
+        {
+            foreach (DataUnit unit in References)
+            {
+                unit.CachedValueChanged -= CachedValueChangedHandler;
+            }
+            References.Clear();
+        }
+
+        private void AddReference(DataUnit unit)
+        {
+            unit.CachedValueChanged += CachedValueChangedHandler;
+            References.Add(unit);
+        }
+
+
         private static string GetRandomVariableName()
         {
             return GetRandomVariableName(15);
@@ -134,8 +162,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             Helpers.A1ReferenceHelper.Parse(a1Reference, out column, out row);
 
             DataCell cell = DataTable[row, column];
-            cell.CachedValueChanged -= CachedValueChangedHandler;
-            cell.CachedValueChanged += CachedValueChangedHandler;
+            AddReference(cell);
             return (Complex)cell.CachedValue;
         }
 
@@ -156,8 +183,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
                 for (int j = 0; j < m; j++)
                 {
                     DataCell cell = DataTable[i + row1Idx, j + col1Idx];
-                    cell.CachedValueChanged -= CachedValueChangedHandler;
-                    cell.CachedValueChanged += CachedValueChangedHandler;
+                    AddReference(cell);
                     if (cell.CachedValue != null)
                         matrix[i, j] = (Complex)cell.CachedValue;
                     else

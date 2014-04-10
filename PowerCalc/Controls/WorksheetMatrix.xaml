@@ -37,7 +37,7 @@
                         
             <DataGrid.RowHeaderTemplate>
                 <DataTemplate>
-                    <Label Width="100" Content="{Binding Path=DataContext.RowNumber, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRowHeader}}" />
+                    <Label Width="100" Padding="4" Content="{Binding Path=DataContext.RowNumber, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRowHeader}}" />
                 </DataTemplate>
             </DataGrid.RowHeaderTemplate>
         </DataGrid>

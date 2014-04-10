@@ -53,7 +53,7 @@ namespace TAlex.PowerCalc.Controls
 
         protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
         {
-            TextBox textBox = new TextBox();
+            TextBox textBox = new TextBox { Margin = new Thickness(0), Padding = new Thickness(0) };
             if (EditingBinding == null)
                 BindingOperations.ClearBinding(textBox, TextBox.TextProperty);
             else
@@ -64,7 +64,9 @@ namespace TAlex.PowerCalc.Controls
 
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            TextBlock textBlock = new TextBlock { VerticalAlignment = VerticalAlignment.Center };
+            TextBlock textBlock = new TextBlock { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0) };
+            //Validation.SetErrorTemplate(textBlock, new ControlTemplate() {  });
+
             if (Binding == null)
                 BindingOperations.ClearBinding(textBlock, TextBlock.TextProperty);
             else

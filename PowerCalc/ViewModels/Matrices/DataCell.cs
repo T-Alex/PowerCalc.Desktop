@@ -30,13 +30,11 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             {
                 if (Parent == null)
                 {
-                    if (String.IsNullOrEmpty(Expression)) return null;
-
                     if (_cachedValue == null)
                     {
                         try
                         {
-                            _cachedValue = EvaluateExpression();
+                            _cachedValue = !String.IsNullOrEmpty(Expression) ? EvaluateExpression() : new Object();
                         }
                         catch(Exception exc)
                         {
@@ -96,6 +94,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
         public void Clear()
         {
             Expression = null;
+            UnsubscripeReferences();
         }
 
         public void RefreshValue()
