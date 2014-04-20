@@ -69,8 +69,6 @@ namespace TAlex.PowerCalc.Controls
         public WorksheetMatrix()
         {
             InitializeComponent();
-
-            Initialize();
         }
 
         #endregion
@@ -87,33 +85,23 @@ namespace TAlex.PowerCalc.Controls
             dataGrid.Items.Refresh();
         }
 
-        public void Initialize()
-        {
-            int colCount = DefaultColumnCount;
-            int rowCount = DefaultRowCount;
-
-            dataGrid.Columns.Clear();
-            for (int i = 0; i < colCount; i++)
-            {
-                dataGrid.Columns.Add(new DataGridTextColumnEx
-                {
-                    Header = Helpers.A1ReferenceHelper.IntegerToA1ReferenceColumn(i),
-                    Binding = new Binding(String.Format("[{0}].CachedValue", i)) { ValidatesOnExceptions = true, NotifyOnValidationError = true, Converter = new WorksheetMatrixCachedValueToStringConverter() },
-                    EditingBinding = new Binding(String.Format("[{0}].Expression", i)) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged }
-                });
-            }
-
-            DataTable dataTable = new DataTable(((WorksheetMatrixViewModel)DataContext).ExpressionTreeBuilder);
-
-            for (int i = 0; i < rowCount; i++)
-            {
-                dataTable.Rows.Add(new DataRow(dataTable, colCount) { RowNumber = i + 1 });
-            }
-            
-            dataGrid.ItemsSource = dataTable.Rows;
-        }
-
         #region Event Handlers
+
+        /// <summary>
+        /// Set DataGridTemplateColumnEx column type
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            e.Column = new DataGridTemplateColumnEx
+            {
+                Header = e.PropertyName,
+                BindingPath = e.PropertyName,
+                CellTemplate = (DataTemplate)Resources["CellTemplate"],
+                CellEditingTemplate = (DataTemplate)Resources["CellEditingTemplate"]
+            };
+        }
 
         /// <summary>
         /// Auto switching to edit mode after typing

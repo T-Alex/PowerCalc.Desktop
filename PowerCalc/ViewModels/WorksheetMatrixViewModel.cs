@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
 
 
 namespace TAlex.PowerCalc.ViewModels
@@ -21,15 +22,15 @@ namespace TAlex.PowerCalc.ViewModels
 
         public string FormulaBarText { get; set; }
 
-        public object Worksheet { get; set; }
+        public DataTable Worksheet { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public WorksheetMatrixViewModel(IExpressionTreeBuilder<Object> expressionTreeBuilder)
+        public WorksheetMatrixViewModel(DataTable worksheet)
         {
-            ExpressionTreeBuilder = expressionTreeBuilder;
+            Worksheet = worksheet;
         }
 
         #endregion

@@ -7,45 +7,66 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using TAlex.PowerCalc.Helpers;
+using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
+
 
 namespace TAlex.PowerCalc.Controls
 {
-    public class DataGridTextColumnEx : DataGridColumn
+    public class DataGridTemplateColumnEx : DataGridColumn
     {
-        private BindingBase _binding;
-        private BindingBase _editingBinding;
+        private string _bindingPath;
+        private DataTemplate _cellTemplate;
+        private DataTemplate _cellEditingTemplate;
 
 
-        public virtual BindingBase Binding
+        public virtual string BindingPath
         {
             get
             {
-                return _binding;
+                return _bindingPath;
             }
 
             set
             {
-                if (_binding != value)
+                if (_bindingPath != value)
                 {
-                    _binding = value;
-                    base.NotifyPropertyChanged("Binding");
+                    _bindingPath = value;
+                    base.NotifyPropertyChanged("BindingPath");
                 }
             }
         }
 
-        public virtual BindingBase EditingBinding
+        public DataTemplate CellTemplate
         {
             get
             {
-                return _editingBinding;
+                return _cellTemplate;
             }
 
             set
             {
-                if (_editingBinding != value)
+                if (_cellTemplate != value)
                 {
-                    _editingBinding = value;
-                    base.NotifyPropertyChanged("EditingBinding");
+                    _cellTemplate = value;
+                    base.NotifyPropertyChanged("CellTemplate");
+                }
+            }
+        }
+
+        public DataTemplate CellEditingTemplate
+        {
+            get
+            {
+                return _cellEditingTemplate;
+            }
+
+            set
+            {
+                if (_cellEditingTemplate != value)
+                {
+                    _cellEditingTemplate = value;
+                    base.NotifyPropertyChanged("CellEditingTemplate");
                 }
             }
         }
@@ -53,31 +74,24 @@ namespace TAlex.PowerCalc.Controls
 
         protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
         {
-            TextBox textBox = new TextBox { Margin = new Thickness(0), Padding = new Thickness(0) };
-            if (EditingBinding == null)
-                BindingOperations.ClearBinding(textBox, TextBox.TextProperty);
-            else
-                BindingOperations.SetBinding(textBox, TextBox.TextProperty, EditingBinding);
+            ContentPresenter contentPresenter = new ContentPresenter { ContentTemplate = CellEditingTemplate };
+            BindingOperations.SetBinding(contentPresenter, ContentPresenter.ContentProperty, new Binding(_bindingPath));
 
-            return textBox;
+            return contentPresenter;
         }
 
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            TextBlock textBlock = new TextBlock { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0) };
-            //Validation.SetErrorTemplate(textBlock, new ControlTemplate() {  });
+            ContentPresenter contentPresenter = new ContentPresenter { ContentTemplate = CellTemplate };
+            BindingOperations.SetBinding(contentPresenter, ContentPresenter.ContentProperty, new Binding(_bindingPath));
 
-            if (Binding == null)
-                BindingOperations.ClearBinding(textBlock, TextBlock.TextProperty);
-            else
-                BindingOperations.SetBinding(textBlock, TextBlock.TextProperty, Binding);
-
-            return textBlock;
+            return contentPresenter;
         }
 
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
-            TextBox textBox = editingElement as TextBox;
+            TextBox textBox = VisualHelper.FindFirstFocusableElement(editingElement) as TextBox;
+            //TextBox textBox = editingElement as TextBox;
             if (textBox == null)
             {
                 return null;
@@ -114,7 +128,7 @@ namespace TAlex.PowerCalc.Controls
         {
             if (s == "\b")
             {
-                s = string.Empty;
+                s = String.Empty;
             }
             return s;
         }

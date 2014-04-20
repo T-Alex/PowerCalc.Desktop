@@ -13,16 +13,26 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
     {
         #region Fields
 
-        private static readonly string CellErrorText = "#ERROR";
-
         private string _expression;
         private Object _cachedValue;
+        private DataArray _parent;
 
         #endregion
 
         #region Properties
 
-        public DataArray Parent { get; set; }
+        public DataArray Parent
+        {
+            get
+            {
+                return _parent;
+            }
+
+            set
+            {
+                Set(() => Parent, ref _parent, value);
+            }
+        }
 
         public override Object CachedValue
         {
