@@ -40,8 +40,16 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             {
                 if (_cachedValue == null)
                 {
-                    _cachedValue = EvaluateExpression();
-                    OnCachedValueChanged(); // ???
+                    try
+                    {
+                        _cachedValue = EvaluateExpression();
+                    }
+                    catch (Exception exc)
+                    {
+                        _cachedValue = exc;
+                    }
+                    
+                    OnCachedValueChanged();
                 }
 
                 return _cachedValue;
@@ -78,8 +86,10 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
         #region Methods
 
-        public object FindValue(DataCell cell, Object cachedValue)
+        public object FindValue(DataCell cell)
         {
+            object cachedValue = CachedValue;
+
             if (cachedValue is CMatrix)
             {
                 CMatrix matrix = cachedValue as CMatrix;
@@ -94,7 +104,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
                     }
                 }
             }
-            else if (cachedValue is Complex)
+            else if (cachedValue is Complex || cachedValue is Exception)
             {
                 return cachedValue;
             }

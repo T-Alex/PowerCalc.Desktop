@@ -60,7 +60,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
                     return _cachedValue;
                 }
 
-                return Parent.FindValue(this, Parent.CachedValue);
+                return Parent.FindValue(this);
             }
         }
 
