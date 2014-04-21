@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TAlex.MathCore;
+using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
 using TAlex.WPF.Converters;
 
 
@@ -20,6 +21,10 @@ namespace TAlex.PowerCalc.Converters
 
                 Complex normilizedValue = NumericUtil.ComplexZeroThreshold((Complex)value, settings.ComplexThreshold, settings.ZeroThreshold);
                 return normilizedValue.ToString(settings.NumericFormat, CultureInfo.InvariantCulture);
+            }
+            else if (value is MatrixIndexOutOfRangeException)
+            {
+                return "#N/A";
             }
             else if (value is Exception)
             {

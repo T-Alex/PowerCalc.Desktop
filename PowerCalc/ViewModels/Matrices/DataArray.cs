@@ -99,7 +99,10 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
                     {
                         if (this.Array[i, j] == cell)
                         {
-                            return matrix[i, j];
+                            if (i < matrix.RowCount && j < matrix.ColumnCount)
+                                return matrix[i, j];
+                            else
+                                return new MatrixIndexOutOfRangeException(Properties.Resources.EXC_MatrixIndexOutOfRange);
                         }
                     }
                 }
@@ -132,5 +135,18 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
         }
 
         #endregion
+    }
+
+    public class MatrixIndexOutOfRangeException : Exception
+    {
+        public MatrixIndexOutOfRangeException()
+            : base()
+        {
+        }
+
+        public MatrixIndexOutOfRangeException(string message)
+            : base(message)
+        {
+        }
     }
 }
