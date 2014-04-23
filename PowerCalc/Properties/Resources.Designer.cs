@@ -104,5 +104,23 @@ namespace TAlex.PowerCalc.Properties {
                 return ResourceManager.GetString("VariableValueAssigned", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The array must be rectangular..
+        /// </summary>
+        internal static string WARN_ArrayMustBeRectangular {
+            get {
+                return ResourceManager.GetString("WARN_ArrayMustBeRectangular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot change part of an array..
+        /// </summary>
+        internal static string WARN_CannotChangePartOfArray {
+            get {
+                return ResourceManager.GetString("WARN_CannotChangePartOfArray", resourceCulture);
+            }
+        }
     }
 }

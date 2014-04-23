@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
-using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
 using TAlex.WPF.Converters;
 
 

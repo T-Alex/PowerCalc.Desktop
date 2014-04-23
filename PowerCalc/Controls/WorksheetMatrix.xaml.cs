@@ -18,7 +18,6 @@ using System.ComponentModel;
 using TAlex.PowerCalc.Locators;
 using TAlex.PowerCalc.Helpers;
 using TAlex.PowerCalc.ViewModels;
-using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
 using TAlex.PowerCalc.Converters;
 using TAlex.PowerCalc.ViewModels.Matrices;
 
@@ -31,6 +30,8 @@ namespace TAlex.PowerCalc.Controls
     public partial class WorksheetMatrix : UserControl
     {
         #region Fields
+
+        private static readonly string MessageBoxCaptionText = Common.Environment.ApplicationInfo.Current.Product;
 
         private bool _formulaBarEdit = false;
         private DataGridCell _lastEditedCellViaFormulaBar = null;
@@ -182,14 +183,14 @@ namespace TAlex.PowerCalc.Controls
                 }
                 catch (ArgumentException exc)
                 {
-                    MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else
             {
                 if (!Keyboard.IsKeyDown(Key.Escape) && currentDataCell.Parent != null)
                 {
-                    MessageBox.Show("You can't edit part of array", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(Properties.Resources.WARN_CannotChangePartOfArray, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                     e.Cancel = true;
                 }
             }
@@ -234,14 +235,15 @@ namespace TAlex.PowerCalc.Controls
         protected void OnDataGridDeleteKeyDown(KeyEventArgs e)
         {
             if (!dataGrid.GetCurrentDataGridCell().IsEditing)
-            { 
-                int selectedCells = dataGrid.SelectedCells.Count;
-
-                for (int i = 0; i < selectedCells; i++)
+            {
+                var cells = dataGrid.SelectedCells.Select(x => new DataCellInfo(dataGrid.Items.IndexOf(x.Item), x.Column.DisplayIndex)).ToList();
+                try
                 {
-                    DataGridCellInfo cellInfo = dataGrid.SelectedCells[i];
-                    DataCell dataCell = GetDataCell(cellInfo);
-                    dataCell.Clear();
+                    ((WorksheetMatrixViewModel)DataContext).Worksheet.DeleteCells(cells);
+                }
+                catch (ArgumentException exc)
+                {
+                    MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }

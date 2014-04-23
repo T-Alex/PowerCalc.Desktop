@@ -8,7 +8,7 @@ using TAlex.MathCore.LinearAlgebra;
 using TAlex.PowerCalc.ViewModels.Matrices;
 
 
-namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
+namespace TAlex.PowerCalc.ViewModels.Matrices
 {
     public class DataArray : DataUnit
     {
@@ -67,7 +67,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             Expression = currentCell.Expression;
             DataTable = currentCell.DataTable;
             ValidateCellsForArray(currentCell.DataTable, cells);
-            GetAllUniqueArrays(GetDataCells(DataTable, cells)).ForEach(arr => arr.Clear());
+            DataCellHelper.GetAllUniqueArrays(DataTable.GetDataCells(cells)).ForEach(arr => arr.Clear());
 
             // Define bounds of new array
             DataCellInfo firstCell = cells[0];
@@ -138,7 +138,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
             }
         }
 
-        protected virtual void Clear()
+        public virtual void Clear()
         {
             UnsubscripeReferences();
             foreach (DataCell cell in Array)
@@ -151,20 +151,10 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
         #region Helpers
 
-        private List<DataArray> GetAllUniqueArrays(IList<DataCell> dataCells)
-        {
-            return dataCells.Select(x => x.Parent).Where(x => x != null).Distinct().ToList();
-        }
-
-        private IList<DataCell> GetDataCells(DataTable dataTable, IList<DataCellInfo> cells)
-        {
-            return cells.Select(x => dataTable[x.RowIndex, x.ColumnIndex]).ToList();
-        }
-
         private void ValidateCellsForArray(DataTable dataTable, IList<DataCellInfo> cells)
         {
             EnsureRectangularity(cells);
-            EnsureAllArraysEnclosing(dataTable, cells);
+            DataCellHelper.EnsureAllArraysEnclosing(dataTable.GetDataCells(cells));
         }
 
         private void EnsureRectangularity(IList<DataCellInfo> cells)
@@ -178,7 +168,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
             if (cellsInRect != cells.Count)
             {
-                throw new ArgumentException("The array must be rectangular.");
+                throw new ArgumentException(Properties.Resources.WARN_ArrayMustBeRectangular);
             }
 
             bool isAllCellInsideRect = cells.All(x =>
@@ -189,30 +179,8 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
             if (!isAllCellInsideRect)
             {
-                throw new ArgumentException("The array must be rectangular.");
+                throw new ArgumentException(Properties.Resources.WARN_ArrayMustBeRectangular);
             }
-        }
-
-        private void EnsureAllArraysEnclosing(DataTable dataTable, IList<DataCellInfo> cells)
-        {
-            IList<DataCell> dataCells = GetDataCells(dataTable, cells);
-            IList<DataArray> allArrays = GetAllUniqueArrays(dataCells);
-
-            bool isValid = allArrays.All(a => IsSequenceContainsArray(a, dataCells));
-
-            if (!isValid)
-            {
-                throw new ArgumentException("You cannot change part of an array.");
-            }
-        }
-
-        private bool IsSequenceContainsArray(DataArray array, IList<DataCell> dataCells)
-        {
-            foreach (var x in array.Array)
-            {
-                if (!dataCells.Contains(x)) return false;
-            }
-            return true;
         }
 
         #endregion

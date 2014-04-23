@@ -11,7 +11,7 @@ using TAlex.WPF.Mvvm;
 using TAlex.PowerCalc.Helpers;
 
 
-namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
+namespace TAlex.PowerCalc.ViewModels.Matrices
 {
     public abstract class DataUnit : ViewModelBase
     {

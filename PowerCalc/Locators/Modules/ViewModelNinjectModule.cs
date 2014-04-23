@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.ViewModels.Worksheet;
-using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.PowerCalc.ViewModels.Matrices;
 
 
 namespace TAlex.PowerCalc.Locators.Modules

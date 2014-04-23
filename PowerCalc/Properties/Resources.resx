@@ -132,4 +132,10 @@
   <data name="VariableValueAssigned" xml:space="preserve">
     <value>'{0}' is assigned with value:</value>
   </data>
+  <data name="WARN_ArrayMustBeRectangular" xml:space="preserve">
+    <value>The array must be rectangular.</value>
+  </data>
+  <data name="WARN_CannotChangePartOfArray" xml:space="preserve">
+    <value>You cannot change part of an array.</value>
+  </data>
 </root>

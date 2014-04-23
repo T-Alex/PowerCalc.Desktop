@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
-using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
+using TAlex.PowerCalc.ViewModels.Matrices;
 
 
 namespace TAlex.PowerCalc.ViewModels

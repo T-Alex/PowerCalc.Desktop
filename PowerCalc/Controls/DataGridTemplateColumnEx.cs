@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using TAlex.PowerCalc.Helpers;
-using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
 
 
 namespace TAlex.PowerCalc.Controls

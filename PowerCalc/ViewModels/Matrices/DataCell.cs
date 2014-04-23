@@ -7,7 +7,7 @@ using TAlex.MathCore;
 using TAlex.MathCore.LinearAlgebra;
 
 
-namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
+namespace TAlex.PowerCalc.ViewModels.Matrices
 {
     public class DataCell : DataUnit
     {
@@ -103,6 +103,7 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
 
         public void Clear()
         {
+            Parent = null;
             Expression = null;
             UnsubscripeReferences();
         }

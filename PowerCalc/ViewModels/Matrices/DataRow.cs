@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using TAlex.PowerCalc.Helpers;
 
 
-namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
+namespace TAlex.PowerCalc.ViewModels.Matrices
 {
     public class DataRow : ICustomTypeDescriptor
     {

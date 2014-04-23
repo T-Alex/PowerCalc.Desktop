@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.PowerCalc.ViewModels.Matrices;
 
 
-namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
+namespace TAlex.PowerCalc.ViewModels.Matrices
 {
     public class DataTable : IList
     {
@@ -71,6 +72,27 @@ namespace TAlex.PowerCalc.ViewModels.WorksheetMatrix
                 _rows.Add(new DataRow(this, columns) { RowNumber = i + 1 });
             }
         }
+
+        public virtual void DeleteCells(IList<DataCellInfo> cells)
+        {
+            IList<DataCell> dataCells = GetDataCells(cells);
+            DataCellHelper.EnsureAllArraysEnclosing(dataCells);
+            DataCellHelper.GetAllUniqueArrays(dataCells).ForEach(x => x.Clear());
+
+            foreach (DataCell dataCell in dataCells)
+            {
+                dataCell.Clear();
+            }
+        }
+
+        #region Helpers
+
+        public IList<DataCell> GetDataCells(IList<DataCellInfo> cells)
+        {
+            return cells.Select(x => this[x.RowIndex, x.ColumnIndex]).ToList();
+        }
+
+        #endregion
 
         #endregion
 

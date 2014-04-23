@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TAlex.MathCore;
-using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
+using TAlex.PowerCalc.ViewModels.Matrices;
 using TAlex.WPF.Converters;
 
 
