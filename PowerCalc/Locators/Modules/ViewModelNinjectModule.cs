@@ -23,7 +23,7 @@ namespace TAlex.PowerCalc.Locators.Modules
             Bind<InsertFunctionContextMenuViewModel>().ToSelf();
             Bind<ConstantsContextMenuViewModel>().ToSelf();
             Bind<WorksheetModel>().ToSelf();
-            Bind<DataTable>().ToConstructor(x => new DataTable(x.Inject<IExpressionTreeBuilder<Object>>(), 255, 255));
+            Bind<DataTable>().ToConstructor(x => new DataTable(x.Inject<IExpressionTreeBuilder<Object>>(), 256, 256));
         }
     }
 }

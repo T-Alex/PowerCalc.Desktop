@@ -20,6 +20,7 @@ using TAlex.PowerCalc.Helpers;
 using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.ViewModels.WorksheetMatrix;
 using TAlex.PowerCalc.Converters;
+using TAlex.PowerCalc.ViewModels.Matrices;
 
 
 namespace TAlex.PowerCalc.Controls
@@ -30,9 +31,6 @@ namespace TAlex.PowerCalc.Controls
     public partial class WorksheetMatrix : UserControl
     {
         #region Fields
-
-        private static readonly int DefaultColumnCount = 256;
-        private static readonly int DefaultRowCount = 256;
 
         private bool _formulaBarEdit = false;
         private DataGridCell _lastEditedCellViaFormulaBar = null;
@@ -176,24 +174,16 @@ namespace TAlex.PowerCalc.Controls
 
             if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
             {
-                DataGridCellInfo firstCell = dataGrid.SelectedCells[0];
-                DataGridCellInfo lastCell = dataGrid.SelectedCells[dataGrid.SelectedCells.Count - 1];
+                var cells = dataGrid.SelectedCells.Select(x => new DataCellInfo(dataGrid.Items.IndexOf(x.Item), x.Column.DisplayIndex)).ToList();
 
-                int firstSelectedItemIndex = dataGrid.Items.IndexOf(firstCell.Item);
-                int lastSelectedItemIndex = dataGrid.Items.IndexOf(lastCell.Item);
-                int firstSelectedColumnIndex = firstCell.Column.DisplayIndex;
-                int lastSelectedColumnIndex = lastCell.Column.DisplayIndex;
-
-                int rows = Math.Abs(firstSelectedItemIndex - lastSelectedItemIndex) + 1;
-                int cols = Math.Abs(firstSelectedColumnIndex - lastSelectedColumnIndex) + 1;
-
-                int rowOffset = Math.Min(firstSelectedItemIndex, lastSelectedItemIndex);
-                int colOffset = Math.Min(firstSelectedColumnIndex, lastSelectedColumnIndex);
-
-                //if (currentDataCell.Parent == null)
-                    new DataArray(currentDataCell, colOffset, rowOffset, rows, cols);
-                //else
-                //    currentDataCell.Parent.Expand(colOffset, rowOffset, rows, cols);
+                try
+                {
+                    new DataArray(currentDataCell, cells);
+                }
+                catch (ArgumentException exc)
+                {
+                    MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
