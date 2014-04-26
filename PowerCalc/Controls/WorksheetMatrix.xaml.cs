@@ -21,6 +21,8 @@ using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.Converters;
 using TAlex.PowerCalc.ViewModels.Matrices;
 
+using TAlex.WPF.Mvvm.Extensions;
+
 
 namespace TAlex.PowerCalc.Controls
 {
@@ -124,7 +126,12 @@ namespace TAlex.PowerCalc.Controls
         {
             if (dataGrid.CurrentCell.Column != null)
             {
-                formulaBarTextBox.SetBinding(TextBox.TextProperty, new Binding("Expression") { Source = GetDataCell(dataGrid.CurrentCell), Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+                formulaBarTextBox.SetBinding(TextBox.TextProperty, new Binding("Expression")
+                {
+                    Source = GetDataCell(dataGrid.CurrentCell),
+                    Mode = BindingMode.TwoWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                });
             }
         }
 
@@ -161,6 +168,13 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
+        protected string StoredExpression;
+
+        private void dataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            StoredExpression = GetDataCell(dataGrid.CurrentCell).Expression;
+        }
+
         private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (_formulaBarEdit)
@@ -168,6 +182,7 @@ namespace TAlex.PowerCalc.Controls
                 e.Cancel = true;
                 _formulaBarEdit = false;
                 _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
+                return;
             }
 
             //---------------------------------------------------------------
@@ -183,15 +198,22 @@ namespace TAlex.PowerCalc.Controls
                 }
                 catch (ArgumentException exc)
                 {
-                    MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    currentDataCell.Expression = StoredExpression;
+                    MessageBox.Show(Application.Current.GetActiveWindow(),
+                        exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+            }
+            else if (Keyboard.IsKeyDown(Key.Escape))
+            {
+                currentDataCell.Expression = StoredExpression;
             }
             else
             {
                 if (!Keyboard.IsKeyDown(Key.Escape) && currentDataCell.Parent != null)
                 {
-                    MessageBox.Show(Properties.Resources.WARN_CannotChangePartOfArray, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    e.Cancel = true;
+                    currentDataCell.Expression = StoredExpression;
+                    MessageBox.Show(Application.Current.GetActiveWindow(),
+                        Properties.Resources.WARN_CannotChangePartOfArray, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }

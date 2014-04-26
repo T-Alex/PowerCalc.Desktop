@@ -55,6 +55,7 @@
                      RowBackground="{DynamicResource DataGridRowBackground}"
                      AlternatingRowBackground="{DynamicResource DataGridAlternatingRowBackground}"
                      CurrentCellChanged="dataGrid_CurrentCellChanged"
+                     BeginningEdit="dataGrid_BeginningEdit"
                      CellEditEnding="dataGrid_CellEditEnding"
                      PreviewKeyDown="dataGrid_PreviewKeyDown"
                      SelectedCellsChanged="dataGrid_SelectedCellsChanged"

@@ -163,6 +163,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
             DataCell cell = DataTable[row, column];
             AddReference(cell);
+
             return (Complex)cell.CachedValue;
         }
 
