@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using System.Globalization;
 
 using TAlex.WPF.Controls;
-using TAlex.WPF.CommonDialogs;
+
 
 namespace TAlex.PowerCalc
 {
@@ -21,21 +21,6 @@ namespace TAlex.PowerCalc
     /// </summary>
     public partial class PreferencesWindow : Window
     {
-        #region Fields
-
-        private FontFamily _worksheetFontFamily;
-        private FontWeight _worksheetFontWeight;
-        private FontStyle _worksheetFontStyle;
-        private FontStretch _worksheetFontStretch;
-        private double _worksheetFontSize;
-        private Color _worksheetForeground;
-
-        #endregion
-
-        #region Properties
-
-        #endregion
-
         #region Constructors
 
         public PreferencesWindow()
@@ -58,9 +43,6 @@ namespace TAlex.PowerCalc
             Properties.Settings settings = Properties.Settings.Default;
 
             // Result format
-            zeroThresholdNumericUpDown.Value = settings.ZeroThreshold;
-            complexThresholdNumericUpDown.Value = settings.ComplexThreshold;
-
             char format = settings.NumericFormat[0];
 
             if (settings.NumericFormat.Length > 1)
@@ -86,13 +68,6 @@ namespace TAlex.PowerCalc
                 default:
                     throw new FormatException();
             }
-
-            // Worksheet
-            worksheetMaxMatrixRows.Value = settings.WorksheetMaxMatrixRows;
-            worksheetMaxMatrixCols.Value = settings.WorksheetMaxMatrixCols;
-
-            // 2D Plot
-            plot2DBackgroundBrush.SelectedColor = settings.Plot2DBackground;
         }
 
         private void SaveSettings()
@@ -100,9 +75,6 @@ namespace TAlex.PowerCalc
             Properties.Settings settings = Properties.Settings.Default;
 
             // Result format
-            settings.ZeroThreshold = (int)zeroThresholdNumericUpDown.Value;
-            settings.ComplexThreshold = (int)complexThresholdNumericUpDown.Value;
-
             string numFormat = String.Empty;
 
             if (scientificFormatRadioButton.IsChecked == true)
@@ -119,73 +91,8 @@ namespace TAlex.PowerCalc
 
             settings.NumericFormat = numFormat;
 
-            // Worksheet
-            settings.WorksheetMaxMatrixRows = (int)worksheetMaxMatrixRows.Value;
-            settings.WorksheetMaxMatrixCols = (int)worksheetMaxMatrixCols.Value;
-
-            // 2D Plot
-            settings.Plot2DBackground = plot2DBackgroundBrush.SelectedColor;
-
             settings.Save();
         }
-
-        private void ResetSettings()
-        {
-        }
-
-        #region Event Handlers
-
-        private void fontButton_Click(object sender, RoutedEventArgs e)
-        {
-            FontChooserDialog fcd = new FontChooserDialog();
-            fcd.Background = Brushes.WhiteSmoke;
-            fcd.Owner = this;
-
-            fcd.Width = 500;
-            fcd.Height = 400;
-            fcd.ShowTextDecorations = false;
-            fcd.ShowColor = true;
-
-            fcd.SelectedFontFamily = _worksheetFontFamily;
-            fcd.SelectedFontWeight = _worksheetFontWeight;
-            fcd.SelectedFontStyle = _worksheetFontStyle;
-            fcd.SelectedFontStretch = _worksheetFontStretch;
-            fcd.SelectedFontSize = _worksheetFontSize;
-            fcd.SelectedFontColor = _worksheetForeground;
-
-            if (fcd.ShowDialog() == true)
-            {
-                _worksheetFontFamily = fcd.SelectedFontFamily;
-                _worksheetFontWeight = fcd.SelectedFontWeight;
-                _worksheetFontStyle = fcd.SelectedFontStyle;
-                _worksheetFontStretch = fcd.SelectedFontStretch;
-                _worksheetFontSize = fcd.SelectedFontSize;
-                _worksheetForeground = fcd.SelectedFontColor;
-            }
-        }
-
-
-        private void okButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                SaveSettings();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(this, "Incorrect settings.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            DialogResult = true;
-        }
-
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
-        }
-
-        #endregion
 
         #endregion
     }
