@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,10 @@ namespace TAlex.PowerCalc.ViewModels
         #endregion
 
         #region Properties
+
+        public int DecimalPlaces { get; set; }
+
+        public string NumericFormat { get; set; }
 
         public int ZeroThreshold { get; set; }
 
@@ -82,6 +87,9 @@ namespace TAlex.PowerCalc.ViewModels
 
         private void LoadSettings()
         {
+            DecimalPlaces = int.Parse(AppSettings.NumericFormat.Substring(1));
+            NumericFormat = AppSettings.NumericFormat[0].ToString();
+
             ZeroThreshold = AppSettings.ZeroThreshold;
             ComplexThreshold = AppSettings.ComplexThreshold;
 
@@ -93,6 +101,7 @@ namespace TAlex.PowerCalc.ViewModels
 
         private void SaveCommandExecute()
         {
+            AppSettings.NumericFormat = NumericFormat + DecimalPlaces.ToString(CultureInfo.InvariantCulture);
             AppSettings.ZeroThreshold = ZeroThreshold;
             AppSettings.ComplexThreshold = ComplexThreshold;
 

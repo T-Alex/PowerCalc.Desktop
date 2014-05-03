@@ -213,6 +213,7 @@
     <Compile Include="Converters\CopyToClipboardParameterConverter.cs" />
     <Compile Include="Converters\DataCellToForegroundConverter.cs" />
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
+    <Compile Include="Converters\NumericFormatToBooleanConverter.cs" />
     <Compile Include="Converters\WorksheetItemResultConverter.cs" />
     <Compile Include="Converters\WorksheetItemResultToForeground.cs" />
     <Compile Include="Converters\WorksheetItemResultToToolTipConverter.cs" />
