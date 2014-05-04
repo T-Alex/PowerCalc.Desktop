@@ -8,6 +8,7 @@ using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.ViewModels.Worksheet;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.PowerCalc.ViewModels.Matrices;
+using TAlex.PowerCalc.Services;
 
 
 namespace TAlex.PowerCalc.Locators.Modules
@@ -24,7 +25,11 @@ namespace TAlex.PowerCalc.Locators.Modules
             Bind<InsertFunctionContextMenuViewModel>().ToSelf();
             Bind<ConstantsContextMenuViewModel>().ToSelf();
             Bind<WorksheetModel>().ToSelf();
-            Bind<DataTable>().ToConstructor(x => new DataTable(x.Inject<IExpressionTreeBuilder<Object>>(), 256, 256));
+
+            Bind<DataTable>().ToConstructor(x => new DataTable(
+                x.Inject<IExpressionTreeBuilder<Object>>(),
+                ((IAppSettings)x.Context.Kernel.GetService(typeof(IAppSettings))).MatricesWorksheetRows,
+                ((IAppSettings)x.Context.Kernel.GetService(typeof(IAppSettings))).MatricesWorksheetColumns));
         }
     }
 }

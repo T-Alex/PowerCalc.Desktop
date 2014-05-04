@@ -32,11 +32,17 @@
     <Setting Name="WorksheetMaxMatrixRows" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15</Value>
     </Setting>
-    <Setting Name="WorksheetMaxMatrixCols" Type="System.Int32" Scope="User">
+    <Setting Name="WorksheetMaxMatrixColumns" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15</Value>
     </Setting>
     <Setting Name="CallUpgrade" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MatricesWorksheetRows" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">256</Value>
+    </Setting>
+    <Setting Name="MatricesWorksheetColumns" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">256</Value>
     </Setting>
   </Settings>
 </SettingsFile>

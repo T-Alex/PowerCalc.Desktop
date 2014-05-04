@@ -76,7 +76,7 @@
                             <talex:NumericUpDown Grid.Row="0" Grid.Column="1" Width="50" Height="22" HorizontalAlignment="Right" Margin="0,0,6,0" Minimum="2" Maximum="100" Value="{Binding WorksheetMaxMatrixRows, Mode=TwoWay, Converter={StaticResource Int32ToDecimalConverter}}" />
 
                             <TextBlock VerticalAlignment="Center" Margin="9,0,0,0" Grid.Row="1" Text="Maximum columns:" />
-                            <talex:NumericUpDown Grid.Row="1" Grid.Column="1" Width="50" Height="22" HorizontalAlignment="Right" Margin="0,0,6,0" Minimum="2" Maximum="100" Value="{Binding WorksheetMaxMatrixCols, Mode=TwoWay, Converter={StaticResource Int32ToDecimalConverter}}" />
+                            <talex:NumericUpDown Grid.Row="1" Grid.Column="1" Width="50" Height="22" HorizontalAlignment="Right" Margin="0,0,6,0" Minimum="2" Maximum="100" Value="{Binding WorksheetMaxMatrixColumns, Mode=TwoWay, Converter={StaticResource Int32ToDecimalConverter}}" />
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -84,7 +84,27 @@
             
             <TabItem Header="Matrices">
                 <Grid>
+                    <GroupBox VerticalAlignment="Top" Header="Worksheet size" Height="87" Margin="7,6">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition Height="0.51*" />
+                            </Grid.RowDefinitions>
 
+                            <TextBlock VerticalAlignment="Center" Margin="9,0,0,0" Text="Rows:" />
+                            <talex:NumericUpDown Grid.Row="0" Grid.Column="1" Width="50" Height="22" HorizontalAlignment="Right" Margin="0,0,6,0" Minimum="20" Maximum="1000" Value="{Binding MatricesWorksheetRows, Mode=TwoWay, Converter={StaticResource Int32ToDecimalConverter}}" />
+
+                            <TextBlock VerticalAlignment="Center" Margin="9,0,0,0" Grid.Row="1" Text="Columns:" />
+                            <talex:NumericUpDown Grid.Row="1" Grid.Column="1" Width="50" Height="22" HorizontalAlignment="Right" Margin="0,0,6,0" Minimum="20" Maximum="1000" Value="{Binding MatricesWorksheetColumns, Mode=TwoWay, Converter={StaticResource Int32ToDecimalConverter}}" />
+
+                            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,6,0" FontSize="10" Foreground="DarkRed" Text="Changes will take effect after restarting the program" />
+                        </Grid>
+                    </GroupBox>
                 </Grid>
             </TabItem>
             

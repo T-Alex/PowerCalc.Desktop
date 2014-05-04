@@ -51,7 +51,7 @@ namespace TAlex.PowerCalc.Converters
         private string MatrixToString(CMatrix m, string format)
         {
             int maxRows = Properties.Settings.Default.WorksheetMaxMatrixRows;
-            int maxCols = Properties.Settings.Default.WorksheetMaxMatrixCols;
+            int maxCols = Properties.Settings.Default.WorksheetMaxMatrixColumns;
             int rows = Math.Min(maxRows + 1, m.RowCount);
             int cols = Math.Min(maxCols + 1, m.ColumnCount);
 

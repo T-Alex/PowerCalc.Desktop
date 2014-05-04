@@ -21,9 +21,12 @@ namespace TAlex.PowerCalc.Services
         string ColorScheme { get; set; }
 
         int WorksheetMaxMatrixRows { get; set; }
-        int WorksheetMaxMatrixCols { get; set; }
+        int WorksheetMaxMatrixColumns { get; set; }
         double WorksheetFontSize { get; set; } // !!!!!!!!!!!!!!
-        
+
+        int MatricesWorksheetRows { get; set; }
+        int MatricesWorksheetColumns { get; set; }
+
         Color Plot2DBackground { get; set; }
 
 

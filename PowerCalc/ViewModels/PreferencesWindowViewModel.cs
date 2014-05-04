@@ -35,7 +35,12 @@ namespace TAlex.PowerCalc.ViewModels
 
         public int WorksheetMaxMatrixRows { get; set; }
 
-        public int WorksheetMaxMatrixCols { get; set; }
+        public int WorksheetMaxMatrixColumns { get; set; }
+
+
+        public int MatricesWorksheetRows { get; set; }
+
+        public int MatricesWorksheetColumns { get; set; }
 
 
         public Color Plot2DBackground { get; set; }
@@ -94,7 +99,10 @@ namespace TAlex.PowerCalc.ViewModels
             ComplexThreshold = AppSettings.ComplexThreshold;
 
             WorksheetMaxMatrixRows = AppSettings.WorksheetMaxMatrixRows;
-            WorksheetMaxMatrixCols = AppSettings.WorksheetMaxMatrixCols;
+            WorksheetMaxMatrixColumns = AppSettings.WorksheetMaxMatrixColumns;
+
+            MatricesWorksheetRows = AppSettings.MatricesWorksheetRows;
+            MatricesWorksheetColumns = AppSettings.MatricesWorksheetColumns;
 
             Plot2DBackground = AppSettings.Plot2DBackground;
         }
@@ -106,7 +114,10 @@ namespace TAlex.PowerCalc.ViewModels
             AppSettings.ComplexThreshold = ComplexThreshold;
 
             AppSettings.WorksheetMaxMatrixRows = WorksheetMaxMatrixRows;
-            AppSettings.WorksheetMaxMatrixCols = WorksheetMaxMatrixCols;
+            AppSettings.WorksheetMaxMatrixColumns = WorksheetMaxMatrixColumns;
+
+            AppSettings.MatricesWorksheetRows = MatricesWorksheetRows;
+            AppSettings.MatricesWorksheetColumns = MatricesWorksheetColumns;
 
             AppSettings.Plot2DBackground = Plot2DBackground;
 

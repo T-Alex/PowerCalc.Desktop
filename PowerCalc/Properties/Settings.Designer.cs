@@ -143,12 +143,12 @@ namespace TAlex.PowerCalc.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("15")]
-        public int WorksheetMaxMatrixCols {
+        public int WorksheetMaxMatrixColumns {
             get {
-                return ((int)(this["WorksheetMaxMatrixCols"]));
+                return ((int)(this["WorksheetMaxMatrixColumns"]));
             }
             set {
-                this["WorksheetMaxMatrixCols"] = value;
+                this["WorksheetMaxMatrixColumns"] = value;
             }
         }
         
@@ -161,6 +161,30 @@ namespace TAlex.PowerCalc.Properties {
             }
             set {
                 this["CallUpgrade"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        public int MatricesWorksheetRows {
+            get {
+                return ((int)(this["MatricesWorksheetRows"]));
+            }
+            set {
+                this["MatricesWorksheetRows"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("256")]
+        public int MatricesWorksheetColumns {
+            get {
+                return ((int)(this["MatricesWorksheetColumns"]));
+            }
+            set {
+                this["MatricesWorksheetColumns"] = value;
             }
         }
     }
