@@ -14,8 +14,6 @@
     Loaded="Window_Loaded">
 
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New" Executed="CommandBindingNew_Executed"/>
-        <CommandBinding Command="ApplicationCommands.Open" Executed="CommandBindingOpen_Executed"/>
         <CommandBinding Command="ApplicationCommands.SaveAs" Executed="CommandBindingSaveAs_Executed"/>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBindingHelp_Executed"/>
     </Window.CommandBindings>
@@ -76,8 +74,6 @@
     <Grid Background="{DynamicResource MainWindowBgBrush}">
         <Menu Height="22" VerticalAlignment="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_New" Command="ApplicationCommands.New" />
-                <MenuItem Header="_Open..." Command="ApplicationCommands.Open" />
                 <MenuItem Header="Save _As..." Command="ApplicationCommands.SaveAs" />
                 <Separator />
                 <MenuItem Header="E_xit" Click="exitMenuItem_Click" InputGestureText="Alt+F4" />
@@ -222,7 +218,7 @@
                 </TabItem.Resources>
                 
                 <DockPanel>
-                    <Expander Background="{DynamicResource GradBrush}" ExpandDirection="Up" IsExpanded="True" DockPanel.Dock="Bottom">                      
+                    <Expander Background="{DynamicResource GradBrush}" ExpandDirection="Up" IsExpanded="True" DockPanel.Dock="Bottom">                       
                         <Canvas Height="156" Width="651" HorizontalAlignment="Center">
                             <GroupBox Canvas.Left="4" Canvas.Top="5" Header="Calc" Height="146" Width="52">
                                 <Canvas>
@@ -360,105 +356,105 @@
                         <Canvas Height="156" Width="651" HorizontalAlignment="Center">
                             <GroupBox Canvas.Left="4" Canvas.Top="5" Header="Dec" Height="146" Width="52">
                                 <Canvas>
-                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="lu()" ToolTip="LU Decomposition" Width="32" Click="insertTextToFormulaBar_Click">lu</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="qr()" ToolTip="QR Decomposition" Width="32" Click="insertTextToFormulaBar_Click">qr</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="chol()" ToolTip="Cholesky Decomposition" Width="32" Click="insertTextToFormulaBar_Click">chol</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="svd()" ToolTip="Singular Value Decomposition" Width="32" Click="insertTextToFormulaBar_Click">svd</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="lu()" ToolTip="LU Decomposition" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">lu</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="qr()" ToolTip="QR Decomposition" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">qr</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="chol()" ToolTip="Cholesky Decomposition" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">chol</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="svd()" ToolTip="Singular Value Decomposition" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">svd</Button>
                                 </Canvas>
                             </GroupBox>
                             <GroupBox Canvas.Left="63" Canvas.Top="5" Header="Lin. Algebra" Height="146" Width="89">
                                 <Canvas>
-                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="cofactor(,,)" ToolTip="Cofactor" Width="32" Click="insertTextToFormulaBar_Click">
+                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="cofactor(,,)" ToolTip="Cofactor" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">
                                         <TextBlock>C<Span BaselineAlignment="Subscript" FontSize="8"><Italic>ij</Italic></Span></TextBlock>
                                     </Button>
-                                    <Button Canvas.Left="41" Canvas.Top="4" FontSize="10" Height="25" Tag="minor(,,)" ToolTip="Minor" Width="32" Click="insertTextToFormulaBar_Click">
+                                    <Button Canvas.Left="41" Canvas.Top="4" FontSize="10" Height="25" Tag="minor(,,)" ToolTip="Minor" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">
                                         <TextBlock>M<Span BaselineAlignment="Subscript" FontSize="8"><Italic>ij</Italic></Span></TextBlock>
                                     </Button>
-                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="eigvals()" ToolTip="Eigenvalues" Width="32" Click="insertTextToFormulaBar_Click">eig</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="34" FontSize="10" Height="25" Tag="sngvals()" ToolTip="Singularvalues" Width="32" Click="insertTextToFormulaBar_Click">sng</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="eigvecs()" ToolTip="Eigenvectors" Width="32" Click="insertTextToFormulaBar_Click">eigv</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="64" FontSize="10" Height="25" Tag="leigvecs()" ToolTip="Left eigenvectors" Width="32" Click="insertTextToFormulaBar_Click">leigv</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="lsolve(,)" ToolTip="Linear system solve" Width="32" Click="insertTextToFormulaBar_Click">solve</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="94" FontSize="10" Height="25" Tag="char()" ToolTip="Characteristic polynomial" Width="32" Click="insertTextToFormulaBar_Click">char</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="eigvals()" ToolTip="Eigenvalues" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">eig</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="34" FontSize="10" Height="25" Tag="sngvals()" ToolTip="Singularvalues" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">sng</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="eigvecs()" ToolTip="Eigenvectors" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">eigv</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" FontSize="10" Height="25" Tag="leigvecs()" ToolTip="Left eigenvectors" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">leigv</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="lsolve(,)" ToolTip="Linear system solve" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">solve</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" FontSize="10" Height="25" Tag="char()" ToolTip="Characteristic polynomial" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">char</Button>
                                 </Canvas>
                             </GroupBox>
                             <GroupBox Canvas.Left="159" Canvas.Top="5" Header="Behaviors" Height="146" Width="89">
                                 <Canvas>
-                                    <Button Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="last()" ToolTip="Index of the last element" Width="32">last</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="length()" ToolTip="Length" Width="32">len</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="rows()" ToolTip="Rows count" Width="32">rows</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="34" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="cols()" ToolTip="Columns count" Width="32">cols</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="max()" ToolTip="Maximum value" Width="32">max</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="64" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="min()" ToolTip="Minimum value" Width="32">min</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="tr()" ToolTip="Trace matrix" Width="32">tr</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="94" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="rank()" ToolTip="Rank of matrix" Width="32">rank</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="last()" ToolTip="Index of the last element" Width="32" Focusable="False">last</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="length()" ToolTip="Length" Width="32" Focusable="False">len</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="rows()" ToolTip="Rows count" Width="32" Focusable="False">rows</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="34" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="cols()" ToolTip="Columns count" Width="32" Focusable="False">cols</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="max()" ToolTip="Maximum value" Width="32" Focusable="False">max</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="min()" ToolTip="Minimum value" Width="32" Focusable="False">min</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="tr()" ToolTip="Trace matrix" Width="32" Focusable="False">tr</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" Click="insertTextToFormulaBar_Click" FontSize="10" Height="25" Tag="rank()" ToolTip="Rank of matrix" Width="32" Focusable="False">rank</Button>
                                 </Canvas>
                             </GroupBox>
                             <GroupBox Header="Creation" Height="146" Width="89" Canvas.Left="255" Canvas.Top="5">
                                 <Canvas>
-                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="matrix(,)" ToolTip="Create matrix" Width="32" Click="insertTextToFormulaBar_Click">M</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="4" Height="25" Tag="diag()" ToolTip="Diagonal" Width="32" Click="insertTextToFormulaBar_Click" FontSize="10">diag</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="identity()" ToolTip="Identity matrix" Width="32" Click="insertTextToFormulaBar_Click">ident</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="34" FontSize="10" Height="25" Tag="submatrix(,,,,)" ToolTip="Submatrix" Width="32" Click="insertTextToFormulaBar_Click">sub</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="stack()" ToolTip="Vertical concatenating" Width="32" Click="insertTextToFormulaBar_Click">stack</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="64" FontSize="9" Height="25" Tag="augment()" ToolTip="Horizontal concatenating" Width="32" Click="insertTextToFormulaBar_Click">augm</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="row(,)" ToolTip="Get row" Width="32" Click="insertTextToFormulaBar_Click">row</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="94" FontSize="10" Height="25" Tag="col(,)" ToolTip="Get column" Width="32" Click="insertTextToFormulaBar_Click">col</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="4" FontSize="10" Height="25" Tag="matrix(,)" ToolTip="Create matrix" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">M</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="4" Height="25" Tag="diag()" ToolTip="Diagonal" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click" FontSize="10">diag</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="identity()" ToolTip="Identity matrix" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">ident</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="34" FontSize="10" Height="25" Tag="submatrix(,,,,)" ToolTip="Submatrix" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">sub</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="stack()" ToolTip="Vertical concatenating" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">stack</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" FontSize="9" Height="25" Tag="augment()" ToolTip="Horizontal concatenating" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">augm</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="row(,)" ToolTip="Get row" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">row</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" FontSize="10" Height="25" Tag="col(,)" ToolTip="Get column" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">col</Button>
                                 </Canvas>
                             </GroupBox>
                             <GroupBox Canvas.Left="351" Canvas.Top="5" Header="Digits" Height="146" Width="126">
                                 <Canvas>
-                                    <Button Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="7" ToolTip="Number 'seven'" Width="32">7</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="8" ToolTip="Number 'eight'" Width="32">8</Button>
-                                    <Button Canvas.Left="78" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="9" ToolTip="Number 'nine'" Width="32">9</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="4" ToolTip="Number 'four'" Width="32">4</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="5" ToolTip="Number 'five'" Width="32">5</Button>
-                                    <Button Canvas.Left="78" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="6" ToolTip="Number 'six'" Width="32">6</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="1" ToolTip="Number 'one'" Width="32">1</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="2" ToolTip="Number 'two'" Width="32">2</Button>
-                                    <Button Canvas.Left="78" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="3" ToolTip="Number 'three'" Width="32">3</Button>
-                                    <Button Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="0" ToolTip="Number 'zero'" Width="32">0</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="i" ToolTip="Imaginary Unit i" Width="32">i</Button>
-                                    <Button Canvas.Left="78" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="." ToolTip="Decimal point" Width="32">.</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="7" ToolTip="Number 'seven'" Width="32" Focusable="False">7</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="8" ToolTip="Number 'eight'" Width="32" Focusable="False">8</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="9" ToolTip="Number 'nine'" Width="32" Focusable="False">9</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="4" ToolTip="Number 'four'" Width="32" Focusable="False">4</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="5" ToolTip="Number 'five'" Width="32" Focusable="False">5</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="6" ToolTip="Number 'six'" Width="32" Focusable="False">6</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="1" ToolTip="Number 'one'" Width="32" Focusable="False">1</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="2" ToolTip="Number 'two'" Width="32" Focusable="False">2</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="3" ToolTip="Number 'three'" Width="32" Focusable="False">3</Button>
+                                    <Button Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="0" ToolTip="Number 'zero'" Width="32" Focusable="False">0</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="i" ToolTip="Imaginary Unit i" Width="32" Focusable="False">i</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="." ToolTip="Decimal point" Width="32" Focusable="False">.</Button>
                                 </Canvas>
                             </GroupBox>
                             <GroupBox Canvas.Left="484" Canvas.Top="5" Header="Operations" Height="146" Width="163">
                                 <Canvas>
-                                    <Button ToolTip="Division" Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="/" Width="32">/</Button>
-                                    <Button ToolTip="Inverse matrix" Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="inv()" Width="32">
+                                    <Button ToolTip="Division" Canvas.Left="4" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="/" Width="32" Focusable="False">/</Button>
+                                    <Button ToolTip="Inverse matrix" Canvas.Left="41" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="inv()" Width="32" Focusable="False">
                                         <Grid VerticalAlignment="Center" Width="14" Height="17">
                                             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="6.5">-1</TextBlock>
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10">M</TextBlock>
                                         </Grid>
                                     </Button>
-                                    <Button ToolTip="Opening bracket" Canvas.Left="78" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="(" Width="32">(</Button>
-                                    <Button ToolTip="Closing bracket" Canvas.Left="115" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag=")" Width="32">)</Button>
-                                    <Button ToolTip="Multiplication" Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="*" Width="32">*</Button>
-                                    <Button ToolTip="Cross product" Canvas.Left="41" Canvas.Top="34" Height="25" Tag="cross(,)" Width="32" Click="insertTextToFormulaBar_Click">×</Button>
-                                    <Button ToolTip="Frobenius norm" Canvas.Left="78" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="fronorm()" FontSize="10" Width="32">||M||</Button>
-                                    <Button ToolTip="Determinant" Canvas.Left="115" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="det()" Width="32">det</Button>
-                                    <Button ToolTip="Subtraction" Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="-" Width="32">-</Button>
-                                    <Button ToolTip="Evaluate" Canvas.Left="41" Canvas.Top="64" Click="evaluateMatricesButton_Click" Height="55" Tag="=" Width="32">=</Button>
-                                    <Button ToolTip="Raise to power" Canvas.Left="78" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="^" Width="32" FontSize="10">
+                                    <Button ToolTip="Opening bracket" Canvas.Left="78" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag="(" Width="32" Focusable="False">(</Button>
+                                    <Button ToolTip="Closing bracket" Canvas.Left="115" Canvas.Top="4" Click="insertTextToFormulaBar_Click" Height="25" Tag=")" Width="32" Focusable="False">)</Button>
+                                    <Button ToolTip="Multiplication" Canvas.Left="4" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="*" Width="32" Focusable="False">*</Button>
+                                    <Button ToolTip="Cross product" Canvas.Left="41" Canvas.Top="34" Height="25" Tag="cross(,)" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">×</Button>
+                                    <Button ToolTip="Frobenius norm" Canvas.Left="78" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="fronorm()" FontSize="10" Width="32" Focusable="False">||M||</Button>
+                                    <Button ToolTip="Determinant" Canvas.Left="115" Canvas.Top="34" Click="insertTextToFormulaBar_Click" Height="25" Tag="det()" Width="32" Focusable="False">det</Button>
+                                    <Button ToolTip="Subtraction" Canvas.Left="4" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="-" Width="32" Focusable="False">-</Button>
+                                    <Button ToolTip="Evaluate" Canvas.Left="41" Canvas.Top="64" Click="evaluateMatricesButton_Click" Height="55" Tag="=" Width="32" Focusable="False">=</Button>
+                                    <Button ToolTip="Raise to power" Canvas.Left="78" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="^" Width="32" Focusable="False" FontSize="10">
                                         <Grid VerticalAlignment="Center"  Width="13" Height="20">
                                             <TextBlock Padding="0" Margin="0" VerticalAlignment="Center"  HorizontalAlignment="Left" FontSize="10">M</TextBlock>
                                             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="8.5">n</TextBlock>
                                         </Grid>
                                     </Button>
-                                    <Button ToolTip="Square" Canvas.Left="115" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="sqr()" Width="32" FontSize="10">
+                                    <Button ToolTip="Square" Canvas.Left="115" Canvas.Top="64" Click="insertTextToFormulaBar_Click" Height="25" Tag="sqr()" Width="32" Focusable="False" FontSize="10">
                                         <Grid VerticalAlignment="Center" Width="12" Height="17">
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10">M</TextBlock>
                                             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="7">2</TextBlock>
                                         </Grid>
                                     </Button>
-                                    <Button ToolTip="Addition" Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="+" Width="32">+</Button>
-                                    <Button Canvas.Left="78" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="tran()" ToolTip="Transpose matrix" Width="32">
+                                    <Button ToolTip="Addition" Canvas.Left="4" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="+" Width="32" Focusable="False">+</Button>
+                                    <Button Canvas.Left="78" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="tran()" ToolTip="Transpose matrix" Width="32" Focusable="False">
                                         <Grid VerticalAlignment="Center" Width="12" Height="17">
                                             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="6.5">T</TextBlock>
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10">M</TextBlock>
                                         </Grid>
                                     </Button>
-                                    <Button Canvas.Left="115" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="adjoint()" ToolTip="Conjugate transpose matrix" Width="32">
+                                    <Button Canvas.Left="115" Canvas.Top="94" Click="insertTextToFormulaBar_Click" Height="25" Tag="adjoint()" ToolTip="Conjugate transpose matrix" Width="32" Focusable="False">
                                         <Grid VerticalAlignment="Center" Width="12" Height="17">
                                             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="6.5">H</TextBlock>
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10">M</TextBlock>

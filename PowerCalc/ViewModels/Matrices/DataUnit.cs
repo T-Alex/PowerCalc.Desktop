@@ -9,6 +9,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.LinearAlgebra;
 using TAlex.WPF.Mvvm;
 using TAlex.PowerCalc.Helpers;
+using TAlex.MathCore.ExpressionEvaluation;
 
 
 namespace TAlex.PowerCalc.ViewModels.Matrices
@@ -54,6 +55,8 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
         {
             UnsubscripeReferences();
             string expression = Expression;
+
+            CheckCircularReferences(this, expression);
 
             // Preparation variables
             IDictionary<string, Object> vars = new Dictionary<string, object>();
@@ -156,7 +159,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             else return 0;
         }
 
-        private Complex GetSingleCellValue(string a1Reference)
+        private object GetSingleCellValue(string a1Reference)
         {
             int row, column;
             Helpers.A1ReferenceHelper.Parse(a1Reference, out column, out row);
@@ -164,7 +167,12 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             DataCell cell = DataTable[row, column];
             AddReference(cell);
 
-            return (Complex)cell.CachedValue;
+            object varValue = cell.CachedValue;
+            if (varValue is Exception || varValue.GetType() == typeof(object))
+            {
+                throw new UnassignedVariableException(a1Reference);
+            }
+            return varValue;
         }
 
         protected abstract void CachedValueChangedHandler(object sender, EventArgs e);
@@ -185,14 +193,23 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
                 {
                     DataCell cell = DataTable[i + row1Idx, j + col1Idx];
                     AddReference(cell);
-                    if (cell.CachedValue != null)
-                        matrix[i, j] = (Complex)cell.CachedValue;
-                    else
-                        matrix[i, j] = Complex.Zero;
+                    object cellValue = cell.CachedValue;
+                    if (cellValue is Exception || cellValue.GetType() == typeof(object))
+                    {
+                        throw new UnassignedVariableException(a1Reference);
+                    }
+
+                    matrix[i, j] = (Complex)cellValue;
                 }
             }
 
             return matrix;
+        }
+
+
+        protected void CheckCircularReferences(DataUnit unit, string expression)
+        {
+
         }
 
         #endregion

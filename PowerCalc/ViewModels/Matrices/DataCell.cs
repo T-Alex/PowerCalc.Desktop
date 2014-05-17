@@ -34,6 +34,14 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
+        public bool HasParent
+        {
+            get
+            {
+                return Parent != null;
+            }
+        }
+
         public override Object CachedValue
         {
             get

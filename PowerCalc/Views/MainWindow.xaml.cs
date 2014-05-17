@@ -98,32 +98,6 @@ namespace TAlex.PowerCalc
 
         #region Command Bindings
 
-        private void CommandBindingNew_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            // TODO: Need refactoring
-            //if (String.IsNullOrEmpty(worksheetTextBox.Text))
-            //{
-            //    return;
-            //}
-
-            //if (MessageBox.Show(this, "", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            //{
-            //    worksheetTextBox.Text = String.Empty;
-            //}
-        }
-
-        private void CommandBindingOpen_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "PowerCalc Worksheet (*.pcx)|*.pcx|All Files (*.*)|*.*";
-
-            if (ofd.ShowDialog(this) == true)
-            {
-                // TODO: Need refactoring.
-                //worksheetTextBox.Text = System.IO.File.ReadAllText(ofd.FileName);
-            }
-        }
-
         private void CommandBindingSaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -152,10 +126,6 @@ namespace TAlex.PowerCalc
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Worksheet
-            // TODO: Need refactoring
-            //worksheetTextBox.Focus();
-
             // 3D Plot
             viewPort3D.Children.Add(Utils3D.GetCubeRectCoordSystem(10, 2));
         }
@@ -240,9 +210,7 @@ namespace TAlex.PowerCalc
 
         private void registrationMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            RegistrationWindow window = new RegistrationWindow();
-            window.Owner = this;
-
+            RegistrationWindow window = new RegistrationWindow { Owner = this };
             window.ShowDialog();
         }
 
@@ -318,7 +286,6 @@ namespace TAlex.PowerCalc
 
         private void insertTextToFormulaBar_Click(object sender, RoutedEventArgs e)
         {
-            worksheetMatrix.FormulaBar.Focus();
             string functionHeader = (string)(((Control)sender).Tag);
             new InsertFunctionCommand().Execute(new InsertFunctionParameter(functionHeader, worksheetMatrix.FormulaBar));
         }
