@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.PowerCalc.Helpers;
 using TAlex.PowerCalc.ViewModels.Matrices;
 
 
@@ -83,6 +85,48 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             {
                 dataCell.Clear();
             }
+        }
+
+        public virtual void CheckCircularReferences(string address, string expression)
+        {
+            List<string> cellsRangesReferences = A1ReferenceHelper.A1ReferenceRangeOfCellsRegex.Matches(expression)
+                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length).ToList();
+
+            foreach (string reference in cellsRangesReferences)
+            {
+                int row1, column1, row2, column2;
+                A1ReferenceHelper.Parse(reference, out column1, out row1, out column2, out row2);
+
+                for (int row = row1; row <= row2; row++)
+                {
+                    for (int column = column1; column <= column2; column++)
+                    {
+                        HandleNextCellCircularReferences(row, column, address);
+                    }
+                }
+                expression = expression.Replace(reference, String.Empty);
+            }
+
+            IEnumerable<string> singleCellReferences = A1ReferenceHelper.A1ReferenceSingleCellRegex.Matches(expression)
+                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length);
+
+            foreach (string reference in singleCellReferences)
+            {
+                int row, column;
+                A1ReferenceHelper.Parse(reference, out column, out row);
+                HandleNextCellCircularReferences(row, column, address);
+            }
+        }
+
+        private void HandleNextCellCircularReferences(int row, int column, string address)
+        {
+            DataCell nextCell = this[row, column];
+
+            if ((A1ReferenceHelper.Within(row, column, address)) || nextCell.CachedValue is CircularReferenceException)
+            {
+                throw new CircularReferenceException();
+            }
+            if (!String.IsNullOrEmpty(nextCell.Expression)) CheckCircularReferences(address, nextCell.Expression);
         }
 
         #region Helpers
@@ -189,5 +233,18 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
         }
 
         #endregion
+    }
+
+    public class CircularReferenceException : Exception
+    {
+        public CircularReferenceException()
+            : base("One or more circular references were found.\nFYI: A circular reference is a part of expression that refers to its own cell value, or refers to cell dependent on its own cell value.")
+        {
+        }
+
+        public CircularReferenceException(string message)
+            : base(message)
+        {
+        }
     }
 }

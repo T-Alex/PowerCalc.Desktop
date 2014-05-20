@@ -53,7 +53,16 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             _cells = new DataCell[cells];
 
             for (int i = 0; i < cells; i++)
-                _cells[i] = new DataCell(dataTable);
+                _cells[i] = new DataCell(dataTable, this);
+        }
+
+        #endregion
+
+        #region Methods
+
+        public int IndexOfCell(DataCell cell)
+        {
+            return ((IList<DataCell>)_cells).IndexOf(cell);
         }
 
         #endregion

@@ -8,8 +8,11 @@ namespace TAlex.PowerCalc.Helpers
     {
         #region Fields
 
-        public const string A1ReferenceSingleCellPattern = @"(?<col>[A-Z]+)(?<row>[0-9]+)";
-        public const string A1ReferenceRangeOfCellsPattern = "(?<first>((?<col>[A-Z]+)(?<row>[0-9]+))):(?<last>((?<col>[A-Z]+)(?<row>[0-9]+)))";
+        private const string A1ReferenceSingleCellPattern = @"(?<col>[A-Z]+)(?<row>[0-9]+)";
+        private const string A1ReferenceRangeOfCellsPattern = "(?<first>((?<col>[A-Z]+)(?<row>[0-9]+))):(?<last>((?<col>[A-Z]+)(?<row>[0-9]+)))";
+
+        public static readonly Regex A1ReferenceSingleCellRegex = new Regex(A1ReferenceSingleCellPattern, RegexOptions.Compiled);
+        public static readonly Regex A1ReferenceRangeOfCellsRegex = new Regex(A1ReferenceRangeOfCellsPattern, RegexOptions.Compiled);
 
         #endregion
 
@@ -66,7 +69,7 @@ namespace TAlex.PowerCalc.Helpers
 
         public static string ToString(int column, int row)
         {
-            return IntegerToA1ReferenceColumn(column) + row;
+            return IntegerToA1ReferenceColumn(column) + (row + 1);
         }
 
         public static string ToString(int column1, int row1, int column2, int row2)
@@ -85,12 +88,12 @@ namespace TAlex.PowerCalc.Helpers
                 column2 = temp;
             }
 
-            return String.Format("{0}{1}:{2}{3}", IntegerToA1ReferenceColumn(column1), row1, IntegerToA1ReferenceColumn(column2), row2);
+            return String.Format("{0}{1}:{2}{3}", IntegerToA1ReferenceColumn(column1), row1 + 1, IntegerToA1ReferenceColumn(column2), row2 + 1);
         }
 
         public static void Parse(string a1Reference, out int column, out int row)
         {
-            Match addr = Regex.Match(a1Reference, A1ReferenceSingleCellPattern);
+            Match addr = A1ReferenceSingleCellRegex.Match(a1Reference);
 
             if (addr.Success)
             {
@@ -105,7 +108,7 @@ namespace TAlex.PowerCalc.Helpers
 
         public static void Parse(string a1Reference, out int column1, out int row1, out int column2, out int row2)
         {
-            Match match = Regex.Match(a1Reference, A1ReferenceRangeOfCellsPattern);
+            Match match = A1ReferenceRangeOfCellsRegex.Match(a1Reference);
 
             if (match.Success)
             {
@@ -114,12 +117,33 @@ namespace TAlex.PowerCalc.Helpers
 
                 Parse(first, out column1, out row1);
                 Parse(last, out column2, out row2);
-                column2++;
-                row2++;
             }
             else
             {
                 throw new ArgumentException();
+            }
+        }
+
+        public static bool Within(int row, int column, string address)
+        {
+            Match match = A1ReferenceRangeOfCellsRegex.Match(address);
+            if (match.Success)
+            {
+                int row1, column1, row2, column2;
+                string first = match.Groups["first"].Value;
+                string last = match.Groups["last"].Value;
+
+                Parse(first, out column1, out row1);
+                Parse(last, out column2, out row2);
+
+                return row >= row1 && row <= row2 && column >= column1 && column <= column2; 
+            }
+            else
+            {
+                int row1, column1;
+                Parse(address, out column1, out row1);
+
+                return column == column1 && row == row1;
             }
         }
 

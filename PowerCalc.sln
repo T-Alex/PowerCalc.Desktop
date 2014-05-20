@@ -13,6 +13,8 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PowerCalcSetupBootstrapper"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PowerCalcSetup", "PowerCalcSetup\PowerCalcSetup.wixproj", "{D8AA910C-CEB9-4201-95EF-7C0D131FC5BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerCalc.Tests", "PowerCalc\Tests\PowerCalc.Tests.csproj", "{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,9 +65,22 @@ Global
 		{D8AA910C-CEB9-4201-95EF-7C0D131FC5BA}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D8AA910C-CEB9-4201-95EF-7C0D131FC5BA}.Release|x86.ActiveCfg = Release|x86
 		{D8AA910C-CEB9-4201-95EF-7C0D131FC5BA}.Release|x86.Build.0 = Release|x86
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6} = {6C57B8C6-0DB1-4253-86BE-470084E602C7}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = PowerCalc.vsmdi

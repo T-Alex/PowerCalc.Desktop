@@ -42,6 +42,8 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
+        public DataRow Row { get; private set; }
+
         public override Object CachedValue
         {
             get
@@ -96,13 +98,22 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
+        public override string Address
+        {
+            get
+            {
+                return Helpers.A1ReferenceHelper.IntegerToA1ReferenceColumn(Row.IndexOfCell(this)) + Row.RowNumber;
+            }
+        }
+
         #endregion
 
         #region Constructors
 
-        public DataCell(DataTable dataTable)
+        public DataCell(DataTable dataTable, DataRow row)
         {
             DataTable = dataTable;
+            Row = row;
         }
 
         #endregion

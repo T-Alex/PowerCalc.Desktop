@@ -58,6 +58,24 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         public DataCell[,] Array { get; set; }
 
+        public int Rows
+        {
+            get { return Array.GetLength(0); }
+        }
+
+        public int Columns
+        {
+            get { return Array.GetLength(1); }
+        }
+
+        public override string Address
+        {
+            get
+            {
+                return String.Format("{0}:{1}", Array[0, 0].Address, Array[Rows - 1, Columns - 1].Address);
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -86,8 +104,11 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
                     DataCell cell = DataTable[y + row, x + col];
                     Array[row, col] = cell;
                     cell.Parent = this;
-                    cell.RefreshValue();
                 }
+            }
+            foreach (DataCell cell in Array)
+            {
+                cell.RefreshValue();
             }
         }
 
@@ -102,9 +123,9 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             if (cachedValue is CMatrix)
             {
                 CMatrix matrix = cachedValue as CMatrix;
-                for (int i = 0; i < Array.GetLength(0); i++)
+                for (int i = 0; i < Rows; i++)
                 {
-                    for (int j = 0; j < Array.GetLength(1); j++)
+                    for (int j = 0; j < Columns; j++)
                     {
                         if (this.Array[i, j] == cell)
                         {

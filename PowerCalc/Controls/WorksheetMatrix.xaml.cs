@@ -78,7 +78,8 @@ namespace TAlex.PowerCalc.Controls
 
         public bool CommitEdit()
         {
-            return dataGrid.CommitEdit();
+            OnFormulaBarEnterKeyDown(new KeyEventArgs(null, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Return) { RoutedEvent = TextBox.TextInputEvent });
+            return true;
         }
 
         public void Refresh()
@@ -145,8 +146,19 @@ namespace TAlex.PowerCalc.Controls
         {
             if (_lastEditedCellViaFormulaBar != null && _lastEditedCellViaFormulaBar != dataGrid.TryToFindGridCell(dataGrid.CurrentItem, dataGrid.CurrentColumn))
             {
-                _lastEditedCellViaFormulaBar.IsEditing = false;
-                _lastEditedCellViaFormulaBar = null;
+                if (_lastEditedCellViaFormulaBar.IsEditing)
+                {
+                    _lastEditedCellViaFormulaBar.IsEditing = false;
+
+                    _formulaBarEdit = false;
+
+                    dataGrid_CellEditEnding(dataGrid, new DataGridCellEditEndingEventArgs(
+                        _lastEditedCellViaFormulaBar.Column,
+                        lastRow,
+                        null, DataGridEditAction.Commit));
+
+                    _lastEditedCellViaFormulaBar = null;
+                }
             }
             
             int selectedCells = dataGrid.SelectedCells.Count;
@@ -156,14 +168,14 @@ namespace TAlex.PowerCalc.Controls
 
                 if (selectedCells == 1)
                 {
-                    nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(firstCellInfo.Item) + 1);
+                    nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(firstCellInfo.Item));
                 }
                 else
                 {
                     DataGridCellInfo lastCellInfo = dataGrid.SelectedCells[selectedCells - 1];
 
-                    nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(firstCellInfo.Item) + 1,
-                        lastCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(lastCellInfo.Item) + 1);
+                    nameBoxTextBox.Text = Helpers.A1ReferenceHelper.ToString(firstCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(firstCellInfo.Item),
+                        lastCellInfo.Column.DisplayIndex, dataGrid.Items.IndexOf(lastCellInfo.Item));
                 }
             }
         }
@@ -175,6 +187,8 @@ namespace TAlex.PowerCalc.Controls
             StoredExpression = GetDataCell(dataGrid.CurrentCell).Expression;
         }
 
+        //TODO: Need rewrite code
+        DataGridRow lastRow;
         private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (_formulaBarEdit)
@@ -182,39 +196,41 @@ namespace TAlex.PowerCalc.Controls
                 e.Cancel = true;
                 _formulaBarEdit = false;
                 _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
+                lastRow = e.Row;
                 return;
             }
 
             //---------------------------------------------------------------
             var currentDataCell = GetDataCell(new DataGridCellInfo(e.Row.Item, e.Column));
 
-            if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            if (e.EditAction == DataGridEditAction.Commit)
             {
-                var cells = dataGrid.SelectedCells.Select(x => new DataCellInfo(dataGrid.Items.IndexOf(x.Item), x.Column.DisplayIndex)).ToList();
+                if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+                {
+                    var cells = dataGrid.SelectedCells.Select(x => new DataCellInfo(dataGrid.Items.IndexOf(x.Item), x.Column.DisplayIndex)).ToList();
 
-                try
-                {
-                    new DataArray(currentDataCell, cells);
+                    try
+                    {
+                        new DataArray(currentDataCell, cells);
+                    }
+                    catch (ArgumentException exc)
+                    {
+                        currentDataCell.Expression = StoredExpression;
+                        MessageBox.Show(Application.Current.GetActiveWindow(),
+                            exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
-                catch (ArgumentException exc)
-                {
-                    currentDataCell.Expression = StoredExpression;
-                    MessageBox.Show(Application.Current.GetActiveWindow(),
-                        exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-            else if (Keyboard.IsKeyDown(Key.Escape))
-            {
-                currentDataCell.Expression = StoredExpression;
-            }
-            else
-            {
-                if (!Keyboard.IsKeyDown(Key.Escape) && currentDataCell.Parent != null)
+                else if (currentDataCell.HasParent)
                 {
                     currentDataCell.Expression = StoredExpression;
                     MessageBox.Show(Application.Current.GetActiveWindow(),
                         Properties.Resources.WARN_CannotChangePartOfArray, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+                
+            }
+            else if (e.EditAction == DataGridEditAction.Cancel)
+            {
+                currentDataCell.Expression = StoredExpression;
             }
         }
 
@@ -238,6 +254,7 @@ namespace TAlex.PowerCalc.Controls
                 }
 
                 _formulaBarEdit = true;
+
                 dataGrid.BeginEdit();
                 formulaBarTextBox.Focus();
             }

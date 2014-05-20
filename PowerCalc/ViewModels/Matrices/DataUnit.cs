@@ -32,6 +32,8 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         public IList<DataUnit> References { get; private set; }
 
+        public abstract string Address { get; }
+
         #endregion
 
         #region Events
@@ -56,45 +58,26 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             UnsubscripeReferences();
             string expression = Expression;
 
-            CheckCircularReferences(this, expression);
+            // TODO: AddReference for dependent cells.
+            DataTable.CheckCircularReferences(Address, expression);
 
             // Preparation variables
             IDictionary<string, Object> vars = new Dictionary<string, object>();
 
-            MatchCollection referenceMatches = Regex.Matches(expression, Helpers.A1ReferenceHelper.A1ReferenceRangeOfCellsPattern);
-            List<string> references = new List<string>();
+            List<string> cellsRangesReferences = A1ReferenceHelper.A1ReferenceRangeOfCellsRegex.Matches(expression)
+                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length).ToList();
 
-            foreach (Match match in referenceMatches)
-            {
-                string reference = match.Value;
-
-                if (!references.Contains(reference))
-                    references.Add(reference);
-            }
-
-            references.Sort(StringLengthComparison);
-
-            foreach (string reference in references)
+            foreach (string reference in cellsRangesReferences)
             {
                 string varName = GetRandomVariableName();
                 vars.Add(varName, GetRangeOfCellValues(reference));
                 expression = expression.Replace(reference, varName);
             }
 
-            referenceMatches = Regex.Matches(expression, Helpers.A1ReferenceHelper.A1ReferenceSingleCellPattern);
-            references.Clear();
+            List<string> singleCellReferences = A1ReferenceHelper.A1ReferenceSingleCellRegex.Matches(expression)
+                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length).ToList();
 
-            foreach (Match match in referenceMatches)
-            {
-                string reference = match.Value;
-
-                if (!references.Contains(reference))
-                    references.Add(reference);
-            }
-
-            references.Sort(StringLengthComparison);
-
-            foreach (string reference in references)
+            foreach (string reference in singleCellReferences)
             {
                 string varName = GetRandomVariableName();
                 vars.Add(varName, GetSingleCellValue(reference));
@@ -130,7 +113,6 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             References.Add(unit);
         }
 
-
         private static string GetRandomVariableName()
         {
             return GetRandomVariableName(15);
@@ -149,20 +131,10 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             return name;
         }
 
-        private int StringLengthComparison(string str1, string str2)
-        {
-            int len1 = str1.Length;
-            int len2 = str2.Length;
-
-            if (len1 < len2) return 1;
-            else if (len1 > len2) return -1;
-            else return 0;
-        }
-
         private object GetSingleCellValue(string a1Reference)
         {
             int row, column;
-            Helpers.A1ReferenceHelper.Parse(a1Reference, out column, out row);
+            A1ReferenceHelper.Parse(a1Reference, out column, out row);
 
             DataCell cell = DataTable[row, column];
             AddReference(cell);
@@ -180,10 +152,10 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
         private CMatrix GetRangeOfCellValues(string a1Reference)
         {
             int row1Idx, col1Idx, row2Idx, col2Idx;
-            Helpers.A1ReferenceHelper.Parse(a1Reference, out col1Idx, out row1Idx, out col2Idx, out row2Idx);
+            A1ReferenceHelper.Parse(a1Reference, out col1Idx, out row1Idx, out col2Idx, out row2Idx);
 
-            int n = row2Idx - row1Idx;
-            int m = col2Idx - col1Idx;
+            int n = row2Idx - row1Idx + 1;
+            int m = col2Idx - col1Idx + 1;
 
             CMatrix matrix = new CMatrix(n, m);
 
@@ -204,12 +176,6 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
 
             return matrix;
-        }
-
-
-        protected void CheckCircularReferences(DataUnit unit, string expression)
-        {
-
         }
 
         #endregion

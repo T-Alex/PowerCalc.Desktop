@@ -89,12 +89,15 @@ namespace TAlex.PowerCalc.Controls
 
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
-            TextBox textBox = VisualHelper.FindFirstFocusableElement(editingElement) as TextBox;
-            //TextBox textBox = editingElement as TextBox;
+            TextBox textBox = editingElement is TextBox ?
+                (TextBox)editingElement :
+                VisualHelper.FindFirstFocusableElement(editingElement) as TextBox;
+
             if (textBox == null)
             {
                 return null;
             }
+
             textBox.Focus();
             string text = textBox.Text;
             TextCompositionEventArgs textCompositionEventArg = editingEventArgs as TextCompositionEventArgs;
@@ -110,7 +113,8 @@ namespace TAlex.PowerCalc.Controls
             }
             return text;
         }
- 
+
+
 
         private static bool PlaceCaretOnTextBox(TextBox textBox, Point position)
         {
