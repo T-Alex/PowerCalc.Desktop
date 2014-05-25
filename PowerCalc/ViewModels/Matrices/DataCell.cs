@@ -124,7 +124,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
         {
             Parent = null;
             Expression = null;
-            UnsubscripeReferences();
+            UnsubscribeReferences();
         }
 
         public void RefreshValue()

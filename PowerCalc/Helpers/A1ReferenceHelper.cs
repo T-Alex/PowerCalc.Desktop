@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -8,11 +10,11 @@ namespace TAlex.PowerCalc.Helpers
     {
         #region Fields
 
-        private const string A1ReferenceSingleCellPattern = @"(?<col>[A-Z]+)(?<row>[0-9]+)";
-        private const string A1ReferenceRangeOfCellsPattern = "(?<first>((?<col>[A-Z]+)(?<row>[0-9]+))):(?<last>((?<col>[A-Z]+)(?<row>[0-9]+)))";
+        private const string A1SingleCellReferencePattern = @"(?<col>[A-Z]+)(?<row>[0-9]+)";
+        private const string A1CellRangeReferencePattern = "(?<first>((?<col>[A-Z]+)(?<row>[0-9]+))):(?<last>((?<col>[A-Z]+)(?<row>[0-9]+)))";
 
-        public static readonly Regex A1ReferenceSingleCellRegex = new Regex(A1ReferenceSingleCellPattern, RegexOptions.Compiled);
-        public static readonly Regex A1ReferenceRangeOfCellsRegex = new Regex(A1ReferenceRangeOfCellsPattern, RegexOptions.Compiled);
+        private static readonly Regex A1SingleCellReferenceRegex = new Regex(A1SingleCellReferencePattern, RegexOptions.Compiled);
+        private static readonly Regex A1CellRangeReferenceRegex = new Regex(A1CellRangeReferencePattern, RegexOptions.Compiled);
 
         #endregion
 
@@ -93,7 +95,7 @@ namespace TAlex.PowerCalc.Helpers
 
         public static void Parse(string a1Reference, out int column, out int row)
         {
-            Match addr = A1ReferenceSingleCellRegex.Match(a1Reference);
+            Match addr = A1SingleCellReferenceRegex.Match(a1Reference);
 
             if (addr.Success)
             {
@@ -108,7 +110,7 @@ namespace TAlex.PowerCalc.Helpers
 
         public static void Parse(string a1Reference, out int column1, out int row1, out int column2, out int row2)
         {
-            Match match = A1ReferenceRangeOfCellsRegex.Match(a1Reference);
+            Match match = A1CellRangeReferenceRegex.Match(a1Reference);
 
             if (match.Success)
             {
@@ -126,7 +128,7 @@ namespace TAlex.PowerCalc.Helpers
 
         public static bool Within(int row, int column, string address)
         {
-            Match match = A1ReferenceRangeOfCellsRegex.Match(address);
+            Match match = A1CellRangeReferenceRegex.Match(address);
             if (match.Success)
             {
                 int row1, column1, row2, column2;
@@ -145,6 +147,18 @@ namespace TAlex.PowerCalc.Helpers
 
                 return column == column1 && row == row1;
             }
+        }
+
+        public static List<string> GetUniqueCellRangeReferences(string expression)
+        {
+            return A1CellRangeReferenceRegex.Matches(expression)
+                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length).ToList();
+        }
+
+        public static List<string> GetUniqueSingleCellReferences(string expression)
+        {
+            return A1SingleCellReferenceRegex.Matches(expression)
+                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length).ToList();
         }
 
         #endregion

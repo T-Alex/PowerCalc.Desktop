@@ -161,7 +161,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         public virtual void Clear()
         {
-            UnsubscripeReferences();
+            UnsubscribeReferences();
             foreach (DataCell cell in Array)
             {
                 cell.Parent = null;

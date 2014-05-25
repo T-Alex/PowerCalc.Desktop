@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EXC_CircularReference" xml:space="preserve">
+    <value>One or more circular references were found.
+FYI: A circular reference is a part of expression that refers to its own cell value, or refers to cell dependent on its own cell value.</value>
+  </data>
   <data name="EXC_MatrixIndexOutOfRange" xml:space="preserve">
     <value>The index of the cell is out of range of the resultant matrix.</value>
   </data>

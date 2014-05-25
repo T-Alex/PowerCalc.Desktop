@@ -55,34 +55,19 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         protected Object EvaluateExpression()
         {
-            UnsubscripeReferences();
             string expression = Expression;
 
-            // TODO: AddReference for dependent cells.
-            DataTable.CheckCircularReferences(Address, expression);
-
-            // Preparation variables
-            IDictionary<string, Object> vars = new Dictionary<string, object>();
-
-            List<string> cellsRangesReferences = A1ReferenceHelper.A1ReferenceRangeOfCellsRegex.Matches(expression)
-                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length).ToList();
-
-            foreach (string reference in cellsRangesReferences)
+            UnsubscribeReferences();
+            //try
             {
-                string varName = GetRandomVariableName();
-                vars.Add(varName, GetRangeOfCellValues(reference));
-                expression = expression.Replace(reference, varName);
+                DataTable.CheckCircularReferences(Address, expression);
             }
-
-            List<string> singleCellReferences = A1ReferenceHelper.A1ReferenceSingleCellRegex.Matches(expression)
-                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length).ToList();
-
-            foreach (string reference in singleCellReferences)
+            //finally
             {
-                string varName = GetRandomVariableName();
-                vars.Add(varName, GetSingleCellValue(reference));
-                expression = expression.Replace(reference, varName);
+                //ResubscribeReferences(expression);
             }
+            
+            IDictionary<string, Object> vars = FindAllVariables(ref expression);
 
             // Evaluation the expression
             Expression<Object> expr = DataTable.ExpressionTreeBuilder.BuildTree(expression);
@@ -98,13 +83,74 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
-        protected void UnsubscripeReferences()
+        protected void UnsubscribeReferences()
         {
             foreach (DataUnit unit in References)
             {
                 unit.CachedValueChanged -= CachedValueChangedHandler;
             }
             References.Clear();
+        }
+
+        protected void ResubscribeReferences(string expression)
+        {
+            // Subscribe
+            List<string> cellRangeReferences = A1ReferenceHelper.GetUniqueCellRangeReferences(expression);
+
+            foreach (string reference in cellRangeReferences)
+            {
+                int row1Idx, col1Idx, row2Idx, col2Idx;
+                A1ReferenceHelper.Parse(reference, out col1Idx, out row1Idx, out col2Idx, out row2Idx);
+
+                int n = row2Idx - row1Idx + 1;
+                int m = col2Idx - col1Idx + 1;
+
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        AddReference(DataTable[i + row1Idx, j + col1Idx]);
+                    }
+                }
+                expression = expression.Replace(reference, String.Empty);
+            }
+
+            List<string> singleCellReferences = A1ReferenceHelper.GetUniqueSingleCellReferences(expression);
+
+            foreach (string reference in singleCellReferences)
+            {
+                int row, column;
+                A1ReferenceHelper.Parse(reference, out column, out row);
+                AddReference(DataTable[row, column]);
+            }
+        }
+
+        protected abstract void CachedValueChangedHandler(object sender, EventArgs e);
+
+        #region Helpers
+
+        private IDictionary<string, Object> FindAllVariables(ref string expression)
+        {
+            IDictionary<string, Object> vars = new Dictionary<string, object>();
+            List<string> cellRangeReferences = A1ReferenceHelper.GetUniqueCellRangeReferences(expression);
+
+            foreach (string reference in cellRangeReferences)
+            {
+                string varName = GetRandomVariableName();
+                vars.Add(varName, GetCellRangeValue(reference));
+                expression = expression.Replace(reference, varName);
+            }
+
+            List<string> singleCellReferences = A1ReferenceHelper.GetUniqueSingleCellReferences(expression);
+
+            foreach (string reference in singleCellReferences)
+            {
+                string varName = GetRandomVariableName();
+                vars.Add(varName, GetSingleCellValue(reference));
+                expression = expression.Replace(reference, varName);
+            }
+
+            return vars;
         }
 
         private void AddReference(DataUnit unit)
@@ -138,18 +184,13 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
             DataCell cell = DataTable[row, column];
             AddReference(cell);
-
             object varValue = cell.CachedValue;
-            if (varValue is Exception || varValue.GetType() == typeof(object))
-            {
-                throw new UnassignedVariableException(a1Reference);
-            }
+            EnsureValidReferenceValue(varValue, a1Reference);
+
             return varValue;
         }
 
-        protected abstract void CachedValueChangedHandler(object sender, EventArgs e);
-
-        private CMatrix GetRangeOfCellValues(string a1Reference)
+        private CMatrix GetCellRangeValue(string a1Reference)
         {
             int row1Idx, col1Idx, row2Idx, col2Idx;
             A1ReferenceHelper.Parse(a1Reference, out col1Idx, out row1Idx, out col2Idx, out row2Idx);
@@ -166,10 +207,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
                     DataCell cell = DataTable[i + row1Idx, j + col1Idx];
                     AddReference(cell);
                     object cellValue = cell.CachedValue;
-                    if (cellValue is Exception || cellValue.GetType() == typeof(object))
-                    {
-                        throw new UnassignedVariableException(a1Reference);
-                    }
+                    EnsureValidReferenceValue(cellValue, a1Reference);
 
                     matrix[i, j] = (Complex)cellValue;
                 }
@@ -177,6 +215,16 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
             return matrix;
         }
+
+        private void EnsureValidReferenceValue(object cellValue, string reference)
+        {
+            if (cellValue is Exception || cellValue.GetType() == typeof(object))
+            {
+                throw new UnassignedVariableException(reference);
+            }
+        }
+
+        #endregion
 
         #endregion
     }

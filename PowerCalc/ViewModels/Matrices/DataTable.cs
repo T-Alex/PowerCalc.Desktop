@@ -89,10 +89,9 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         public virtual void CheckCircularReferences(string address, string expression)
         {
-            List<string> cellsRangesReferences = A1ReferenceHelper.A1ReferenceRangeOfCellsRegex.Matches(expression)
-                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length).ToList();
+            List<string> cellRangeReferences = A1ReferenceHelper.GetUniqueCellRangeReferences(expression);
 
-            foreach (string reference in cellsRangesReferences)
+            foreach (string reference in cellRangeReferences)
             {
                 int row1, column1, row2, column2;
                 A1ReferenceHelper.Parse(reference, out column1, out row1, out column2, out row2);
@@ -107,8 +106,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
                 expression = expression.Replace(reference, String.Empty);
             }
 
-            IEnumerable<string> singleCellReferences = A1ReferenceHelper.A1ReferenceSingleCellRegex.Matches(expression)
-                .Cast<Match>().Select(x => x.Value).Distinct().OrderByDescending(x => x.Length);
+            IList<string> singleCellReferences = A1ReferenceHelper.GetUniqueSingleCellReferences(expression);
 
             foreach (string reference in singleCellReferences)
             {
@@ -238,7 +236,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
     public class CircularReferenceException : Exception
     {
         public CircularReferenceException()
-            : base("One or more circular references were found.\nFYI: A circular reference is a part of expression that refers to its own cell value, or refers to cell dependent on its own cell value.")
+            : base(Properties.Resources.EXC_CircularReference)
         {
         }
 

@@ -61,6 +61,16 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more circular references were found.
+        ///FYI: A circular reference is a part of expression that refers to its own cell value, or refers to cell dependent on its own cell value..
+        /// </summary>
+        internal static string EXC_CircularReference {
+            get {
+                return ResourceManager.GetString("EXC_CircularReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The index of the cell is out of range of the resultant matrix..
         /// </summary>
         internal static string EXC_MatrixIndexOutOfRange {
