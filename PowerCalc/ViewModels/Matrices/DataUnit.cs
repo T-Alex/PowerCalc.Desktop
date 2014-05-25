@@ -56,15 +56,16 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
         protected Object EvaluateExpression()
         {
             string expression = Expression;
-
             UnsubscribeReferences();
-            //try
+
+            try
             {
-                DataTable.CheckCircularReferences(Address, expression);
+                DataTable.CheckCircularReferences(Address, this);
             }
-            //finally
+            catch (CircularReferenceException exc)
             {
-                //ResubscribeReferences(expression);
+                AddReference(exc.DataUnit); // !!!!!!!!!!
+                throw;
             }
             
             IDictionary<string, Object> vars = FindAllVariables(ref expression);
@@ -90,39 +91,6 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
                 unit.CachedValueChanged -= CachedValueChangedHandler;
             }
             References.Clear();
-        }
-
-        protected void ResubscribeReferences(string expression)
-        {
-            // Subscribe
-            List<string> cellRangeReferences = A1ReferenceHelper.GetUniqueCellRangeReferences(expression);
-
-            foreach (string reference in cellRangeReferences)
-            {
-                int row1Idx, col1Idx, row2Idx, col2Idx;
-                A1ReferenceHelper.Parse(reference, out col1Idx, out row1Idx, out col2Idx, out row2Idx);
-
-                int n = row2Idx - row1Idx + 1;
-                int m = col2Idx - col1Idx + 1;
-
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < m; j++)
-                    {
-                        AddReference(DataTable[i + row1Idx, j + col1Idx]);
-                    }
-                }
-                expression = expression.Replace(reference, String.Empty);
-            }
-
-            List<string> singleCellReferences = A1ReferenceHelper.GetUniqueSingleCellReferences(expression);
-
-            foreach (string reference in singleCellReferences)
-            {
-                int row, column;
-                A1ReferenceHelper.Parse(reference, out column, out row);
-                AddReference(DataTable[row, column]);
-            }
         }
 
         protected abstract void CachedValueChangedHandler(object sender, EventArgs e);
@@ -155,8 +123,11 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         private void AddReference(DataUnit unit)
         {
-            unit.CachedValueChanged += CachedValueChangedHandler;
-            References.Add(unit);
+            if (this != unit)
+            {
+                unit.CachedValueChanged += CachedValueChangedHandler;
+                References.Add(unit);
+            }
         }
 
         private static string GetRandomVariableName()

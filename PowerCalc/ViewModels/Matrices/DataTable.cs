@@ -87,8 +87,9 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
-        public virtual void CheckCircularReferences(string address, string expression)
+        public virtual void CheckCircularReferences(string targetCellAddress, DataUnit dataUnit)
         {
+            string expression = dataUnit.Expression;
             List<string> cellRangeReferences = A1ReferenceHelper.GetUniqueCellRangeReferences(expression);
 
             foreach (string reference in cellRangeReferences)
@@ -100,7 +101,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
                 {
                     for (int column = column1; column <= column2; column++)
                     {
-                        HandleNextCellCircularReferences(row, column, address);
+                        HandleNextCellCircularReferences(row, column, targetCellAddress, dataUnit);
                     }
                 }
                 expression = expression.Replace(reference, String.Empty);
@@ -112,19 +113,19 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             {
                 int row, column;
                 A1ReferenceHelper.Parse(reference, out column, out row);
-                HandleNextCellCircularReferences(row, column, address);
+                HandleNextCellCircularReferences(row, column, targetCellAddress, dataUnit);
             }
         }
 
-        private void HandleNextCellCircularReferences(int row, int column, string address)
+        private void HandleNextCellCircularReferences(int nextRow, int nextColumn, string targetCellAddress, DataUnit currentDataUnit)
         {
-            DataCell nextCell = this[row, column];
+            DataCell nextCell = this[nextRow, nextColumn];
 
-            if ((A1ReferenceHelper.Within(row, column, address)) || nextCell.CachedValue is CircularReferenceException)
+            if ((A1ReferenceHelper.Within(nextRow, nextColumn, targetCellAddress)) || nextCell.CachedValue is CircularReferenceException)
             {
-                throw new CircularReferenceException();
+                throw new CircularReferenceException(currentDataUnit);
             }
-            if (!String.IsNullOrEmpty(nextCell.Expression)) CheckCircularReferences(address, nextCell.Expression);
+            if (!String.IsNullOrEmpty(nextCell.Expression)) CheckCircularReferences(targetCellAddress, nextCell);
         }
 
         #region Helpers
@@ -235,14 +236,26 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
     public class CircularReferenceException : Exception
     {
-        public CircularReferenceException()
+        #region Properties
+
+        public DataUnit DataUnit { get; private set; }
+
+        #endregion
+
+        #region Constructors
+
+        public CircularReferenceException(DataUnit dataUnit)
             : base(Properties.Resources.EXC_CircularReference)
         {
+            DataUnit = dataUnit;
         }
 
-        public CircularReferenceException(string message)
+        public CircularReferenceException(DataUnit dataUnit, string message)
             : base(message)
         {
+            DataUnit = dataUnit;
         }
+
+        #endregion
     }
 }

@@ -146,6 +146,11 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
+        public override string ToString()
+        {
+            return String.Format("{0}: {1}", Address, Expression);
+        }
+
         #endregion
     }
 }
