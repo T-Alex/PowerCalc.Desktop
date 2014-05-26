@@ -64,7 +64,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
             catch (CircularReferenceException exc)
             {
-                AddReference(exc.DataUnit); // !!!!!!!!!!
+                AddReference(exc.DataUnit);
                 throw;
             }
             
