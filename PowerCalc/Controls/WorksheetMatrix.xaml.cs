@@ -33,10 +33,13 @@ namespace TAlex.PowerCalc.Controls
     {
         #region Fields
 
+        protected string UneditedExpression;
+
         private static readonly string MessageBoxCaptionText = Common.Environment.ApplicationInfo.Current.Product;
 
         private bool _formulaBarEdit = false;
         private DataGridCell _lastEditedCellViaFormulaBar = null;
+        private DataGridRow _lastEditedRowViaFormulaBar;
 
         #endregion
 
@@ -154,7 +157,7 @@ namespace TAlex.PowerCalc.Controls
 
                     dataGrid_CellEditEnding(dataGrid, new DataGridCellEditEndingEventArgs(
                         _lastEditedCellViaFormulaBar.Column,
-                        lastRow,
+                        _lastEditedRowViaFormulaBar,
                         null, DataGridEditAction.Commit));
 
                     _lastEditedCellViaFormulaBar = null;
@@ -180,15 +183,12 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
-        protected string StoredExpression;
-
+        
         private void dataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
-            StoredExpression = GetDataCell(dataGrid.CurrentCell).Expression;
+            UneditedExpression = GetDataCell(dataGrid.CurrentCell).Expression;
         }
-
-        //TODO: Need rewrite code
-        DataGridRow lastRow;
+        
         private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (_formulaBarEdit)
@@ -196,7 +196,7 @@ namespace TAlex.PowerCalc.Controls
                 e.Cancel = true;
                 _formulaBarEdit = false;
                 _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
-                lastRow = e.Row;
+                _lastEditedRowViaFormulaBar = e.Row;
                 return;
             }
 
@@ -215,14 +215,14 @@ namespace TAlex.PowerCalc.Controls
                     }
                     catch (ArgumentException exc)
                     {
-                        currentDataCell.Expression = StoredExpression;
+                        currentDataCell.Expression = UneditedExpression;
                         MessageBox.Show(Application.Current.GetActiveWindow(),
                             exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 else if (currentDataCell.HasParent)
                 {
-                    currentDataCell.Expression = StoredExpression;
+                    currentDataCell.Expression = UneditedExpression;
                     MessageBox.Show(Application.Current.GetActiveWindow(),
                         Properties.Resources.WARN_CannotChangePartOfArray, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -230,7 +230,7 @@ namespace TAlex.PowerCalc.Controls
             }
             else if (e.EditAction == DataGridEditAction.Cancel)
             {
-                currentDataCell.Expression = StoredExpression;
+                currentDataCell.Expression = UneditedExpression;
             }
         }
 
@@ -253,10 +253,13 @@ namespace TAlex.PowerCalc.Controls
                     SelectFirstCell();
                 }
 
-                _formulaBarEdit = true;
+                if (_lastEditedCellViaFormulaBar == null || !_lastEditedCellViaFormulaBar.IsEditing)
+                {
+                    _formulaBarEdit = true;
 
-                dataGrid.BeginEdit();
-                formulaBarTextBox.Focus();
+                    dataGrid.BeginEdit();
+                    ((TextBox)sender).Focus();
+                }
             }
         }
 
