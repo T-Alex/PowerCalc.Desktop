@@ -67,6 +67,17 @@ namespace TAlex.PowerCalc.Helpers
             return grid.SelectedCells.Select(x => TryToFindGridCell(grid, x)).ToList();
         }
 
+        public static DataGridRow GetRow(this DataGridCell cell)
+        {
+            var parent = VisualTreeHelper.GetParent(cell);
+            while (parent != null && parent.GetType() != typeof(DataGridRow))
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            return parent as DataGridRow;
+        }
+
 
         private static T GetVisualChild<T>(Visual parent) where T : Visual
         {

@@ -39,7 +39,6 @@ namespace TAlex.PowerCalc.Controls
 
         private bool _formulaBarEdit = false;
         private DataGridCell _lastEditedCellViaFormulaBar = null;
-        private DataGridRow _lastEditedRowViaFormulaBar;
 
         #endregion
 
@@ -157,7 +156,7 @@ namespace TAlex.PowerCalc.Controls
 
                     dataGrid_CellEditEnding(dataGrid, new DataGridCellEditEndingEventArgs(
                         _lastEditedCellViaFormulaBar.Column,
-                        _lastEditedRowViaFormulaBar,
+                        _lastEditedCellViaFormulaBar.GetRow(),
                         null, DataGridEditAction.Commit));
 
                     _lastEditedCellViaFormulaBar = null;
@@ -196,7 +195,6 @@ namespace TAlex.PowerCalc.Controls
                 e.Cancel = true;
                 _formulaBarEdit = false;
                 _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
-                _lastEditedRowViaFormulaBar = e.Row;
                 return;
             }
 
