@@ -60,7 +60,8 @@
                      PreviewKeyDown="dataGrid_PreviewKeyDown"
                      SelectedCellsChanged="dataGrid_SelectedCellsChanged"
                      AutoGeneratingColumn="dataGrid_AutoGeneratingColumn"
-                     TextInput="dataGrid_TextInput">
+                     TextInput="dataGrid_TextInput"
+                     ScrollViewer.CanContentScroll="False">
                         
             <DataGrid.RowHeaderTemplate>
                 <DataTemplate>
