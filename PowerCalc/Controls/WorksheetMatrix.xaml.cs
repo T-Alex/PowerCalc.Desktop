@@ -253,11 +253,9 @@ namespace TAlex.PowerCalc.Controls
                     SelectFirstCell();
                 }
 
-                if (_lastEditedCellViaFormulaBar == null || !_lastEditedCellViaFormulaBar.IsEditing)
+                if (dataGrid.BeginEdit())
                 {
                     _formulaBarEdit = true;
-
-                    dataGrid.BeginEdit();
                     ((TextBox)sender).Focus();
                 }
             }
