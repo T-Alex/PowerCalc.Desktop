@@ -98,18 +98,6 @@ namespace TAlex.PowerCalc
 
         #region Command Bindings
 
-        private void CommandBindingSaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "PowerCalc Worksheet (*.pcx)|*.pcx|All Files (*.*)|*.*";
-
-            if (sfd.ShowDialog(this) == true)
-            {
-                // TODO: Need refactoring.
-                //System.IO.File.WriteAllText(sfd.FileName, worksheetTextBox.Text);
-            }
-        }
-
         private void CommandBindingHelp_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             string helpFileName = Properties.Resources.HelpFileName;

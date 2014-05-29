@@ -114,8 +114,6 @@ namespace TAlex.PowerCalc.Controls
             return text;
         }
 
-
-
         private static bool PlaceCaretOnTextBox(TextBox textBox, Point position)
         {
             int characterIndexFromPoint = textBox.GetCharacterIndexFromPoint(position, false);

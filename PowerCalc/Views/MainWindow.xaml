@@ -14,7 +14,6 @@
     Loaded="Window_Loaded">
 
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="CommandBindingSaveAs_Executed"/>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBindingHelp_Executed"/>
     </Window.CommandBindings>
 
@@ -74,8 +73,6 @@
     <Grid Background="{DynamicResource MainWindowBgBrush}">
         <Menu Height="22" VerticalAlignment="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="Save _As..." Command="ApplicationCommands.SaveAs" />
-                <Separator />
                 <MenuItem Header="E_xit" Click="exitMenuItem_Click" InputGestureText="Alt+F4" />
             </MenuItem>
             <MenuItem Header="_Edit">

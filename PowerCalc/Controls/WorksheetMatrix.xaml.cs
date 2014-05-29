@@ -65,6 +65,11 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
+        protected WorksheetMatrixViewModel Model
+        {
+            get { return (WorksheetMatrixViewModel)DataContext; }
+        }
+
         #endregion
 
         #region Constructors
@@ -234,11 +239,26 @@ namespace TAlex.PowerCalc.Controls
 
         private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            if (e.Key == Key.Delete)
             {
-                case Key.Delete:
-                    OnDataGridDeleteKeyDown(e);
-                    break;
+                OnDataGridDeleteKeyDown(e);
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                switch (e.Key)
+                {
+                    case Key.C:
+                        OnDataGridCopyKeyDown(e);
+                        break;
+
+                    case Key.X:
+                        OnDataGridCutKeyDown(e);
+                        break;
+
+                    case Key.V:
+                        OnDataGridPasteKeyDown(e);
+                        break;
+                }
             }
         }
 
@@ -277,7 +297,7 @@ namespace TAlex.PowerCalc.Controls
                 var cells = dataGrid.SelectedCells.Select(x => new DataCellInfo(dataGrid.Items.IndexOf(x.Item), x.Column.DisplayIndex)).ToList();
                 try
                 {
-                    ((WorksheetMatrixViewModel)DataContext).Worksheet.DeleteCells(cells);
+                    Model.Worksheet.Delete(cells);
                 }
                 catch (ArgumentException exc)
                 {
@@ -285,6 +305,52 @@ namespace TAlex.PowerCalc.Controls
                 }
             }
         }
+
+        protected void OnDataGridCopyKeyDown(KeyEventArgs e)
+        {
+            if (!dataGrid.GetCurrentDataGridCell().IsEditing)
+            {
+                var cells = dataGrid.SelectedCells.Select(x => new DataCellInfo(dataGrid.Items.IndexOf(x.Item), x.Column.DisplayIndex)).ToList();
+                Model.Worksheet.Copy(cells);
+            }
+        }
+
+        protected void OnDataGridCutKeyDown(KeyEventArgs e)
+        {
+            if (!dataGrid.GetCurrentDataGridCell().IsEditing)
+            {
+                var cells = dataGrid.SelectedCells.Select(x => new DataCellInfo(dataGrid.Items.IndexOf(x.Item), x.Column.DisplayIndex)).ToList();
+                try
+                {
+                    Model.Worksheet.Cut(cells);
+                }
+                catch (ArgumentException exc)
+                {
+                    MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
+        protected void OnDataGridPasteKeyDown(KeyEventArgs e)
+        {
+            if (!dataGrid.GetCurrentDataGridCell().IsEditing)
+            {
+                var firstSelectedCell = dataGrid.SelectedCells.FirstOrDefault();
+                
+                if (firstSelectedCell != null)
+                {
+                    try
+                    {
+                        Model.Worksheet.Paste(dataGrid.Items.IndexOf(firstSelectedCell.Item), firstSelectedCell.Column.DisplayIndex);
+                    }
+                    catch (ArgumentException exc)
+                    {
+                        MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+            }
+        }
+
 
         protected void OnFormulaBarEnterKeyDown(KeyEventArgs e)
         {

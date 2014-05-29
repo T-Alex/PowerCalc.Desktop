@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.PowerCalc.Helpers;
 using TAlex.PowerCalc.ViewModels.Matrices;
@@ -14,6 +15,8 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
     public class DataTable : IList
     {
         #region Fields
+
+        protected static readonly string CellClipboardFormatName = "DataGridCell";
 
         public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
@@ -75,7 +78,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
-        public virtual void DeleteCells(IList<DataCellInfo> cells)
+        public virtual void Delete(IEnumerable<DataCellInfo> cells)
         {
             IList<DataCell> dataCells = GetDataCells(cells);
             DataCellHelper.EnsureAllArraysEnclosing(dataCells);
@@ -84,6 +87,32 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             foreach (DataCell dataCell in dataCells)
             {
                 dataCell.Clear();
+            }
+        }
+
+        public virtual void Copy(IEnumerable<DataCellInfo> cells)
+        {
+            Clipboard.SetData(CellClipboardFormatName, cells);
+            CopyAsText(cells);
+        }
+
+        public virtual void Cut(IEnumerable<DataCellInfo> cells)
+        {
+            DataCellHelper.EnsureAllArraysEnclosing(GetDataCells(cells));
+            Copy(cells);
+            Delete(cells);
+        }
+
+        public virtual void Paste(int row, int column)
+        {
+            var storedCells = Clipboard.GetData(CellClipboardFormatName) as IEnumerable<DataCellInfo>;
+
+            if (storedCells != null)
+            {
+                IList<DataCell> dataCells = GetDataCells(storedCells);
+                DataCellHelper.EnsureAllArraysEnclosing(dataCells);
+
+
             }
         }
 
@@ -117,6 +146,8 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
+
+
         private void HandleNextCellCircularReferences(int nextRow, int nextColumn, string targetCellAddress, DataUnit currentDataUnit)
         {
             DataCell nextCell = this[nextRow, nextColumn];
@@ -130,9 +161,28 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         #region Helpers
 
-        public IList<DataCell> GetDataCells(IList<DataCellInfo> cells)
+        public IList<DataCell> GetDataCells(IEnumerable<DataCellInfo> cells)
         {
             return cells.Select(x => this[x.RowIndex, x.ColumnIndex]).ToList();
+        }
+
+        public void CopyAsText(IEnumerable<DataCellInfo> cells)
+        {
+            StringBuilder sb = new StringBuilder();
+            DataCellInfo topLeft = cells.OrderBy(x => x.ColumnIndex + x.RowIndex).First();
+            DataCellInfo buttomRight = cells.OrderBy(x => x.ColumnIndex + x.RowIndex).Last();
+
+            for (int row = topLeft.RowIndex; row <= buttomRight.RowIndex; row++)
+            {
+                for (int col = topLeft.ColumnIndex; col <= buttomRight.ColumnIndex; col++)
+                {
+                    sb.Append(this[row, col].CachedValue);
+                    if (col < buttomRight.ColumnIndex) sb.Append("\t");
+                }
+                if (row < buttomRight.RowIndex) sb.AppendLine();
+            }
+
+            Clipboard.SetText(sb.ToString(), TextDataFormat.Text);
         }
 
         #endregion
