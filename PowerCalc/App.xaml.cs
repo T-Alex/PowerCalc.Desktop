@@ -7,6 +7,10 @@ using System.Diagnostics;
 
 using TAlex.PowerCalc.Licensing;
 using TAlex.PowerCalc.Locators;
+using TAlex.PowerCalc.Views;
+using TAlex.Common.Diagnostics.ErrorReporting;
+using TAlex.Common.Environment;
+using TAlex.WPF.Mvvm.Extensions;
 
 
 namespace TAlex.PowerCalc
@@ -42,6 +46,12 @@ namespace TAlex.PowerCalc
         private void ProcessingUnhandledException(Exception e)
         {
             Trace.TraceError(e.ToString());
+
+            ErrorReportingWindow reportWindow =
+                new ErrorReportingWindow(new ErrorReport(e), ApplicationInfo.Current);
+
+            reportWindow.Owner = this.GetActiveWindow();
+            reportWindow.ShowDialog();
         }
 
         protected override void OnNavigating(System.Windows.Navigation.NavigatingCancelEventArgs e)

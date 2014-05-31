@@ -8,7 +8,7 @@ using System.Windows.Media.Animation;
 using TAlex.Common.Environment;
 
 
-namespace TAlex.PowerCalc
+namespace TAlex.PowerCalc.Views
 {
     /// <summary>
     /// Interaction logic for AboutWindow.xaml

@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using TAlex.Common.Licensing;
 using TAlex.PowerCalc.Licensing;
 
-namespace TAlex.PowerCalc
+namespace TAlex.PowerCalc.Views
 {
     /// <summary>
     /// Interaction logic for RegistrationWindow.xaml

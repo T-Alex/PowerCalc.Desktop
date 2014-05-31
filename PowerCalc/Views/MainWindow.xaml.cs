@@ -29,7 +29,7 @@ using TAlex.PowerCalc.ViewModels;
 using System.Collections.Specialized;
 
 
-namespace TAlex.PowerCalc
+namespace TAlex.PowerCalc.Views
 {
     public partial class MainWindow : Window
     {

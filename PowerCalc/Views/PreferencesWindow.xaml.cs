@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using System.Globalization;
 
 
-namespace TAlex.PowerCalc
+namespace TAlex.PowerCalc.Views
 {
     /// <summary>
     /// Interaction logic for PreferencesWindow.xaml
