@@ -71,7 +71,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             IDictionary<string, Object> vars = FindAllVariables(ref expression);
 
             // Evaluation the expression
-            Expression<Object> expr = DataTable.ExpressionTreeBuilder.BuildTree(expression);
+            Expression<Object> expr = DataTable.BuildTree(expression);
             expr.SetAllVariables(vars);
             return expr.Evaluate();
         }

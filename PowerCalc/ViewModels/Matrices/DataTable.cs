@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows;
+using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.PowerCalc.Converters;
 using TAlex.PowerCalc.Helpers;
+using TAlex.PowerCalc.Services;
 using TAlex.PowerCalc.ViewModels.Matrices;
 
 
@@ -18,7 +20,9 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         protected static readonly string CellClipboardFormatName = "DataGridCell";
 
-        public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
+        protected readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
+        protected readonly IClipboardService ClipboardService;
+        protected readonly WorksheetMatrixCachedValueConverter CachedValueConverter;
 
         private List<DataRow> _rows;
 
@@ -50,14 +54,16 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         #region Constructors
 
-        public DataTable(IExpressionTreeBuilder<Object> expressionTreeBuilder)
+        public DataTable(IExpressionTreeBuilder<Object> expressionTreeBuilder, IClipboardService clipboardService, WorksheetMatrixCachedValueConverter cachedValueConverter)
         {
             ExpressionTreeBuilder = expressionTreeBuilder;
+            ClipboardService = clipboardService;
+            CachedValueConverter = cachedValueConverter;
             _rows = new List<DataRow>();
         }
 
-        public DataTable(IExpressionTreeBuilder<Object> expressionTreeBuilder, int rows, int columns)
-            : this(expressionTreeBuilder)
+        public DataTable(IExpressionTreeBuilder<Object> expressionTreeBuilder, IClipboardService clipboardService, WorksheetMatrixCachedValueConverter cachedValueConverter, int rows, int columns)
+            : this(expressionTreeBuilder, clipboardService, cachedValueConverter)
         {
             Initialize(rows, columns);
         }
@@ -78,6 +84,11 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
         }
 
+        public Expression<Object> BuildTree(string expression)
+        {
+            return ExpressionTreeBuilder.BuildTree(expression);
+        }
+
         public virtual void Delete(IEnumerable<DataCellInfo> cells)
         {
             IList<DataCell> dataCells = GetDataCells(cells);
@@ -92,7 +103,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         public virtual void Copy(IEnumerable<DataCellInfo> cells)
         {
-            Clipboard.SetData(CellClipboardFormatName, cells);
+            ClipboardService.SetData(CellClipboardFormatName, cells);
             CopyAsText(cells);
         }
 
@@ -105,7 +116,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         public virtual void Paste(int row, int column)
         {
-            var storedCells = Clipboard.GetData(CellClipboardFormatName) as IEnumerable<DataCellInfo>;
+            var storedCells = ClipboardService.GetData(CellClipboardFormatName) as IEnumerable<DataCellInfo>;
 
             if (storedCells != null)
             {
@@ -176,13 +187,13 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             {
                 for (int col = topLeft.ColumnIndex; col <= buttomRight.ColumnIndex; col++)
                 {
-                    sb.Append(this[row, col].CachedValue);
+                    sb.Append(CachedValueConverter.ToString(this[row, col].CachedValue));
                     if (col < buttomRight.ColumnIndex) sb.Append("\t");
                 }
                 if (row < buttomRight.RowIndex) sb.AppendLine();
             }
 
-            Clipboard.SetText(sb.ToString(), TextDataFormat.Text);
+            ClipboardService.SetText(sb.ToString());
         }
 
         #endregion

@@ -227,7 +227,9 @@
     <Compile Include="Locators\Modules\MathCoreNinjectModule.cs" />
     <Compile Include="Locators\Modules\ViewModelNinjectModule.cs" />
     <Compile Include="Locators\ViewModelLocator.cs" />
+    <Compile Include="Services\ClipboardService.cs" />
     <Compile Include="Services\IAppSettings.cs" />
+    <Compile Include="Services\IClipboardService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TemplateSelectors\WorksheetItemTemplateSelector.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
