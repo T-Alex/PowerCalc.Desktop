@@ -122,9 +122,9 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             {
                 IList<DataCell> dataCells = GetDataCells(storedCells);
                 DataCellHelper.EnsureAllArraysEnclosing(dataCells);
-
-
             }
+
+            PasteFromText(row, column);
         }
 
         public virtual void CheckCircularReferences(string targetCellAddress, DataUnit dataUnit)
@@ -177,7 +177,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             return cells.Select(x => this[x.RowIndex, x.ColumnIndex]).ToList();
         }
 
-        public void CopyAsText(IEnumerable<DataCellInfo> cells)
+        private void CopyAsText(IEnumerable<DataCellInfo> cells)
         {
             StringBuilder sb = new StringBuilder();
             DataCellInfo topLeft = cells.OrderBy(x => x.ColumnIndex + x.RowIndex).First();
@@ -194,6 +194,40 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             }
 
             ClipboardService.SetText(sb.ToString());
+        }
+
+        private void PasteFromText(int row, int column)
+        {
+            var text = ClipboardService.GetText();
+
+            List<List<string>> values = text
+                .Split(new[] { Environment.NewLine }, StringSplitOptions.None)
+                .Select(l => l.Split('\t').Select(x => x.Trim()).ToList()).ToList();
+
+            int r = 0, c = 0;
+            List<DataCell> cells = new List<DataCell>();
+            foreach (List<string> line in values)
+            {
+                line.ForEach(v => { cells.Add(this[row + r, column + c]); c++; });
+                c = 0;
+                r++;
+            }
+            DataCellHelper.EnsureAllArraysEnclosing(cells);
+
+            r = 0; c = 0;
+            foreach (List<string> line in values)
+            {
+                foreach (string value in line)
+                {
+                    DataCell cell = this[row + r, column + c];
+                    cell.Parent = null;
+                    cell.Expression = value;
+                    c++;
+                }
+
+                c = 0;
+                r++;
+            }
         }
 
         #endregion
