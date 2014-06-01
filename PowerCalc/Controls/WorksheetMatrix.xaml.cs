@@ -200,6 +200,7 @@ namespace TAlex.PowerCalc.Controls
                 e.Cancel = true;
                 _formulaBarEdit = false;
                 _lastEditedCellViaFormulaBar = dataGrid.TryToFindGridCell(e.Row.Item, e.Column);
+                dataGrid.ScrollIntoView(e.Row.Item, e.Column);
                 return;
             }
 
