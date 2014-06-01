@@ -345,6 +345,7 @@ namespace TAlex.PowerCalc.Controls
                     }
                     catch (ArgumentException exc)
                     {
+                        e.Handled = true;
                         MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }

@@ -31,6 +31,16 @@ namespace TAlex.PowerCalc.Services
             Clipboard.SetData(format, data);
         }
 
+        public void SetDataObject(params object[] objs)
+        {
+            var dataObject = new DataObject();
+            foreach (object obj in objs)
+            {
+                dataObject.SetData(obj);
+            }
+            Clipboard.SetDataObject(dataObject);
+        }
+
         #endregion
     }
 }

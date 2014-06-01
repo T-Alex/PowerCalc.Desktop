@@ -103,8 +103,7 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         public virtual void Copy(IEnumerable<DataCellInfo> cells)
         {
-            ClipboardService.SetData(CellClipboardFormatName, cells);
-            CopyAsText(cells);
+            ClipboardService.SetDataObject(GetCopyText(cells), GetCellsCopyInfo(cells));
         }
 
         public virtual void Cut(IEnumerable<DataCellInfo> cells)
@@ -116,15 +115,12 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
 
         public virtual void Paste(int row, int column)
         {
-            var storedCells = ClipboardService.GetData(CellClipboardFormatName) as IEnumerable<DataCellInfo>;
+            var copyCells = ClipboardService.GetData(typeof(List<DataCellCopyInfo>).FullName) as List<DataCellCopyInfo>;
 
-            if (storedCells != null)
-            {
-                IList<DataCell> dataCells = GetDataCells(storedCells);
-                DataCellHelper.EnsureAllArraysEnclosing(dataCells);
-            }
-
-            PasteFromText(row, column);
+            if (copyCells != null)
+                PasteFromData(row, column, copyCells);
+            else
+                PasteFromText(row, column);
         }
 
         public virtual void CheckCircularReferences(string targetCellAddress, DataUnit dataUnit)
@@ -177,7 +173,32 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             return cells.Select(x => this[x.RowIndex, x.ColumnIndex]).ToList();
         }
 
-        private void CopyAsText(IEnumerable<DataCellInfo> cells)
+        private List<DataCellCopyInfo> GetCellsCopyInfo(IEnumerable<DataCellInfo> cells)
+        {
+            int maxArrayIndex = 0;
+            Dictionary<DataArray, int> arrayIndexes = new Dictionary<DataArray, int>();
+            DataCellInfo topLeft = cells.OrderBy(x => x.ColumnIndex + x.RowIndex).First();
+            
+            return cells.Select(x =>
+            {
+                DataCell cell = this[x.RowIndex, x.ColumnIndex];
+                int? arrayIndex = null;
+                if (cell.Parent != null)
+                {
+                    int idx;
+                    if (!arrayIndexes.TryGetValue(cell.Parent, out idx))
+                    {
+                        arrayIndexes.Add(cell.Parent, ++maxArrayIndex);
+                        idx = maxArrayIndex;
+                    }
+                    arrayIndex = idx;
+                }
+
+                return new DataCellCopyInfo { CellInfo = x.Offset(-topLeft), Expression = cell.Expression, ArrayIndex = arrayIndex };
+            }).ToList();
+        }
+
+        private string GetCopyText(IEnumerable<DataCellInfo> cells)
         {
             StringBuilder sb = new StringBuilder();
             DataCellInfo topLeft = cells.OrderBy(x => x.ColumnIndex + x.RowIndex).First();
@@ -193,7 +214,25 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
                 if (row < buttomRight.RowIndex) sb.AppendLine();
             }
 
-            ClipboardService.SetText(sb.ToString());
+            return sb.ToString();
+        }
+
+        private void PasteFromData(int row, int column, List<DataCellCopyInfo> copyCells)
+        {
+            List<DataCell> dataCells = copyCells.Select(x => this[row + x.CellInfo.RowIndex, column + x.CellInfo.ColumnIndex]).ToList();
+            DataCellHelper.EnsureAllArraysEnclosing(dataCells);
+
+            foreach (DataCellCopyInfo copyCell in copyCells)
+            {
+                DataCell dataCell = this[row + copyCell.CellInfo.RowIndex, column + copyCell.CellInfo.ColumnIndex];
+                dataCell.Parent = null;
+                dataCell.Expression = copyCell.Expression;
+            }
+            foreach (var group in copyCells.Where(x => x.ArrayIndex.HasValue).GroupBy(x => x.ArrayIndex))
+            {
+                var first = group.First();
+                new DataArray(this[row + first.CellInfo.RowIndex, column + first.CellInfo.ColumnIndex], group.Select(x => x.CellInfo.Offset(row, column)).ToList());
+            }
         }
 
         private void PasteFromText(int row, int column)
@@ -324,6 +363,19 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
             {
                 ((IList)_rows)[index] = value;
             }
+        }
+
+        #endregion
+
+        #region Nested Types
+
+        [Serializable]
+        private class DataCellCopyInfo
+        {
+            public DataCellInfo CellInfo { get; set; }
+
+            public string Expression { get; set; }
+            public int? ArrayIndex { get; set; }
         }
 
         #endregion

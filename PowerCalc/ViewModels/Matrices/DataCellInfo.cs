@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TAlex.PowerCalc.ViewModels.Matrices
 {
+    [Serializable]
     public struct DataCellInfo
     {
         public int RowIndex { get; set; }
@@ -18,6 +19,23 @@ namespace TAlex.PowerCalc.ViewModels.Matrices
         {
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
+        }
+
+
+        public DataCellInfo Offset(int rowIndex, int columnIndex)
+        {
+            return new DataCellInfo(RowIndex + rowIndex, ColumnIndex + columnIndex);
+        }
+
+        public DataCellInfo Offset(DataCellInfo cellInfo)
+        {
+            return new DataCellInfo(RowIndex + cellInfo.RowIndex, ColumnIndex + cellInfo.ColumnIndex);
+        }
+
+
+        public static DataCellInfo operator -(DataCellInfo cellInfo)
+        {
+            return new DataCellInfo(-cellInfo.RowIndex, -cellInfo.ColumnIndex);
         }
     }
 }
