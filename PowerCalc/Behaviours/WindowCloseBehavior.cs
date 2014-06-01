@@ -23,7 +23,10 @@ namespace TAlex.PowerCalc.Behaviours
             {
                 Window window = GetWindow(sender);
                 if (window != null)
-                    window.Close();
+                {
+                    window.DialogResult = true;
+                    //window.Close();
+                }
             }
         }
 
