@@ -40,6 +40,14 @@ namespace TAlex.PowerCalc.Locators
             }
         }
 
+        public ReferencesWindowViewModel ReferencesWindowViewModel
+        {
+            get
+            {
+                return _kernel.Get<ReferencesWindowViewModel>();
+            }
+        }
+
         public AboutWindowViewModel AboutWindowViewModel
         {
             get

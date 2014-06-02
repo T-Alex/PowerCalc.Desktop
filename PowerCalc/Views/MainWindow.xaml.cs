@@ -17,7 +17,6 @@ using System.Windows.Data;
 using Microsoft.Win32;
 using TAlex.PowerCalc.Helpers;
 using TAlex.MathCore;
-using TAlex.MathCore.LinearAlgebra;
 using TAlex.MathCore.ExpressionEvaluation;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
@@ -100,12 +99,7 @@ namespace TAlex.PowerCalc.Views
 
         private void CommandBindingHelp_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string helpFileName = Properties.Resources.HelpFileName;
-
-            if (System.IO.File.Exists(helpFileName))
-            {
-                Process.Start(helpFileName);
-            }
+            new ReferencesWindow { Owner = this }.ShowDialog();
         }
 
         #endregion

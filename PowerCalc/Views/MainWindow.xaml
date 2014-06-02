@@ -101,7 +101,7 @@
                 <MenuItem Header="_Preferences..." Click="preferencesMenuItem_Click" />
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Command="ApplicationCommands.Help" Header="_View Help" />
+                <MenuItem Command="ApplicationCommands.Help" Header="_References" />
                 <Separator />
                 <MenuItem Header="T-Alex Software _Homepage" Click="navHomepageMenuItem_Click" />
                 <MenuItem Header="_Registration..." Click="registrationMenuItem_Click" />

@@ -133,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ReferencesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +220,7 @@
     </Compile>
     <Compile Include="Converters\CopyToClipboardParameterConverter.cs" />
     <Compile Include="Converters\DataCellToForegroundConverter.cs" />
+    <Compile Include="Converters\FunctionSignatureToDisplayConverter.cs" />
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
     <Compile Include="Converters\NumericFormatToBooleanConverter.cs" />
     <Compile Include="Converters\WorksheetItemResultConverter.cs" />
@@ -243,6 +248,7 @@
     <Compile Include="ViewModels\Matrices\DataCellHelper.cs" />
     <Compile Include="ViewModels\Matrices\DataCellInfo.cs" />
     <Compile Include="ViewModels\PreferencesWindowViewModel.cs" />
+    <Compile Include="ViewModels\ReferencesWindowViewModel.cs" />
     <Compile Include="ViewModels\RegistrationWindowViewModel.cs" />
     <Compile Include="ViewModels\WorksheetMatrixViewModel.cs" />
     <Compile Include="ViewModels\Matrices\DataArray.cs" />
@@ -268,6 +274,9 @@
     <Compile Include="Services\Licensing\AppLicenseDataManager.cs" />
     <Compile Include="Views\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReferencesWindow.xaml.cs">
+      <DependentUpon>ReferencesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>

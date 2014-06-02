@@ -20,6 +20,7 @@ namespace TAlex.PowerCalc.Locators.Modules
         {
             Bind<MainWindowViewModel>().ToSelf();
             Bind<PreferencesWindowViewModel>().ToSelf();
+            Bind<ReferencesWindowViewModel>().ToSelf();
             Bind<AboutWindowViewModel>().ToSelf().InSingletonScope();
             Bind<RegistrationWindowViewModel>().ToSelf();
             Bind<WorksheetMatrixViewModel>().ToSelf();
