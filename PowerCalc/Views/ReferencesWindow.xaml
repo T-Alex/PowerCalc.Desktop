@@ -18,11 +18,45 @@
     
     <Grid>
         <TabControl>
-            <TabItem Header="Constants">
+            <TabControl.Resources>
                 
+            </TabControl.Resources>
+            <TabItem Header="Operators">
+                
+            </TabItem>            
+            
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="{Binding ConstantMetadata.Count, Mode=OneWay, StringFormat=Constants ({0})}" />
+                </TabItem.Header>
+
+                <ListView ItemsSource="{Binding ConstantMetadata}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name" Width="250" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </TabItem>
             
-            <TabItem Header="Functions">
+            <TabItem>
+                <TabItem.Resources>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabItem.Resources>
+                
+                <TabItem.Header>
+                    <TextBlock Text="{Binding FunctionMetadata.Count, Mode=OneWay, StringFormat=Functions ({0})}" />
+                </TabItem.Header>
+                
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30" />
@@ -30,19 +64,6 @@
                     </Grid.RowDefinitions>
 
                     <ListView Grid.Row="1" ItemsSource="{Binding Source={StaticResource Functions}}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListView.Resources>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ListViewItem">
-                                            <ContentPresenter />
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-
-                            </Style>
-                        </ListView.Resources>
-
                         <ListView.GroupStyle>
                             <GroupStyle>
                                 <GroupStyle.ContainerStyle>
@@ -54,8 +75,7 @@
                                                         <Expander.Header>
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Gray" FontSize="14" VerticalAlignment="Bottom" />
-                                                                <TextBlock Text="{Binding ItemCount}" FontSize="14" Foreground="DimGray" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
-                                                                <TextBlock Text=" item(s)" FontSize="14" Foreground="Silver" FontStyle="Italic" VerticalAlignment="Bottom" />
+                                                                <TextBlock Text="{Binding ItemCount, Mode=OneWay, StringFormat=({0})}" FontSize="14" Foreground="Silver" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
                                                             </StackPanel>
                                                         </Expander.Header>
                                                         <ItemsPresenter />
