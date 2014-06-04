@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dat="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
         xmlns:convs="clr-namespace:TAlex.PowerCalc.Converters"
-        Title="References" Height="600" Width="500" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        Title="References" Height="600" MinHeight="300" Width="500" MinWidth="400" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
         DataContext="{Binding Source={StaticResource viewModelLocator}, Path=ReferencesWindowViewModel, Mode=OneTime}">
     
     <Window.Resources>
@@ -17,12 +17,41 @@
     </Window.Resources>
     
     <Grid>
-        <TabControl>
+        <TabControl Margin="5">
             <TabControl.Resources>
-                
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="Black" />
+                </Style>
             </TabControl.Resources>
+
             <TabItem Header="Operators">
-                
+                <TabItem.Resources>
+                    <XmlDataProvider x:Key="Operators" XPath="Operators/*">
+                        <x:XData>
+                            <Operators xmlns="">
+                                <Operator Sign="±" Description="Unary plus/minus" />
+                                <Operator Sign="+" Description="Addition" />
+                                <Operator Sign="-" Description="Subtraction" />
+                                <Operator Sign="*" Description="Multiplication" />
+                                <Operator Sign="/" Description="Division" />
+                                <Operator Sign="^ or **" Description="Raising to power" />
+                                <Operator Sign="(,)" Description="Parentheses" />
+                                <Operator Sign="{,}" Description="Matrix or array brackets" />
+                                <Operator Sign="," Description="Function arguments or matrix elements separator" />
+                                <Operator Sign=";" Description="Matrix row separator" />
+                            </Operators>
+                        </x:XData>
+                    </XmlDataProvider>
+                </TabItem.Resources>
+
+                <ListView ItemsSource="{Binding Source={StaticResource Operators}}">                   
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Operation" DisplayMemberBinding="{Binding XPath=@Sign}" />
+                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding XPath=@Description}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </TabItem>            
             
             <TabItem>
@@ -33,7 +62,8 @@
                 <ListView ItemsSource="{Binding ConstantMetadata}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="250" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Description" Width="200" DisplayMemberBinding="{Binding DisplayName}" />
                             <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
                         </GridView>
                     </ListView.View>
@@ -75,7 +105,7 @@
                                                         <Expander.Header>
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Gray" FontSize="14" VerticalAlignment="Bottom" />
-                                                                <TextBlock Text="{Binding ItemCount, Mode=OneWay, StringFormat=({0})}" FontSize="14" Foreground="Silver" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                                <TextBlock Text="{Binding ItemCount, Mode=OneWay, StringFormat=({0})}" FontSize="14" Foreground="Silver" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Bottom" />
                                                             </StackPanel>
                                                         </Expander.Header>
                                                         <ItemsPresenter />
