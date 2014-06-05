@@ -31,5 +31,28 @@ namespace TAlex.PowerCalc.Helpers
 
             return firstFocusable;
         }
+
+        public static T GetChild<T>(DependencyObject obj) where T : class
+        {
+            T target = default(T);
+
+            int count = VisualTreeHelper.GetChildrenCount(obj);
+            for (int i = 0; i < count && null == target; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+
+                T inputElement = child as T;
+                if (null != inputElement)
+                {
+                    target = inputElement;
+                }
+                else
+                {
+                    target = GetChild<T>(child);
+                }
+            }
+
+            return target;
+        }
     }
 }

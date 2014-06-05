@@ -76,7 +76,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
-                                    <ContentPresenter />
+                                    <ContentPresenter MouseDown="ContentPresenter_MouseDown" />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -89,11 +89,27 @@
                 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="3" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <ListView Grid.Row="1" ItemsSource="{Binding Source={StaticResource Functions}}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ComboBox Grid.Row="0" ItemsSource="{Binding Source={StaticResource Functions}}" 
+                              IsEditable="False" ShouldPreserveUserEnteredPrefix="True"
+                              SelectedItem="{Binding Path=SelectedItem, ElementName=FunctionsListView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Category}" />
+                                    <TextBlock Text=": " />
+                                    <TextBlock Text="{Binding DisplayName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ListView Name="FunctionsListView" Grid.Row="2" ItemsSource="{Binding Source={StaticResource Functions}}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListView.GroupStyle>
                             <GroupStyle>
                                 <GroupStyle.ContainerStyle>
@@ -104,7 +120,7 @@
                                                     <Expander IsExpanded="False">
                                                         <Expander.Header>
                                                             <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Gray" FontSize="14" VerticalAlignment="Bottom" />
+                                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Black" FontSize="14" VerticalAlignment="Bottom" />
                                                                 <TextBlock Text="{Binding ItemCount, Mode=OneWay, StringFormat=({0})}" FontSize="14" Foreground="Silver" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Bottom" />
                                                             </StackPanel>
                                                         </Expander.Header>
