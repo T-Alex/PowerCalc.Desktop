@@ -76,7 +76,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
-                                    <ContentPresenter MouseDown="ContentPresenter_MouseDown" />
+                                    <ContentPresenter />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -136,14 +136,14 @@
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Border CornerRadius="3" BorderThickness="1" BorderBrush="Silver" Padding="15,5" Margin="5" HorizontalAlignment="Stretch">
+                                <Border CornerRadius="3" BorderThickness="1" BorderBrush="Silver" Padding="15,5" Margin="5" HorizontalAlignment="Stretch" Background="Transparent" MouseDown="Border_MouseDown">
                                     <StackPanel>
                                         <TextBlock Text="{Binding DisplayName}" FontSize="14" />
                                         <Separator Background="Silver" />
                                         <TextBlock Text="{Binding Description}" TextWrapping="WrapWithOverflow" />
 
                                         <TextBlock Text="Signatures:" Margin="0,5,0,0" Foreground="#93a1a1" FontWeight="Bold" />
-                                        <ListView ItemsSource="{Binding Signatures}" BorderThickness="0">
+                                        <ListView ItemsSource="{Binding Signatures}" BorderThickness="0" IsHitTestVisible="False">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
                                                     <ContentPresenter Content="{Binding Path=., Converter={StaticResource FunctionSignatureToDisplayConverter}}" />
@@ -153,7 +153,7 @@
 
                                         <TextBlock Text="Usage Examples:" Margin="0,5,0,0" Foreground="#93a1a1" FontWeight="Bold" />
                                         <Border>
-                                            <ListView ItemsSource="{Binding ExampleUsages}" BorderThickness="0">
+                                            <ListView ItemsSource="{Binding ExampleUsages}" BorderThickness="0" IsHitTestVisible="False">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
                                                         <TextBlock>

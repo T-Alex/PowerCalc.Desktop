@@ -48,10 +48,10 @@ namespace TAlex.PowerCalc.Views
             }
         }
 
-        private void ContentPresenter_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ContentPresenter contentPresenter = (ContentPresenter)sender;
-            FunctionsListView.SelectedItem = contentPresenter.Content;
+            Border contentPresenter = (Border)sender;
+            FunctionsListView.SelectedItem = contentPresenter.DataContext;
         }
     }
 }
