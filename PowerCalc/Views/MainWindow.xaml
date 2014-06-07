@@ -19,6 +19,8 @@
 
     <!-- Resources -->
     <Window.Resources>
+        <FontFamily x:Key="IconicFont">/PowerCalc;component/Resources/Fonts/#fontello</FontFamily>
+        
         <talex:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:FunctionSignaturesToTooltipConverter x:Key="FunctionSignaturesToTooltipConverter" />
         <converters:XYCoordsToStringConverter x:Key="XYCoordsToStringConverter" />
@@ -468,7 +470,7 @@
 
             <TabItem Header="2D Plot">
                 <DockPanel>
-                    <Expander Background="{DynamicResource GradBrush}" DockPanel.Dock="Bottom" ExpandDirection="Up" IsExpanded="True">
+                    <Expander Background="{DynamicResource GradBrush}" DockPanel.Dock="Bottom" ExpandDirection="Up" IsExpanded="True" Visibility="Collapsed">
                         <Canvas Height="156" Width="651" HorizontalAlignment="Center">
                             <GroupBox Canvas.Left="60" Canvas.Top="5" Header="X-Y Function" Height="55" Width="530">
                                 <Canvas>
@@ -480,10 +482,45 @@
                         </Canvas>
                     </Expander>
 
+                    <Border Background="{DynamicResource GradBrush}" DockPanel.Dock="Bottom" Height="30">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="FontFamily" Value="{StaticResource IconicFont}" />
+                                    <Setter Property="FontSize" Value="16" />
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Width" Value="70" />
+                                    <Setter Property="Margin" Value="2,2" />
+                                    
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border BorderThickness="1" CornerRadius="12">
+                                                    <Border.BorderBrush>
+                                                        <SolidColorBrush Color="White" Opacity="0.5" />
+                                                    </Border.BorderBrush>
+                                                    
+                                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </StackPanel.Resources>
+
+                            <Button ToolTip="Add Trace"></Button>
+                            <Button ToolTip="Show Traces List"></Button>
+                        </StackPanel>
+                    </Border>
+
                     <controls:Plot2D x:Name="plot2D" Background="AliceBlue" MouseMove="plot2D_MouseMove" MouseLeave="plot2D_MouseLeave">
                         <controls:Plot2D.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Fullscreen" Click="fullscreenPlot2DMenuItem_Click" />
+                                <Separator />
+                                <MenuItem Header="Traces">
+                                    <MenuItem Header="Add Trace..." />
+                                </MenuItem>
                                 <Separator />
                                 <MenuItem Header="Copy to clipboard" Click="copyPlotMenuItem_Click" />
                                 <MenuItem Header="Save image as..." Click="saveAsPlotMenuItem_Click" />

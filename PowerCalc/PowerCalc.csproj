@@ -367,6 +367,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Fonts\fontello.ttf" />
     <None Include="Resources\Icons\icon.ico" />
   </ItemGroup>
   <ItemGroup>
