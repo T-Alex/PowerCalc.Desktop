@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -11,11 +12,12 @@ using System.Windows.Shapes;
 using System.Globalization;
 
 using TAlex.PowerCalc.Helpers;
+using System.Collections;
 
 
 namespace TAlex.PowerCalc.Controls
 {
-    public class Plot2D : FrameworkElement
+    public class Plot2D : FrameworkElement, IPlot2D
     {
         #region Fields
 
@@ -26,9 +28,6 @@ namespace TAlex.PowerCalc.Controls
         private const double DefaultXAxisScaleInterval = 1.0;
 
         private const double DefaultYAxisScaleInterval = 1.0;
-
-
-        private readonly List<SimpleTrace> _traces = new List<SimpleTrace>();
 
         private Point _lastMousePos = new Point();
 
@@ -360,12 +359,10 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
-        public List<SimpleTrace> Traces
+        public Trace2DCollection Traces
         {
-            get
-            {
-                return _traces;
-            }
+            get;
+            private set;
         }
 
         public bool CanUndo
@@ -409,6 +406,8 @@ namespace TAlex.PowerCalc.Controls
 
         public Plot2D()
         {
+            Traces = new Trace2DCollection(this);
+
             _dx = DefaultStepX;
             _dy = DefaultStepY;
             _xAxisScaleInterval = DefaultXAxisScaleInterval;
@@ -556,7 +555,7 @@ namespace TAlex.PowerCalc.Controls
 
         #region Rendering
 
-        protected void RenderPlot()
+        void IPlot2D.RenderPlot()
         {
             double w = Math.Round(ActualWidth);
             double h = Math.Round(ActualHeight);
@@ -671,15 +670,13 @@ namespace TAlex.PowerCalc.Controls
                     double inv_x_step = _dx / _xAxisScaleInterval;
                     double inv_y_step = _dy / _yAxisScaleInterval;
 
-                    for (int idx = 0; idx < _traces.Count; idx++)
+                    foreach (Trace2D trace in Traces)
                     {
-                        SimpleTrace trace = _traces[idx];
-
-                        if (trace.Visible == false || trace.Function == null)
+                        if (trace.Display == false || trace.Function == null)
                             continue;
 
-                        double x_min = trace.LowerBound;
-                        double x_max = trace.UpperBound;
+                        double x_min = trace.IsLowerBoundInfinity ? double.NegativeInfinity : trace.LowerBound;
+                        double x_max = trace.IsUpperBoundInfinity ? double.PositiveInfinity : trace.UpperBound;
                         double yTemp;
 
                         double x1, x2, y1, y2;
@@ -792,6 +789,11 @@ namespace TAlex.PowerCalc.Controls
             }
         }
 
+        protected void RenderPlot()
+        {
+            ((IPlot2D)this).RenderPlot();
+        }
+
         protected override Visual GetVisualChild(int index)
         {
             if (index == 0)
@@ -811,16 +813,6 @@ namespace TAlex.PowerCalc.Controls
         #endregion
 
         #region Helpers
-
-        public void SetTrace(Func<double, double> function)
-        {
-            if (_traces.Count == 0)
-                _traces.Add(new SimpleTrace(function));
-            else
-                _traces[0] = new SimpleTrace(function);
-
-            RenderPlot();
-        }
 
         public Point PointToPlot2DCoordinate(Point point)
         {
@@ -950,8 +942,8 @@ namespace TAlex.PowerCalc.Controls
                 destination.SelectedRegionBrush = source.SelectedRegionBrush;
                 destination.SelectedRegionBorderPen = source.SelectedRegionBorderPen;
 
-                if (source._traces.Count != 0)
-                    destination.SetTrace(source._traces[0].Function);
+                destination.Traces = new Trace2DCollection(destination, source.Traces.Cast<Trace2D>());
+                destination.RenderPlot();
             }
         }
 
@@ -1108,17 +1100,21 @@ namespace TAlex.PowerCalc.Controls
             #endregion
         }
 
-        public class SimpleTrace
+        public class Trace2D : ICloneable
         {
             #region Fields
 
             private Pen _pen = new Pen(Brushes.Blue, 1);
 
-            private double _lowerBound = double.NegativeInfinity;
+            private double _lowerBound = -100;
 
-            private double _upperBound = double.PositiveInfinity;
+            private bool _isLowerBoundInfinity = true;
 
-            private bool _visible = true;
+            private double _upperBound = 100;
+
+            private bool _isUpperBoundInfinity = true;
+
+            private bool _display = true;
 
             private string _title;
 
@@ -1127,6 +1123,21 @@ namespace TAlex.PowerCalc.Controls
             #endregion
 
             #region Properties
+
+            public string Expression { get; set; }
+
+            public string Title
+            {
+                get
+                {
+                    return _title;
+                }
+
+                set
+                {
+                    _title = value;
+                }
+            }
 
             public Pen Pen
             {
@@ -1154,6 +1165,12 @@ namespace TAlex.PowerCalc.Controls
                 }
             }
 
+            public bool IsLowerBoundInfinity
+            {
+                get { return _isLowerBoundInfinity; }
+                set { _isLowerBoundInfinity = value; }
+            }
+
             public double UpperBound
             {
                 get
@@ -1167,29 +1184,22 @@ namespace TAlex.PowerCalc.Controls
                 }
             }
 
-            public bool Visible
+            public bool IsUpperBoundInfinity
             {
-                get
-                {
-                    return _visible;
-                }
-
-                set
-                {
-                    _visible = value;
-                }
+                get { return _isUpperBoundInfinity; }
+                set { _isUpperBoundInfinity = value; }
             }
 
-            public string Title
+            public bool Display
             {
                 get
                 {
-                    return _title;
+                    return _display;
                 }
 
                 set
                 {
-                    _title = value;
+                    _display = value;
                 }
             }
 
@@ -1210,17 +1220,123 @@ namespace TAlex.PowerCalc.Controls
 
             #region Constructors
 
-            public SimpleTrace(Func<double, double> function)
+            public Trace2D()
             {
-                _function = function;
             }
 
-            public SimpleTrace(Func<double, double> function, Pen pen, double lowerBound, double upperBound)
+            #endregion
+
+            #region Methods
+
+            public override string ToString()
             {
-                _function = function;
-                _pen = pen;
-                _lowerBound = lowerBound;
-                _upperBound = upperBound;
+                return Expression;
+            }
+
+            #endregion
+
+            #region ICloneable Members
+
+            object ICloneable.Clone()
+            {
+                return new Trace2D
+                {
+                    Expression = Expression,
+                    Title = Title,
+                    Function = Function != null ? (Func<double, double>)Function.Clone() : null,
+                    Pen = Pen,
+                    LowerBound = LowerBound,
+                    IsLowerBoundInfinity = IsLowerBoundInfinity,
+                    UpperBound = UpperBound,
+                    IsUpperBoundInfinity = IsUpperBoundInfinity,
+                    Display = Display
+                };
+            }
+
+            public Trace2D Clone()
+            {
+                return (Trace2D)((ICloneable)this).Clone();
+            }
+
+            #endregion
+        }
+
+        public class Trace2DCollection : ICollection, IEnumerable
+        {
+            #region Fields
+
+            protected readonly IPlot2D Plot;
+
+            private List<Trace2D> _traces;
+
+            #endregion
+
+            #region Constructors
+
+            public Trace2DCollection(IPlot2D plot)
+            {
+                Plot = plot;
+                _traces = new List<Trace2D>();
+            }
+
+            public Trace2DCollection(IPlot2D plot, IEnumerable<Trace2D> traces)
+                : this(plot)
+            {
+                _traces = new List<Trace2D>(traces);
+            }
+
+            #endregion
+
+            #region Methods
+
+            public Trace2D CreateNew()
+            {
+                return new Trace2D();
+            }
+
+            public void Add(Trace2D trace)
+            {
+                _traces.Add(trace);
+                Plot.RenderPlot();
+            }
+
+            public void Update(List<Trace2D> traces)
+            {
+                _traces = traces.Select(t => (Trace2D)t.Clone()).ToList();
+                Plot.RenderPlot();
+            }
+
+            #endregion
+
+            #region IEnumerable Members
+
+            public IEnumerator GetEnumerator()
+            {
+                return _traces.GetEnumerator();
+            }
+
+            #endregion
+
+            #region ICollection Members
+
+            public void CopyTo(Array array, int index)
+            {
+                ((ICollection)_traces).CopyTo(array, index);
+            }
+
+            public int Count
+            {
+                get { return _traces.Count; }
+            }
+
+            bool ICollection.IsSynchronized
+            {
+                get { return ((ICollection)_traces).IsSynchronized; }
+            }
+
+            object ICollection.SyncRoot
+            {
+                get { return ((ICollection)_traces).SyncRoot; }
             }
 
             #endregion

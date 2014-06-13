@@ -26,6 +26,7 @@ using TAlex.Common.Environment;
 using TAlex.PowerCalc.Commands;
 using TAlex.PowerCalc.ViewModels;
 using System.Collections.Specialized;
+using TAlex.PowerCalc.ViewModels.Plot2D;
 
 
 namespace TAlex.PowerCalc.Views
@@ -301,19 +302,6 @@ namespace TAlex.PowerCalc.Views
             viewModel.CanShowXYCoords = false;
         }
 
-        private void buttonPlot2DDraw_Click(object sender, RoutedEventArgs e)
-        {
-            Plot2DDraw(textBoxPlot2D.Text);
-        }
-
-        private void textBoxPlot2D_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Plot2DDraw(textBoxPlot2D.Text);
-            }
-        }
-
 
         private void fullscreenPlot2DMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -343,6 +331,34 @@ namespace TAlex.PowerCalc.Views
         private void plot2DPropertiesMenuItem_Click(object sender, RoutedEventArgs e)
         {
             ShowPreferencesDialog(3);
+        }
+
+
+
+        private void addTrace2DButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Traces2DWindow(Trace2DMode.Add, new List<TAlex.PowerCalc.Controls.Plot2D.Trace2D> { plot2D.Traces.CreateNew() })
+            {
+                Owner = this
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                plot2D.Traces.Add(dialog.Model.Traces[0]);
+            }
+        }
+
+        private void showTraces2DButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Traces2DWindow(Trace2DMode.Edit, plot2D.Traces.Cast<TAlex.PowerCalc.Controls.Plot2D.Trace2D>())
+            {
+                Owner = this
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                plot2D.Traces.Update(dialog.Model.Traces);
+            }
         }
 
         #endregion
@@ -427,31 +443,6 @@ namespace TAlex.PowerCalc.Views
                 // Refresh numeric values
                 WorksheetListView.Items.Refresh();
                 worksheetMatrix.Refresh();
-            }
-        }
-
-        private void Plot2DDraw(string expr)
-        {
-            if (expr.Length > 0)
-            {
-                try
-                {
-                    Expression<Object> expression = ExpressionTreeBuilder.BuildTree(expr);
-
-                    Func<Object, Object> f = ParametricFunctionCreator.CreateOneParametricFunction(expression, "x");
-                    Func<double, double> func = (x) => { Complex res = (Complex)f((Complex)x); return res.IsReal ? res.Re : double.NaN; };
-                    func(0.0);
-                    plot2D.SetTrace(func);
-                }
-                catch (Exception exc)
-                {
-                    MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-            }
-            else
-            {
-                plot2D.SetTrace(null);
             }
         }
 

@@ -10,6 +10,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.PowerCalc.ViewModels.Matrices;
 using TAlex.PowerCalc.Services;
 using TAlex.PowerCalc.Converters;
+using TAlex.PowerCalc.ViewModels.Plot2D;
 
 
 namespace TAlex.PowerCalc.Locators.Modules
@@ -34,6 +35,8 @@ namespace TAlex.PowerCalc.Locators.Modules
                 x.Inject<WorksheetMatrixCachedValueConverter>(),
                 ((IAppSettings)x.Context.Kernel.GetService(typeof(IAppSettings))).MatricesWorksheetRows,
                 ((IAppSettings)x.Context.Kernel.GetService(typeof(IAppSettings))).MatricesWorksheetColumns));
+
+            Bind<Plot2DModel>().ToSelf();
         }
     }
 }

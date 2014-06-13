@@ -202,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Traces2DWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="_3DTools\Trackport3D.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -216,6 +220,7 @@
     <Compile Include="Commands\CopyToClipboardCommand.cs" />
     <Compile Include="Commands\InsertFunctionCommand.cs" />
     <Compile Include="Controls\DataGridTemplateColumnEx.cs" />
+    <Compile Include="Controls\IPlot2D.cs" />
     <Compile Include="Controls\WorksheetMatrix.xaml.cs">
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
@@ -223,6 +228,7 @@
     <Compile Include="Converters\DataCellToForegroundConverter.cs" />
     <Compile Include="Converters\FunctionSignatureToDisplayConverter.cs" />
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\NumericFormatToBooleanConverter.cs" />
     <Compile Include="Converters\WorksheetItemResultConverter.cs" />
     <Compile Include="Converters\WorksheetItemResultToForeground.cs" />
@@ -248,6 +254,11 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Matrices\DataCellHelper.cs" />
     <Compile Include="ViewModels\Matrices\DataCellInfo.cs" />
+    <Compile Include="ViewModels\Plot2D\AddTraces2DState.cs" />
+    <Compile Include="ViewModels\Plot2D\EditTraces2DState.cs" />
+    <Compile Include="ViewModels\Plot2D\ITraces2DState.cs" />
+    <Compile Include="ViewModels\Plot2D\Plot2DModel.cs" />
+    <Compile Include="ViewModels\Plot2D\Trace2DMode.cs" />
     <Compile Include="ViewModels\PreferencesWindowViewModel.cs" />
     <Compile Include="ViewModels\ReferencesWindowViewModel.cs" />
     <Compile Include="ViewModels\RegistrationWindowViewModel.cs" />
@@ -284,6 +295,9 @@
     </Compile>
     <Compile Include="Helpers\Snapshot.cs" />
     <Compile Include="Themes\Twilight\TwilightThemeManager.cs" />
+    <Compile Include="Views\Traces2DWindow.xaml.cs">
+      <DependentUpon>Traces2DWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF.3DToolkit\Polyline3D.cs" />
     <Compile Include="WPF.3DToolkit\Sphere3D.cs" />
     <Compile Include="WPF.3DToolkit\Surfaces\SimpleSurface.cs" />

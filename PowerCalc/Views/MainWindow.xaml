@@ -470,18 +470,6 @@
 
             <TabItem Header="2D Plot">
                 <DockPanel>
-                    <Expander Background="{DynamicResource GradBrush}" DockPanel.Dock="Bottom" ExpandDirection="Up" IsExpanded="True" Visibility="Collapsed">
-                        <Canvas Height="156" Width="651" HorizontalAlignment="Center">
-                            <GroupBox Canvas.Left="60" Canvas.Top="5" Header="X-Y Function" Height="55" Width="530">
-                                <Canvas>
-                                    <Label Canvas.Left="3" Canvas.Top="1">f(x):</Label>
-                                    <TextBox Canvas.Left="43" Canvas.Top="3" Height="23" Name="textBoxPlot2D" ContextMenu="{StaticResource mainContextMenu}" Width="390" KeyDown="textBoxPlot2D_KeyDown" FontFamily="Consolas, Courier New" Background="{DynamicResource textBoxBgBrush2}" />
-                                    <Button Canvas.Left="442" Canvas.Top="3" Height="23" Name="buttonPlot2DDraw" Width="65" Click="buttonPlot2DDraw_Click">Draw</Button>
-                                </Canvas>
-                            </GroupBox>
-                        </Canvas>
-                    </Expander>
-
                     <Border Background="{DynamicResource GradBrush}" DockPanel.Dock="Bottom" Height="30">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel.Resources>
@@ -495,21 +483,75 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border BorderThickness="1" CornerRadius="12">
+                                                <ControlTemplate.Resources>
+                                                    <Storyboard x:Key="HoverOn">
+                                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Opacity)" Storyboard.TargetName="ButtonBorder">
+                                                            <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+                                                        </DoubleAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                    <Storyboard x:Key="HoverOff" FillBehavior="Stop">
+                                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Opacity)" Storyboard.TargetName="ButtonBorder">
+                                                            <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="0.3"/>
+                                                        </DoubleAnimationUsingKeyFrames>
+                                                    </Storyboard>
+
+                                                    <Storyboard x:Key="PressedOn">
+                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentPresenter.LayoutTransform).(ScaleTransform.ScaleX)" Storyboard.TargetName="ContentPresenter">
+                                                            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.98"/>
+                                                        </DoubleAnimationUsingKeyFrames>
+                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentPresenter.LayoutTransform).(ScaleTransform.ScaleY)" Storyboard.TargetName="ContentPresenter">
+                                                            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.98"/>
+                                                        </DoubleAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                    <Storyboard x:Key="PressedOff" FillBehavior="Stop">
+                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentPresenter.LayoutTransform).(ScaleTransform.ScaleX)" Storyboard.TargetName="ContentPresenter">
+                                                            <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+                                                        </DoubleAnimationUsingKeyFrames>
+                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentPresenter.LayoutTransform).(ScaleTransform.ScaleY)" Storyboard.TargetName="ContentPresenter">
+                                                            <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+                                                        </DoubleAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </ControlTemplate.Resources>
+                                                
+                                                <Border Name="ButtonBorder" BorderThickness="1" CornerRadius="12" Background="Transparent">
                                                     <Border.BorderBrush>
-                                                        <SolidColorBrush Color="White" Opacity="0.5" />
+                                                        <SolidColorBrush Color="White" Opacity="0.3" />
                                                     </Border.BorderBrush>
-                                                    
-                                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}" />
+
+                                                    <ContentPresenter Name="ContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}">
+                                                        <ContentPresenter.LayoutTransform>
+                                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                        </ContentPresenter.LayoutTransform>
+                                                    </ContentPresenter>
                                                 </Border>
+                                            
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Trigger.EnterActions>
+                                                            <BeginStoryboard x:Name="HoverOn_BeginStoryboard" Storyboard="{StaticResource HoverOn}"/>
+                                                        </Trigger.EnterActions>
+                                                        <Trigger.ExitActions>
+                                                            <BeginStoryboard x:Name="HoverOff_BeginStoryboard" Storyboard="{StaticResource HoverOff}"/>
+                                                        </Trigger.ExitActions>
+                                                    </Trigger>
+
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Trigger.EnterActions>
+                                                            <BeginStoryboard x:Name="PressedOn_BeginStoryboard" Storyboard="{StaticResource PressedOn}"/>
+                                                        </Trigger.EnterActions>
+                                                        <Trigger.ExitActions>
+                                                            <BeginStoryboard x:Name="PressedOff_BeginStoryboard" Storyboard="{StaticResource PressedOff}"/>
+                                                        </Trigger.ExitActions>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
                             </StackPanel.Resources>
 
-                            <Button ToolTip="Add Trace"></Button>
-                            <Button ToolTip="Show Traces List"></Button>
+                            <Button ToolTip="Add Trace" Click="addTrace2DButton_Click"></Button>
+                            <Button ToolTip="Show Traces List" Click="showTraces2DButton_Click"></Button>
                         </StackPanel>
                     </Border>
 

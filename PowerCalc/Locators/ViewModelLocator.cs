@@ -10,6 +10,7 @@ using TAlex.Common.Environment;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.PowerCalc.Locators.Modules;
 using TAlex.PowerCalc.ViewModels;
+using TAlex.PowerCalc.ViewModels.Plot2D;
 
 
 namespace TAlex.PowerCalc.Locators
@@ -64,7 +65,6 @@ namespace TAlex.PowerCalc.Locators
             }
         }
 
-
         public WorksheetMatrixViewModel WorksheetMatrixViewModel
         {
             get
@@ -73,6 +73,13 @@ namespace TAlex.PowerCalc.Locators
             }
         }
 
+        public Plot2DModel Plot2DViewModel
+        {
+            get
+            {
+                return _kernel.Get<Plot2DModel>();
+            }
+        }
 
         public InsertFunctionContextMenuViewModel InsertFunctionContextMenuViewModel
         {

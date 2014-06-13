@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using TAlex.PowerCalc.ViewModels.Plot2D;
+
+namespace TAlex.PowerCalc.Views
+{
+    /// <summary>
+    /// Interaction logic for Traces2DWindow.xaml
+    /// </summary>
+    public partial class Traces2DWindow : Window
+    {
+        #region Properties
+
+        public Plot2DModel Model
+        {
+            get { return (Plot2DModel)DataContext; }
+        }
+        
+        #endregion
+
+        #region Constructors
+
+        public Traces2DWindow()
+        {
+            InitializeComponent();
+        }
+
+        public Traces2DWindow(Trace2DMode mode, IEnumerable<TAlex.PowerCalc.Controls.Plot2D.Trace2D> traces)
+            : this()
+        {
+            Model.SetState(mode);
+            
+            Model.Traces = traces.Select(x => x.Clone()).ToList();
+        }
+
+        #endregion
+    }
+}
