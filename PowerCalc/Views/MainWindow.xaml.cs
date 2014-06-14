@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
@@ -14,37 +15,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Data;
-using Microsoft.Win32;
-using TAlex.PowerCalc.Helpers;
-using TAlex.MathCore;
-using TAlex.MathCore.ExpressionEvaluation;
-using TAlex.MathCore.ExpressionEvaluation.Trees;
-using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
-using TAlex.WPF3DToolkit;
-using TAlex.WPF3DToolkit.Surfaces;
+
 using TAlex.Common.Environment;
+using TAlex.PowerCalc.Helpers;
 using TAlex.PowerCalc.Commands;
 using TAlex.PowerCalc.ViewModels;
-using System.Collections.Specialized;
 using TAlex.PowerCalc.ViewModels.Plot2D;
+using TAlex.WPF3DToolkit;
+using TAlex.WPF3DToolkit.Surfaces;
 
 
 namespace TAlex.PowerCalc.Views
 {
     public partial class MainWindow : Window
-    {
-        #region Properties
-
-        public IExpressionTreeBuilder<Object> ExpressionTreeBuilder
-        {
-            get
-            {
-                return ((MainWindowViewModel)DataContext).ExpressionTreeBuilder;
-            }
-        }
-
-        #endregion
-        
+    {        
         #region Constructors
 
         public MainWindow()
@@ -77,9 +61,6 @@ namespace TAlex.PowerCalc.Views
                     Height = windowBounds.Height;
                 }
             }
-
-            // TODO: Need refactoring
-            //worksheetTextBox.FontSize = settings.WorksheetFontSize;
 
             plot2D.Background = new SolidColorBrush(settings.Plot2DBackground);
         }
@@ -448,25 +429,25 @@ namespace TAlex.PowerCalc.Views
 
         private void Plot3DRender(string expr)
         {
-            if (expr.Length > 0)
-            {
-                try
-                {
-                    Expression<Object> expression = ExpressionTreeBuilder.BuildTree(expr);
-                    Func<Object, Object, Object> f = ParametricFunctionCreator.CreateTwoParametricFunction(expression, "x", "y");
+            //if (expr.Length > 0)
+            //{
+            //    try
+            //    {
+            //        Expression<Object> expression = ExpressionTreeBuilder.BuildTree(expr);
+            //        Func<Object, Object, Object> f = ParametricFunctionCreator.CreateTwoParametricFunction(expression, "x", "y");
 
-                    Func<double, double, double> func = (x, y) => { var res = (Complex)f((Complex)x, (Complex)y); return res.IsReal ? res.Re : double.NaN; };
-                    surface.Geometry = new SimpleSurface(func).BuildGeometry();
-                }
-                catch (Exception exc)
-                {
-                    MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else
-            {
-                surface.Geometry = null;
-            }
+            //        Func<double, double, double> func = (x, y) => { var res = (Complex)f((Complex)x, (Complex)y); return res.IsReal ? res.Re : double.NaN; };
+            //        surface.Geometry = new SimpleSurface(func).BuildGeometry();
+            //    }
+            //    catch (Exception exc)
+            //    {
+            //        MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    }
+            //}
+            //else
+            //{
+            //    surface.Geometry = null;
+            //}
         }
 
         #endregion

@@ -117,7 +117,7 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
                             return result.IsReal ? result.Re : double.NaN;
                         };
                         func(0.0);
-                        trace.Function = func;
+                        trace.Trace = func;
                     }
                     catch (Exception exc)
                     {

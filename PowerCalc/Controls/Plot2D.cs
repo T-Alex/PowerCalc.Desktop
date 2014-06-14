@@ -672,7 +672,7 @@ namespace TAlex.PowerCalc.Controls
 
                     foreach (Trace2D trace in Traces)
                     {
-                        if (trace.Display == false || trace.Function == null)
+                        if (trace.Display == false || trace.Trace == null)
                             continue;
 
                         double x_min = trace.IsLowerBoundInfinity ? double.NegativeInfinity : trace.LowerBound;
@@ -697,7 +697,7 @@ namespace TAlex.PowerCalc.Controls
 
                         int points = (int)Math.Round((x_max - x_min) / x_step);
 
-                        Func<double, double> function = trace.Function;
+                        Func<double, double> function = trace.Trace;
                         yTemp = function(x_min);
 
                         for (int i = 0; i < points; i++)
@@ -727,7 +727,8 @@ namespace TAlex.PowerCalc.Controls
                         }
 
                         sgc.Close();
-                        dc.DrawGeometry(null, trace.Pen, geometry);
+                        Pen pen = new Pen((Brush)new BrushConverter().ConvertFromString(trace.Color), trace.LineThickness);
+                        dc.DrawGeometry(null, pen, geometry);
                     }
                 }
                 //------------------------------------------------------------
@@ -1126,31 +1127,9 @@ namespace TAlex.PowerCalc.Controls
 
             public string Expression { get; set; }
 
-            public string Title
-            {
-                get
-                {
-                    return _title;
-                }
+            public string Color { get; set; }
 
-                set
-                {
-                    _title = value;
-                }
-            }
-
-            public Pen Pen
-            {
-                get
-                {
-                    return _pen;
-                }
-
-                set
-                {
-                    _pen = value;
-                }
-            }
+            public double LineThickness { get; set; }
 
             public double LowerBound
             {
@@ -1203,7 +1182,7 @@ namespace TAlex.PowerCalc.Controls
                 }
             }
 
-            public Func<double, double> Function
+            public Func<double, double> Trace
             {
                 get
                 {
@@ -1222,6 +1201,8 @@ namespace TAlex.PowerCalc.Controls
 
             public Trace2D()
             {
+                Color = "Blue";
+                LineThickness = 1;
             }
 
             #endregion
@@ -1242,14 +1223,14 @@ namespace TAlex.PowerCalc.Controls
                 return new Trace2D
                 {
                     Expression = Expression,
-                    Title = Title,
-                    Function = Function != null ? (Func<double, double>)Function.Clone() : null,
-                    Pen = Pen,
+                    Color = Color,
+                    LineThickness = LineThickness,
                     LowerBound = LowerBound,
                     IsLowerBoundInfinity = IsLowerBoundInfinity,
                     UpperBound = UpperBound,
                     IsUpperBoundInfinity = IsUpperBoundInfinity,
-                    Display = Display
+                    Display = Display,
+                    Trace = (Trace != null) ? (Func<double, double>)Trace.Clone() : null
                 };
             }
 
@@ -1268,6 +1249,27 @@ namespace TAlex.PowerCalc.Controls
             protected readonly IPlot2D Plot;
 
             private List<Trace2D> _traces;
+
+            private List<string> _colorSeries = new List<string>
+            {
+                "Blue",
+                "Green",
+                "Orange",
+                "Purple",
+                "Lime",
+                "Magenta",
+                "Teal",
+                "Gold",
+                "DimGray",
+                "Cyan",
+                "Navy",
+                "Maroon",
+                "Red",
+                "Olive",
+                "Silver",
+                "LightSalmon",
+                "Black"
+            };
 
             #endregion
 
@@ -1291,7 +1293,7 @@ namespace TAlex.PowerCalc.Controls
 
             public Trace2D CreateNew()
             {
-                return new Trace2D();
+                return new Trace2D { Color = _colorSeries[_traces.Count % _colorSeries.Count] };
             }
 
             public void Add(Trace2D trace)

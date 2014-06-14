@@ -6,8 +6,8 @@
         xmlns:convs="clr-namespace:TAlex.PowerCalc.Converters"
         DataContext="{Binding Source={StaticResource viewModelLocator}, Path=Plot2DViewModel}"
         Background="{DynamicResource GradBrush}"
-        Title="{Binding State.WindowCaption}" Height="300" Width="600" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
-        FocusManager.FocusedElement="{Binding ElementName=traceTextBox}">
+        Title="{Binding State.WindowCaption}" Height="270" Width="600" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
+        FocusManager.FocusedElement="{Binding ElementName=expressionTextBox}">
     <Window.Resources>
         <talex:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <convs:InverseBooleanConverter x:Key="InverseBooleanConverter" />
@@ -30,14 +30,14 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0">
-            <Expander Header="Traces" Grid.Column="1" DockPanel.Dock="Left" ExpandDirection="Left" Margin="5,0,0,0"
+            <Expander Header="List" Grid.Column="1" DockPanel.Dock="Left" ExpandDirection="Left" Margin="5,0,0,0"
                       Visibility="{Binding State.ShowTracesList, Converter={StaticResource BooleanToVisibilityConverter}}" IsExpanded="True">               
                 
                 <ListView Name="TracesList" Width="150" SelectedIndex="0" ItemsSource="{Binding Traces}">
                 </ListView>
             </Expander>
 
-            <GroupBox Header="Settings" Padding="15" DataContext="{Binding Path=SelectedItem, ElementName=TracesList}" Background="{DynamicResource prefTabControlBgBrush}">
+            <Border Padding="25,10" DataContext="{Binding Path=SelectedItem, ElementName=TracesList}" CornerRadius="3" BorderThickness="1" BorderBrush="{DynamicResource SecondaryBrush}" Background="{DynamicResource prefTabControlBgBrush}">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -55,7 +55,7 @@
                     </Grid.Resources>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="95" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
@@ -67,22 +67,29 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="f(x):" />
-                    <TextBox Name="traceTextBox" Grid.Column="1" Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
+                    <TextBlock Text="F(x):" />
+                    <TextBox Name="expressionTextBox" Grid.Column="1" Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding DataContext.AcceptCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
 
-                    <TextBlock Grid.Row="1" Text="Minimum:" />
+                    <TextBlock Grid.Row="1" Text="Lower Bound:" />
                     <TextBox Grid.Row="1" Grid.Column="1" Width="80" HorizontalAlignment="Left" Text="{Binding LowerBound, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=IsChecked, ElementName=MinimumInfinity, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}" />
                     <CheckBox Name="MinimumInfinity" Content="Negative Infinity" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" IsChecked="{Binding IsLowerBoundInfinity}" />
                     
-                    <TextBlock Grid.Row="2" Text="Maxymum:" />
+                    <TextBlock Grid.Row="2" Text="Upper Bound:" />
                     <TextBox Grid.Row="2" Grid.Column="1" Width="80" HorizontalAlignment="Left" Text="{Binding UpperBound, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=IsChecked, ElementName=MaximumInfinity, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}" />
                     <CheckBox Name="MaximumInfinity" Content="Positive Infinity" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" IsChecked="{Binding IsUpperBoundInfinity}" />
 
                     <CheckBox Grid.Row="3" Content="Display" IsChecked="{Binding Display}" />
 
-                    <talex:ColorChip Grid.Row="4" Content="Foreground" Margin="-2,0,0,0" />
+                    <talex:ColorChip Grid.Row="4" SelectedColor="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Foreground" Margin="-2,0,0,0" />
+                    
+                    <Slider Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="140" Grid.Column="1" IsSnapToTickEnabled="True" Minimum="0.5" Maximum="5" SmallChange="0.5" TickFrequency="0.5" TickPlacement="TopLeft" Value="{Binding LineThickness}" />
+                    <TextBlock Grid.Row="4" Grid.Column="1" Margin="145,0,0,0" Text="{Binding LineThickness, StringFormat=Line Thickness: {0:F1}}" />
                 </Grid>
-            </GroupBox>
+            </Border>
         </DockPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Height="25">
