@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TAlex.MathCore;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.WPF.Mvvm;
 using TAlex.WPF.Mvvm.Commands;
+
 
 namespace TAlex.PowerCalc.ViewModels.Plot2D
 {
@@ -17,8 +18,9 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
         #region Fields
 
         protected readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
+        protected Trace2DCollection OriginalTraces;
 
-        private List<TAlex.PowerCalc.Controls.Plot2D.Trace2D> _traces;
+        private ObservableCollection<Trace2D> _traces;
         private bool _closeSignal;
 
         #endregion
@@ -31,7 +33,7 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
             private set;
         }
 
-        public List<TAlex.PowerCalc.Controls.Plot2D.Trace2D> Traces
+        public ObservableCollection<Trace2D> Traces
         {
             get
             {
@@ -72,14 +74,14 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
             InitializeCommands();
 
             ExpressionTreeBuilder = treeBuilder;
-            Traces = new List<Controls.Plot2D.Trace2D>();
+            Traces = new ObservableCollection<Trace2D>();
         }
 
         #endregion
 
         #region Methods
 
-        public void SetState(Trace2DMode mode)
+        public void SetState(Trace2DMode mode, Trace2DCollection traces)
         {
             switch (mode)
             {
@@ -92,6 +94,12 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
                     break;
             }
 
+            OriginalTraces = traces;
+            Traces = new ObservableCollection<Trace2D>( (mode == Trace2DMode.Add) ?
+                new List<Trace2D> { traces.CreateNew() } :
+                traces.Cast<Trace2D>().Select(x => x.Clone())
+            );
+            
             RaisePropertyChanged(() => State);
         }
 

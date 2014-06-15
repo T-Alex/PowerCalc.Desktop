@@ -153,10 +153,10 @@
 
                                         <TextBlock Text="Usage Examples:" Margin="0,5,0,0" Foreground="#93a1a1" FontWeight="Bold" />
                                         <Border>
-                                            <ListView ItemsSource="{Binding ExampleUsages}" BorderThickness="0" IsHitTestVisible="False">
+                                            <ListView ItemsSource="{Binding ExampleUsages}" BorderThickness="0" IsHitTestVisible="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock>
+                                                        <TextBlock TextWrapping="WrapWithOverflow">
                                                             <Run Text="{Binding Expression}" />
                                                             <Run Text=" = " Foreground="#93A1A1" />
                                                             <Run Text="{Binding Result}" />

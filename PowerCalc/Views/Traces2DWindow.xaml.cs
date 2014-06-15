@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TAlex.PowerCalc.ViewModels.Plot2D;
 
+
 namespace TAlex.PowerCalc.Views
 {
     /// <summary>
@@ -36,12 +37,10 @@ namespace TAlex.PowerCalc.Views
             InitializeComponent();
         }
 
-        public Traces2DWindow(Trace2DMode mode, IEnumerable<TAlex.PowerCalc.Controls.Plot2D.Trace2D> traces)
+        public Traces2DWindow(Trace2DMode mode, Trace2DCollection traces)
             : this()
         {
-            Model.SetState(mode);
-            
-            Model.Traces = traces.Select(x => x.Clone()).ToList();
+            Model.SetState(mode, traces);
         }
 
         #endregion

@@ -318,10 +318,7 @@ namespace TAlex.PowerCalc.Views
 
         private void addTrace2DButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Traces2DWindow(Trace2DMode.Add, new List<TAlex.PowerCalc.Controls.Plot2D.Trace2D> { plot2D.Traces.CreateNew() })
-            {
-                Owner = this
-            };
+            var dialog = new Traces2DWindow(Trace2DMode.Add, plot2D.Traces) { Owner = this };
 
             if (dialog.ShowDialog() == true)
             {
@@ -331,10 +328,7 @@ namespace TAlex.PowerCalc.Views
 
         private void showTraces2DButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Traces2DWindow(Trace2DMode.Edit, plot2D.Traces.Cast<TAlex.PowerCalc.Controls.Plot2D.Trace2D>())
-            {
-                Owner = this
-            };
+            var dialog = new Traces2DWindow(Trace2DMode.Edit, plot2D.Traces) { Owner = this };
 
             if (dialog.ShowDialog() == true)
             {

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace TAlex.PowerCalc.Controls
+namespace TAlex.PowerCalc.ViewModels.Plot2D
 {
     public interface IPlot2D
     {
