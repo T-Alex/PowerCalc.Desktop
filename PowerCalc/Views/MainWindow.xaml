@@ -551,7 +551,7 @@
                             </StackPanel.Resources>
 
                             <Button ToolTip="Add Trace" Click="addTrace2DButton_Click"></Button>
-                            <Button ToolTip="Show Traces List" Click="showTraces2DButton_Click"></Button>
+                            <Button ToolTip="Show Trace List" Click="showTraces2DButton_Click"></Button>
                         </StackPanel>
                     </Border>
 

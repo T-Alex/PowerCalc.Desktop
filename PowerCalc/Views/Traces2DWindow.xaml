@@ -32,7 +32,7 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0">
-            <Expander Header="Traces" Grid.Column="1" DockPanel.Dock="Left" ExpandDirection="Left" Margin="-1,-1,0,-1"
+            <Expander  Grid.Column="1" DockPanel.Dock="Left" ExpandDirection="Left" Margin="-1,-1,0,-1"
                       Visibility="{Binding State.ShowTracesList, Converter={StaticResource BooleanToVisibilityConverter}}" IsExpanded="True">
 
                 <ListBox Name="TracesList" Width="150" SelectedIndex="0" ItemsSource="{Binding Traces}" Background="{DynamicResource prefTabControlBgBrush}">
@@ -85,12 +85,12 @@
                     </TextBox>
 
                     <TextBlock Grid.Row="1" Text="Lower Bound:" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Width="80" HorizontalAlignment="Left" Text="{Binding LowerBound, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=IsChecked, ElementName=MinimumInfinity, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}" />
-                    <CheckBox Name="MinimumInfinity" Content="Negative Infinity" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" IsChecked="{Binding IsLowerBoundInfinity}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Width="80" HorizontalAlignment="Left" Text="{Binding LowerBound, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=IsChecked, ElementName=LowerBoundUnlimited, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox Name="LowerBoundUnlimited" Content="Negative Infinity" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" IsChecked="{Binding IsLowerBoundUnlimited}" />
                     
                     <TextBlock Grid.Row="2" Text="Upper Bound:" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Width="80" HorizontalAlignment="Left" Text="{Binding UpperBound, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=IsChecked, ElementName=MaximumInfinity, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}" />
-                    <CheckBox Name="MaximumInfinity" Content="Positive Infinity" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" IsChecked="{Binding IsUpperBoundInfinity}" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Width="80" HorizontalAlignment="Left" Text="{Binding UpperBound, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=IsChecked, ElementName=UpperBoundUnlimited, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox Name="UpperBoundUnlimited" Content="Positive Infinity" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="100,0,0,0" IsChecked="{Binding IsUpperBoundUnlimited}" />
 
                     <CheckBox Grid.Row="3" Content="Display" IsChecked="{Binding Display}" />
 

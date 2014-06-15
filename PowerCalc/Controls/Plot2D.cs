@@ -675,8 +675,8 @@ namespace TAlex.PowerCalc.Controls
                         if (trace.Display == false || trace.Trace == null)
                             continue;
 
-                        double x_min = trace.IsLowerBoundInfinity ? double.NegativeInfinity : trace.LowerBound;
-                        double x_max = trace.IsUpperBoundInfinity ? double.PositiveInfinity : trace.UpperBound;
+                        double x_min = trace.IsLowerBoundUnlimited ? double.NegativeInfinity : trace.LowerBound;
+                        double x_max = trace.IsUpperBoundUnlimited ? double.PositiveInfinity : trace.UpperBound;
                         double yTemp;
 
                         double x1, x2, y1, y2;
@@ -1109,17 +1109,15 @@ namespace TAlex.PowerCalc.Controls
 
             private double _lowerBound = -100;
 
-            private bool _isLowerBoundInfinity = true;
+            private bool _isLowerBoundUnlimited = true;
 
             private double _upperBound = 100;
 
-            private bool _isUpperBoundInfinity = true;
+            private bool _isUpperBoundUnlimited = true;
 
             private bool _display = true;
 
-            private string _title;
-
-            private Func<double, double> _function;
+            private Func<double, double> _trace;
 
             #endregion
 
@@ -1144,10 +1142,10 @@ namespace TAlex.PowerCalc.Controls
                 }
             }
 
-            public bool IsLowerBoundInfinity
+            public bool IsLowerBoundUnlimited
             {
-                get { return _isLowerBoundInfinity; }
-                set { _isLowerBoundInfinity = value; }
+                get { return _isLowerBoundUnlimited; }
+                set { _isLowerBoundUnlimited = value; }
             }
 
             public double UpperBound
@@ -1163,10 +1161,10 @@ namespace TAlex.PowerCalc.Controls
                 }
             }
 
-            public bool IsUpperBoundInfinity
+            public bool IsUpperBoundUnlimited
             {
-                get { return _isUpperBoundInfinity; }
-                set { _isUpperBoundInfinity = value; }
+                get { return _isUpperBoundUnlimited; }
+                set { _isUpperBoundUnlimited = value; }
             }
 
             public bool Display
@@ -1186,12 +1184,12 @@ namespace TAlex.PowerCalc.Controls
             {
                 get
                 {
-                    return _function;
+                    return _trace;
                 }
 
                 set
                 {
-                    _function = value;
+                    _trace = value;
                 }
             }
 
@@ -1226,9 +1224,9 @@ namespace TAlex.PowerCalc.Controls
                     Color = Color,
                     LineThickness = LineThickness,
                     LowerBound = LowerBound,
-                    IsLowerBoundInfinity = IsLowerBoundInfinity,
+                    IsLowerBoundUnlimited = IsLowerBoundUnlimited,
                     UpperBound = UpperBound,
-                    IsUpperBoundInfinity = IsUpperBoundInfinity,
+                    IsUpperBoundUnlimited = IsUpperBoundUnlimited,
                     Display = Display,
                     Trace = (Trace != null) ? (Func<double, double>)Trace.Clone() : null
                 };

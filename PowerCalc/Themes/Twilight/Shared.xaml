@@ -1027,11 +1027,11 @@
                                                 <RowDefinition Height="50*" />
                                                 <RowDefinition Height="50*" />
                                             </Grid.RowDefinitions>
-                                            <Border CornerRadius="4" x:Name="White" BorderBrush="#FFFFFFFF" BorderThickness="1.2" Grid.RowSpan="2" Background="{DynamicResource WhiteRadialGradientBrush}" />
+                                            <!--<Border CornerRadius="4" x:Name="White" BorderBrush="#FFFFFFFF" BorderThickness="1.2" Grid.RowSpan="2" Background="{DynamicResource WhiteRadialGradientBrush}" />
                                             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1.2" CornerRadius="4" x:Name="Background" Opacity="0.65" Grid.RowSpan="2" Background="{DynamicResource BackgroundGradientBrush}" />
                                             <Border BorderBrush="#7FFFFFFF" BorderThickness="1" CornerRadius="3.5" x:Name="InnerBorder" Margin="1" Grid.RowSpan="2" />
                                             <Border CornerRadius="3.5" x:Name="Shadow" Margin="2" Grid.RowSpan="2" OpacityMask="{DynamicResource ShadowOpacityMaskGradientBrush}" Background="{DynamicResource ShadowBgGradientBrush}" />
-                                            <Border Margin="1" CornerRadius="4,4,40,40" x:Name="Highlight" Opacity="0.8" RenderTransformOrigin="0.5,1" Background="{DynamicResource HighlightBgGradientBrush}" />
+                                            <Border Margin="1" CornerRadius="4,4,40,40" x:Name="Highlight" Opacity="0.8" RenderTransformOrigin="0.5,1" Background="{DynamicResource HighlightBgGradientBrush}" />-->
                                         </Grid>
                                         <Path Stroke="{DynamicResource TextBrush}" StrokeThickness="2" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" SnapsToDevicePixels="false" Data="M 1,1.5 L 4.5,5 L 8,1.5"  RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
                                             <Path.RenderTransform>
@@ -1071,10 +1071,10 @@
                                     <Trigger.ExitActions>
                                         <BeginStoryboard>
                                             <Storyboard FillBehavior="Stop">
-                                                <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Duration="00:00:00.1" To="0.75" />
+                                                <!--<DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Duration="00:00:00.1" To="0.75" />
                                                 <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.1" To="0.65" />
                                                 <ColorAnimation Storyboard.TargetName="Shadow" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="00:00:00.1" To="#33000000" />
-                                                <DoubleAnimation Storyboard.TargetName="Highlight" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.1" To="0.8" />
+                                                <DoubleAnimation Storyboard.TargetName="Highlight" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.1" To="0.8" />-->
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.ExitActions>
@@ -1082,10 +1082,10 @@
                                     <Trigger.EnterActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Duration="00:00:00.3" To="0.089" />
+                                                <!--<DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Duration="00:00:00.3" To="0.089" />
                                                 <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.3" To="1" />
                                                 <ColorAnimation Storyboard.TargetName="Shadow" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="00:00:00.3" To="#4C000000" />
-                                                <DoubleAnimation Storyboard.TargetName="Highlight" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.3" To="1" />
+                                                <DoubleAnimation Storyboard.TargetName="Highlight" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.3" To="1" />-->
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.EnterActions>
@@ -1095,11 +1095,11 @@
                                     <Trigger.ExitActions>
                                         <BeginStoryboard>
                                             <Storyboard FillBehavior="Stop">
-                                                <ColorAnimation Storyboard.TargetName="White" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="00:00:00.1" To="#FFFFFFFF" />
+                                                <!--<ColorAnimation Storyboard.TargetName="White" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="00:00:00.1" To="#FFFFFFFF" />
                                                 <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Duration="00:00:00.1" To="0.143" />
                                                 <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.1" To="1" />
                                                 <DoubleAnimation Storyboard.TargetName="Highlight" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.1" To="1" />
-                                                <ColorAnimation Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="(BorderBrush).(SolidColorBrush.Color)" Duration="00:00:00.1" To="#7FFFFFFF" />
+                                                <ColorAnimation Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="(BorderBrush).(SolidColorBrush.Color)" Duration="00:00:00.1" To="#7FFFFFFF" />-->
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.ExitActions>
@@ -1107,11 +1107,11 @@
                                     <Trigger.EnterActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <ColorAnimation Storyboard.TargetName="White" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="00:00:00.05" To="#FF0C0C0C" />
+                                                <!--<ColorAnimation Storyboard.TargetName="White" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="00:00:00.05" To="#FF0C0C0C" />
                                                 <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Duration="00:00:00.05" To="0" />
                                                 <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.05" To="1" />
                                                 <DoubleAnimation Storyboard.TargetName="Highlight" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="00:00:00.05" To="0.5" />
-                                                <ColorAnimation Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="(BorderBrush).(SolidColorBrush.Color)" Duration="00:00:00.05" To="#7F202020" />
+                                                <ColorAnimation Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="(BorderBrush).(SolidColorBrush.Color)" Duration="00:00:00.05" To="#7F202020" />-->
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.EnterActions>
