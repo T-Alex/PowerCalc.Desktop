@@ -2717,7 +2717,7 @@
                             </DoubleAnimationUsingKeyFrames>
 						</Storyboard>
                 	</ControlTemplate.Resources>
-                    <Border x:Name="Bd" SnapsToDevicePixels="true" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border x:Name="Bd" SnapsToDevicePixels="true" Background="{TemplateBinding Background}" CornerRadius="5" BorderThickness="{TemplateBinding BorderThickness}">
                 		<Grid>
                 			<Rectangle x:Name="rectangleSelected" Opacity="0" RadiusX="3" RadiusY="3" Stroke="#7F4392C7" >
                 				<Rectangle.Fill>
@@ -2748,6 +2748,7 @@
                 				<Border Background="{TemplateBinding Background}" BorderBrush="#7FFFFFFF" BorderThickness="1" CornerRadius="3.5" x:Name="InnerBorder1" Margin="1" />
                 				<Border CornerRadius="3.5" x:Name="Shadow1" Margin="2" Grid.RowSpan="2" OpacityMask="{DynamicResource ShadowOpacityMaskGradientBrush}" Background="{DynamicResource ShadowBgGradientBrush}" />
                 				<Border Margin="1,1,1,10" CornerRadius="4,4,40,40" x:Name="Highlight1" Opacity="0.8" RenderTransformOrigin="0.5,1" Background="{DynamicResource HighlightBgGradientBrush}" />
+                                <Border Margin="0" CornerRadius="5" Opacity="0.7" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" />
                 			</Grid>
                 			<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" x:Name="contentPresenter" />
                 			<Rectangle x:Name="FocusVisualElement" Visibility="Collapsed" Stroke="#FF6DBDD1" StrokeThickness="1" RadiusX="1" RadiusY="1" />
