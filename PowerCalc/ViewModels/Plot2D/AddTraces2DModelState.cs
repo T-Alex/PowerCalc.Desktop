@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TAlex.PowerCalc.ViewModels.Plot2D
 {
-    public class AddTraces2DState : ITraces2DState
+    public class AddTraces2DModelState : ITraces2DModelState
     {
         #region ITraces2DState Members
 
@@ -18,7 +18,7 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
             }
         }
 
-        public string AcceptButtonCaption
+        public string SaveButtonCaption
         {
             get
             {
@@ -26,12 +26,17 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
             }
         }
 
-        public bool ShowTracesList
+        public bool ShowTraceList
         {
             get
             {
                 return false;
             }
+        }
+
+        public void Save(Trace2DCollection source, IEnumerable<Trace2D> newTraces)
+        {
+            source.Add(newTraces.First());
         }
 
         #endregion

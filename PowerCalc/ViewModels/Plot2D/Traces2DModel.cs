@@ -13,7 +13,7 @@ using TAlex.WPF.Mvvm.Commands;
 
 namespace TAlex.PowerCalc.ViewModels.Plot2D
 {
-    public class Plot2DModel : ViewModelBase
+    public class Traces2DModel : ViewModelBase
     {
         #region Fields
 
@@ -27,7 +27,7 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         #region Properties
 
-        public ITraces2DState State
+        public ITraces2DModelState State
         {
             get;
             private set;
@@ -63,13 +63,13 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         #region Commands
 
-        public ICommand AcceptCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Plot2DModel(IExpressionTreeBuilder<Object> treeBuilder)
+        public Traces2DModel(IExpressionTreeBuilder<Object> treeBuilder)
         {
             InitializeCommands();
 
@@ -81,21 +81,21 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         #region Methods
 
-        public void SetState(Trace2DMode mode, Trace2DCollection traces)
+        public void SetState(StateMode mode, Trace2DCollection traces)
         {
             switch (mode)
             {
-                case Trace2DMode.Add:
-                    State = new AddTraces2DState();
+                case StateMode.Add:
+                    State = new AddTraces2DModelState();
                     break;
 
-                case Trace2DMode.Edit:
-                    State = new EditTraces2DState();
+                case StateMode.Edit:
+                    State = new EditTraces2DModelState();
                     break;
             }
 
             OriginalTraces = traces;
-            Traces = new ObservableCollection<Trace2D>( (mode == Trace2DMode.Add) ?
+            Traces = new ObservableCollection<Trace2D>((mode == StateMode.Add) ?
                 new List<Trace2D> { traces.CreateNew() } :
                 traces.Cast<Trace2D>().Select(x => x.Clone())
             );
@@ -105,10 +105,10 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         protected virtual void InitializeCommands()
         {
-            AcceptCommand = new RelayCommand(Accept);
+            SaveCommand = new RelayCommand(Save);
         }
 
-        private void Accept()
+        private void Save()
         {
             foreach (var trace in Traces)
             {
@@ -139,7 +139,18 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
                 //}
             }
 
+            State.Save(OriginalTraces, _traces);
             CloseSignal = true;
+        }
+
+        #endregion
+
+        #region Nested Types
+
+        public enum StateMode
+        {
+            Add,
+            Edit
         }
 
         #endregion

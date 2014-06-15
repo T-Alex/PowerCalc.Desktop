@@ -23,9 +23,9 @@ namespace TAlex.PowerCalc.Views
     {
         #region Properties
 
-        public Plot2DModel Model
+        public Traces2DModel Model
         {
-            get { return (Plot2DModel)DataContext; }
+            get { return (Traces2DModel)DataContext; }
         }
         
         #endregion
@@ -37,7 +37,7 @@ namespace TAlex.PowerCalc.Views
             InitializeComponent();
         }
 
-        public Traces2DWindow(Trace2DMode mode, Trace2DCollection traces)
+        public Traces2DWindow(Traces2DModel.StateMode mode, Trace2DCollection traces)
             : this()
         {
             Model.SetState(mode, traces);

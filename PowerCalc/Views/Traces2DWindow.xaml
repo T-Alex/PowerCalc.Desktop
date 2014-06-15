@@ -4,7 +4,7 @@
         xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
         xmlns:behaviours="clr-namespace:TAlex.PowerCalc.Behaviours"
         xmlns:convs="clr-namespace:TAlex.PowerCalc.Converters"
-        DataContext="{Binding Source={StaticResource viewModelLocator}, Path=Plot2DViewModel}"
+        DataContext="{Binding Source={StaticResource viewModelLocator}, Path=Traces2DViewModel}"
         Background="{DynamicResource GradBrush}"
         Title="{Binding State.WindowCaption}" Height="270" Width="600" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
         FocusManager.FocusedElement="{Binding ElementName=expressionTextBox}">
@@ -33,7 +33,7 @@
 
         <DockPanel Grid.Row="0">
             <Expander  Grid.Column="1" DockPanel.Dock="Left" ExpandDirection="Left" Margin="-1,-1,0,-1"
-                      Visibility="{Binding State.ShowTracesList, Converter={StaticResource BooleanToVisibilityConverter}}" IsExpanded="True">
+                      Visibility="{Binding State.ShowTraceList, Converter={StaticResource BooleanToVisibilityConverter}}" IsExpanded="True">
 
                 <ListBox Name="TracesList" Width="150" SelectedIndex="0" ItemsSource="{Binding Traces}" Background="{DynamicResource prefTabControlBgBrush}">
                     <ListBox.ItemTemplate>
@@ -80,7 +80,7 @@
                     <TextBlock Text="F(x):" />
                     <TextBox Name="expressionTextBox" Grid.Column="1" Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch">
                         <TextBox.InputBindings>
-                            <KeyBinding Key="Enter" Command="{Binding DataContext.AcceptCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <KeyBinding Key="Enter" Command="{Binding DataContext.SaveCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                         </TextBox.InputBindings>
                     </TextBox>
 
@@ -103,7 +103,7 @@
         </DockPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Height="25">
-            <Button MinWidth="80" Margin="0,0,8,0" Content="{Binding State.AcceptButtonCaption}" Command="{Binding AcceptCommand}" />
+            <Button MinWidth="80" Margin="0,0,8,0" Content="{Binding State.SaveButtonCaption}" Command="{Binding SaveCommand}" />
             <Button MinWidth="80" Content="_Cancel" IsCancel="True" />
         </StackPanel>
         

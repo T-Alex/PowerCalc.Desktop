@@ -73,11 +73,11 @@ namespace TAlex.PowerCalc.Locators
             }
         }
 
-        public Plot2DModel Plot2DViewModel
+        public Traces2DModel Traces2DViewModel
         {
             get
             {
-                return _kernel.Get<Plot2DModel>();
+                return _kernel.Get<Traces2DModel>();
             }
         }
 

@@ -318,22 +318,12 @@ namespace TAlex.PowerCalc.Views
 
         private void addTrace2DButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Traces2DWindow(Trace2DMode.Add, plot2D.Traces) { Owner = this };
-
-            if (dialog.ShowDialog() == true)
-            {
-                plot2D.Traces.Add(dialog.Model.Traces[0]);
-            }
+            var dialog = new Traces2DWindow(Traces2DModel.StateMode.Add, plot2D.Traces) { Owner = this }.ShowDialog();
         }
 
         private void showTraces2DButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Traces2DWindow(Trace2DMode.Edit, plot2D.Traces) { Owner = this };
-
-            if (dialog.ShowDialog() == true)
-            {
-                plot2D.Traces.Update(dialog.Model.Traces);
-            }
+            var dialog = new Traces2DWindow(Traces2DModel.StateMode.Edit, plot2D.Traces) { Owner = this }.ShowDialog();
         }
 
         #endregion

@@ -36,7 +36,7 @@ namespace TAlex.PowerCalc.Locators.Modules
                 ((IAppSettings)x.Context.Kernel.GetService(typeof(IAppSettings))).MatricesWorksheetRows,
                 ((IAppSettings)x.Context.Kernel.GetService(typeof(IAppSettings))).MatricesWorksheetColumns));
 
-            Bind<Plot2DModel>().ToSelf();
+            Bind<Traces2DModel>().ToSelf();
         }
     }
 }
