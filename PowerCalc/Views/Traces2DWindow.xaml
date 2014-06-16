@@ -32,22 +32,48 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0">
-            <Expander  Grid.Column="1" DockPanel.Dock="Left" ExpandDirection="Left" Margin="-1,-1,0,-1"
+            <Expander Grid.Column="1" DockPanel.Dock="Left" ExpandDirection="Left" Margin="-1,-1,0,-1"
                       Visibility="{Binding State.ShowTraceList, Converter={StaticResource BooleanToVisibilityConverter}}" IsExpanded="True">
 
                 <ListBox Name="TracesList" Width="150" SelectedIndex="0" ItemsSource="{Binding Traces}" Background="{DynamicResource prefTabControlBgBrush}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                            <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Header="Display" IsCheckable="True" IsChecked="{Binding Display}" />
+                                        <Separator />
+                                        <MenuItem Header="Delete" Command="{Binding PlacementTarget.Tag.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" CommandParameter="{Binding}" />
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Opacity="{Binding Display, Converter={StaticResource Trace2DVisibleToOpacityConverter}}">
+                            <StackPanel Orientation="Horizontal" Opacity="{Binding Display, Converter={StaticResource Trace2DVisibleToOpacityConverter}}">                                                               
                                 <Rectangle Fill="{Binding Color}" Width="10" Height="10" />
                                 <TextBlock Text="{Binding Expression}" Margin="5,0,0,0" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add" Command="{Binding AddCommand}" />
+                            <MenuItem Header="Delete All" Command="{Binding DeleteAllCommand}" />
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                 </ListBox>
             </Expander>
 
-            <Border Padding="25,10" DataContext="{Binding Path=SelectedItem, ElementName=TracesList}" IsEnabled="{Binding Converter={StaticResource IsNotNullToBooleanConverter}}" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource SecondaryBrush}" Background="{DynamicResource prefTabControlBgBrush}">
+            <Border Padding="25,10" DataContext="{Binding Path=SelectedItem, ElementName=TracesList}"
+                    IsEnabled="{Binding Converter={StaticResource IsNotNullToBooleanConverter}}"
+                    CornerRadius="4" BorderThickness="1"
+                    BorderBrush="{DynamicResource SecondaryBrush}"
+                    Background="{DynamicResource prefTabControlBgBrush}">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">

@@ -555,25 +555,7 @@
                         </StackPanel>
                     </Border>
 
-                    <controls:Plot2D x:Name="plot2D" Background="AliceBlue" MouseMove="plot2D_MouseMove" MouseLeave="plot2D_MouseLeave">
-                        <controls:Plot2D.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Fullscreen" Click="fullscreenPlot2DMenuItem_Click" />
-                                <Separator />
-                                <MenuItem Header="Traces">
-                                    <MenuItem Header="Add Trace..." />
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Header="Copy to clipboard" Click="copyPlotMenuItem_Click" />
-                                <MenuItem Header="Save image as..." Click="saveAsPlotMenuItem_Click" />
-                                <Separator />
-                                <MenuItem Header="Undo Zoom/Pan" Click="undoZoomPanMenuItem_Click" />
-                                <MenuItem Header="Reset Viewport" Click="resetViewportMenuItem_Click" />
-                                <Separator />
-                                <MenuItem Header="Properties..." Click="plot2DPropertiesMenuItem_Click" />
-                            </ContextMenu>
-                        </controls:Plot2D.ContextMenu>
-                    </controls:Plot2D>
+                    <controls:Plot2D x:Name="plot2D" Background="AliceBlue" MouseMove="plot2D_MouseMove" MouseLeave="plot2D_MouseLeave" />
                 </DockPanel>
             </TabItem>
 

@@ -35,8 +35,6 @@ namespace TAlex.PowerCalc.Controls
 
         protected string UneditedExpression;
 
-        private static readonly string MessageBoxCaptionText = Common.Environment.ApplicationInfo.Current.Product;
-
         private bool _formulaBarEdit = false;
         private DataGridCell _lastEditedCellViaFormulaBar = null;
 
@@ -221,14 +219,14 @@ namespace TAlex.PowerCalc.Controls
                     {
                         currentDataCell.Expression = UneditedExpression;
                         MessageBox.Show(Application.Current.GetActiveWindow(),
-                            exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                            exc.Message, Properties.Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 else if (currentDataCell.HasParent)
                 {
                     currentDataCell.Expression = UneditedExpression;
                     MessageBox.Show(Application.Current.GetActiveWindow(),
-                        Properties.Resources.WARN_CannotChangePartOfArray, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        Properties.Resources.WARN_CannotChangePartOfArray, Properties.Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 
             }
@@ -302,7 +300,7 @@ namespace TAlex.PowerCalc.Controls
                 }
                 catch (ArgumentException exc)
                 {
-                    MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(exc.Message, Properties.Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -327,7 +325,7 @@ namespace TAlex.PowerCalc.Controls
                 }
                 catch (ArgumentException exc)
                 {
-                    MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(exc.Message, Properties.Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -347,7 +345,7 @@ namespace TAlex.PowerCalc.Controls
                     catch (ArgumentException exc)
                     {
                         e.Handled = true;
-                        MessageBox.Show(exc.Message, MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show(exc.Message, Properties.Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
             }

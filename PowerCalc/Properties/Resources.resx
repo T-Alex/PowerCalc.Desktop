@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DeleteAllTraces2DQuestion" xml:space="preserve">
+    <value>Do you really want to delete all traces?</value>
+  </data>
   <data name="EXC_CircularReference" xml:space="preserve">
     <value>One or more circular references were found.
 FYI: A circular reference is a part of expression that refers to its own cell value, or refers to cell dependent on its own cell value.</value>
@@ -129,6 +132,9 @@ FYI: A circular reference is a part of expression that refers to its own cell va
   </data>
   <data name="HomepageUrl" xml:space="preserve">
     <value>http://www.talex-soft.com</value>
+  </data>
+  <data name="MessageBoxCaptionText" xml:space="preserve">
+    <value>PowerCalc</value>
   </data>
   <data name="SupportEmail" xml:space="preserve">
     <value>mailto:support@talex-soft.com</value>

@@ -7,8 +7,10 @@ using System.Windows.Input;
 using TAlex.MathCore;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.PowerCalc.Properties;
 using TAlex.WPF.Mvvm;
 using TAlex.WPF.Mvvm.Commands;
+using TAlex.WPF.Mvvm.Services;
 
 
 namespace TAlex.PowerCalc.ViewModels.Plot2D
@@ -18,6 +20,7 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
         #region Fields
 
         protected readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
+        protected readonly IMessageService MessageService;
         protected Trace2DCollection OriginalTraces;
 
         private ObservableCollection<Trace2D> _traces;
@@ -63,17 +66,24 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         #region Commands
 
+        public ICommand AddCommand { get; set; }
+
+        public ICommand DeleteCommand { get; set; }
+
+        public ICommand DeleteAllCommand { get; set; }
+
         public ICommand SaveCommand { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Traces2DModel(IExpressionTreeBuilder<Object> treeBuilder)
+        public Traces2DModel(IExpressionTreeBuilder<Object> treeBuilder, IMessageService messageService)
         {
             InitializeCommands();
 
             ExpressionTreeBuilder = treeBuilder;
+            MessageService = messageService;
             Traces = new ObservableCollection<Trace2D>();
         }
 
@@ -105,7 +115,34 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         protected virtual void InitializeCommands()
         {
+            AddCommand = new RelayCommand(AddNew);
+            DeleteCommand = new RelayCommand<Trace2D>(Delete);
+            DeleteAllCommand = new RelayCommand(DeleteAll, CanDeleteAll);
             SaveCommand = new RelayCommand(Save);
+        }
+
+        private void AddNew()
+        {
+            Traces.Add(OriginalTraces.CreateNew(Traces.Count));
+        }
+
+        private void Delete(Trace2D trace)
+        {
+            Traces.Remove(trace);
+        }
+
+        private bool CanDeleteAll()
+        {
+            return Traces.Count > 0;
+        }
+
+        private void DeleteAll()
+        {
+            if (MessageService.Show(Resources.DeleteAllTraces2DQuestion, Resources.MessageBoxCaptionText,
+                MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
+            {
+                Traces.Clear();
+            }
         }
 
         private void Save()
@@ -129,7 +166,7 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
                     }
                     catch (Exception exc)
                     {
-                        //MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageService.Show(exc.Message, "Error", MessageButton.OK, MessageImage.Error);
                         return;
                     }
                 }

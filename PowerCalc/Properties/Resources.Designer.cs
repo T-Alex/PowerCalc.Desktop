@@ -61,6 +61,15 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete all traces?.
+        /// </summary>
+        internal static string DeleteAllTraces2DQuestion {
+            get {
+                return ResourceManager.GetString("DeleteAllTraces2DQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more circular references were found.
         ///FYI: A circular reference is a part of expression that refers to its own cell value, or refers to cell dependent on its own cell value..
         /// </summary>
@@ -94,6 +103,15 @@ namespace TAlex.PowerCalc.Properties {
         internal static string HomepageUrl {
             get {
                 return ResourceManager.GetString("HomepageUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PowerCalc.
+        /// </summary>
+        internal static string MessageBoxCaptionText {
+            get {
+                return ResourceManager.GetString("MessageBoxCaptionText", resourceCulture);
             }
         }
         

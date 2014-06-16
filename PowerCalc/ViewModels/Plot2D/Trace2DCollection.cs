@@ -58,7 +58,12 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         public Trace2D CreateNew()
         {
-            return new Trace2D { Color = _colorSeries[_traces.Count % _colorSeries.Count] };
+            return CreateNew(_traces.Count);
+        }
+
+        public Trace2D CreateNew(int index)
+        {
+            return new Trace2D { Color = _colorSeries[index % _colorSeries.Count] };
         }
 
         public void Add(Trace2D trace)

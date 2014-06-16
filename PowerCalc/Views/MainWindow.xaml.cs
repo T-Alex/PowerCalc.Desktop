@@ -284,46 +284,14 @@ namespace TAlex.PowerCalc.Views
         }
 
 
-        private void fullscreenPlot2DMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            plot2D.FullScreen = true;
-        }
-
-        private void copyPlotMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Snapshot.ToClipboard(plot2D);
-        }
-
-        private void saveAsPlotMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Snapshot.ToFile(plot2D, this);
-        }
-
-        private void undoZoomPanMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            plot2D.UndoZoomPan();
-        }
-
-        private void resetViewportMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            plot2D.ResetViewport();
-        }
-
-        private void plot2DPropertiesMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            ShowPreferencesDialog(3);
-        }
-
-
-
         private void addTrace2DButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Traces2DWindow(Traces2DModel.StateMode.Add, plot2D.Traces) { Owner = this }.ShowDialog();
+            plot2D.ShowAddTraceDialog();
         }
 
         private void showTraces2DButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Traces2DWindow(Traces2DModel.StateMode.Edit, plot2D.Traces) { Owner = this }.ShowDialog();
+            plot2D.ShowEditTracesDialog();
         }
 
         #endregion

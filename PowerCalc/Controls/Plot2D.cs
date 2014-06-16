@@ -14,6 +14,7 @@ using System.Globalization;
 using TAlex.PowerCalc.Helpers;
 using System.Collections;
 using TAlex.PowerCalc.ViewModels.Plot2D;
+using TAlex.PowerCalc.Views;
 
 
 namespace TAlex.PowerCalc.Controls
@@ -328,24 +329,21 @@ namespace TAlex.PowerCalc.Controls
                 {
                     if (value == true)
                     {
-                        Window window = new Window();
-                        window.WindowState = WindowState.Maximized;
-                        window.WindowStyle = WindowStyle.None;
-                        window.ShowInTaskbar = false;
-                        window.Topmost = true;
-                        window.Tag = this;
-
                         Plot2D plot = new Plot2D();
                         Copy(this, plot, true);
-                        plot.ContextMenu = CreateContextMenuForFullscreen(plot, window);
                         plot._fullScreen = true;
-
-                        plot.KeyDown += new KeyEventHandler(delegate(object o, KeyEventArgs args)
-                            { if (args.Key == Key.Escape) plot.FullScreen = false; }
-                        );
+                        plot.KeyDown += (object o, KeyEventArgs args) => { if (args.Key == Key.Escape) plot.FullScreen = false; };
                         plot.Focus();
 
-                        window.Content = plot;
+                        Window window = new Window
+                        {
+                            WindowState = WindowState.Maximized,
+                            WindowStyle = WindowStyle.None,
+                            ShowInTaskbar = false,
+                            Topmost = true,
+                            Tag = this,
+                            Content = plot
+                        };
                         window.ShowDialog();
                     }
                     else
@@ -414,6 +412,7 @@ namespace TAlex.PowerCalc.Controls
             _xAxisScaleInterval = DefaultXAxisScaleInterval;
             _yAxisScaleInterval = DefaultYAxisScaleInterval;
 
+            ContextMenu = CreateContextMenu();
             ClipToBounds = true;
             Focusable = true;
             FocusVisualStyle = null;
@@ -920,6 +919,17 @@ namespace TAlex.PowerCalc.Controls
             RenderPlot();
         }
 
+        public void ShowAddTraceDialog()
+        {
+            new Traces2DWindow(Traces2DModel.StateMode.Add, Traces) { Owner = Window.GetWindow(this) }.ShowDialog();
+        }
+
+        public void ShowEditTracesDialog()
+        {
+            new Traces2DWindow(Traces2DModel.StateMode.Edit, Traces) { Owner = Window.GetWindow(this) }.ShowDialog();
+        }
+
+
         private static void Copy(Plot2D source, Plot2D destination, bool fullCopy)
         {
             destination._horizOffset = source._horizOffset;
@@ -934,6 +944,8 @@ namespace TAlex.PowerCalc.Controls
             destination.XAxisScaleInterval = source.XAxisScaleInterval;
             destination.YAxisScaleInterval = source.YAxisScaleInterval;
 
+            destination.Traces = new Trace2DCollection(destination, source.Traces.Cast<Trace2D>());
+
             if (fullCopy)
             {
                 destination.Background = source.Background;
@@ -943,39 +955,48 @@ namespace TAlex.PowerCalc.Controls
                 destination.AxisPen = source.AxisPen;
                 destination.SelectedRegionBrush = source.SelectedRegionBrush;
                 destination.SelectedRegionBorderPen = source.SelectedRegionBorderPen;
-
-                destination.Traces = new Trace2DCollection(destination, source.Traces.Cast<Trace2D>());
-                destination.RenderPlot();
             }
+            destination.RenderPlot();
         }
 
-        private static ContextMenu CreateContextMenuForFullscreen(Plot2D plot2D, Window window)
+        private ContextMenu CreateContextMenu()
         {
-            ContextMenu contextMenu = new ContextMenu();
-
             MenuItem fullscreenMenuItem = new MenuItem();
             fullscreenMenuItem.Header = "Fullscreen";
             fullscreenMenuItem.IsCheckable = true;
-            fullscreenMenuItem.IsChecked = true;
-            fullscreenMenuItem.Click += new RoutedEventHandler(delegate(object o, RoutedEventArgs args) { plot2D.FullScreen = false; });
+            fullscreenMenuItem.Loaded += (object o, RoutedEventArgs args) => { ((MenuItem)o).IsChecked = FullScreen; };
+            fullscreenMenuItem.Click += (object o, RoutedEventArgs args) => { FullScreen = !FullScreen; };
+
+            MenuItem addTraceMenuItem = new MenuItem();
+            addTraceMenuItem.Header = "Add Trace...";
+            addTraceMenuItem.Click += (object o, RoutedEventArgs args) => { ShowAddTraceDialog(); };
+
+            MenuItem editTracesMenuItem = new MenuItem();
+            editTracesMenuItem.Header = "Edit Traces...";
+            editTracesMenuItem.Click += (object o, RoutedEventArgs args) => { ShowEditTracesDialog(); };
 
             MenuItem copyToClipboardMenuItem = new MenuItem();
             copyToClipboardMenuItem.Header = "Copy to clipboard";
-            copyToClipboardMenuItem.Click += new RoutedEventHandler(delegate(object o, RoutedEventArgs args) { Snapshot.ToClipboard(plot2D); });
+            copyToClipboardMenuItem.Click += (object o, RoutedEventArgs args) => { Snapshot.ToClipboard(this); };
 
             MenuItem saveImageAsMenuItem = new MenuItem();
             saveImageAsMenuItem.Header = "Save image as...";
-            saveImageAsMenuItem.Click += new RoutedEventHandler(delegate(object o, RoutedEventArgs args) { Snapshot.ToFile(plot2D, window); });
+            saveImageAsMenuItem.Click += (object o, RoutedEventArgs args) => { Snapshot.ToFile(this, Window.GetWindow(this)); };
 
             MenuItem unZoomMenuItem = new MenuItem();
             unZoomMenuItem.Header = "Undo Zoom/Pan";
-            unZoomMenuItem.Click += new RoutedEventHandler(delegate(object o, RoutedEventArgs args) { plot2D.UndoZoomPan(); });
+            unZoomMenuItem.Click += (object o, RoutedEventArgs args) => { UndoZoomPan(); };
 
             MenuItem undoAllZoomPanMenuItem = new MenuItem();
             undoAllZoomPanMenuItem.Header = "Reset Viewport";
-            undoAllZoomPanMenuItem.Click += new RoutedEventHandler(delegate(object o, RoutedEventArgs args) { plot2D.ResetViewport(); });
+            undoAllZoomPanMenuItem.Click += (object o, RoutedEventArgs args) => { ResetViewport(); };
+
+            ContextMenu contextMenu = new ContextMenu();
 
             contextMenu.Items.Add(fullscreenMenuItem);
+            contextMenu.Items.Add(new Separator());
+            contextMenu.Items.Add(addTraceMenuItem);
+            contextMenu.Items.Add(editTracesMenuItem);
             contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(copyToClipboardMenuItem);
             contextMenu.Items.Add(saveImageAsMenuItem);
