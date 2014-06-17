@@ -22,54 +22,10 @@
         <FontFamily x:Key="IconicFont">/PowerCalc;component/Resources/Fonts/#fontello</FontFamily>
         
         <talex:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <converters:FunctionSignaturesToTooltipConverter x:Key="FunctionSignaturesToTooltipConverter" />
         <converters:XYCoordsToStringConverter x:Key="XYCoordsToStringConverter" />
         <converters:WorksheetItemResultConverter x:Key="WorksheetItemResultConverter" />
         <converters:WorksheetItemResultToForeground x:Key="WorksheetItemResultToForeground" />
         <converters:CopyToClipboardParameterConverter x:Key="CopyToClipboardParameterConverter" />
-        
-        <commands:InsertFunctionCommand x:Key="InsertFunctionCommand" />
-        <commands:CopyToClipboardCommand x:Key="CopyToClipboardCommand" />
-        
-        <ContextMenu x:Key="mainContextMenu">
-            <MenuItem Header="Insert function" DataContext="{Binding Source={StaticResource viewModelLocator}, Path=InsertFunctionContextMenuViewModel}" ItemsSource="{Binding Categories}">
-                <MenuItem.ItemContainerStyle>
-                    <Style TargetType="MenuItem">
-                        <Setter Property="Header" Value="{Binding CategoryName}" />
-                        <Setter Property="ItemsSource" Value="{Binding Functions}" />
-                        <Setter Property="ItemContainerStyle">
-                            <Setter.Value>
-                                <Style TargetType="MenuItem">
-                                    <Setter Property="Header" Value="{Binding DisplayName}" />
-                                    <Setter Property="InputGestureText" Value="{Binding FunctionName}" />
-                                    <Setter Property="ToolTip" Value="{Binding Signatures, Converter={StaticResource FunctionSignaturesToTooltipConverter}}" />
-                                    <Setter Property="CommandParameter" Value="{Binding InsertValue}" />
-                                    <Setter Property="Command" Value="{StaticResource InsertFunctionCommand}" />
-                                </Style>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </MenuItem.ItemContainerStyle>
-            </MenuItem>
-
-            <MenuItem Header="Constants" DataContext="{Binding Source={StaticResource viewModelLocator}, Path=ConstantsContextMenuViewModel}" ItemsSource="{Binding Constants}">
-                <MenuItem.ItemContainerStyle>
-                    <Style TargetType="MenuItem">
-                        <Setter Property="Header" Value="{Binding DisplayName}"/>
-                        <Setter Property="InputGestureText" Value="{Binding ConstantName}"/>
-                        <Setter Property="ToolTip" Value="{Binding Value}"/>
-                        <Setter Property="CommandParameter" Value="{Binding ConstantName}" />
-                        <Setter Property="Command" Value="{StaticResource InsertFunctionCommand}" />
-                    </Style>
-                </MenuItem.ItemContainerStyle>
-            </MenuItem>
-            
-            <Separator/>
-            
-            <MenuItem Command="Cut"/>
-            <MenuItem Command="Copy"/>
-            <MenuItem Command="Paste"/>
-        </ContextMenu>
     </Window.Resources>
 
     <Grid Background="{DynamicResource MainWindowBgBrush}">
@@ -137,7 +93,7 @@
                             <TextBox x:Name="worksheetTextBox"  Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource stlHintbox}" Tag="Type expression here..."
                                  Foreground="Black"
-                                 ContextMenu="{StaticResource mainContextMenu}" Focusable="True">
+                                 ContextMenu="{StaticResource MainContextMenu}" Focusable="True">
                                 <TextBox.InputBindings>
                                     <KeyBinding Key="Return" Command="{Binding DataContext.EvaluateCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" />
                                 </TextBox.InputBindings>
@@ -464,7 +420,7 @@
                         </Canvas>
                     </Expander>
 
-                    <controls:WorksheetMatrix x:Name="worksheetMatrix" DockPanel.Dock="Top" FormulaBarContextMenu="{StaticResource mainContextMenu}" />
+                    <controls:WorksheetMatrix x:Name="worksheetMatrix" DockPanel.Dock="Top" FormulaBarContextMenu="{StaticResource MainContextMenu}" />
                 </DockPanel>
             </TabItem>
 
@@ -566,7 +522,7 @@
                             <GroupBox Header="Surface" Height="55" Canvas.Left="60" Canvas.Top="5" Width="530">
                                 <Canvas>
                                     <Label Canvas.Left="3" Canvas.Top="1">f(x,y):</Label>
-                                    <TextBox Canvas.Left="43" Canvas.Top="3" Height="23" Name="textBoxSurface" ContextMenu="{StaticResource mainContextMenu}" Width="390" FontFamily="Consolas, Courier New" Background="{DynamicResource textBoxBgBrush2}" KeyDown="textBoxSurface_KeyDown" />
+                                    <TextBox Canvas.Left="43" Canvas.Top="3" Height="23" Name="textBoxSurface" ContextMenu="{StaticResource MainContextMenu}" Width="390" FontFamily="Consolas, Courier New" Background="{DynamicResource textBoxBgBrush2}" KeyDown="textBoxSurface_KeyDown" />
                                     <Button Canvas.Left="442" Canvas.Top="3" Height="23" Name="surfaceRenderButton" Width="65" Click="surfaceRenderButton_Click">Render</Button>
                                 </Canvas>
                             </GroupBox>

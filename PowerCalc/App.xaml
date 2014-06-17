@@ -10,6 +10,7 @@
                 <ResourceDictionary>
                     <locators:ViewModelLocator x:Key="viewModelLocator" />
                 </ResourceDictionary>
+                <ResourceDictionary Source="Views/MainContextMenu.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

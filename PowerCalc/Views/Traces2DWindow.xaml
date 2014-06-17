@@ -105,7 +105,8 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="F(x):" />
-                    <TextBox Name="expressionTextBox" Grid.Column="1" Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch">
+                    <TextBox Name="expressionTextBox" Grid.Column="1" Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+                             ContextMenu="{StaticResource MainContextMenu}">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding DataContext.SaveCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                         </TextBox.InputBindings>
