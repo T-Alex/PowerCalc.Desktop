@@ -41,6 +41,44 @@ namespace TAlex.PowerCalc.Views
             : this()
         {
             Model.SetState(mode, traces);
+            Model.Traces.CollectionChanged += Traces_CollectionChanged;
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void TracesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.RemovedItems.Count > 0)
+            {
+                try
+                {
+                    if (Model.Traces.Contains(e.RemovedItems[0]))
+                    {
+                        Model.UpdateTrace((Trace2D)e.RemovedItems[0]);
+                    }
+                }
+                catch (Exception exc)
+                {
+                    TracesList.Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        TracesList.SelectionChanged -= TracesList_SelectionChanged;
+                        TracesList.SelectedItem = e.RemovedItems[0];
+                        TracesList.SelectionChanged += TracesList_SelectionChanged;
+                        MessageBox.Show(this, exc.Message, Properties.Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }));
+                }
+            }
+        }
+
+        private void Traces_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                TracesList.SelectedItem = (Trace2D)e.NewItems[0];
+                expressionTextBox.Focus();
+            }
         }
 
         #endregion

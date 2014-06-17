@@ -113,6 +113,39 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
             RaisePropertyChanged(() => State);
         }
 
+        public void UpdateTrace(Trace2D trace)
+        {
+            Expression<Object> expression = ExpressionTreeBuilder.BuildTree(trace.Expression);
+
+            Func<Object, Object> f = ParametricFunctionCreator.CreateOneParametricFunction(expression, "x");
+            Func<double, double> func = (x) =>
+            {
+                Complex result = (Complex)f((Complex)x);
+                return result.IsReal ? result.Re : double.NaN;
+            };
+            func(0.5);
+            trace.Trace = func;
+        }
+
+        private bool UpdateTraces()
+        {
+            foreach (var trace in Traces)
+            {
+                try
+                {
+                    UpdateTrace(trace);
+                }
+                catch (Exception exc)
+                {
+                    MessageService.Show(exc.Message, Properties.Resources.MessageBoxCaptionText, MessageButton.OK, MessageImage.Error);
+                    trace.Trace = null;
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         protected virtual void InitializeCommands()
         {
             AddCommand = new RelayCommand(AddNew);
@@ -123,7 +156,10 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         private void AddNew()
         {
-            Traces.Add(OriginalTraces.CreateNew(Traces.Count));
+            if (UpdateTraces())
+            {
+                Traces.Add(OriginalTraces.CreateNew(Traces.Count));
+            }
         }
 
         private void Delete(Trace2D trace)
@@ -147,37 +183,11 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
 
         private void Save()
         {
-            foreach (var trace in Traces)
+            if (UpdateTraces())
             {
-                //if (!String.IsNullOrEmpty(trace.Expression))
-                {
-                    try
-                    {
-                        Expression<Object> expression = ExpressionTreeBuilder.BuildTree(trace.Expression);
-
-                        Func<Object, Object> f = ParametricFunctionCreator.CreateOneParametricFunction(expression, "x");
-                        Func<double, double> func = (x) =>
-                        {
-                            Complex result = (Complex)f((Complex)x);
-                            return result.IsReal ? result.Re : double.NaN;
-                        };
-                        func(0.0);
-                        trace.Trace = func;
-                    }
-                    catch (Exception exc)
-                    {
-                        MessageService.Show(exc.Message, "Error", MessageButton.OK, MessageImage.Error);
-                        return;
-                    }
-                }
-                //else
-                //{
-                //    trace.Function = null;
-                //}
+                State.Save(OriginalTraces, _traces);
+                CloseSignal = true;
             }
-
-            State.Save(OriginalTraces, _traces);
-            CloseSignal = true;
         }
 
         #endregion
