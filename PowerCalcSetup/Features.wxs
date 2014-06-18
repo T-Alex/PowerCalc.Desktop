@@ -21,6 +21,8 @@
         <ComponentRef Id="CMP_TAlexMathCore_SpecialFunctions" />
         <ComponentRef Id="CMP_TAlexMathCore_Statistics" />
 
+        <ComponentRef Id="CMP_License" />
+        
         <ComponentRef Id="CMP_TAlexMathCore_ComplexExpressions_Extensions" />
         
         <ComponentRef Id="CMP_ProgramsMenuShortcuts" />

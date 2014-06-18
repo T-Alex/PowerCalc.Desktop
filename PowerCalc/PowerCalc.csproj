@@ -344,9 +344,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Help.chm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -391,14 +388,9 @@
     <None Include="Resources\Icons\icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="License.txt">
+    <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Readme.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Extensions\TAlex.MathCore.ComplexExpressions.Extensions.dll">

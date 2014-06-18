@@ -7,11 +7,6 @@
       <!-- Product Executable file -->
       <Component Id="CMP_ProductExecutable" Guid="FBF1CF0F-5980-4443-B715-20E354EF7C0C">
         <File Id="ProductExecutableFile" Name="$(var.PowerCalc.TargetFileName)" Source="$(var.PowerCalc.TargetPath)" DiskId="1" KeyPath="yes" />
-        <!--<ProgId Id="Tester.BinaryTest" Description="Binary file test" Advertise="yes" Icon="BinaryTestFile.ico">
-          <Extension Id="tst">
-            <Verb Id="open" Command="Open" Argument='"%1"' />
-          </Extension>
-        </ProgId>-->
       </Component>
       <!-- Configuration file -->
       <Component Id="CMP_ProductExecutableConfig" Guid="26FEFE6E-2783-4C07-8DBE-523B5B5903FE">
@@ -63,6 +58,11 @@
       <Component Id="CMP_TAlexMathCore_Statistics" Guid="27E7D596-E6F6-49A1-B3FA-B9B261729E57">
         <File Id="FILE_TAlexMathCore_Statistics" Name="TAlex.MathCore.Statistics.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
       </Component>
+
+      <!-- License.txt -->
+      <Component Id="CMP_License" Guid="B7A3EA2C-F1BF-449E-9853-9D6AC404BAC8">
+        <File Id="FILE_License" Name="License.txt" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="ExtensionsFolder">
@@ -70,12 +70,6 @@
       <Component Id="CMP_TAlexMathCore_ComplexExpressions_Extensions" Guid="A132D519-5375-4161-8B06-E26CF98C02AF">
         <File Id="FILE_TAlexMathCore_ComplexExpressions_Extensions" Name="TAlex.MathCore.ComplexExpressions.Extensions.dll" Source="$(var.PowerCalc.TargetDir)Extensions\" DiskId="1" KeyPath="yes" />
       </Component>
-    </DirectoryRef>
-    
-    <DirectoryRef Id="CommonDocumentsTestsFolder">
-      <!--<Component Id="CMP_SimpleTest" Guid="EB2920D9-0879-428A-8520-40258D592F62">
-        <File Id="FILE_SimpleTest" Name="Simple Test.tst" Source="$(var.Testcheck.Tester.ProjectDir)Tests\Simple Test.tst" DiskId="1" KeyPath="yes" />
-      </Component>-->
     </DirectoryRef>
   </Fragment>
 </Wix>
