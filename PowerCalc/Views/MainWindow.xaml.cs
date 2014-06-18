@@ -47,22 +47,40 @@ namespace TAlex.PowerCalc.Views
         {
             Properties.Settings settings = Properties.Settings.Default;
 
-            if (isStarting)
+            try
             {
-                WindowState = (settings.WindowState == System.Windows.WindowState.Minimized) ? System.Windows.WindowState.Normal : settings.WindowState;
-
-                Rect windowBounds = settings.WindowBounds;
-                if (!(windowBounds.Width == 0 || windowBounds.Height == 0))
+                if (isStarting)
                 {
-                    WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
-                    Left = windowBounds.Left;
-                    Top = windowBounds.Top;
-                    Width = windowBounds.Width;
-                    Height = windowBounds.Height;
-                }
-            }
+                    WindowState = (settings.WindowState == System.Windows.WindowState.Minimized) ? System.Windows.WindowState.Normal : settings.WindowState;
 
-            plot2D.Background = new SolidColorBrush(settings.Plot2DBackground);
+                    Rect windowBounds = settings.WindowBounds;
+                    if (!(windowBounds.Width == 0 || windowBounds.Height == 0))
+                    {
+                        WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
+                        Left = windowBounds.Left;
+                        Top = windowBounds.Top;
+                        Width = windowBounds.Width;
+                        Height = windowBounds.Height;
+                    }
+                }
+
+                plot2D.Background = new SolidColorBrush(settings.Plot2DBackground);
+                plot2D.Foreground = new SolidColorBrush(settings.Plot2DForeground);
+                plot2D.GridPen = new Pen(new SolidColorBrush(settings.Plot2DGridlinesColor), plot2D.GridPen.Thickness);
+                plot2D.AxisPen = new Pen(new SolidColorBrush(settings.Plot2DAxisColor), plot2D.AxisPen.Thickness);
+                plot2D.SelectedRegionBrush = new SolidColorBrush(settings.Plot2DSelectionRegionColor);
+
+                plot2D.VertGridLinesVisible = settings.Plot2DVertGridlinesVisible;
+                plot2D.HorizGridLinesVisible = settings.Plot2DHorizGridlinesVisible;
+                plot2D.XAxisVisible = settings.Plot2DXAxisVisible;
+                plot2D.YAxisVisible = settings.Plot2DYAxisVisible;
+            }
+            catch (Exception)
+            {
+                settings.Reset();
+                settings.Save();
+                LoadSettings(isStarting);
+            }
         }
 
         private void SaveSettings()

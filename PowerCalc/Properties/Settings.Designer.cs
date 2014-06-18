@@ -73,18 +73,6 @@ namespace TAlex.PowerCalc.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("12")]
-        public double WorksheetFontSize {
-            get {
-                return ((double)(this["WorksheetFontSize"]));
-            }
-            set {
-                this["WorksheetFontSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#FFF0F8FF")]
         public global::System.Windows.Media.Color Plot2DBackground {
             get {
@@ -185,6 +173,102 @@ namespace TAlex.PowerCalc.Properties {
             }
             set {
                 this["MatricesWorksheetColumns"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF696969")]
+        public global::System.Windows.Media.Color Plot2DForeground {
+            get {
+                return ((global::System.Windows.Media.Color)(this["Plot2DForeground"]));
+            }
+            set {
+                this["Plot2DForeground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFC0C0C0")]
+        public global::System.Windows.Media.Color Plot2DGridlinesColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["Plot2DGridlinesColor"]));
+            }
+            set {
+                this["Plot2DGridlinesColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFA9A9A9")]
+        public global::System.Windows.Media.Color Plot2DAxisColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["Plot2DAxisColor"]));
+            }
+            set {
+                this["Plot2DAxisColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#963399FF")]
+        public global::System.Windows.Media.Color Plot2DSelectionRegionColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["Plot2DSelectionRegionColor"]));
+            }
+            set {
+                this["Plot2DSelectionRegionColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Plot2DVertGridlinesVisible {
+            get {
+                return ((bool)(this["Plot2DVertGridlinesVisible"]));
+            }
+            set {
+                this["Plot2DVertGridlinesVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Plot2DHorizGridlinesVisible {
+            get {
+                return ((bool)(this["Plot2DHorizGridlinesVisible"]));
+            }
+            set {
+                this["Plot2DHorizGridlinesVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Plot2DXAxisVisible {
+            get {
+                return ((bool)(this["Plot2DXAxisVisible"]));
+            }
+            set {
+                this["Plot2DXAxisVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Plot2DYAxisVisible {
+            get {
+                return ((bool)(this["Plot2DYAxisVisible"]));
+            }
+            set {
+                this["Plot2DYAxisVisible"] = value;
             }
         }
     }

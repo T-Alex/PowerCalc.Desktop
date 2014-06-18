@@ -14,9 +14,6 @@
     <Setting Name="ComplexThreshold" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="WorksheetFontSize" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">12</Value>
-    </Setting>
     <Setting Name="Plot2DBackground" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FFF0F8FF</Value>
     </Setting>
@@ -43,6 +40,30 @@
     </Setting>
     <Setting Name="MatricesWorksheetColumns" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">256</Value>
+    </Setting>
+    <Setting Name="Plot2DForeground" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF696969</Value>
+    </Setting>
+    <Setting Name="Plot2DGridlinesColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFC0C0C0</Value>
+    </Setting>
+    <Setting Name="Plot2DAxisColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFA9A9A9</Value>
+    </Setting>
+    <Setting Name="Plot2DSelectionRegionColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#963399FF</Value>
+    </Setting>
+    <Setting Name="Plot2DVertGridlinesVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Plot2DHorizGridlinesVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Plot2DXAxisVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Plot2DYAxisVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

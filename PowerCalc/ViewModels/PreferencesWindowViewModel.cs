@@ -26,24 +26,28 @@ namespace TAlex.PowerCalc.ViewModels
         #region Properties
 
         public int DecimalPlaces { get; set; }
-
         public string NumericFormat { get; set; }
-
         public int ZeroThreshold { get; set; }
-
         public int ComplexThreshold { get; set; }
 
-        public int WorksheetMaxMatrixRows { get; set; }
 
+        public int WorksheetMaxMatrixRows { get; set; }
         public int WorksheetMaxMatrixColumns { get; set; }
 
 
         public int MatricesWorksheetRows { get; set; }
-
         public int MatricesWorksheetColumns { get; set; }
 
 
         public Color Plot2DBackground { get; set; }
+        public Color Plot2DForeground { get; set; }
+        public Color Plot2DGridlinesColor { get; set; }
+        public Color Plot2DAxisColor { get; set; }
+        public Color Plot2DSelectionRegionColor { get; set; }
+        public bool Plot2DVertGridlinesVisible { get; set; }
+        public bool Plot2DHorizGridlinesVisible { get; set; }
+        public bool Plot2DXAxisVisible { get; set; }
+        public bool Plot2DYAxisVisible { get; set; }
 
 
         public bool CloseSignal
@@ -105,6 +109,14 @@ namespace TAlex.PowerCalc.ViewModels
             MatricesWorksheetColumns = AppSettings.MatricesWorksheetColumns;
 
             Plot2DBackground = AppSettings.Plot2DBackground;
+            Plot2DForeground = AppSettings.Plot2DForeground;
+            Plot2DGridlinesColor = AppSettings.Plot2DGridlinesColor;
+            Plot2DAxisColor = AppSettings.Plot2DAxisColor;
+            Plot2DSelectionRegionColor = AppSettings.Plot2DSelectionRegionColor;
+            Plot2DVertGridlinesVisible = AppSettings.Plot2DVertGridlinesVisible;
+            Plot2DHorizGridlinesVisible = AppSettings.Plot2DHorizGridlinesVisible;
+            Plot2DXAxisVisible = AppSettings.Plot2DXAxisVisible;
+            Plot2DYAxisVisible = AppSettings.Plot2DYAxisVisible;
         }
 
         private void SaveCommandExecute()
@@ -120,6 +132,14 @@ namespace TAlex.PowerCalc.ViewModels
             AppSettings.MatricesWorksheetColumns = MatricesWorksheetColumns;
 
             AppSettings.Plot2DBackground = Plot2DBackground;
+            AppSettings.Plot2DForeground = Plot2DForeground;
+            AppSettings.Plot2DGridlinesColor = Plot2DGridlinesColor;
+            AppSettings.Plot2DAxisColor = Plot2DAxisColor;
+            AppSettings.Plot2DSelectionRegionColor = Plot2DSelectionRegionColor;
+            AppSettings.Plot2DVertGridlinesVisible = Plot2DVertGridlinesVisible;
+            AppSettings.Plot2DHorizGridlinesVisible = Plot2DHorizGridlinesVisible;
+            AppSettings.Plot2DXAxisVisible = Plot2DXAxisVisible;
+            AppSettings.Plot2DYAxisVisible = Plot2DYAxisVisible;
 
             AppSettings.Save();
             CloseSignal = true;

@@ -102,24 +102,46 @@
                             <talex:NumericUpDown Grid.Row="1" Grid.Column="1" Width="50" Height="22" HorizontalAlignment="Right" Margin="0,0,6,0" Minimum="20" Maximum="1000" Value="{Binding MatricesWorksheetColumns, Mode=TwoWay, Converter={StaticResource Int32ToDecimalConverter}}" />
                         </Grid>
                     </GroupBox>
-                    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-5,10,0" FontSize="10" Text="Changes will take effect after restarting the program" />
+                    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-5,10,0" FontSize="10" FontWeight="Bold" Text="Changes will take effect after restarting the program" />
                 </StackPanel>
             </TabItem>
             
             <TabItem Header="2D Plot">
                 <Grid>
-                    <GroupBox Header="Colors" Margin="6,6,190,72">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                            <talex:ColorChip Grid.Row="0" SelectedColor="{Binding Plot2DBackground, Mode=TwoWay}">Background</talex:ColorChip>
-                           
-                            <talex:ColorChip Grid.Row="1">Gridlines</talex:ColorChip>
-                        </Grid>
+                    <GroupBox Header="Colors" Margin="7,6,5,6" Padding="8,6">
+                        <StackPanel>
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type talex:ColorChip}" BasedOn="{StaticResource {x:Type talex:ColorChip}}">
+                                    <Setter Property="Margin" Value="0,2" />
+                                </Style>
+                            </StackPanel.Resources>
+                            
+                            <talex:ColorChip SelectedColor="{Binding Plot2DBackground, Mode=TwoWay}">Background</talex:ColorChip>
+                            <talex:ColorChip SelectedColor="{Binding Plot2DForeground, Mode=TwoWay}">Foreground</talex:ColorChip>
+                            <talex:ColorChip SelectedColor="{Binding Plot2DGridlinesColor, Mode=TwoWay}">Gridlines</talex:ColorChip>
+                            <talex:ColorChip SelectedColor="{Binding Plot2DAxisColor, Mode=TwoWay}">Axis</talex:ColorChip>
+                            <talex:ColorChip SelectedColor="{Binding Plot2DSelectionRegionColor, Mode=TwoWay}">Selection region</talex:ColorChip>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Layout" Grid.Column="1" Margin="5,6,7,6" Padding="10,8">
+                        <StackPanel>
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                    <Setter Property="Margin" Value="0,3" />
+                                </Style>
+                            </StackPanel.Resources>
+
+                            <CheckBox Content="Vertical gridlines" IsChecked="{Binding Plot2DVertGridlinesVisible}" />
+                            <CheckBox Content="Horizontal gridlines" IsChecked="{Binding Plot2DHorizGridlinesVisible}" />
+                            <CheckBox Content="X-Axis" IsChecked="{Binding Plot2DXAxisVisible}" />
+                            <CheckBox Content="Y-Axis" IsChecked="{Binding Plot2DYAxisVisible}" />
+                        </StackPanel>
                     </GroupBox>
                 </Grid>
             </TabItem>
