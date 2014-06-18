@@ -269,15 +269,12 @@ namespace TAlex.PowerCalc.Views
             point.X = Math.Round(point.X);
             point.Y = Math.Round(point.Y);
 
-            Point coord = plot2D.PointToPlot2DCoordinate(point);
-
-            Point offsetCoord = plot2D.PointToPlot2DCoordinate(new Point(point.X + 1, point.Y + 1));
-            Vector diff = offsetCoord - coord;
+            Point coord = plot2D.PointToRoundedPlot2DCoordinate(point);
 
             MainWindowViewModel viewModel = DataContext as MainWindowViewModel;
             viewModel.CanShowXYCoords = true;
-            viewModel.XCoord2dPlot = Math.Round(coord.X, Math.Min(15, Math.Max(0, (int)Math.Round(-Math.Log10(Math.Abs(diff.X))) + 1)));
-            viewModel.YCoord2dPlot = Math.Round(coord.Y, Math.Min(15, Math.Max(0, (int)Math.Round(-Math.Log10(Math.Abs(diff.Y))) + 1)));
+            viewModel.XCoord2dPlot = coord.X;
+            viewModel.YCoord2dPlot = coord.Y;
         }
 
         private void plot2D_MouseLeave(object sender, MouseEventArgs e)

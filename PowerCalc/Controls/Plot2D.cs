@@ -824,6 +824,19 @@ namespace TAlex.PowerCalc.Controls
             return coord;
         }
 
+        public Point PointToRoundedPlot2DCoordinate(Point point)
+        {
+            Point coord = PointToPlot2DCoordinate(point);
+
+            Point offsetCoord = PointToPlot2DCoordinate(new Point(point.X + 1, point.Y + 1));
+            Vector diff = offsetCoord - coord;
+
+            double x = Math.Round(coord.X, Math.Min(15, Math.Max(0, (int)Math.Round(-Math.Log10(Math.Abs(diff.X))) + 1)));
+            double y = Math.Round(coord.Y, Math.Min(15, Math.Max(0, (int)Math.Round(-Math.Log10(Math.Abs(diff.Y))) + 1)));
+
+            return new Point(x, y);
+        }
+
         public Rect GetPlot2DViewport()
         {
             Point p1 = PointToPlot2DCoordinate(new Point(borderSize, borderSize));

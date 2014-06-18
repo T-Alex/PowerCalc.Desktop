@@ -83,8 +83,8 @@
             </TabItem>
             
             <TabItem Header="Matrices">
-                <Grid>
-                    <GroupBox VerticalAlignment="Top" Header="Worksheet size" Height="87" Margin="7,6">
+                <StackPanel>
+                    <GroupBox VerticalAlignment="Top" Header="Worksheet size" Height="74" Margin="7,6">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
@@ -93,7 +93,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
-                                <RowDefinition Height="0.51*" />
                             </Grid.RowDefinitions>
 
                             <TextBlock VerticalAlignment="Center" Margin="9,0,0,0" Text="Rows:" />
@@ -101,11 +100,10 @@
 
                             <TextBlock VerticalAlignment="Center" Margin="9,0,0,0" Grid.Row="1" Text="Columns:" />
                             <talex:NumericUpDown Grid.Row="1" Grid.Column="1" Width="50" Height="22" HorizontalAlignment="Right" Margin="0,0,6,0" Minimum="20" Maximum="1000" Value="{Binding MatricesWorksheetColumns, Mode=TwoWay, Converter={StaticResource Int32ToDecimalConverter}}" />
-
-                            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,6,0" FontSize="10" Foreground="DarkRed" Text="Changes will take effect after restarting the program" />
                         </Grid>
                     </GroupBox>
-                </Grid>
+                    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-5,10,0" FontSize="10" Text="Changes will take effect after restarting the program" />
+                </StackPanel>
             </TabItem>
             
             <TabItem Header="2D Plot">
