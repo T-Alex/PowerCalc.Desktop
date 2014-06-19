@@ -19,6 +19,7 @@ namespace TAlex.PowerCalc.Locators.Modules
     {
         public override void Load()
         {
+            Bind<HowToViewModel>().ToSelf();
             Bind<MainWindowViewModel>().ToSelf();
             Bind<PreferencesWindowViewModel>().ToSelf();
             Bind<ReferencesWindowViewModel>().ToSelf();

@@ -271,5 +271,17 @@ namespace TAlex.PowerCalc.Properties {
                 this["Plot2DYAxisVisible"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowHowToOnStartup {
+            get {
+                return ((bool)(this["ShowHowToOnStartup"]));
+            }
+            set {
+                this["ShowHowToOnStartup"] = value;
+            }
+        }
     }
 }

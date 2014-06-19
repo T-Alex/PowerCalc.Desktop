@@ -15,6 +15,8 @@ namespace TAlex.PowerCalc.Services
         Rect WindowBounds { get; set; }
         string ExtensionsPath { get; }
 
+        bool ShowHowToOnStartup { get; set; }
+
         int ZeroThreshold { get; set; }
         int ComplexThreshold { get; set; }
         string NumericFormat { get; set; }

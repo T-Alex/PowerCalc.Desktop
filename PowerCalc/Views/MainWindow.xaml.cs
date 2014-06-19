@@ -110,6 +110,11 @@ namespace TAlex.PowerCalc.Views
         {
             // 3D Plot
             viewPort3D.Children.Add(Utils3D.GetCubeRectCoordSystem(10, 2));
+
+            if (Properties.Settings.Default.ShowHowToOnStartup)
+            {
+                new HowToWindow { Owner = this }.ShowDialog();
+            }
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
@@ -183,6 +188,11 @@ namespace TAlex.PowerCalc.Views
         private void preferencesMenuItem_Click(object sender, RoutedEventArgs e)
         {
             ShowPreferencesDialog(0);
+        }
+
+        private void howToMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            new HowToWindow() { Owner = this }.ShowDialog();
         }
 
         private void navHomepageMenuItem_Click(object sender, RoutedEventArgs e)

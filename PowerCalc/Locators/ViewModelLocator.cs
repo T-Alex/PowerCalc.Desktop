@@ -25,6 +25,14 @@ namespace TAlex.PowerCalc.Locators
 
         #region Properties
 
+        public HowToViewModel HowToViewModel
+        {
+            get
+            {
+                return _kernel.Get<HowToViewModel>();
+            }
+        }
+
         public MainWindowViewModel MainWindowViewModel
         {
             get

@@ -137,6 +137,7 @@
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Command="ApplicationCommands.Help" Header="_References" />
+                <MenuItem Header="How To..." Click="howToMenuItem_Click" />
                 <Separator />
                 <MenuItem Header="T-Alex Software _Homepage" Click="navHomepageMenuItem_Click" />
                 <MenuItem Header="_Registration..." Click="registrationMenuItem_Click" />
