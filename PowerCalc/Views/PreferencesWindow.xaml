@@ -146,7 +146,7 @@
                 </Grid>
             </TabItem>
             
-            <TabItem Header="3D Plot">
+            <TabItem Header="3D Plot" Visibility="Hidden">
                 <Grid>
 
                 </Grid>

@@ -206,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\SurfacesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Traces2DWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -301,6 +305,9 @@
     </Compile>
     <Compile Include="Helpers\Snapshot.cs" />
     <Compile Include="Themes\Twilight\TwilightThemeManager.cs" />
+    <Compile Include="Views\SurfacesWindow.xaml.cs">
+      <DependentUpon>SurfacesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Traces2DWindow.xaml.cs">
       <DependentUpon>Traces2DWindow.xaml</DependentUpon>
     </Compile>

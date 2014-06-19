@@ -316,19 +316,6 @@ namespace TAlex.PowerCalc.Views
 
         #region 3D Plot
 
-        private void surfaceRenderButton_Click(object sender, RoutedEventArgs e)
-        {
-            Plot3DRender(textBoxSurface.Text);
-        }
-
-        private void textBoxSurface_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Plot3DRender(textBoxSurface.Text);
-            }
-        }
-
         private void trackball_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
@@ -341,13 +328,15 @@ namespace TAlex.PowerCalc.Views
 
                     parent.Children.Remove(trackball);
 
-                    Window fullwindow = new Window();
-                    fullwindow.Background = parent.Background;
-                    fullwindow.ShowInTaskbar = false;
-                    fullwindow.Topmost = false;
-                    fullwindow.WindowStyle = WindowStyle.None;
-                    fullwindow.WindowState = WindowState.Maximized;
-                    fullwindow.Content = trackball;
+                    Window fullwindow = new Window
+                    {
+                        Background = parent.Background,
+                        ShowInTaskbar = false,
+                        Topmost = false,
+                        WindowStyle = WindowStyle.None,
+                        WindowState = WindowState.Maximized,
+                        Content = trackball
+                    };
                     fullwindow.ShowDialog();
                 }
                 else
