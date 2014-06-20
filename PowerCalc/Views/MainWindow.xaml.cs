@@ -257,7 +257,10 @@ namespace TAlex.PowerCalc.Views
         {
             ListBoxItem selectedItem = sender as ListBoxItem;
             IInputElement firstFocusable = VisualHelper.FindFirstFocusableElement(selectedItem);
-            firstFocusable.Focus();
+            if (firstFocusable != null)
+            {
+                firstFocusable.Focus();
+            }
         }
 
         private IInputElement GetWorksheetInputElement()
