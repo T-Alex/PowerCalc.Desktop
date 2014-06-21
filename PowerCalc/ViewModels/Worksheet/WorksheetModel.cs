@@ -61,6 +61,12 @@ cls – clear console
 
         #endregion
 
+        #region Events
+
+        public event EventHandler InputHistoryNavigated;
+
+        #endregion
+
         #region Commands
 
         public ICommand EvaluateCommand { get; set; }
@@ -127,6 +133,7 @@ cls – clear console
                 EditableItem.Expression = InputHistory[InputHistoryIndex];
 
                 IsInputHistoryNavigated = true;
+                OnInputHistoryNavigated();
             }
         }
 
@@ -138,9 +145,17 @@ cls – clear console
                 EditableItem.Expression = InputHistory[InputHistoryIndex];
 
                 IsInputHistoryNavigated = true;
+                OnInputHistoryNavigated();
             }
         }
 
+        protected void OnInputHistoryNavigated()
+        {
+            if (InputHistoryNavigated != null)
+            {
+                InputHistoryNavigated(this, new EventArgs());
+            }
+        }
 
         protected virtual void Initialize()
         {

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Tag="Worksheet: Define a variable..."
         FontFamily="Segoe UI">
-    <Paragraph FontWeight="Bold" Margin="0">
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
         Steps:
     </Paragraph>
     <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
@@ -27,20 +27,20 @@
     </List>
 
     <Paragraph>
-        <Span FontWeight="Bold">Example:</Span>
+        <Span FontWeight="Bold" FontSize="17">Example:</Span>
         <LineBreak />
         <Span>x: sin(pi/2)+25</Span>
     </Paragraph>
 
     <Paragraph>
-        <Span FontWeight="Bold">Where:</Span>
+        <Span FontStyle="Italic">Where:</Span>
         <LineBreak />
         <Span>
-            <Run Foreground="Gray">x</Run> - variable name
+            <Underline>x</Underline> - variable name
         </Span>
         <LineBreak />
         <Span>
-            <Run Foreground="Gray">sin(pi/2)+25</Run> - expression
+            <Underline>sin(pi/2)+25</Underline> - expression
         </Span>
     </Paragraph>
 </FlowDocument>

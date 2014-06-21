@@ -23,6 +23,7 @@ using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.ViewModels.Plot2D;
 using TAlex.WPF3DToolkit;
 using TAlex.WPF3DToolkit.Surfaces;
+using TAlex.PowerCalc.ViewModels.Worksheet;
 
 
 namespace TAlex.PowerCalc.Views
@@ -37,6 +38,7 @@ namespace TAlex.PowerCalc.Views
             LoadSettings(true);
 
             ((INotifyCollectionChanged)WorksheetListView.Items).CollectionChanged += Worksheet_CollectionChanged;
+            ((WorksheetModel)WorksheetListView.DataContext).InputHistoryNavigated += Worksheet_InputHistoryNavigated;
         }
 
         #endregion
@@ -250,6 +252,15 @@ namespace TAlex.PowerCalc.Views
                 ItemContainerGenerator generator = WorksheetListView.ItemContainerGenerator;
                 ListBoxItem selectedItem = (ListBoxItem)generator.ContainerFromItem(lastItem);
                 selectedItem.Loaded += selectedItem_Loaded;
+            }
+        }
+
+        private void Worksheet_InputHistoryNavigated(object sender, EventArgs e)
+        {
+            var textBox = GetWorksheetInputElement() as TextBox;
+            if (textBox != null)
+            {
+                textBox.CaretIndex = textBox.Text.Length;
             }
         }
 
