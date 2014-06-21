@@ -17,6 +17,7 @@ namespace TAlex.PowerCalc.Locators.Modules
             Bind<IClipboardService>().To<ClipboardService>();
             Bind<IMessageService>().To<MessageService>();
             Bind<WorksheetMatrixCachedValueConverter>().ToSelf();
+            Bind<IHowToItemsProvider>().To<HowToItemsProvider>();
         }
     }
 }

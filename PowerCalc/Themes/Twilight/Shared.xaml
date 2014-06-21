@@ -2188,10 +2188,10 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Border Margin="{TemplateBinding Padding}" x:Uid="Border_49" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4,4,4,4">
+                        <Border Margin="{TemplateBinding Padding}" x:Uid="Border_49" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="4,4,4,4">
                             <ScrollViewer HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" x:Name="PART_ContentHost" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" x:Uid="ScrollViewer_8" CanContentScroll="True" />
                         </Border>
-                        <Border x:Name="PART_ToolBarHost" x:Uid="Border_51" Grid.Row="1" Background="{TemplateBinding Background}">
+                        <Border x:Name="PART_ToolBarHost" x:Uid="Border_51" Grid.Row="1">
                             <Grid x:Uid="Grid_34">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />

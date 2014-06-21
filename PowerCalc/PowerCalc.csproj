@@ -130,6 +130,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <EmbeddedResource Include="Resources\Documents\HowTo\WorksheetDefineVariable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Documents\HowTo\WorksheetClearWorksheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <Page Include="Views\ErrorReportingWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -256,8 +264,10 @@
     <Compile Include="Locators\Modules\ViewModelNinjectModule.cs" />
     <Compile Include="Locators\ViewModelLocator.cs" />
     <Compile Include="Services\ClipboardService.cs" />
+    <Compile Include="Services\HowToItemsProvider.cs" />
     <Compile Include="Services\IAppSettings.cs" />
     <Compile Include="Services\IClipboardService.cs" />
+    <Compile Include="Services\IHowToItemsProvider.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TemplateSelectors\WorksheetItemTemplateSelector.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />

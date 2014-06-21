@@ -3,25 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         DataContext="{Binding Source={StaticResource viewModelLocator}, Path=HowToViewModel, Mode=OneTime}"
         Title="How To..." Height="400" MinHeight="200" Width="600" MinWidth="400"
-        ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource GradBrush}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        
-        <Grid Margin="0,0,0,10">
+
+        <Grid Margin="0,0,0,10" DataContext="{Binding CurrentItem}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             
-            <TextBlock FontSize="16" Text="Define a variable..." />
-            <Separator VerticalAlignment="Bottom" />
-            <DocumentPageView Grid.Row="1" />
+            <TextBlock FontSize="16" Text="{Binding Caption}" Margin="0,0,0,5" />
+            <FlowDocumentScrollViewer Grid.Row="1" Document="{Binding Body}" Zoom="80" IsToolBarVisible="False" Background="{DynamicResource prefTabControlBgBrush}" />
         </Grid>
-        
-        <CheckBox Grid.Row="1" Content="Show on startup" IsChecked="{Binding ShowOnStartup}" VerticalAlignment="Center" />
+
+        <CheckBox Grid.Row="1" IsChecked="{Binding ShowOnStartup}" VerticalAlignment="Center">
+            <TextBlock Text="Show on startup" Foreground="White" VerticalAlignment="Center" />
+        </CheckBox>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,190,0">
+            <TextBlock Text="{Binding CurrentIndex}" Foreground="White" />
+            <TextBlock Text="{Binding TotalItems, StringFormat=/{0}}" Foreground="White" />
+        </StackPanel>
         
         <Button Grid.Row="1" Width="80" HorizontalAlignment="Right" Margin="0,0,90,0" Content="Previous" Command="{Binding PreviousCommand}" />
         <Button Grid.Row="1" Width="80" HorizontalAlignment="Right" Content="Next" Command="{Binding NextCommand}" />

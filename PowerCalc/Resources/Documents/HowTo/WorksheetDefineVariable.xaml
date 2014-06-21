@@ -1,0 +1,46 @@
+﻿<FlowDocument
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Tag="Worksheet: Define a variable..."
+        FontFamily="Segoe UI">
+    <Paragraph FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>Type a variable name <Span Foreground="Gray">(starts from letter or underscore and than numbers, letters and underscore is allowed)</Span>
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>Type variable definition sign "
+                <Span FontWeight="Bold">:</Span> "
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>Type expression</Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>Press
+                <Span FontWeight="Bold">Enter</Span> button
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <Span FontWeight="Bold">Example:</Span>
+        <LineBreak />
+        <Span>x: sin(pi/2)+25</Span>
+    </Paragraph>
+
+    <Paragraph>
+        <Span FontWeight="Bold">Where:</Span>
+        <LineBreak />
+        <Span>
+            <Run Foreground="Gray">x</Run> - variable name
+        </Span>
+        <LineBreak />
+        <Span>
+            <Run Foreground="Gray">sin(pi/2)+25</Run> - expression
+        </Span>
+    </Paragraph>
+</FlowDocument>

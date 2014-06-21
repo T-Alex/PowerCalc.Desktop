@@ -27,7 +27,8 @@ namespace TAlex.PowerCalc.Tests.ViewModels.Worksheet
             ViewModel = new WorksheetModel(TreeBuilderMock);
         }
 
-        #region NavigateUpInputHistory Tests
+
+        #region NavigateUpInputInputHistory Tests
 
         [Test]
         public void NavigateUpInputHistory_Empty()
@@ -141,7 +142,7 @@ namespace TAlex.PowerCalc.Tests.ViewModels.Worksheet
 
         #endregion
 
-        #region NavigateDownHistory Tests
+        #region NavigateDownInputHistory Tests
 
         [Test]
         public void NavigateDownInputHistory_Empty()
