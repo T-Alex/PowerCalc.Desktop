@@ -118,6 +118,27 @@ namespace TAlex.PowerCalc.Tests.ViewModels.Worksheet
             ViewModel.EditableItem.Expression.Should().Be(expr1);
         }
 
+        [Test]
+        public void NavigateUpInputHistory_SpecialCase()
+        {
+            //arrange
+            const string expr1 = "1";
+            ViewModel.EditableItem.Expression = expr1;
+            ViewModel.Evaluate();
+            const string expr2 = "2";
+            ViewModel.EditableItem.Expression = expr2;
+            ViewModel.Evaluate();
+            ViewModel.NavigateUpInputHistory();
+            ViewModel.NavigateUpInputHistory();
+            ViewModel.Evaluate();
+
+            //assert
+            ViewModel.NavigateDownInputHistory();
+            ViewModel.EditableItem.Expression.Should().Be(expr2);
+            ViewModel.NavigateDownInputHistory();
+            ViewModel.EditableItem.Expression.Should().Be(expr1);
+        }
+
         #endregion
 
         #region NavigateDownHistory Tests

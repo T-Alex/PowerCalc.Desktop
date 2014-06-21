@@ -257,9 +257,7 @@ cls – clear console
 
         private bool IsNeededToAddInputHistory(string expression)
         {
-            return InputHistory.Count == 0 ||
-                (!String.Equals(InputHistory.Last(), expression) &&
-                (!String.Equals(InputHistory[InputHistoryIndex], expression)));
+            return InputHistory.Count == 0 || !String.Equals(InputHistory.Last(), expression);
         }
 
         private void AddInputHistory(string expression)
@@ -267,7 +265,11 @@ cls – clear console
             if (IsNeededToAddInputHistory(expression))
             {
                 InputHistory.Add(expression);
-                InputHistoryIndex = InputHistory.Count - 1;
+
+                if (!IsInputHistoryNavigated || (IsInputHistoryNavigated && !String.Equals(InputHistory[InputHistoryIndex], expression)))
+                {
+                    InputHistoryIndex = InputHistory.Count - 1;
+                } 
             }
             IsInputHistoryNavigated = false;
         }
