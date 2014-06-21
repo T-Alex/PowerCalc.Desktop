@@ -39,6 +39,10 @@ cls – clear console
 
         protected readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
+        protected List<string> InputHistory = new List<string>();
+        protected int InputHistoryIndex = -1;
+        protected bool IsInputHistoryNavigated = false;
+
         #endregion
 
         #region Properties
@@ -47,6 +51,14 @@ cls – clear console
 
         public ObservableCollection<WorksheetItem> Items { get; private set; }
 
+        public WorksheetItem EditableItem
+        {
+            get
+            {
+                return Items.Last();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -54,6 +66,10 @@ cls – clear console
         public ICommand EvaluateCommand { get; set; }
 
         public ICommand ClearCommand { get; set; }
+
+        public ICommand NavigateUpInputHistoryCommand { get; set; }
+
+        public ICommand NavigateDownInputHistoryCommand { get; set; }
 
         #endregion
 
@@ -83,12 +99,15 @@ cls – clear console
 
         public void Evaluate()
         {
-            WorksheetItem lastItem = Items.Last();
+            WorksheetItem lastItem = EditableItem;
             string expression = (lastItem.Expression + String.Empty).Trim();
 
             // Handle empty expression
             if (IsEmptyExpression(expression)) return;
-            
+
+            // Add input history if needed
+            AddInputHistory(expression);
+
             if (IsClearScreenExpression(expression)) // Handle clear screen expression
                 Clear();
             else if (IsCommentExpression(expression) || IsHelpExpression(expression)) // Handle comments and help
@@ -98,6 +117,28 @@ cls – clear console
             }
             else
                 HandleCalculatedExpression(lastItem); // Handle calculated expression
+        }
+
+        public void NavigateUpInputHistory()
+        {
+            if (InputHistoryIndex > -1)
+            {
+                if (InputHistoryIndex > 0 && IsInputHistoryNavigated) InputHistoryIndex--;
+                EditableItem.Expression = InputHistory[InputHistoryIndex];
+
+                IsInputHistoryNavigated = true;
+            }
+        }
+
+        public void NavigateDownInputHistory()
+        {
+            if (InputHistoryIndex < InputHistory.Count - 1)
+            {
+                InputHistoryIndex++;
+                EditableItem.Expression = InputHistory[InputHistoryIndex];
+
+                IsInputHistoryNavigated = true;
+            }
         }
 
 
@@ -110,6 +151,8 @@ cls – clear console
         {
             EvaluateCommand = new RelayCommand(Evaluate);
             ClearCommand = new RelayCommand(Clear);
+            NavigateUpInputHistoryCommand = new RelayCommand(NavigateUpInputHistory);
+            NavigateDownInputHistoryCommand = new RelayCommand(NavigateDownInputHistory);
         }
 
 
@@ -209,6 +252,24 @@ cls – clear console
             }
             
             AddItem(item);
+        }
+
+
+        private bool IsNeededToAddInputHistory(string expression)
+        {
+            return InputHistory.Count == 0 ||
+                (!String.Equals(InputHistory.Last(), expression) &&
+                (!String.Equals(InputHistory[InputHistoryIndex], expression)));
+        }
+
+        private void AddInputHistory(string expression)
+        {
+            if (IsNeededToAddInputHistory(expression))
+            {
+                InputHistory.Add(expression);
+                InputHistoryIndex = InputHistory.Count - 1;
+            }
+            IsInputHistoryNavigated = false;
         }
 
         #endregion

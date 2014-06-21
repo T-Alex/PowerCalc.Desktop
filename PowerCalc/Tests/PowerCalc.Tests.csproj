@@ -36,6 +36,9 @@
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>..\..\packages\NSubstitute.1.7.2.0\lib\NET45\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -46,10 +49,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TAlex.MathCore.ExpressionsBase, Version=1.0.5281.34974, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\TAlex.MathCore.ExpressionsBase.1.0.5281.34974\lib\net45\TAlex.MathCore.ExpressionsBase.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.WPF.Mvvm, Version=1.1.5201.39558, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\TAlex.WPF.Mvvm.1.1.5201.39558\lib\net45\TAlex.WPF.Mvvm.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\A1ReferenceHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Worksheet\WorksheetModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
