@@ -17,7 +17,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             
-            <TextBlock FontSize="16" Text="{Binding Caption}" Margin="0,0,0,5" />
+            <TextBlock FontSize="16" Text="{Binding Caption}" Margin="0" />
             <FlowDocumentScrollViewer Grid.Row="1" Document="{Binding Body}" Zoom="80" IsToolBarVisible="False" Background="{DynamicResource prefTabControlBgBrush}" />
         </Grid>
 

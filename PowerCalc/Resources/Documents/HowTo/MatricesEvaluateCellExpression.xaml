@@ -1,6 +1,6 @@
 ﻿<FlowDocument
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Tag="Worksheet: clear worksheet..."
+        Tag="Matrices: evaluate cell expression..."
         FontFamily="Segoe UI">
 </FlowDocument>

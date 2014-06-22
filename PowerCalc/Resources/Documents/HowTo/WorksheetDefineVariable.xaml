@@ -1,7 +1,7 @@
 ﻿<FlowDocument
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Tag="Worksheet: Define a variable..."
+        Tag="Worksheet: define a variable..."
         FontFamily="Segoe UI">
     <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
         Steps:
