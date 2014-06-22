@@ -93,7 +93,7 @@ namespace TAlex.PowerCalc.ViewModels
             AppSettings = appSettings;
             ShowOnStartup = appSettings.ShowHowToOnStartup;
 
-            Items = howToItemsProvider.GetItems().OrderBy(x => x.Caption).ToList();
+            Items = howToItemsProvider.GetItems();
             CurrentIndex = new Random().Next(1, Items.Count + 1);
         }
 
