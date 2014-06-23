@@ -3,4 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Tag="Worksheet: input matrix..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>
+                Enter open matrix defenition character "<Span FontWeight="Bold">{</Span>"
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Type expression which expresses the element of matrix
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Enter element separator sign "<Span FontWeight="Bold">,</Span>"
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Repeat steps 2 and 3 until the end of matrix row and enter row separator sign "<Span FontWeight="Bold">;</Span>" instead of step 3
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Repeat step 4 until the end of the matrix and be aware that the last entered row must be without row separator at the end
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Enter close matrix defenition character "<Span FontWeight="Bold">}</Span>"
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>Press
+                <Span FontWeight="Bold">Enter</Span> button
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph FontWeight="Bold" FontSize="17" Margin="0,15,0,0">
+        Examples:
+    </Paragraph>
+    <List Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>{1, 2; 3, 4} - square matrix (2x2)</Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>{-2; 0; 14; 3i} - column vector</Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>{0, 0, 137, -14, 5} - rectangular matrix (1x5)</Paragraph>
+        </ListItem>
+    </List>
 </FlowDocument>

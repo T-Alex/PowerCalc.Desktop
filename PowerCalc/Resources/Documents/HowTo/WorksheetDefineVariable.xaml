@@ -8,12 +8,11 @@
     </Paragraph>
     <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
         <ListItem>
-            <Paragraph>Type a variable name <Span Foreground="Gray">(starts from letter or underscore and than numbers, letters and underscore is allowed)</Span>
+            <Paragraph>Type a variable name <Span Foreground="Gray">(starts from letter or underscore and than numbers, letters and underscore are allowed)</Span>
             </Paragraph>
         </ListItem>
         <ListItem>
-            <Paragraph>Type variable definition sign "
-                <Span FontWeight="Bold">:</Span> "
+            <Paragraph>Type variable definition sign "<Span FontWeight="Bold">:</Span>"
             </Paragraph>
         </ListItem>
         <ListItem>

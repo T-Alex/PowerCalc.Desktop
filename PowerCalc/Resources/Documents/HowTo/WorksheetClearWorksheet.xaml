@@ -3,4 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Tag="Worksheet: clear worksheet..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>Enter "<Span FontWeight="Bold">cls</Span>" character sequence <Span Foreground="Gray">(clear screen)</Span>
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>Press
+                <Span FontWeight="Bold">Enter</Span> button
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <Span>After that all information from "<Italic>Worksheet</Italic>" tab will be removed.
+        </Span>
+    </Paragraph>
 </FlowDocument>

@@ -3,4 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Tag="Worksheet: add comments..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>Enter // character sequence marks the following text as a single-line comment
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Type comment
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>Press
+                <Span FontWeight="Bold">Enter</Span> button
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <Span FontWeight="Bold" FontSize="17">Example:</Span>
+        <LineBreak />
+        <Span>// This line will not be evaluated, it's just a comment!</Span>
+    </Paragraph>
 </FlowDocument>
