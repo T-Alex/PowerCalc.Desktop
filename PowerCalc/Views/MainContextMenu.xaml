@@ -28,7 +28,7 @@
             </MenuItem.ItemContainerStyle>
         </MenuItem>
 
-        <MenuItem Header="Constants" DataContext="{Binding Source={StaticResource viewModelLocator}, Path=ConstantsContextMenuViewModel}" ItemsSource="{Binding Constants}">
+        <MenuItem Header="Insert constant" DataContext="{Binding Source={StaticResource viewModelLocator}, Path=ConstantsContextMenuViewModel}" ItemsSource="{Binding Constants}">
             <MenuItem.ItemContainerStyle>
                 <Style TargetType="MenuItem">
                     <Setter Property="Header" Value="{Binding DisplayName}"/>

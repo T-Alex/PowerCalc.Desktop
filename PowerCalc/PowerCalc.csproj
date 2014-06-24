@@ -488,10 +488,13 @@
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Documents\HowTo\Images\navigate_by_input_history.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\insert_function.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\insert_constant.png" />
     <Resource Include="Resources\Documents\HowTo\Images\input_matrix.png" />
     <Resource Include="Resources\Documents\HowTo\Images\evaluate_expression.png" />
     <Resource Include="Resources\Documents\HowTo\Images\define_variable.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\add_comments.PNG" />
+    <Resource Include="Resources\Documents\HowTo\Images\add_comments.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Extensions\TAlex.MathCore.ComplexExpressions.Extensions.dll">

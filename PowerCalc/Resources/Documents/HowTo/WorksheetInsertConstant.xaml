@@ -3,4 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Tag="Worksheet: insert constant..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>
+                Click mouse <Span FontWeight="Bold">right button</Span> on input field to show context menu
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Select "<Span FontWeight="Bold">Insert constant</Span>" menu item
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Choose the necessary constant
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Click on this item to insert
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>                
+        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/insert_constant.png" Opacity="0.7" />
+    </Paragraph>
 </FlowDocument>

@@ -3,4 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Tag="Worksheet: insert function..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>
+                Click mouse <Span FontWeight="Bold">right button</Span> on input field to show context menu
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Select "<Span FontWeight="Bold">Insert function</Span>" menu item
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Choose the necessary function from one of the available group
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Click on this item to insert
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/insert_function.png" Opacity="0.7" />
+    </Paragraph>
 </FlowDocument>

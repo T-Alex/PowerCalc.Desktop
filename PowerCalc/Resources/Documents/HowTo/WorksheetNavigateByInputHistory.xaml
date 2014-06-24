@@ -3,4 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Tag="Worksheet: navigate by input history..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>
+                Evaluate several expressions
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Press <Span FontWeight="Bold">Up</Span> button to navigate up by input history
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Press <Span FontWeight="Bold">Down</Span> button to navigate down by input history
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/navigate_by_input_history.png" Opacity="0.7" />
+    </Paragraph>
 </FlowDocument>
