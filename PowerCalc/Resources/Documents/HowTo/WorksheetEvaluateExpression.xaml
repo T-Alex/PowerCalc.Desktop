@@ -33,4 +33,7 @@
             <Paragraph>{1, 2; 5, 3+2i} * { 1, 2^0.5; sin(pi), sqrt(-1)}</Paragraph>
         </ListItem>
     </List>
+    <Paragraph>
+        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/evaluate_expression.png" Opacity="0.7" />
+    </Paragraph>
 </FlowDocument>

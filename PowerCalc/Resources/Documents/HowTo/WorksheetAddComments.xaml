@@ -29,4 +29,8 @@
         <LineBreak />
         <Span>// This line will not be evaluated, it's just a comment!</Span>
     </Paragraph>
+    
+    <Paragraph>
+        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/add_comments.png" Opacity="0.7" />
+    </Paragraph>
 </FlowDocument>

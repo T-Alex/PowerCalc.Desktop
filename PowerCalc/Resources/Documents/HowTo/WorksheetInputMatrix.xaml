@@ -59,4 +59,7 @@
             <Paragraph>{0, 0, 137, -14, 5} - rectangular matrix (1x5)</Paragraph>
         </ListItem>
     </List>
+    <Paragraph>
+        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/input_matrix.png" Opacity="0.7" />
+    </Paragraph>
 </FlowDocument>

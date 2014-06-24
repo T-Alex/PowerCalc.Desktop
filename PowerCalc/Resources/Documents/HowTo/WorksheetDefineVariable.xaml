@@ -42,4 +42,7 @@
             <Underline>sin(pi/2)+25</Underline> - expression
         </Span>
     </Paragraph>
+    <Paragraph>
+        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/define_variable.png" Opacity="0.7" />
+    </Paragraph>
 </FlowDocument>
