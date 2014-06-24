@@ -3,4 +3,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Tag="Matrices: copy/cut/paste cell values..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>
+                Fill necessary cells with data
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Select cells for managing
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph Margin="0">
+                Press
+            </Paragraph>
+            <List Margin="0" Padding="15,0">
+                <ListItem>
+                    <Paragraph><Span FontWeight="Bold">Crtl+C</Span> - for copying selected cells</Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph><Span FontWeight="Bold">Crtl+X</Span> - for cutting selected cells</Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph><Span FontWeight="Bold">Crtl+V</Span> - for pasting selected cells to specified area</Paragraph>
+                </ListItem>
+            </List>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/matrices_clipboard.png" Opacity="0.7" />
+    </Paragraph>
 </FlowDocument>

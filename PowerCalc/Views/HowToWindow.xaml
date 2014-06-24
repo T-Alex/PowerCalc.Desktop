@@ -5,7 +5,12 @@
         Title="How To..." Height="400" MinHeight="300" Width="600" MinWidth="500"
         ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
         Background="{DynamicResource GradBrush}">
-    <Grid Margin="10">
+    <Window.InputBindings>
+        <KeyBinding Key="Left" Gesture="Left" Command="{Binding PreviousCommand}" />
+        <KeyBinding Key="Right" Command="{Binding NextCommand}" />
+    </Window.InputBindings>
+    
+    <Grid Margin="10">       
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="25" />

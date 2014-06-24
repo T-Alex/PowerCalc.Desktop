@@ -101,7 +101,7 @@ namespace TAlex.PowerCalc.Views
 
         private void CommandBindingHelp_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            new ReferencesWindow { Owner = this }.ShowDialog();
+            new ReferencesWindow { Owner = this }.Show();
         }
 
         #endregion
