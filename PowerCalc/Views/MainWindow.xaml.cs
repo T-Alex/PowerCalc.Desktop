@@ -115,7 +115,7 @@ namespace TAlex.PowerCalc.Views
 
             if (Properties.Settings.Default.ShowHowToOnStartup)
             {
-                new HowToWindow { Owner = this }.ShowDialog();
+                new HowToWindow { Owner = this }.Show();
             }
         }
 
@@ -194,7 +194,7 @@ namespace TAlex.PowerCalc.Views
 
         private void howToMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            new HowToWindow() { Owner = this }.ShowDialog();
+            new HowToWindow { Owner = this }.Show();
         }
 
         private void navHomepageMenuItem_Click(object sender, RoutedEventArgs e)

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace TAlex.PowerCalc.Views
 {
     /// <summary>
@@ -22,6 +23,11 @@ namespace TAlex.PowerCalc.Views
         public HowToWindow()
         {
             InitializeComponent();
+        }
+
+        private void closeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
