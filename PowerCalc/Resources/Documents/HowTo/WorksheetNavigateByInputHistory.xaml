@@ -1,6 +1,7 @@
 ﻿<FlowDocument
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls;assembly=PowerCalc"
         Tag="Worksheet: navigate by input history..."
         FontFamily="Segoe UI">
 
@@ -26,6 +27,6 @@
     </List>
 
     <Paragraph>
-        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/navigate_by_input_history.png" Opacity="0.7" />
+        <controls:ThemedImage Stretch="None" Source="/Resources/Documents/HowTo/Images/navigate_by_input_history.Grayscale.png" />
     </Paragraph>
 </FlowDocument>

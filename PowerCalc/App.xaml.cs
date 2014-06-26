@@ -11,6 +11,7 @@ using TAlex.PowerCalc.Views;
 using TAlex.Common.Diagnostics.ErrorReporting;
 using TAlex.Common.Environment;
 using TAlex.WPF.Mvvm.Extensions;
+using TAlex.WPF.Theming;
 
 
 namespace TAlex.PowerCalc
@@ -59,7 +60,7 @@ namespace TAlex.PowerCalc
             base.OnNavigating(e);
             
             // apply theme
-            TAlex.WPFThemes.Twilight.TwilightThemeManager.ApplyTheme(PowerCalc.Properties.Settings.Default.ColorScheme);
+            ThemeLocator.Manager.ApplyTheme(PowerCalc.Properties.Settings.Default.ColorScheme);
 
             // check license
             CheckTrialExpiration();

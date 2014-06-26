@@ -1,16 +1,24 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.IO;
+using TAlex.WPF.Theming;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+
 
 namespace TAlex.WPFThemes.Twilight
 {
-    public static class TwilightThemeManager
+    public class TwilightThemeManager : IThemeManager
     {
         #region Fields
 
+        private static TwilightThemeManager _instance;
+        private static object _syncObj = new object();
+
         private static string _assemblyName;
 
-        private static readonly string[] _colorSchemes;
+        private static readonly ReadOnlyCollection<ThemeInfo> _avaliableThemes;
 
         private static string _uriThemeDir;
 
@@ -18,13 +26,41 @@ namespace TAlex.WPFThemes.Twilight
 
         #region Properties
 
-        public static string[] ColorSchemes
+        public static TwilightThemeManager Instance
         {
             get
             {
-                return _colorSchemes;
+                if (_instance == null)
+                {
+                    lock(_syncObj)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new TwilightThemeManager();
+                        }
+                    }
+                }
+
+                return _instance;
             }
         }
+
+
+        public string CurrentTheme { get; private set; }
+
+        public ReadOnlyCollection<ThemeInfo> AvailableThemes
+        {
+            get
+            {
+                return _avaliableThemes;
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        public event ThemeChangedEventHandler ThemeChanged;
 
         #endregion
 
@@ -33,42 +69,49 @@ namespace TAlex.WPFThemes.Twilight
         static TwilightThemeManager()
         {
             _assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            _uriThemeDir = @"/" + _assemblyName + ";" + PathCombine("component", "Themes", "Twilight");
-            _colorSchemes = new string[] { "Black" , "Blue", "Silver" };
+            _uriThemeDir = @"/" + _assemblyName + ";" + Path.Combine("component", "Themes", "Twilight");
+            _avaliableThemes = new ReadOnlyCollection<ThemeInfo>(new List<ThemeInfo>
+            {
+                new ThemeInfo("Blue", "Blue"),
+                new ThemeInfo("Silver", "Grayscale"),
+                new ThemeInfo("Black", "Grayscale")
+            });
+        }
+
+        protected TwilightThemeManager()
+        {
         }
 
         #endregion
 
         #region Methods
 
-        public static bool ApplyTheme(string colorScheme)
+        public bool ApplyTheme(string themeName)
         {
-            if (Array.IndexOf(_colorSchemes, colorScheme) == -1)
+            if (!AvailableThemes.Any(x => x.Name == themeName))
             {
                 return false;
             }
 
             ResourceDictionary resources = Application.Current.Resources.MergedDictionaries[0];
             resources.Clear();
-            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "ColorSchemes", colorScheme + ".xaml"), UriKind.Relative)) as ResourceDictionary);
-            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "Shared.xaml"), UriKind.Relative)) as ResourceDictionary);
-            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "NumericUpDown.xaml"), UriKind.Relative)) as ResourceDictionary);
+            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(Path.Combine(_uriThemeDir, "ColorSchemes", themeName + ".xaml"), UriKind.Relative)) as ResourceDictionary);
+            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(Path.Combine(_uriThemeDir, "Shared.xaml"), UriKind.Relative)) as ResourceDictionary);
+            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(Path.Combine(_uriThemeDir, "NumericUpDown.xaml"), UriKind.Relative)) as ResourceDictionary);
 
-            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(PathCombine(_uriThemeDir, "DataGrid.xaml"), UriKind.Relative)) as ResourceDictionary);
+            resources.MergedDictionaries.Add(Application.LoadComponent(new Uri(Path.Combine(_uriThemeDir, "DataGrid.xaml"), UriKind.Relative)) as ResourceDictionary);
 
+            CurrentTheme = themeName;
+            OnThemeChanged(themeName);
             return true;
         }
 
-        private static string PathCombine(params string[] paths)
+        protected virtual void OnThemeChanged(string themeName)
         {
-            string path = String.Empty;
-
-            for (int i = 0; i < paths.Length; i++)
+            if (ThemeChanged != null)
             {
-                path = Path.Combine(path, paths[i]);
+                ThemeChanged(this, new ThemeEventArgs(themeName));
             }
-
-            return path;
         }
 
         #endregion

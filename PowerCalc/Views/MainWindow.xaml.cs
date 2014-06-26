@@ -24,6 +24,7 @@ using TAlex.PowerCalc.ViewModels.Plot2D;
 using TAlex.WPF3DToolkit;
 using TAlex.WPF3DToolkit.Surfaces;
 using TAlex.PowerCalc.ViewModels.Worksheet;
+using TAlex.WPF.Theming;
 
 
 namespace TAlex.PowerCalc.Views
@@ -150,41 +151,9 @@ namespace TAlex.PowerCalc.Views
             }
         }
 
-        private void colorSchemeMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = sender as MenuItem;
-            string currentColorScheme = PowerCalc.Properties.Settings.Default.ColorScheme;
-
-            for (int i = 0; i < menuItem.Items.Count; i++)
-            {
-                MenuItem item = menuItem.Items[i] as MenuItem;
-
-                if ((string)item.Tag == currentColorScheme)
-                    item.IsChecked = true;
-                else
-                    item.IsChecked = false;
-            }
-        }
-
         private void viewMenuItems_Click(object sender, RoutedEventArgs e)
         {
             mainTabControl.SelectedIndex = int.Parse((string)((Control)(sender)).Tag);
-        }
-
-        private void applyColorSchemeMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = sender as MenuItem;
-            string colorScheme = (string)menuItem.Tag;
-
-            int selectedIndex = mainTabControl.SelectedIndex;
-
-            if (TAlex.WPFThemes.Twilight.TwilightThemeManager.ApplyTheme(colorScheme))
-            {
-                PowerCalc.Properties.Settings.Default.ColorScheme = colorScheme;
-                PowerCalc.Properties.Settings.Default.Save();
-
-                mainTabControl.SelectedIndex = selectedIndex;
-            }
         }
 
         private void preferencesMenuItem_Click(object sender, RoutedEventArgs e)

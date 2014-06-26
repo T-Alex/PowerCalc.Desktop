@@ -4,6 +4,7 @@ using TAlex.Common.Environment;
 using TAlex.PowerCalc.Services;
 using TAlex.PowerCalc.Converters;
 using TAlex.WPF.Mvvm.Services;
+using TAlex.WPF.Theming;
 
 
 namespace TAlex.PowerCalc.Locators.Modules
@@ -18,6 +19,9 @@ namespace TAlex.PowerCalc.Locators.Modules
             Bind<IMessageService>().To<MessageService>();
             Bind<WorksheetMatrixCachedValueConverter>().ToSelf();
             Bind<IHowToItemsProvider>().To<HowToItemsProvider>();
+
+            TAlex.WPF.Theming.ThemeLocator.SetManager(TAlex.WPFThemes.Twilight.TwilightThemeManager.Instance);
+            Bind<IThemeManager>().ToConstant(TAlex.WPF.Theming.ThemeLocator.Manager);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿<FlowDocument
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls;assembly=PowerCalc"
         Tag="Worksheet: evaluate expression..."
         FontFamily="Segoe UI">
 
@@ -34,6 +35,6 @@
         </ListItem>
     </List>
     <Paragraph>
-        <Image Stretch="None" Source="/Resources/Documents/HowTo/Images/evaluate_expression.png" Opacity="0.7" />
+        <controls:ThemedImage Stretch="None" Source="/Resources/Documents/HowTo/Images/evaluate_expression.Grayscale.png" />
     </Paragraph>
 </FlowDocument>

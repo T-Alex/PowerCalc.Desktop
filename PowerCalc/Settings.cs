@@ -16,6 +16,13 @@ namespace TAlex.PowerCalc.Properties {
                 Upgrade();
                 CallUpgrade = false;
             }
+
+            TAlex.WPF.Theming.ThemeLocator.Manager.ThemeChanged += Manager_ThemeChanged;
+        }
+
+        private void Manager_ThemeChanged(object sender, WPF.Theming.ThemeEventArgs args)
+        {
+            ColorScheme = args.NewTheme;
         }
     }
 }

@@ -11,6 +11,8 @@ using TAlex.Common.Licensing;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.PowerCalc.ViewModels.Worksheet;
 using TAlex.WPF.Mvvm;
+using TAlex.WPF.Mvvm.Commands;
+using TAlex.WPF.Theming;
 
 
 namespace TAlex.PowerCalc.ViewModels
@@ -21,6 +23,7 @@ namespace TAlex.PowerCalc.ViewModels
 
         protected readonly ApplicationInfo ApplicationInfo;
         protected readonly LicenseBase AppLicense;
+        protected readonly IThemeManager ThemeManager;
         public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
         private bool _canShowXYCoords;
@@ -53,6 +56,13 @@ namespace TAlex.PowerCalc.ViewModels
             }
         }
 
+        public virtual List<ColorScheme> ColorSchemes
+        {
+            get
+            {
+                return ThemeManager.AvailableThemes.Select(x => new ColorScheme(ThemeManager, x.Name, x.DisplayName)).ToList();
+            }
+        }
 
 
         public WorksheetModel Worksheet { get; set; }
@@ -102,13 +112,35 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Constructors
 
-        public MainWindowViewModel(ApplicationInfo applicationInfo, LicenseBase appLicense, IExpressionTreeBuilder<Object> treeBuilder, WorksheetModel worksheetModel)
+        public MainWindowViewModel(ApplicationInfo applicationInfo, LicenseBase appLicense, IExpressionTreeBuilder<Object> treeBuilder, WorksheetModel worksheetModel, IThemeManager themeManager)
         {
             ApplicationInfo = applicationInfo;
             AppLicense = appLicense;
             ExpressionTreeBuilder = treeBuilder;
 
             Worksheet = worksheetModel;
+            ThemeManager = themeManager;
+        }
+
+        #endregion
+
+        #region Nested Types
+
+        public class ColorScheme
+        {
+            public string Name { get; private set; }
+
+            public string DisplayName { get; private set; }
+
+            public ICommand ApplySchemeCommand { get; private set; }
+
+
+            public ColorScheme(IThemeManager themeManager, string name, string displayName)
+            {
+                Name = name;
+                DisplayName = displayName;
+                ApplySchemeCommand = new RelayCommand(() => { themeManager.ApplyTheme(name); });
+            }
         }
 
         #endregion

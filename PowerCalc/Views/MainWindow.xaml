@@ -26,7 +26,7 @@
         <converters:WorksheetItemResultConverter x:Key="WorksheetItemResultConverter" />
         <converters:WorksheetItemResultToForeground x:Key="WorksheetItemResultToForeground" />
         <converters:CopyToClipboardParameterConverter x:Key="CopyToClipboardParameterConverter" />
-
+        <converters:IsCurrentThemeConverter x:Key="IsCurrentThemeConverter" />
 
         <Style x:Key="RoundedButton" TargetType="{x:Type Button}">
             <Setter Property="FontFamily" Value="{StaticResource IconicFont}" />
@@ -126,10 +126,14 @@
                 <MenuItem Header="_2D Plot" IsCheckable="True" Tag="2" Click="viewMenuItems_Click" />
                 <MenuItem Header="_3D Plot" IsCheckable="True" Tag="3" Click="viewMenuItems_Click" Visibility="Collapsed" />
                 <Separator />
-                <MenuItem Header="_Color Scheme" SubmenuOpened="colorSchemeMenuItem_SubmenuOpened">
-                    <MenuItem Header="Blue" IsCheckable="True" Tag="Blue" Click="applyColorSchemeMenuItem_Click" />
-                    <MenuItem Header="Silver" IsCheckable="True" Tag="Silver" Click="applyColorSchemeMenuItem_Click" />
-                    <MenuItem Header="Black" IsCheckable="True" Tag="Black" Click="applyColorSchemeMenuItem_Click" />
+                <MenuItem Header="_Color Scheme" ItemsSource="{Binding ColorSchemes}">
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="IsChecked" Value="{Binding Name, Mode=OneWay, Converter={StaticResource IsCurrentThemeConverter}}" />
+                            <Setter Property="Header" Value="{Binding DisplayName}"/>
+                            <Setter Property="Command" Value="{Binding ApplySchemeCommand}" />
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Tools">

@@ -95,9 +95,8 @@
     <Reference Include="TAlex.MathCore.Statistics">
       <HintPath>..\packages\TAlex.MathCore.Statistics.1.0.4871.34047\lib\net45\TAlex.MathCore.Statistics.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.WPF.Controls, Version=1.8.5284.37124, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TAlex.WPF.Controls.1.8.5284.37124\lib\net40\TAlex.WPF.Controls.dll</HintPath>
+    <Reference Include="TAlex.WPF.Controls">
+      <HintPath>..\packages\TAlex.WPF.Controls.1.8.5290.41575\lib\net40\TAlex.WPF.Controls.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.WPF.Mvvm, Version=1.1.5201.39558, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -312,6 +311,7 @@
     <Compile Include="Commands\CopyToClipboardCommand.cs" />
     <Compile Include="Commands\InsertFunctionCommand.cs" />
     <Compile Include="Controls\DataGridTemplateColumnEx.cs" />
+    <Compile Include="Controls\ThemedImage.cs" />
     <Compile Include="Controls\WorksheetMatrix.xaml.cs">
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
@@ -320,6 +320,7 @@
     <Compile Include="Converters\FunctionSignatureToDisplayConverter.cs" />
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\IsCurrentThemeConverter.cs" />
     <Compile Include="Converters\NumericFormatToBooleanConverter.cs" />
     <Compile Include="Converters\Trace2DVisibleToOpacityConverter.cs" />
     <Compile Include="Converters\WorksheetItemResultConverter.cs" />
@@ -488,14 +489,15 @@
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Documents\HowTo\Images\matrices_clipboard.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\navigate_by_input_history.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\insert_function.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\insert_constant.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\input_matrix.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\evaluate_expression.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\define_variable.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\add_comments.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\add_comments.Blue.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_clipboard.Grayscale.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\navigate_by_input_history.Grayscale.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\insert_function.Grayscale.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\insert_constant.Grayscale.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\input_matrix.Grayscale.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\evaluate_expression.Grayscale.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\define_variable.Grayscale.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\add_comments.Grayscale.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Extensions\TAlex.MathCore.ComplexExpressions.Extensions.dll">
