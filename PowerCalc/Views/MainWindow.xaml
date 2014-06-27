@@ -26,7 +26,6 @@
         <converters:WorksheetItemResultConverter x:Key="WorksheetItemResultConverter" />
         <converters:WorksheetItemResultToForeground x:Key="WorksheetItemResultToForeground" />
         <converters:CopyToClipboardParameterConverter x:Key="CopyToClipboardParameterConverter" />
-        <converters:IsCurrentThemeConverter x:Key="IsCurrentThemeConverter" />
 
         <Style x:Key="RoundedButton" TargetType="{x:Type Button}">
             <Setter Property="FontFamily" Value="{StaticResource IconicFont}" />
@@ -129,7 +128,7 @@
                 <MenuItem Header="_Color Scheme" ItemsSource="{Binding ColorSchemes}">
                     <MenuItem.ItemContainerStyle>
                         <Style TargetType="MenuItem">
-                            <Setter Property="IsChecked" Value="{Binding Name, Mode=OneWay, Converter={StaticResource IsCurrentThemeConverter}}" />
+                            <Setter Property="IsChecked" Value="{Binding IsCurrent, Mode=OneWay}" />
                             <Setter Property="Header" Value="{Binding DisplayName}"/>
                             <Setter Property="Command" Value="{Binding ApplySchemeCommand}" />
                         </Style>

@@ -44,6 +44,10 @@
         </Span>
     </Paragraph>
     <Paragraph>
-        <controls:ThemedImage Stretch="None" Source="/Resources/Documents/HowTo/Images/define_variable.Grayscale.png" />
+        <controls:ThemedImage Stretch="None" Source="/Resources/Documents/HowTo/Images/define_variable.Blue.png" RenderOptions.BitmapScalingMode="HighQuality">
+            <controls:ThemedImage.LayoutTransform>
+                <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+            </controls:ThemedImage.LayoutTransform>
+        </controls:ThemedImage>
     </Paragraph>
 </FlowDocument>

@@ -44,7 +44,6 @@ namespace TAlex.PowerCalc.Controls
         protected override void OnRender(DrawingContext dc)
         {
             ImageSource source = Source;
-            Size size = RenderSize;
 
             if (source == null)
             {
@@ -60,14 +59,13 @@ namespace TAlex.PowerCalc.Controls
                 {
                     BitmapImage bi = new BitmapImage(newUri);
                     source = bi;
-                    size = new Size(bi.Width / 0.75, bi.Height / 0.75);
                 }
                 catch (IOException)
                 {
                 }
                 
             }
-            dc.DrawImage(source, new Rect(new Point(), size));
+            dc.DrawImage(source, new Rect(new Point(), RenderSize));
         }
 
         #endregion

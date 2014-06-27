@@ -128,15 +128,28 @@ namespace TAlex.PowerCalc.ViewModels
 
         public class ColorScheme
         {
+            private IThemeManager _themeManager;
+
+
             public string Name { get; private set; }
 
             public string DisplayName { get; private set; }
+
+            public bool IsCurrent
+            {
+                get
+                {
+                    return Name == _themeManager.CurrentTheme;
+                }
+            }
 
             public ICommand ApplySchemeCommand { get; private set; }
 
 
             public ColorScheme(IThemeManager themeManager, string name, string displayName)
             {
+                _themeManager = themeManager;
+
                 Name = name;
                 DisplayName = displayName;
                 ApplySchemeCommand = new RelayCommand(() => { themeManager.ApplyTheme(name); });

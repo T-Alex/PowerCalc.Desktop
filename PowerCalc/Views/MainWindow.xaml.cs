@@ -24,7 +24,6 @@ using TAlex.PowerCalc.ViewModels.Plot2D;
 using TAlex.WPF3DToolkit;
 using TAlex.WPF3DToolkit.Surfaces;
 using TAlex.PowerCalc.ViewModels.Worksheet;
-using TAlex.WPF.Theming;
 
 
 namespace TAlex.PowerCalc.Views
