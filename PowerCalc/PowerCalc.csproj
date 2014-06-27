@@ -488,6 +488,9 @@
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_clipboard.Blue.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\navigate_by_input_history.Blue.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\insert_function.Blue.png" />
     <Resource Include="Resources\Documents\HowTo\Images\insert_constant.Blue.png" />
     <Resource Include="Resources\Documents\HowTo\Images\input_matrix.Blue.png" />
     <Resource Include="Resources\Documents\HowTo\Images\evaluate_expression.Blue.png" />
