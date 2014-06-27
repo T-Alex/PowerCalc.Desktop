@@ -44,7 +44,7 @@
         </Span>
     </Paragraph>
     <Paragraph>
-        <controls:ThemedImage Stretch="None" Source="/Resources/Documents/HowTo/Images/define_variable.Blue.png" RenderOptions.BitmapScalingMode="HighQuality">
+        <controls:ThemedImage Stretch="None" Source="/Resources/Documents/HowTo/Images/define_variable.Blue.png">
             <controls:ThemedImage.LayoutTransform>
                 <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
             </controls:ThemedImage.LayoutTransform>
