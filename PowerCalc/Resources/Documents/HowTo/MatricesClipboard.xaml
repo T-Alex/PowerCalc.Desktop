@@ -38,7 +38,7 @@
     </List>
 
     <Paragraph>
-        <talex:ImageEx Stretch="None" Source="/Resources/Documents/HowTo/Images/matrices_clipboard.Blue.png">
+        <talex:ImageEx Stretch="None" IsThemed="True" Source="/Resources/Documents/HowTo/Images/matrices_clipboard.Blue.png">
             <talex:ImageEx.LayoutTransform>
                 <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
             </talex:ImageEx.LayoutTransform>

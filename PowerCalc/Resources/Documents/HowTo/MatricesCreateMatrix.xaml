@@ -10,7 +10,7 @@
     </Paragraph>
     <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
         <ListItem>
-            <Paragraph>Select group of cells (empty cells)</Paragraph>
+            <Paragraph>Select group of cells</Paragraph>
         </ListItem>
         <ListItem>
             <Paragraph>
