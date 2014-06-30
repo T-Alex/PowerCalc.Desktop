@@ -95,9 +95,9 @@
     <Reference Include="TAlex.MathCore.Statistics">
       <HintPath>..\packages\TAlex.MathCore.Statistics.1.0.4871.34047\lib\net45\TAlex.MathCore.Statistics.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.WPF.Controls, Version=1.9.5294.35350, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TAlex.WPF.Controls, Version=1.9.5294.42184, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TAlex.WPF.Controls.1.9.5294.35350\lib\net40\TAlex.WPF.Controls.dll</HintPath>
+      <HintPath>..\packages\TAlex.WPF.Controls.1.9.5294.42184\lib\net40\TAlex.WPF.Controls.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.WPF.Mvvm, Version=1.1.5201.39558, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -488,18 +488,16 @@
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Blue.5.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Grayscale.5.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Blue.4.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Grayscale.4.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Blue.0.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Blue.1.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Blue.2.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Blue.3.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Blue.4.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Grayscale.0.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Grayscale.1.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Grayscale.2.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Grayscale.3.png" />
-    <Resource Include="Resources\Documents\HowTo\Images\matrices_delete_cells.Grayscale.4.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.0.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.1.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.10.png" />

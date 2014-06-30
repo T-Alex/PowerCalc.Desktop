@@ -29,7 +29,7 @@
     </List>
 
     <Paragraph>
-        <talex:ImageEx Stretch="None" IsThemed="True" IsFrameBased="True" LastFrameIndex="11" Source="/Resources/Documents/HowTo/Images/matrices_create_matrix.Blue.0.png">
+        <talex:ImageEx Stretch="None" IsThemed="True" IsFrameBased="True" Source="/Resources/Documents/HowTo/Images/matrices_create_matrix.Blue.0.png">
             <talex:ImageEx.LayoutTransform>
                 <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
             </talex:ImageEx.LayoutTransform>
