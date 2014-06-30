@@ -1,7 +1,38 @@
 ﻿<FlowDocument
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:TAlex.PowerCalc.Controls;assembly=PowerCalc"
+        xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
         Tag="Matrices: create matrix..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>Select group of cells (empty cells)</Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Press
+                <Span FontWeight="Bold">F2</Span> button
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>Type exression for matrix evaluation</Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Press button combination "<Span FontWeight="Bold">Ctrl+Shift+Enter</Span>"
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <talex:ImageEx Stretch="None" IsThemed="True" IsFrameBased="True" LastFrameIndex="11" Source="/Resources/Documents/HowTo/Images/matrices_create_matrix.Blue.0.png">
+            <talex:ImageEx.LayoutTransform>
+                <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+            </talex:ImageEx.LayoutTransform>
+        </talex:ImageEx>
+    </Paragraph>
 </FlowDocument>

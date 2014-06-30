@@ -95,8 +95,9 @@
     <Reference Include="TAlex.MathCore.Statistics">
       <HintPath>..\packages\TAlex.MathCore.Statistics.1.0.4871.34047\lib\net45\TAlex.MathCore.Statistics.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.WPF.Controls">
-      <HintPath>..\packages\TAlex.WPF.Controls.1.8.5290.41575\lib\net40\TAlex.WPF.Controls.dll</HintPath>
+    <Reference Include="TAlex.WPF.Controls, Version=1.9.5294.35350, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TAlex.WPF.Controls.1.9.5294.35350\lib\net40\TAlex.WPF.Controls.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.WPF.Mvvm, Version=1.1.5201.39558, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -311,7 +312,6 @@
     <Compile Include="Commands\CopyToClipboardCommand.cs" />
     <Compile Include="Commands\InsertFunctionCommand.cs" />
     <Compile Include="Controls\DataGridTemplateColumnEx.cs" />
-    <Compile Include="Controls\ThemedImage.cs" />
     <Compile Include="Controls\WorksheetMatrix.xaml.cs">
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
     </Compile>
@@ -488,6 +488,30 @@
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.0.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.1.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.10.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.11.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.2.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.3.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.4.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.5.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.6.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.7.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.8.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Blue.9.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.0.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.1.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.10.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.11.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.2.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.3.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.4.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.5.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.6.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.7.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.8.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\matrices_create_matrix.Grayscale.9.png" />
     <Resource Include="Resources\Documents\HowTo\Images\matrices_clipboard.Blue.png" />
     <Resource Include="Resources\Documents\HowTo\Images\navigate_by_input_history.Blue.png" />
     <Resource Include="Resources\Documents\HowTo\Images\insert_function.Blue.png" />
