@@ -4,4 +4,23 @@
         xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
         Tag="Matrices: use group of cells as a matrix in expression..."
         FontFamily="Segoe UI">
+    
+    <Paragraph>
+        <Span FontWeight="Bold">PowerCalc</Span> uses the A1 reference style, which refers to columns with letters (A through IV by default, for a total of 256 columns) and refers to rows with numbers (1 through 256 by default). These letters and numbers are called row and column headings. To refer to a cell, enter the column letter followed by the row number. For example, B2 refers to the cell at the intersection of column B and row 2.
+    </Paragraph>
+    <Paragraph>
+        To refer to a group of cells (matrix) in expression you should refer to <Span FontWeight="Bold">top left</Span> cell than type <Span FontWeight="Bold">:</Span> and refer to <Span FontWeight="Bold">bottom right</Span> cell.
+    </Paragraph>
+
+    <Paragraph FontWeight="Bold" FontSize="17" Margin="0,15,0,0">
+        Examples:
+    </Paragraph>
+    <List Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>A10 - the cell in column A and row 10</Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>A10:E20 - the matrix in columns A through E and rows 10 through 20</Paragraph>
+        </ListItem>
+    </List>
 </FlowDocument>
