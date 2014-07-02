@@ -29,20 +29,14 @@
     <Paragraph>
         <Span FontWeight="Bold" FontSize="17">Example:</Span>
         <LineBreak />
-        <Span>x: sin(pi/2)+25</Span>
+        <Span>x: sin(pi/2)+25</Span>,
+        <Span>
+            <Run FontStyle="Italic">where:</Run>
+            <Underline>x</Underline> - <Run FontStyle="Italic">variable name</Run>,
+            <Underline>sin(pi/2)+25</Underline> - <Run FontStyle="Italic">expression</Run>
+        </Span>
     </Paragraph>
 
-    <Paragraph>
-        <Span FontStyle="Italic">Where:</Span>
-        <LineBreak />
-        <Span>
-            <Underline>x</Underline> - variable name
-        </Span>
-        <LineBreak />
-        <Span>
-            <Underline>sin(pi/2)+25</Underline> - expression
-        </Span>
-    </Paragraph>
     <Paragraph>
         <talex:ImageEx Stretch="None" IsThemed="True" Source="/Resources/Documents/HowTo/Images/define_variable.Blue.png">
             <talex:ImageEx.LayoutTransform>

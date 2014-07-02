@@ -4,4 +4,27 @@
         xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
         Tag="Plot 2D: select a region..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>Hold
+                <Span FontWeight="Bold">Ctrl</Span>+<Span FontWeight="Bold">Left Mouse</Span> buttons and then select a region for zooming
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>Release all buttons
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <talex:ImageEx Stretch="None" IsThemed="True" Source="/Resources/Documents/HowTo/Images/plot2d_select_region.Blue.png">
+            <talex:ImageEx.LayoutTransform>
+                <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+            </talex:ImageEx.LayoutTransform>
+        </talex:ImageEx>
+    </Paragraph>
 </FlowDocument>

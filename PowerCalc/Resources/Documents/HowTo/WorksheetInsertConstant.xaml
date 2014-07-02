@@ -11,7 +11,7 @@
     <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
         <ListItem>
             <Paragraph>
-                Click mouse <Span FontWeight="Bold">right button</Span> on input field to show context menu
+                Click <Span FontWeight="Bold">Right Mouse</Span> button on input field to show context menu
             </Paragraph>
         </ListItem>
         <ListItem>
