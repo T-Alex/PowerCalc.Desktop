@@ -488,6 +488,8 @@
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Documents\HowTo\Images\plot2d_fullscreen.Blue.png" />
+    <Resource Include="Resources\Documents\HowTo\Images\plot2d_fullscreen.Grayscale.png" />
     <Resource Include="Resources\Documents\HowTo\Images\plot2d_select_region.Blue.png" />
     <Resource Include="Resources\Documents\HowTo\Images\plot2d_select_region.Grayscale.png" />
     <Resource Include="Resources\Documents\HowTo\Images\plot2d_reset_viewport.Blue.png" />

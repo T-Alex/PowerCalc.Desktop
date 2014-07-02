@@ -4,4 +4,24 @@
         xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
         Tag="Plot 2D: zoom plot..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>Hover mouse pointer under plot 2D
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Scroll up mouse wheel to <Span FontWeight="Bold">zoom in</Span>
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                Scroll down mouse wheel to <Span FontWeight="Bold">zoom out</Span>
+            </Paragraph>
+        </ListItem>
+    </List>
 </FlowDocument>

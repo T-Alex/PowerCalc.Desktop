@@ -30,9 +30,6 @@
         <ListItem>
             <Paragraph>integ(sin(x)^x, 0, 1500, x)</Paragraph>
         </ListItem>
-        <ListItem>
-            <Paragraph>{1, 2; 5, 3+2i} * { 1, 2^0.5; sin(pi), sqrt(-1)}</Paragraph>
-        </ListItem>
     </List>
     <Paragraph>
         <talex:ImageEx Stretch="None" IsThemed="True" Source="/Resources/Documents/HowTo/Images/evaluate_expression.Blue.png">
