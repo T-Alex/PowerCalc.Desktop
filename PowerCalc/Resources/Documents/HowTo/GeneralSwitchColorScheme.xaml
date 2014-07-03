@@ -4,4 +4,29 @@
         xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
         Tag="General: switch color scheme..."
         FontFamily="Segoe UI">
+
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>
+                Open
+                <Span FontWeight="Bold">View > Color Scheme</Span> menu item
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph Margin="0">
+                Choose one of the available colors: <Italic>Blue</Italic>, <Italic>Silver</Italic>, <Italic>Black</Italic>
+            </Paragraph>
+        </ListItem>
+    </List>
+
+    <Paragraph>
+        <talex:ImageEx Stretch="None" IsThemed="True" Source="/Resources/Documents/HowTo/Images/general_color_scheme.Blue.png">
+            <talex:ImageEx.LayoutTransform>
+                <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+            </talex:ImageEx.LayoutTransform>
+        </talex:ImageEx>
+    </Paragraph>
 </FlowDocument>

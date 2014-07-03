@@ -4,4 +4,41 @@
         xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
         Tag="General: change result format..."
         FontFamily="Segoe UI">
+    <Paragraph FontSize="17" FontWeight="Bold" Margin="0">
+        Steps:
+    </Paragraph>
+    <List MarkerStyle="Decimal" Padding="25,0" Margin="0">
+        <ListItem>
+            <Paragraph>
+                Open <Span FontWeight="Bold">Tools > Preferences...</Span> menu item
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph Margin="0">
+                Manage result format
+            </Paragraph>
+            <List Margin="0" Padding="15,0">
+                <ListItem>
+                    <Paragraph>
+                        <Italic>Decimal Places</Italic>: from 0 to 17
+                    </Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph>
+                        <Italic>Result Format</Italic>: scientific, fixed-point, general
+                    </Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph>
+                        <Italic>Complex threshold</Italic>: from 0 to 307
+                    </Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph>
+                        <Italic>Zero threshold</Italic>: from 0 to 307
+                    </Paragraph>
+                </ListItem>
+            </List>
+        </ListItem>
+    </List>
 </FlowDocument>
