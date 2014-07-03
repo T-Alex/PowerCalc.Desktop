@@ -3,10 +3,11 @@
   <?include Variables.wxi ?>
 
   <Bundle Name="$(var.ProductName)" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)" Copyright="$(var.Copyright)" AboutUrl="$(var.HomePageUrl)" UpdateUrl="$(var.UpdateInformation)" HelpUrl="$(var.HelpLink)">
-    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
       <bal:WixStandardBootstrapperApplication
-          LicenseFile="$(var.PowerCalcSetup.ProjectDir)\Resources\License.rtf"
+          LicenseUrl=""
           LogoFile="Resources/logo.bmp"
+          ShowVersion="yes"
           SuppressOptionsUI="yes" />
     </BootstrapperApplicationRef>
 

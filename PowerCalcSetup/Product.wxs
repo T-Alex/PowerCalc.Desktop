@@ -19,6 +19,7 @@
     <!-- Properties for UI -->
     <Property Id="SHORTCUT_PROGRAMMENU">1</Property>
     <Property Id="SHORTCUT_DESKTOP">1</Property>
+    <Property Id="LAUNCHAPPONEXIT">1</Property>
 
     <!--Directory structure-->
     <Directory Id="TARGETDIR" Name="SourceDir">
@@ -45,6 +46,12 @@
 
     <FeatureRef Id="Complete"/>
 
+    <!-- Launch on exit -->
+    <CustomAction Id="LaunchApplication" FileKey="ProductExecutableFile" ExeCommand="" Execute="immediate" Impersonate="yes" Return="asyncNoWait" />
+    <UI>
+      <Publish Dialog="CustomExitDialog" Control="Finish" Order="1" Event="DoAction" Value="LaunchApplication">LAUNCHAPPONEXIT</Publish>
+    </UI>
+    
     <!-- Icons -->
     <Icon Id="ProductIcon.exe" SourceFile="$(var.PowerCalc.TargetPath)" />
     <!--<Icon Id="BinaryTestFile.ico" SourceFile="$(var.Testcheck.Tester.ProjectDir)Resources\Icons\testfile.ico" />--> <!-- TODO: Need to remove -->

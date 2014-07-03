@@ -15,12 +15,12 @@
         </ListItem>
         <ListItem>
             <Paragraph>
-                Scroll up mouse wheel to <Span FontWeight="Bold">zoom in</Span>
+                Scroll up mouse wheel to <Span FontWeight="Bold">Zoom In</Span>
             </Paragraph>
         </ListItem>
         <ListItem>
             <Paragraph>
-                Scroll down mouse wheel to <Span FontWeight="Bold">zoom out</Span>
+                Scroll down mouse wheel to <Span FontWeight="Bold">Zoom Out</Span>
             </Paragraph>
         </ListItem>
     </List>

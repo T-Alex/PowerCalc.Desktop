@@ -26,6 +26,7 @@
     <Compile Include="Product.wxs" />
     <Compile Include="Shortcuts.wxs" />
     <Compile Include="UI\AdditionalTasksDlg.wxs" />
+    <Compile Include="UI\CustomExitDialog.wxs" />
     <Compile Include="UI\WixUI_InstallDirEx.wxs" />
   </ItemGroup>
   <ItemGroup>
