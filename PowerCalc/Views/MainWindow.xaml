@@ -172,7 +172,7 @@
 
                         <Grid Margin="6,3" FocusManager.FocusedElement="{Binding ElementName=worksheetTextBox}">
                             <TextBox x:Name="worksheetTextBox"  Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource stlHintbox}" Tag="Type expression here..."
+                                 Style="{DynamicResource stlHintbox}" Tag="Type expression here..."
                                  Foreground="Black"
                                  ContextMenu="{StaticResource MainContextMenu}" Focusable="True">
                                 <TextBox.InputBindings>
@@ -367,7 +367,6 @@
 
                     <ListView Name="WorksheetListView" Background="{DynamicResource WorksheetBgBrush}" BorderBrush="{DynamicResource WorksheetBorderBrush}"
                               DockPanel.Dock="Top" FontSize="12"
-                              VirtualizingPanel.IsContainerVirtualizable="False" VirtualizingPanel.IsVirtualizing="False"
                               HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               DataContext="{Binding Worksheet}" ItemsSource="{Binding Items}"
                               ItemTemplateSelector="{StaticResource WorksheetTemplateSelector}">
