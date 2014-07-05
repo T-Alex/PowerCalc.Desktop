@@ -102,6 +102,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <Style x:Key="ReadOnlyTextBox" TargetType="{x:Type TextBox}" BasedOn="{x:Null}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="IsReadOnly" Value="True" />
+        </Style>
     </Window.Resources>
 
     <Grid Background="{DynamicResource MainWindowBgBrush}">
@@ -220,8 +226,9 @@
                                             <MenuItem Header="Copy Raw Result" Command="{StaticResource CopyToClipboardCommand}" CommandParameter="{Binding Result}"  />
                                         </ContextMenu>
                                     </StackPanel.ContextMenu>
-                                    
-                                    <TextBlock Text="{Binding Expression}" />
+
+                                    <TextBox Text="{Binding Expression, Mode=OneWay}" Style="{StaticResource ReadOnlyTextBox}" TextWrapping="Wrap" />
+
                                     <Line Stretch="Fill" Stroke="{DynamicResource WorksheetItemSeparatorBrush}" X2="1"/>
                                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                         <Label Margin="0" Padding="0" FontFamily="Consolas"
@@ -243,7 +250,7 @@
                                 </Border.Effect>
 
                                 <StackPanel Margin="7,3">
-                                    <Label Margin="0" Padding="0" Foreground="#966F33" Content="{Binding Result}" />
+                                    <TextBox Style="{StaticResource ReadOnlyTextBox}" Margin="0" Padding="0" Foreground="#966F33" Text="{Binding Result, Mode=OneWay}" TextWrapping="Wrap" />
                                 </StackPanel>
                             </Border>
                         </Grid>
