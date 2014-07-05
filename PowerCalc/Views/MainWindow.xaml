@@ -231,9 +231,9 @@
 
                                     <Line Stretch="Fill" Stroke="{DynamicResource WorksheetItemSeparatorBrush}" X2="1"/>
                                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                                        <Label Margin="0" Padding="0" FontFamily="Consolas"
+                                        <TextBox Style="{StaticResource ReadOnlyTextBox}" Margin="0" Padding="0" FontFamily="Consolas"
                                            Foreground="{Binding Result, Converter={StaticResource WorksheetItemResultToForeground}}"
-                                           Content="{Binding Result, Converter={StaticResource WorksheetItemResultConverter}}" />
+                                           Text="{Binding Result, Mode=OneWay, Converter={StaticResource WorksheetItemResultConverter}}" />
                                     </ScrollViewer>
                                     
                                 </StackPanel>
