@@ -89,7 +89,8 @@ namespace TAlex.PowerCalc.Controls
 
         public void Refresh()
         {
-            dataGrid.Items.Refresh();
+            dataGrid.Dispatcher.BeginInvoke((Action)EndEditFormulaBar)
+                .Task.ContinueWith((t) => { dataGrid.Items.Refresh(); });
         }
 
         #region Event Handlers
@@ -149,22 +150,7 @@ namespace TAlex.PowerCalc.Controls
         /// <param name="e"></param>
         private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (_lastEditedCellViaFormulaBar != null && _lastEditedCellViaFormulaBar != dataGrid.TryToFindGridCell(dataGrid.CurrentItem, dataGrid.CurrentColumn))
-            {
-                if (_lastEditedCellViaFormulaBar.IsEditing)
-                {
-                    _lastEditedCellViaFormulaBar.IsEditing = false;
-
-                    _formulaBarEdit = false;
-
-                    dataGrid_CellEditEnding(dataGrid, new DataGridCellEditEndingEventArgs(
-                        _lastEditedCellViaFormulaBar.Column,
-                        _lastEditedCellViaFormulaBar.GetRow(),
-                        null, DataGridEditAction.Commit));
-
-                    _lastEditedCellViaFormulaBar = null;
-                }
-            }
+            EndEditFormulaBar();
             
             int selectedCells = dataGrid.SelectedCells.Count;
             if (selectedCells > 0)
@@ -390,6 +376,26 @@ namespace TAlex.PowerCalc.Controls
             dataGrid.UnselectAllCells();
             dataGrid.SelectedCells.Add(firstCellInfo);
             dataGrid.CurrentCell = firstCellInfo;
+        }
+
+        protected virtual void EndEditFormulaBar()
+        {
+            if (_lastEditedCellViaFormulaBar != null && _lastEditedCellViaFormulaBar != dataGrid.TryToFindGridCell(dataGrid.CurrentItem, dataGrid.CurrentColumn))
+            {
+                if (_lastEditedCellViaFormulaBar.IsEditing)
+                {
+                    _lastEditedCellViaFormulaBar.IsEditing = false;
+
+                    _formulaBarEdit = false;
+
+                    dataGrid_CellEditEnding(dataGrid, new DataGridCellEditEndingEventArgs(
+                        _lastEditedCellViaFormulaBar.Column,
+                        _lastEditedCellViaFormulaBar.GetRow(),
+                        null, DataGridEditAction.Commit));
+
+                    _lastEditedCellViaFormulaBar = null;
+                }
+            }
         }
 
         #endregion
