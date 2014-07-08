@@ -283,5 +283,29 @@ namespace TAlex.PowerCalc.Properties {
                 this["ShowHowToOnStartup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int WorksheetDefaultInsertMatrixRows {
+            get {
+                return ((int)(this["WorksheetDefaultInsertMatrixRows"]));
+            }
+            set {
+                this["WorksheetDefaultInsertMatrixRows"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int WorksheetDefaultInsertMatrixColumns {
+            get {
+                return ((int)(this["WorksheetDefaultInsertMatrixColumns"]));
+            }
+            set {
+                this["WorksheetDefaultInsertMatrixColumns"] = value;
+            }
+        }
     }
 }

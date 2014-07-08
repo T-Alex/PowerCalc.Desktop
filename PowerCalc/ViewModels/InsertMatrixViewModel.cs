@@ -107,6 +107,7 @@ namespace TAlex.PowerCalc.ViewModels
         private int _rowsCount;
         private int _columnsCount;
         private ObservableCollection<MatrixRowViewModel> _rows;
+        private MatrixViewMode _mode;
 
         #endregion
 
@@ -148,6 +149,32 @@ namespace TAlex.PowerCalc.ViewModels
             }
         }
 
+        public string Caption
+        {
+            get
+            {
+                if (_mode == MatrixViewMode.Insert)
+                    return "Insert Matrix";
+                else if (_mode == MatrixViewMode.Edit)
+                    return "Edit Matrix";
+                else
+                    return null;
+            }
+        }
+
+        public string InsertActionText
+        {
+            get
+            {
+                if (_mode == MatrixViewMode.Insert)
+                    return "Insert";
+                else if (_mode == MatrixViewMode.Edit)
+                    return "Edit";
+                else
+                    return null;
+            }
+        }
+
         #endregion
 
         #region Events
@@ -162,6 +189,25 @@ namespace TAlex.PowerCalc.ViewModels
         {
             _rows = new ObservableCollection<MatrixRowViewModel>();
             Initialize(rows, columns);
+            _mode = MatrixViewMode.Insert;
+        }
+
+        public MatrixViewModel(List<List<string>> matrix)
+        {
+            _rows = new ObservableCollection<MatrixRowViewModel>();
+
+            int i = 0;
+            foreach (var row in matrix)
+            {
+                _rows.Add(new MatrixRowViewModel(row) { RowNumber = i++ });
+            }
+
+            Set(() => Rows, ref _rowsCount, matrix.Count);
+            if (matrix.Count > 0)
+            {
+                Set(() => Columns, ref _columnsCount, matrix[0].Count);
+            }
+            _mode = MatrixViewMode.Edit;
         }
 
         #endregion
@@ -340,6 +386,16 @@ namespace TAlex.PowerCalc.ViewModels
         }
 
         #endregion
+
+        #region Nested Types
+
+        public enum MatrixViewMode
+        {
+            Insert,
+            Edit
+        }
+
+        #endregion
     }
 
     public class MatrixRowViewModel : ICustomTypeDescriptor
@@ -379,6 +435,11 @@ namespace TAlex.PowerCalc.ViewModels
             {
                 _cells.Add(null);
             }
+        }
+
+        public MatrixRowViewModel(List<string> row)
+        {
+            _cells = new List<string>(row);
         }
 
         #endregion
