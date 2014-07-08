@@ -6,6 +6,7 @@
     <converters:FunctionSignaturesToTooltipConverter x:Key="FunctionSignaturesToTooltipConverter" />
     <commands:InsertFunctionCommand x:Key="InsertFunctionCommand" />
     <commands:CopyToClipboardCommand x:Key="CopyToClipboardCommand" />
+    <commands:InsertMatrixCommand x:Key="InsertMatrixCommand" />
 
     <ContextMenu x:Key="MainContextMenu">
         <MenuItem Header="Insert function" DataContext="{Binding Source={StaticResource viewModelLocator}, Path=InsertFunctionContextMenuViewModel}" ItemsSource="{Binding Categories}">
@@ -39,7 +40,10 @@
                 </Style>
             </MenuItem.ItemContainerStyle>
         </MenuItem>
-
+        
+        <MenuItem Header="Insert/edit matrix..." Command="{StaticResource InsertMatrixCommand}" />
+        <MenuItem Header="Define a variable..." />
+        
         <Separator/>
 
         <MenuItem Command="Cut"/>

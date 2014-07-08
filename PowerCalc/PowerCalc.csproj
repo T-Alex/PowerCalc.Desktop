@@ -218,6 +218,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\InsertMatrixWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainContextMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -311,6 +315,7 @@
     <Compile Include="Behaviours\WindowCloseBehavior.cs" />
     <Compile Include="Commands\CopyToClipboardCommand.cs" />
     <Compile Include="Commands\InsertFunctionCommand.cs" />
+    <Compile Include="Commands\InsertMatrixCommand.cs" />
     <Compile Include="Controls\DataGridTemplateColumnEx.cs" />
     <Compile Include="Controls\WorksheetMatrix.xaml.cs">
       <DependentUpon>WorksheetMatrix.xaml</DependentUpon>
@@ -346,6 +351,7 @@
     <Compile Include="ViewModels\ConstantsContextMenuViewModel.cs" />
     <Compile Include="ViewModels\HowToViewModel.cs" />
     <Compile Include="ViewModels\InsertFunctionContextMenuViewModel.cs" />
+    <Compile Include="ViewModels\InsertMatrixViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Matrices\DataCellHelper.cs" />
     <Compile Include="ViewModels\Matrices\DataCellInfo.cs" />
@@ -372,6 +378,9 @@
     </Compile>
     <Compile Include="Views\HowToWindow.xaml.cs">
       <DependentUpon>HowToWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InsertMatrixWindow.xaml.cs">
+      <DependentUpon>InsertMatrixWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

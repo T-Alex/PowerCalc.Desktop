@@ -1,0 +1,52 @@
+﻿<Window x:Class="TAlex.PowerCalc.Views.InsertMatrixWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
+        xmlns:behaviours="clr-namespace:TAlex.PowerCalc.Behaviours"
+        Title="Insert Matrix" Height="300" MinHeight="300" Width="450" MinWidth="400" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource GradBrush}">
+
+    <Window.Style>
+        <Style>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CloseSignal}" Value="true">
+                    <Setter Property="behaviours:WindowCloseBehavior.Close" Value="true" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22" />
+            <RowDefinition />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Text="Rows:" VerticalAlignment="Center" Margin="5,0" />
+            <talex:NumericUpDown Width="60" Margin="5,0,10,0" Minimum="1" Value="{Binding Matrix.Rows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Columns:" VerticalAlignment="Center" Margin="5,0" />
+            <talex:NumericUpDown Width="60" Margin="5,0,0,0" Minimum="1" Value="{Binding Matrix.Columns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <DataGrid ItemsSource="{Binding Matrix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="0,10"
+                  CanUserReorderColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" CanUserSortColumns="False"
+                  AutoGenerateColumns="True" SelectionUnit="Cell" ColumnWidth="60"
+                  RowBackground="{DynamicResource DataGridRowBackground}"
+                  AlternatingRowBackground="{DynamicResource DataGridAlternatingRowBackground}">
+            <DataGrid.Background>
+                <SolidColorBrush Color="White" Opacity="0.2" />
+            </DataGrid.Background>
+            
+            <DataGrid.RowHeaderTemplate>
+                <DataTemplate>
+                    <Label Width="30" Padding="4" Content="{Binding Path=DataContext.RowNumber, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRowHeader}}" />
+                </DataTemplate>
+            </DataGrid.RowHeaderTemplate>
+        </DataGrid>
+        
+        <Button Grid.Row="2" Width="80" HorizontalAlignment="Right" Margin="0,0,90,0" Content="_Insert" Command="{Binding InsertCommand}" />
+        <Button Grid.Row="2" Width="80" HorizontalAlignment="Right" Content="_Cancel" IsCancel="True" Click="closeButton_Click" />
+    </Grid>
+</Window>
