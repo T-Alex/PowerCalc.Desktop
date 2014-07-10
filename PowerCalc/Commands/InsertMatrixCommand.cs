@@ -101,7 +101,7 @@ namespace TAlex.PowerCalc.Commands
             string s = text.Trim();
             if (!s.StartsWith("{") || !s.EndsWith("}"))
             {
-                throw new FormatException(Resources.EXC_InvalidFormatMatrix);
+                throw new FormatException(Resources.EXC_InvalidFormatMatrixCurlyBrackets);
             }
             s = s.Substring(1, s.Length - 2).Trim();
 
@@ -141,8 +141,15 @@ namespace TAlex.PowerCalc.Commands
                 throw new FormatException(Resources.EXC_InvalidFormatMatrix);
             else
                 result.Last().Add(currentItem.Trim());
-            
+            if (result.Any(r => r.Count != result.First().Count))
+                throw new FormatException(Resources.EXC_InvalidFormatMatrix);
+
             return result;
+        }
+
+        private void FireInvalidMatrixFormatException()
+        {
+            throw new FormatException(Resources.EXC_InvalidFormatMatrix);
         }
 
         #endregion

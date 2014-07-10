@@ -89,6 +89,15 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The format of matrix is invalid. Matrix should be enclosed with curly brackets..
+        /// </summary>
+        internal static string EXC_InvalidFormatMatrixCurlyBrackets {
+            get {
+                return ResourceManager.GetString("EXC_InvalidFormatMatrixCurlyBrackets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The index of the cell is out of range of the resultant matrix..
         /// </summary>
         internal static string EXC_MatrixIndexOutOfRange {

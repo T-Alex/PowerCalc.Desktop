@@ -127,6 +127,9 @@ FYI: A circular reference is a part of expression that refers to its own cell va
   <data name="EXC_InvalidFormatMatrix" xml:space="preserve">
     <value>The format of matrix is invalid.</value>
   </data>
+  <data name="EXC_InvalidFormatMatrixCurlyBrackets" xml:space="preserve">
+    <value>The format of matrix is invalid. Matrix should be enclosed with curly brackets.</value>
+  </data>
   <data name="EXC_MatrixIndexOutOfRange" xml:space="preserve">
     <value>The index of the cell is out of range of the resultant matrix.</value>
   </data>
