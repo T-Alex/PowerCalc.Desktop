@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using TAlex.PowerCalc.Properties;
 using TAlex.PowerCalc.Services;
 using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.Views;
@@ -59,16 +60,16 @@ namespace TAlex.PowerCalc.Commands
             ClipboardService.SetText(tempText);
 
             List<List<string>> matrix = null;
-            if (!String.IsNullOrEmpty(selectedText))
+            if (!String.IsNullOrWhiteSpace(selectedText))
             {
                 try
                 {
                     matrix = ParseMatrix(selectedText);
                 }
-                catch (FormatException)
+                catch (FormatException exc)
                 {
                     MessageBox.Show(Application.Current.GetActiveWindow(),
-                        "The format of matrix is invalid.", Properties.Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Error);
+                        exc.Message, Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
@@ -98,27 +99,22 @@ namespace TAlex.PowerCalc.Commands
         private List<List<string>> ParseMatrix(string text)
         {
             string s = text.Trim();
+            if (!s.StartsWith("{") || !s.EndsWith("}"))
+            {
+                throw new FormatException(Resources.EXC_InvalidFormatMatrix);
+            }
+            s = s.Substring(1, s.Length - 2).Trim();
 
             var result = new List<List<string>>();
             result.Add(new List<string>());
 
             CharEnumerator enumerator = s.GetEnumerator();
-            enumerator.MoveNext();
-            
-            if (enumerator.Current != '{')
-            {
-                return result;
-            }
 
-            int index = 0;
             int parenthesesCount = 0, curlyBracesCount = 0;
             string currentItem = String.Empty;
 
             while (enumerator.MoveNext())
             {
-                index++;
-                if (Char.IsWhiteSpace(enumerator.Current)) continue;
-
                 if (enumerator.Current == '{') curlyBracesCount++;
                 else if (enumerator.Current == '(') parenthesesCount++;
                 else if (enumerator.Current == '}') curlyBracesCount--;
@@ -126,7 +122,7 @@ namespace TAlex.PowerCalc.Commands
 
                 if (parenthesesCount == 0 && curlyBracesCount == 0 && (enumerator.Current == ',' || enumerator.Current == ';'))
                 {
-                    result.Last().Add(currentItem);
+                    result.Last().Add(currentItem.Trim());
                     currentItem = String.Empty;
 
                     if (enumerator.Current == ';')
@@ -136,15 +132,15 @@ namespace TAlex.PowerCalc.Commands
                 {
                     currentItem += enumerator.Current;
                 }
-                else if (index == s.Length - 1 && enumerator.Current == '}')
-                {
-                    result.Last().Add(currentItem);
-                }
                 else
                 {
-                    throw new FormatException();
+                    throw new FormatException(Resources.EXC_InvalidFormatMatrix);
                 }
             }
+            if (String.IsNullOrWhiteSpace(currentItem) || parenthesesCount != 0 || curlyBracesCount != 0)
+                throw new FormatException(Resources.EXC_InvalidFormatMatrix);
+            else
+                result.Last().Add(currentItem.Trim());
             
             return result;
         }

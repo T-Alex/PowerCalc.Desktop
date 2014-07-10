@@ -80,6 +80,15 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The format of matrix is invalid..
+        /// </summary>
+        internal static string EXC_InvalidFormatMatrix {
+            get {
+                return ResourceManager.GetString("EXC_InvalidFormatMatrix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The index of the cell is out of range of the resultant matrix..
         /// </summary>
         internal static string EXC_MatrixIndexOutOfRange {
