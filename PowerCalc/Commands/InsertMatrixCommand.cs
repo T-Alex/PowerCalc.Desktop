@@ -134,22 +134,22 @@ namespace TAlex.PowerCalc.Commands
                 }
                 else
                 {
-                    throw new FormatException(Resources.EXC_InvalidFormatMatrix);
+                    throw new FormatException(Resources.EXC_InvalidFormatMatrixClosingBracketMatching);
                 }
             }
-            if (String.IsNullOrWhiteSpace(currentItem) || parenthesesCount != 0 || curlyBracesCount != 0)
-                throw new FormatException(Resources.EXC_InvalidFormatMatrix);
-            else
-                result.Last().Add(currentItem.Trim());
+
+            if (parenthesesCount != 0 || curlyBracesCount != 0)
+                throw new FormatException(Resources.EXC_InvalidFormatMatrixBracketMatching);
+
+            if (String.IsNullOrWhiteSpace(currentItem))
+                throw new FormatException(Resources.EXC_InvalidFormatMatrixLastItem);
+            
+            result.Last().Add(currentItem.Trim());
+
             if (result.Any(r => r.Count != result.First().Count))
-                throw new FormatException(Resources.EXC_InvalidFormatMatrix);
+                throw new FormatException(Resources.EXC_InvalidFormatMatrixRowLengths);
 
             return result;
-        }
-
-        private void FireInvalidMatrixFormatException()
-        {
-            throw new FormatException(Resources.EXC_InvalidFormatMatrix);
         }
 
         #endregion

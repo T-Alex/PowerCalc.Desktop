@@ -89,11 +89,47 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The format of matrix is invalid. Each opening bracket should have corresponding closing bracket..
+        /// </summary>
+        internal static string EXC_InvalidFormatMatrixBracketMatching {
+            get {
+                return ResourceManager.GetString("EXC_InvalidFormatMatrixBracketMatching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The format of matrix is invalid. Each closing bracket should have corresponding opening bracket..
+        /// </summary>
+        internal static string EXC_InvalidFormatMatrixClosingBracketMatching {
+            get {
+                return ResourceManager.GetString("EXC_InvalidFormatMatrixClosingBracketMatching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The format of matrix is invalid. Matrix should be enclosed with curly brackets..
         /// </summary>
         internal static string EXC_InvalidFormatMatrixCurlyBrackets {
             get {
                 return ResourceManager.GetString("EXC_InvalidFormatMatrixCurlyBrackets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The format of matrix is invalid. Last item should be not empty..
+        /// </summary>
+        internal static string EXC_InvalidFormatMatrixLastItem {
+            get {
+                return ResourceManager.GetString("EXC_InvalidFormatMatrixLastItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The format of matrix is invalid. All rows should be the same length..
+        /// </summary>
+        internal static string EXC_InvalidFormatMatrixRowLengths {
+            get {
+                return ResourceManager.GetString("EXC_InvalidFormatMatrixRowLengths", resourceCulture);
             }
         }
         
