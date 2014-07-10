@@ -287,24 +287,24 @@ namespace TAlex.PowerCalc.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public int WorksheetDefaultInsertMatrixRows {
+        public int WorksheetInsertMatrixDefaultRowsCount {
             get {
-                return ((int)(this["WorksheetDefaultInsertMatrixRows"]));
+                return ((int)(this["WorksheetInsertMatrixDefaultRowsCount"]));
             }
             set {
-                this["WorksheetDefaultInsertMatrixRows"] = value;
+                this["WorksheetInsertMatrixDefaultRowsCount"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public int WorksheetDefaultInsertMatrixColumns {
+        public int WorksheetInsertMatrixDefaultColumnsCount {
             get {
-                return ((int)(this["WorksheetDefaultInsertMatrixColumns"]));
+                return ((int)(this["WorksheetInsertMatrixDefaultColumnsCount"]));
             }
             set {
-                this["WorksheetDefaultInsertMatrixColumns"] = value;
+                this["WorksheetInsertMatrixDefaultColumnsCount"] = value;
             }
         }
     }

@@ -75,7 +75,7 @@ namespace TAlex.PowerCalc.Commands
 
             var dataContext = new InsertMatrixViewModel();
             if (matrix == null)
-                dataContext.Matrix = new MatrixViewModel(AppSettings.WorksheetDefaultInsertMatrixRows, AppSettings.WorksheetDefaultInsertMatrixColumns);
+                dataContext.Matrix = new MatrixViewModel(AppSettings.WorksheetInsertMatrixDefaultRowsCount, AppSettings.WorksheetInsertMatrixDefaultColumnsCount);
             else
                 dataContext.Matrix = new MatrixViewModel(matrix);
 

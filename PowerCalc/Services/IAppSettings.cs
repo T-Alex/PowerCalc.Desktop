@@ -24,8 +24,8 @@ namespace TAlex.PowerCalc.Services
 
         int WorksheetMaxMatrixRows { get; set; }
         int WorksheetMaxMatrixColumns { get; set; }
-        int WorksheetDefaultInsertMatrixRows { get; set; }
-        int WorksheetDefaultInsertMatrixColumns { get; set; }
+        int WorksheetInsertMatrixDefaultRowsCount { get; set; }
+        int WorksheetInsertMatrixDefaultColumnsCount { get; set; }
 
         int MatricesWorksheetRows { get; set; }
         int MatricesWorksheetColumns { get; set; }

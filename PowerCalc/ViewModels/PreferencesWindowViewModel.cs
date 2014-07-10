@@ -30,14 +30,13 @@ namespace TAlex.PowerCalc.ViewModels
         public int ZeroThreshold { get; set; }
         public int ComplexThreshold { get; set; }
 
-
         public int WorksheetMaxMatrixRows { get; set; }
         public int WorksheetMaxMatrixColumns { get; set; }
-
+        public int WorksheetInsertMatrixDefaultRowsCount { get; set; }
+        public int WorksheetInsertMatrixDefaultColumnsCount { get; set; }
 
         public int MatricesWorksheetRows { get; set; }
         public int MatricesWorksheetColumns { get; set; }
-
 
         public Color Plot2DBackground { get; set; }
         public Color Plot2DForeground { get; set; }
@@ -104,6 +103,8 @@ namespace TAlex.PowerCalc.ViewModels
 
             WorksheetMaxMatrixRows = AppSettings.WorksheetMaxMatrixRows;
             WorksheetMaxMatrixColumns = AppSettings.WorksheetMaxMatrixColumns;
+            WorksheetInsertMatrixDefaultRowsCount = AppSettings.WorksheetInsertMatrixDefaultRowsCount;
+            WorksheetInsertMatrixDefaultColumnsCount = AppSettings.WorksheetInsertMatrixDefaultColumnsCount;
 
             MatricesWorksheetRows = AppSettings.MatricesWorksheetRows;
             MatricesWorksheetColumns = AppSettings.MatricesWorksheetColumns;
@@ -127,6 +128,8 @@ namespace TAlex.PowerCalc.ViewModels
 
             AppSettings.WorksheetMaxMatrixRows = WorksheetMaxMatrixRows;
             AppSettings.WorksheetMaxMatrixColumns = WorksheetMaxMatrixColumns;
+            AppSettings.WorksheetInsertMatrixDefaultRowsCount = WorksheetInsertMatrixDefaultRowsCount;
+            AppSettings.WorksheetInsertMatrixDefaultColumnsCount = WorksheetInsertMatrixDefaultColumnsCount;
 
             AppSettings.MatricesWorksheetRows = MatricesWorksheetRows;
             AppSettings.MatricesWorksheetColumns = MatricesWorksheetColumns;
