@@ -31,8 +31,8 @@ cls – clear console
 ?, /?, help – show help
 ";
 
-        private static readonly string VariableNamePattern = @"(?<var>[a-zA-Z_][a-zA-Z_0-9]*)";
-        private static readonly string ExpressionPattern = @"(?<expr>[^=]+)";
+        private static readonly string VariableNamePattern = @"(?<var>[^\W\d]\w*)";
+        private static readonly string ExpressionPattern = @"(?<expr>.+)";
 
         private static readonly string StatementPattern = "(" + VariableNamePattern + @"\s*\:)?" + ExpressionPattern;
         private static readonly Regex StatementRegex = new Regex(StatementPattern, RegexOptions.Compiled);

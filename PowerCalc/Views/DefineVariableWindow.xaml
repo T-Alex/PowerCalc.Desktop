@@ -1,0 +1,36 @@
+﻿<Window x:Class="TAlex.PowerCalc.Views.DefineVariableWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behaviours="clr-namespace:TAlex.PowerCalc.Behaviours"
+        Title="Define a Variable" Height="140" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" WindowStyle="ToolWindow"
+        Background="{DynamicResource GradBrush}"
+        FocusManager.FocusedElement="{Binding ElementName=VariableNameTextBox}"
+        Loaded="Window_Loaded">
+    <Window.Style>
+        <Style>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CloseSignal}" Value="true">
+                    <Setter Property="behaviours:WindowCloseBehavior.Close" Value="true" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Variable Name" Margin="0,0,0,10">
+            <TextBox Name="VariableNameTextBox" Height="23" Text="{Binding VariableName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding DefineCommand}" />
+                </TextBox.InputBindings>
+            </TextBox>
+        </GroupBox>
+
+        <Button Grid.Row="2" Width="80" HorizontalAlignment="Right" Margin="0,0,90,0" Content="_Define" Command="{Binding DefineCommand}" />
+        <Button Grid.Row="2" Width="80" HorizontalAlignment="Right" Content="_Cancel" IsCancel="True" Click="closeButton_Click" />
+    </Grid>
+</Window>

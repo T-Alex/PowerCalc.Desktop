@@ -210,6 +210,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+    <Page Include="Views\DefineVariableWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ErrorReportingWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -314,6 +318,7 @@
     </Compile>
     <Compile Include="Behaviours\WindowCloseBehavior.cs" />
     <Compile Include="Commands\CopyToClipboardCommand.cs" />
+    <Compile Include="Commands\DefineVariableCommand.cs" />
     <Compile Include="Commands\InsertFunctionCommand.cs" />
     <Compile Include="Commands\InsertMatrixCommand.cs" />
     <Compile Include="Controls\DataGridTemplateColumnEx.cs" />
@@ -322,6 +327,7 @@
     </Compile>
     <Compile Include="Converters\CopyToClipboardParameterConverter.cs" />
     <Compile Include="Converters\DataCellToForegroundConverter.cs" />
+    <Compile Include="Converters\DefineVariableMenuItemVisibilityConverter.cs" />
     <Compile Include="Converters\FunctionSignatureToDisplayConverter.cs" />
     <Compile Include="Converters\FunctionSignaturesToTooltipConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
@@ -349,6 +355,7 @@
     <Compile Include="TemplateSelectors\WorksheetItemTemplateSelector.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\ConstantsContextMenuViewModel.cs" />
+    <Compile Include="ViewModels\DefineVariableViewModel.cs" />
     <Compile Include="ViewModels\HowToViewModel.cs" />
     <Compile Include="ViewModels\InsertFunctionContextMenuViewModel.cs" />
     <Compile Include="ViewModels\InsertMatrixViewModel.cs" />
@@ -373,6 +380,9 @@
     <Compile Include="ViewModels\Matrices\DataUnit.cs" />
     <Compile Include="ViewModels\Worksheet\WorksheetModel.cs" />
     <Compile Include="ViewModels\Worksheet\WorksheetItem.cs" />
+    <Compile Include="Views\DefineVariableWindow.xaml.cs">
+      <DependentUpon>DefineVariableWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ErrorReportingWindow.xaml.cs">
       <DependentUpon>ErrorReportingWindow.xaml</DependentUpon>
     </Compile>

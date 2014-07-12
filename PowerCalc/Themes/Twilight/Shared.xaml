@@ -4188,7 +4188,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition SharedSizeGroup="MenuItemIconColumnGroup" MinWidth="24" Width="Auto" />
-                            <ColumnDefinition Width="4" />
+                            <ColumnDefinition Width="7" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="37" />
                             <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto" />
