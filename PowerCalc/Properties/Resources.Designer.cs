@@ -179,6 +179,24 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Variable name cannot be empty.
+        /// </summary>
+        internal static string VALID_VarCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("VALID_VarCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The format of variable name is invalid.
+        /// </summary>
+        internal static string VALID_VarInvalidFormat {
+            get {
+                return ResourceManager.GetString("VALID_VarInvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is assigned with value:.
         /// </summary>
         internal static string VariableValueAssigned {

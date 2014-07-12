@@ -44,7 +44,7 @@ namespace TAlex.PowerCalc.Commands
             var textBox = FocusManager.GetFocusedElement(activeWindow) as TextBox;
             if (textBox == null) return;
 
-            var varName = String.Empty;
+            string varName = null;
             string expression = textBox.Text.Trim();
             var varMatch = _variableRegex.Match(expression);
 

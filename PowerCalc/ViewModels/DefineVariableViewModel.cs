@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using TAlex.PowerCalc.Properties;
 using TAlex.WPF.Mvvm;
 using TAlex.WPF.Mvvm.Commands;
 
+
 namespace TAlex.PowerCalc.ViewModels
 {
-    public class DefineVariableViewModel : ViewModelBase
+    public class DefineVariableViewModel : ViewModelBase, IDataErrorInfo
     {
         #region Fields
 
@@ -80,7 +82,35 @@ namespace TAlex.PowerCalc.ViewModels
 
         private bool CanDefine()
         {
-            return _variableNameRegex.IsMatch(VariableName.Trim());
+            return VariableName != null && _variableNameRegex.IsMatch(VariableName.Trim());
+        }
+
+        #endregion
+
+        #region IDataErrorInfo Members
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "VariableName":
+                        if (VariableName != null)
+                        {
+                            if (String.IsNullOrWhiteSpace(VariableName)) return Resources.VALID_VarCannotBeEmpty;
+                            if (!_variableNameRegex.IsMatch(VariableName.Trim())) return Resources.VALID_VarInvalidFormat;
+                        }
+                        break;
+                }
+
+                return null;
+            }
         }
 
         #endregion

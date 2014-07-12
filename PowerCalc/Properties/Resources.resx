@@ -157,6 +157,12 @@ FYI: A circular reference is a part of expression that refers to its own cell va
   <data name="SupportEmail" xml:space="preserve">
     <value>mailto:support@talex-soft.com</value>
   </data>
+  <data name="VALID_VarCannotBeEmpty" xml:space="preserve">
+    <value>Variable name cannot be empty</value>
+  </data>
+  <data name="VALID_VarInvalidFormat" xml:space="preserve">
+    <value>The format of variable name is invalid</value>
+  </data>
   <data name="VariableValueAssigned" xml:space="preserve">
     <value>'{0}' is assigned with value:</value>
   </data>

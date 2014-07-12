@@ -23,7 +23,17 @@
         </Grid.RowDefinitions>
 
         <GroupBox Header="Variable Name" Margin="0,0,0,10">
-            <TextBox Name="VariableNameTextBox" Height="23" Text="{Binding VariableName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <GroupBox.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="true">
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Resources>
+
+            <TextBox Name="VariableNameTextBox" Height="23" Text="{Binding VariableName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Return" Command="{Binding DefineCommand}" />
                 </TextBox.InputBindings>
