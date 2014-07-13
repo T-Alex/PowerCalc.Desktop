@@ -76,7 +76,7 @@ namespace TAlex.PowerCalc.Commands
                 }
             }
 
-            var dataContext = new InsertMatrixViewModel();
+            var dataContext = new InsertMatrixViewModel(String.IsNullOrWhiteSpace(selectedText) ? InsertMatrixViewModel.MatrixViewMode.Insert : InsertMatrixViewModel.MatrixViewMode.Edit);
             if (matrix == null)
                 dataContext.Matrix = new MatrixViewModel(AppSettings.WorksheetInsertMatrixDefaultRowsCount, AppSettings.WorksheetInsertMatrixDefaultColumnsCount);
             else
@@ -90,8 +90,10 @@ namespace TAlex.PowerCalc.Commands
 
             if (dialog.ShowDialog() == true)
             {
+                string tempText2 = ClipboardService.GetText();
                 ClipboardService.SetText(dataContext.Matrix.ToString());
                 ApplicationCommands.Paste.Execute(null, null);
+                ClipboardService.SetText(tempText2);
             }
         }
 

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
         xmlns:behaviours="clr-namespace:TAlex.PowerCalc.Behaviours"
-        Title="Insert Matrix" Height="300" MinHeight="300" Width="450" MinWidth="400" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        Title="{Binding Caption}" Height="300" MinHeight="300" Width="450" MinWidth="400" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
         Background="{DynamicResource GradBrush}">
 
     <Window.Style>
@@ -45,8 +45,8 @@
                 </DataTemplate>
             </DataGrid.RowHeaderTemplate>
         </DataGrid>
-        
-        <Button Grid.Row="2" Width="80" HorizontalAlignment="Right" Margin="0,0,90,0" Content="_Insert" Command="{Binding InsertCommand}" />
+
+        <Button Grid.Row="2" Width="80" HorizontalAlignment="Right" Margin="0,0,90,0" Content="{Binding InsertActionText}" Command="{Binding InsertCommand}" />
         <Button Grid.Row="2" Width="80" HorizontalAlignment="Right" Content="_Cancel" IsCancel="True" Click="closeButton_Click" />
     </Grid>
 </Window>

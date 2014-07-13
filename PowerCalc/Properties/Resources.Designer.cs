@@ -70,6 +70,15 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Matrix.
+        /// </summary>
+        internal static string EditMatrixCaption {
+            get {
+                return ResourceManager.GetString("EditMatrixCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more circular references were found.
         ///FYI: A circular reference is a part of expression that refers to its own cell value, or refers to cell dependent on its own cell value..
         /// </summary>
@@ -170,6 +179,24 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert.
+        /// </summary>
+        internal static string InsertActionText {
+            get {
+                return ResourceManager.GetString("InsertActionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Matrix.
+        /// </summary>
+        internal static string InsertMatrixCaption {
+            get {
+                return ResourceManager.GetString("InsertMatrixCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PowerCalc.
         /// </summary>
         internal static string MessageBoxCaptionText {
@@ -184,6 +211,15 @@ namespace TAlex.PowerCalc.Properties {
         internal static string SupportEmail {
             get {
                 return ResourceManager.GetString("SupportEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        internal static string UpdateActionText {
+            get {
+                return ResourceManager.GetString("UpdateActionText", resourceCulture);
             }
         }
         

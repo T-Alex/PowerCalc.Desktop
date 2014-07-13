@@ -120,6 +120,9 @@
   <data name="DeleteAllTraces2DQuestion" xml:space="preserve">
     <value>Do you really want to delete all traces?</value>
   </data>
+  <data name="EditMatrixCaption" xml:space="preserve">
+    <value>Edit Matrix</value>
+  </data>
   <data name="EXC_CircularReference" xml:space="preserve">
     <value>One or more circular references were found.
 FYI: A circular reference is a part of expression that refers to its own cell value, or refers to cell dependent on its own cell value.</value>
@@ -154,11 +157,20 @@ FYI: A circular reference is a part of expression that refers to its own cell va
   <data name="HomepageUrl" xml:space="preserve">
     <value>http://www.talex-soft.com</value>
   </data>
+  <data name="InsertActionText" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="InsertMatrixCaption" xml:space="preserve">
+    <value>Insert Matrix</value>
+  </data>
   <data name="MessageBoxCaptionText" xml:space="preserve">
     <value>PowerCalc</value>
   </data>
   <data name="SupportEmail" xml:space="preserve">
     <value>mailto:support@talex-soft.com</value>
+  </data>
+  <data name="UpdateActionText" xml:space="preserve">
+    <value>Update</value>
   </data>
   <data name="VALID_VarCannotBeEmpty" xml:space="preserve">
     <value>Variable name cannot be empty</value>

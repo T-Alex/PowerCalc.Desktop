@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TAlex.PowerCalc.Properties;
 using TAlex.WPF.Mvvm;
 using TAlex.WPF.Mvvm.Commands;
 
@@ -20,6 +21,7 @@ namespace TAlex.PowerCalc.ViewModels
 
         private MatrixViewModel _matrix;
         private bool _closeSignal;
+        private MatrixViewMode _mode;
 
         #endregion
 
@@ -57,6 +59,32 @@ namespace TAlex.PowerCalc.ViewModels
             }
         }
 
+        public string Caption
+        {
+            get
+            {
+                if (_mode == MatrixViewMode.Insert)
+                    return Resources.InsertMatrixCaption;
+                else if (_mode == MatrixViewMode.Edit)
+                    return Resources.EditMatrixCaption;
+                else
+                    return null;
+            }
+        }
+
+        public string InsertActionText
+        {
+            get
+            {
+                if (_mode == MatrixViewMode.Insert)
+                    return Resources.InsertActionText;
+                else if (_mode == MatrixViewMode.Edit)
+                    return Resources.UpdateActionText;
+                else
+                    return null;
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -67,9 +95,11 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Constructors
 
-        public InsertMatrixViewModel()
+        public InsertMatrixViewModel(MatrixViewMode mode)
         {
             InitializeCommands();
+
+            _mode = mode;
         }
 
         #endregion
@@ -98,6 +128,16 @@ namespace TAlex.PowerCalc.ViewModels
         }
 
         #endregion
+
+        #region Nested Types
+
+        public enum MatrixViewMode
+        {
+            Insert,
+            Edit
+        }
+
+        #endregion
     }
 
     public class MatrixViewModel : ViewModelBase, IList, INotifyCollectionChanged
@@ -107,7 +147,6 @@ namespace TAlex.PowerCalc.ViewModels
         private int _rowsCount;
         private int _columnsCount;
         private ObservableCollection<MatrixRowViewModel> _rows;
-        private MatrixViewMode _mode;
 
         #endregion
 
@@ -149,32 +188,6 @@ namespace TAlex.PowerCalc.ViewModels
             }
         }
 
-        public string Caption
-        {
-            get
-            {
-                if (_mode == MatrixViewMode.Insert)
-                    return "Insert Matrix";
-                else if (_mode == MatrixViewMode.Edit)
-                    return "Edit Matrix";
-                else
-                    return null;
-            }
-        }
-
-        public string InsertActionText
-        {
-            get
-            {
-                if (_mode == MatrixViewMode.Insert)
-                    return "Insert";
-                else if (_mode == MatrixViewMode.Edit)
-                    return "Edit";
-                else
-                    return null;
-            }
-        }
-
         #endregion
 
         #region Events
@@ -189,7 +202,6 @@ namespace TAlex.PowerCalc.ViewModels
         {
             _rows = new ObservableCollection<MatrixRowViewModel>();
             Initialize(rows, columns);
-            _mode = MatrixViewMode.Insert;
         }
 
         public MatrixViewModel(List<List<string>> matrix)
@@ -207,7 +219,6 @@ namespace TAlex.PowerCalc.ViewModels
             {
                 Set(() => Columns, ref _columnsCount, matrix[0].Count);
             }
-            _mode = MatrixViewMode.Edit;
         }
 
         #endregion
@@ -383,16 +394,6 @@ namespace TAlex.PowerCalc.ViewModels
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
-        }
-
-        #endregion
-
-        #region Nested Types
-
-        public enum MatrixViewMode
-        {
-            Insert,
-            Edit
         }
 
         #endregion
