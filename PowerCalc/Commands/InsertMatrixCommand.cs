@@ -18,8 +18,11 @@ namespace TAlex.PowerCalc.Commands
     {
         #region Fields
 
+        private const int MaxMatrixSize = 100;
+
         protected readonly IClipboardService ClipboardService;
         protected readonly IAppSettings AppSettings;
+
 
         #endregion
 
@@ -66,7 +69,7 @@ namespace TAlex.PowerCalc.Commands
                 {
                     matrix = ParseMatrix(selectedText);
                 }
-                catch (FormatException exc)
+                catch (Exception exc)
                 {
                     MessageBox.Show(Application.Current.GetActiveWindow(),
                         exc.Message, Resources.MessageBoxCaptionText, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -148,6 +151,8 @@ namespace TAlex.PowerCalc.Commands
 
             if (result.Any(r => r.Count != result.First().Count))
                 throw new FormatException(Resources.EXC_InvalidFormatMatrixRowLengths);
+            if (result.Count > MaxMatrixSize || result.Last().Count > MaxMatrixSize)
+                throw new Exception(Resources.EXC_MatrixSizeIsTooBig);
 
             return result;
         }

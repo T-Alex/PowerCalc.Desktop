@@ -145,6 +145,9 @@ FYI: A circular reference is a part of expression that refers to its own cell va
   <data name="EXC_MatrixIndexOutOfRange" xml:space="preserve">
     <value>The index of the cell is out of range of the resultant matrix.</value>
   </data>
+  <data name="EXC_MatrixSizeIsTooBig" xml:space="preserve">
+    <value>Matrix size is too big.</value>
+  </data>
   <data name="HelpFileName" xml:space="preserve">
     <value>Help.chm</value>
   </data>

@@ -143,6 +143,15 @@ namespace TAlex.PowerCalc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Matrix size is too big..
+        /// </summary>
+        internal static string EXC_MatrixSizeIsTooBig {
+            get {
+                return ResourceManager.GetString("EXC_MatrixSizeIsTooBig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.chm.
         /// </summary>
         internal static string HelpFileName {
