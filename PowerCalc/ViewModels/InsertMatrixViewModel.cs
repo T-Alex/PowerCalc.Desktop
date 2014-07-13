@@ -186,6 +186,11 @@ namespace TAlex.PowerCalc.ViewModels
             {
                 return _rows[row][col];
             }
+
+            set
+            {
+                _rows[row][col] = value;
+            }
         }
 
         #endregion
@@ -399,7 +404,7 @@ namespace TAlex.PowerCalc.ViewModels
         #endregion
     }
 
-    public class MatrixRowViewModel : ICustomTypeDescriptor
+    public class MatrixRowViewModel : ViewModelBase, ICustomTypeDescriptor
     {
         #region Fields
 
@@ -421,6 +426,7 @@ namespace TAlex.PowerCalc.ViewModels
             set
             {
                 _cells[i] = value;
+                RaisePropertyChanged(i.ToString());
             }
         }
 

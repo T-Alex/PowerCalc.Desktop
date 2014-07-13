@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TAlex.PowerCalc.Helpers;
+using TAlex.PowerCalc.ViewModels;
+
 
 namespace TAlex.PowerCalc.Views
 {
@@ -36,9 +39,33 @@ namespace TAlex.PowerCalc.Views
 
         #region Event Handlers
 
+        private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                OnDataGridDeleteKeyDown(sender as DataGrid, e);
+            }
+        }
+
         private void closeButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected void OnDataGridDeleteKeyDown(DataGrid source, KeyEventArgs e)
+        {
+            if (!source.GetCurrentDataGridCell().IsEditing)
+            {
+                MatrixViewModel matrix = ((InsertMatrixViewModel)DataContext).Matrix;
+                foreach (var cell in source.SelectedCells)
+                {
+                    matrix[source.Items.IndexOf(cell.Item), cell.Column.DisplayIndex] = String.Empty;
+                }
+            }
         }
 
         #endregion

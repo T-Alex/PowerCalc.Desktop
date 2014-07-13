@@ -34,7 +34,8 @@
                   CanUserReorderColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" CanUserSortColumns="False"
                   AutoGenerateColumns="True" SelectionUnit="Cell" ColumnWidth="60"
                   RowBackground="{DynamicResource DataGridRowBackground}"
-                  AlternatingRowBackground="{DynamicResource DataGridAlternatingRowBackground}">
+                  AlternatingRowBackground="{DynamicResource DataGridAlternatingRowBackground}"
+                  PreviewKeyDown="DataGrid_PreviewKeyDown">
             <DataGrid.Background>
                 <SolidColorBrush Color="White" Opacity="0.2" />
             </DataGrid.Background>
