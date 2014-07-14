@@ -120,10 +120,16 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
             Func<Object, Object> f = ParametricFunctionCreator.CreateOneParametricFunction(expression, "x");
             Func<double, double> func = (x) =>
             {
-                Complex result = (Complex)f((Complex)x);
-                return result.IsReal ? result.Re : double.NaN;
+                try
+                {
+                    Complex result = (Complex)f((Complex)x);
+                    return result.IsReal ? result.Re : double.NaN;
+                }
+                catch (Exception)
+                {
+                    return double.NaN;
+                }
             };
-            func(0.5);
             trace.Trace = func;
         }
 
