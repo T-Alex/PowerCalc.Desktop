@@ -89,8 +89,21 @@ namespace TAlex.PowerCalc.Controls
 
         public void Refresh()
         {
-            dataGrid.Dispatcher.BeginInvoke((Action)EndEditFormulaBar)
-                .Task.ContinueWith((t) => { dataGrid.Items.Refresh(); });
+            var view = dataGrid.Items as IEditableCollectionView;
+
+            dataGrid.Focus();
+            var selectedCells = dataGrid.SelectedCells.ToList();
+
+            if (view.IsEditingItem)
+            {
+                dataGrid.CancelEdit();
+                dataGrid.CommitEdit();
+                EndEditFormulaBar();
+                view.CommitEdit();
+            }
+            
+            dataGrid.Items.Refresh();
+            selectedCells.ForEach(x => dataGrid.SelectedCells.Add(x));
         }
 
         #region Event Handlers
@@ -394,6 +407,7 @@ namespace TAlex.PowerCalc.Controls
                         null, DataGridEditAction.Commit));
 
                     _lastEditedCellViaFormulaBar = null;
+                    dataGrid.CommitEdit();
                 }
             }
         }
