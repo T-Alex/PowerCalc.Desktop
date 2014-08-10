@@ -417,7 +417,7 @@
                                     <Button Canvas.Left="4" Canvas.Top="34" FontSize="10" Height="25" Tag="eigvals()" ToolTip="Eigenvalues" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">eig</Button>
                                     <Button Canvas.Left="41" Canvas.Top="34" FontSize="10" Height="25" Tag="sngvals()" ToolTip="Singularvalues" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">sng</Button>
                                     <Button Canvas.Left="4" Canvas.Top="64" FontSize="10" Height="25" Tag="eigvecs()" ToolTip="Eigenvectors" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">eigv</Button>
-                                    <Button Canvas.Left="41" Canvas.Top="64" FontSize="10" Height="25" Tag="leigvecs()" ToolTip="Left eigenvectors" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">leigv</Button>
+                                    <Button Canvas.Left="41" Canvas.Top="64" FontSize="10" Height="25" Tag="pinv()" ToolTip="Pseudo inverse" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">pinv</Button>
                                     <Button Canvas.Left="4" Canvas.Top="94" FontSize="10" Height="25" Tag="lsolve(,)" ToolTip="Linear system solve" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">solve</Button>
                                     <Button Canvas.Left="41" Canvas.Top="94" FontSize="10" Height="25" Tag="char()" ToolTip="Characteristic polynomial" Width="32" Focusable="False" Click="insertTextToFormulaBar_Click">char</Button>
                                 </Canvas>

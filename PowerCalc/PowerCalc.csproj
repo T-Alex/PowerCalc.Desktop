@@ -73,27 +73,32 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\TAlex.Common.1.5.5145.31419\lib\net40\TAlex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.MathCore">
-      <HintPath>..\packages\TAlex.MathCore.1.0.4871.34044\lib\net45\TAlex.MathCore.dll</HintPath>
-    </Reference>
-    <Reference Include="TAlex.MathCore.ComplexExpressions">
-      <HintPath>..\packages\TAlex.MathCore.ComplexExpressions.1.0.4871.35633\lib\net45\TAlex.MathCore.ComplexExpressions.dll</HintPath>
-    </Reference>
-    <Reference Include="TAlex.MathCore.ExpressionsBase, Version=1.0.5281.34974, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TAlex.MathCore, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TAlex.MathCore.ExpressionsBase.1.0.5281.34974\lib\net45\TAlex.MathCore.ExpressionsBase.dll</HintPath>
+      <HintPath>..\packages\TAlex.MathCore.1.1.0.0\lib\.NETPortable40-Profile344\TAlex.MathCore.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.MathCore.ComplexExpressions, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TAlex.MathCore.ComplexExpressions.1.1.0.0\lib\.NETPortable40-Profile344\TAlex.MathCore.ComplexExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="TAlex.MathCore.ExpressionsBase, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TAlex.MathCore.ExpressionsBase.1.1.0.0\lib\.NETPortable40-Profile344\TAlex.MathCore.ExpressionsBase.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.MathCore.LinearAlgebra">
-      <HintPath>..\packages\TAlex.MathCore.LinearAlgebra.1.0.4871.34046\lib\net45\TAlex.MathCore.LinearAlgebra.dll</HintPath>
+      <HintPath>..\packages\TAlex.MathCore.LinearAlgebra.1.1.1.0\lib\.NETPortable40-Profile344\TAlex.MathCore.LinearAlgebra.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.MathCore.NumericalAnalysis">
-      <HintPath>..\packages\TAlex.MathCore.NumericalAnalysis.1.0.4871.34048\lib\net45\TAlex.MathCore.NumericalAnalysis.dll</HintPath>
+    <Reference Include="TAlex.MathCore.NumericalAnalysis, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TAlex.MathCore.NumericalAnalysis.1.1.0.0\lib\.NETPortable40-Profile344\TAlex.MathCore.NumericalAnalysis.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.MathCore.SpecialFunctions">
-      <HintPath>..\packages\TAlex.MathCore.SpecialFunctions.1.0.4871.34045\lib\net45\TAlex.MathCore.SpecialFunctions.dll</HintPath>
+    <Reference Include="TAlex.MathCore.SpecialFunctions, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TAlex.MathCore.SpecialFunctions.1.1.0.0\lib\.NETPortable40-Profile344\TAlex.MathCore.SpecialFunctions.dll</HintPath>
     </Reference>
-    <Reference Include="TAlex.MathCore.Statistics">
-      <HintPath>..\packages\TAlex.MathCore.Statistics.1.0.4871.34047\lib\net45\TAlex.MathCore.Statistics.dll</HintPath>
+    <Reference Include="TAlex.MathCore.Statistics, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TAlex.MathCore.Statistics.1.1.0.0\lib\.NETPortable40-Profile344\TAlex.MathCore.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.WPF.Controls, Version=1.9.5294.42184, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
