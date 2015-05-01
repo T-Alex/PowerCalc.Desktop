@@ -35,7 +35,7 @@ namespace TAlex.PowerCalc.ViewModels
             set
             {
                 Set(ref _variableName, value);
-                RaiseCanDefine();
+                DefineCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -84,15 +84,6 @@ namespace TAlex.PowerCalc.ViewModels
         private bool CanDefine()
         {
             return VariableName != null && VariableNameRegex.IsMatch(VariableName.Trim());
-        }
-
-        private void RaiseCanDefine()
-        {
-            var command = DefineCommand as RelayCommand;
-            if (command != null)
-            {
-                command.RaiseCanExecuteChanged();
-            }
         }
 
         #endregion

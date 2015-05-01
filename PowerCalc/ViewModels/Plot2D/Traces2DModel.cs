@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -46,6 +47,11 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
             set
             {
                 Set(() => Traces, ref _traces, value);
+                if (Traces != null)
+                {
+                    Traces.CollectionChanged -= Traces_CollectionChanged;
+                    Traces.CollectionChanged += Traces_CollectionChanged;
+                }
             }
         }
 
@@ -194,6 +200,12 @@ namespace TAlex.PowerCalc.ViewModels.Plot2D
                 State.Save(OriginalTraces, _traces);
                 CloseSignal = true;
             }
+        }
+
+
+        public void Traces_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            DeleteAllCommand.RaiseCanExecuteChanged();
         }
 
         #endregion
