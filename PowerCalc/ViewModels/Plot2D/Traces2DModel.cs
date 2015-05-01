@@ -7,10 +7,10 @@ using System.Windows.Input;
 using TAlex.MathCore;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.Mvvm.Commands;
+using TAlex.Mvvm.Services;
+using TAlex.Mvvm.ViewModels;
 using TAlex.PowerCalc.Properties;
-using TAlex.WPF.Mvvm;
-using TAlex.WPF.Mvvm.Commands;
-using TAlex.WPF.Mvvm.Services;
 
 
 namespace TAlex.PowerCalc.ViewModels.Plot2D

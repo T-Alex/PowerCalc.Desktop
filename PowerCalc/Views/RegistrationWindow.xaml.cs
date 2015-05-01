@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using TAlex.Common.Licensing;
+using TAlex.License;
 using TAlex.PowerCalc.Licensing;
 
 namespace TAlex.PowerCalc.Views

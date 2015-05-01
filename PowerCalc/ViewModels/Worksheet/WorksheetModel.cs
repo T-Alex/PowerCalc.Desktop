@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
-using TAlex.WPF.Mvvm.Commands;
 using TAlex.PowerCalc.Helpers;
 using System.Text.RegularExpressions;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
+using TAlex.Mvvm.Commands;
 
 
 namespace TAlex.PowerCalc.ViewModels.Worksheet

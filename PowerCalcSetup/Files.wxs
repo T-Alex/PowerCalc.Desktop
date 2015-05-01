@@ -17,13 +17,21 @@
       <Component Id="CMP_TAlexCommon" Guid="448491D1-3810-4811-913E-02C108F4A176">
         <File Id="FILE_TAlexCommon" Name="TAlex.Common.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
       </Component>
+      <!-- TAlex.Common.Diagnostics -->
+      <Component Id="CMP_TAlexCommonDiagnostics" Guid="B9878020-F572-4FC0-AACA-2355CE6ED674">
+        <File Id="FILE_TAlexCommonDiagnostics" Name="TAlex.Common.Diagnostics.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
       <!-- TAlex.WPF.Controls -->
       <Component Id="CMP_TAlexWPFControls" Guid="0B005407-D39A-4D29-9703-4AF79E23132B">
         <File Id="FILE_TAlexWPFControls" Name="TAlex.WPF.Controls.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
       </Component>
-      <!-- TAlex.WPF.Mvvm -->
-      <Component Id="CMP_TAlexWPFMvvm" Guid="7D27AF12-541B-42B1-AB58-6140AD4C5EDA">
-        <File Id="FILE_TAlexWPFMvvm" Name="TAlex.WPF.Mvvm.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      <!-- TAlex.Mvvm -->
+      <Component Id="CMP_TAlexMvvm" Guid="7D27AF12-541B-42B1-AB58-6140AD4C5EDA">
+        <File Id="FILE_TAlexMvvm" Name="TAlex.Mvvm.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
+      <!-- TAlex.Mvvm.Wpf -->
+      <Component Id="CMP_TAlexMvvmWpf" Guid="4F5F6949-FDEE-49B2-9FE7-B69E386726CD">
+        <File Id="FILE_TAlexMvvmWpf" Name="TAlex.Mvvm.Wpf.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
       </Component>
       <!-- Ninject -->
       <Component Id="CMP_Ninject" Guid="C76B9053-F128-4694-A565-5160A179ADAA">

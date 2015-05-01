@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using TAlex.Common.Environment;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.PowerCalc.Locators.Modules;
 using TAlex.PowerCalc.ViewModels;

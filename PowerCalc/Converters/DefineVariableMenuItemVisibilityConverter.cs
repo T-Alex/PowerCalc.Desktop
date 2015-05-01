@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TAlex.WPF.Converters;
-using TAlex.WPF.Mvvm.Extensions;
+using TAlex.Mvvm.Extensions;
 
 
 namespace TAlex.PowerCalc.Converters

@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TAlex.Common.Environment;
 using TAlex.Common.Extensions;
-using TAlex.Common.Licensing;
+using TAlex.Common.Models;
+using TAlex.License;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.Mvvm.Commands;
+using TAlex.Mvvm.ViewModels;
 using TAlex.PowerCalc.ViewModels.Worksheet;
-using TAlex.WPF.Mvvm;
-using TAlex.WPF.Mvvm.Commands;
 using TAlex.WPF.Theming;
 
 
@@ -21,7 +21,7 @@ namespace TAlex.PowerCalc.ViewModels
     {
         #region Fields
 
-        protected readonly ApplicationInfo ApplicationInfo;
+        protected readonly AssemblyInfo AssemblyInfo;
         protected readonly LicenseBase AppLicense;
         protected readonly IThemeManager ThemeManager;
         public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
@@ -38,7 +38,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                string productTitle = ApplicationInfo.Title;
+                string productTitle = AssemblyInfo.Title;
 
                 if (AppLicense.IsTrial)
                     return String.Format("{0} - Evaluation version (days left: {1})", productTitle, AppLicense.TrialDaysLeft);
@@ -51,7 +51,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                string productTitle = ApplicationInfo.Title;
+                string productTitle = AssemblyInfo.Title;
                 return "_About " + productTitle;
             }
         }
@@ -112,9 +112,9 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Constructors
 
-        public MainWindowViewModel(ApplicationInfo applicationInfo, LicenseBase appLicense, IExpressionTreeBuilder<Object> treeBuilder, WorksheetModel worksheetModel, IThemeManager themeManager)
+        public MainWindowViewModel(AssemblyInfo assemblyInfo, LicenseBase appLicense, IExpressionTreeBuilder<Object> treeBuilder, WorksheetModel worksheetModel, IThemeManager themeManager)
         {
-            ApplicationInfo = applicationInfo;
+            AssemblyInfo = assemblyInfo;
             AppLicense = appLicense;
             ExpressionTreeBuilder = treeBuilder;
 

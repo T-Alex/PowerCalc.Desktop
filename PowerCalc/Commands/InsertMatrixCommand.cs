@@ -9,7 +9,7 @@ using TAlex.PowerCalc.Properties;
 using TAlex.PowerCalc.Services;
 using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.Views;
-using TAlex.WPF.Mvvm.Extensions;
+using TAlex.Mvvm.Extensions;
 
 
 namespace TAlex.PowerCalc.Commands

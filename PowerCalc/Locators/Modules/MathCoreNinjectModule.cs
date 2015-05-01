@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
+using TAlex.MathCore.ExpressionEvaluation.Trees;
 
 
 namespace TAlex.PowerCalc.Locators.Modules
@@ -20,7 +21,7 @@ namespace TAlex.PowerCalc.Locators.Modules
             Bind<ConstantFlyweightFactory<Object>>()
                 .ToSelf()
                 .InSingletonScope()
-                .OnActivation((c, i) => { i.AddFromAssemblies(GetAssembliesFromPath(Properties.Settings.Default.ExtensionsPath)); });
+                .OnActivation((c, i) => { AddFromAssemblies(i.Constants, GetAssembliesFromPath(Properties.Settings.Default.ExtensionsPath)); });
             Bind<IConstantFactory<Object>>().ToMethod(ctx => ctx.Kernel.Get<ConstantFlyweightFactory<Object>>());
             Bind<IConstantsMetadataProvider>().ToMethod(ctx => ctx.Kernel.Get<ConstantFlyweightFactory<Object>>());
 
@@ -49,6 +50,21 @@ namespace TAlex.PowerCalc.Locators.Modules
             foreach (string filePath in files)
             {
                 yield return Assembly.LoadFile(filePath);
+            }
+        }
+
+        public virtual void AddFromAssemblies(IDictionary<string, Type> Constants, IEnumerable<Assembly> assemblies)
+        {
+            foreach (Assembly assembly in assemblies)
+            {
+                var a = assembly.ExportedTypes.Where(x => x.GetCustomAttribute<ConstantAttribute>() != null).ToList();
+
+                var constants = assembly.ExportedTypes.Where(x => x.GetCustomAttribute<ConstantAttribute>() != null && typeof(Expression<Object>).IsAssignableFrom(x)).ToList();
+
+                foreach (var x in constants)
+                {
+                    Constants.Add(x.GetCustomAttribute<ConstantAttribute>().Name, x);
+                }
             }
         }
     }

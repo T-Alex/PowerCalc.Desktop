@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using TAlex.Mvvm.Commands;
+using TAlex.Mvvm.ViewModels;
 using TAlex.PowerCalc.Services;
-using TAlex.WPF.Mvvm;
-using TAlex.WPF.Mvvm.Commands;
 
 
 namespace TAlex.PowerCalc.ViewModels

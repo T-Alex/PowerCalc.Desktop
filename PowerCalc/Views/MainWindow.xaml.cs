@@ -15,8 +15,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Data;
-
-using TAlex.Common.Environment;
 using TAlex.PowerCalc.Helpers;
 using TAlex.PowerCalc.Commands;
 using TAlex.PowerCalc.ViewModels;

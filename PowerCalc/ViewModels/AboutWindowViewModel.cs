@@ -2,8 +2,8 @@
 using System.Reflection;
 using System.Resources;
 using System.Text;
-using TAlex.Common.Environment;
-using TAlex.Common.Licensing;
+using TAlex.Common.Models;
+using TAlex.License;
 
 
 namespace TAlex.PowerCalc.ViewModels
@@ -12,7 +12,7 @@ namespace TAlex.PowerCalc.ViewModels
     {
         #region Fields
 
-        protected readonly ApplicationInfo ApplicationInfo;
+        protected readonly AssemblyInfo AssemblyInfo;
         protected readonly LicenseBase AppLicense;
         internal ResourceManager ResourcesManager;
 
@@ -27,7 +27,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return ApplicationInfo.Title;
+                return AssemblyInfo.Title;
             }
         }
 
@@ -38,7 +38,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return ApplicationInfo.Description;
+                return AssemblyInfo.Description;
             }
         }
 
@@ -49,7 +49,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return ApplicationInfo.Company;
+                return AssemblyInfo.Company;
             }
         }
 
@@ -60,7 +60,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return ApplicationInfo.Product;
+                return AssemblyInfo.Product;
             }
         }
 
@@ -71,7 +71,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return String.Format("{0}. All rights reserved.", ApplicationInfo.Copyright);
+                return String.Format("{0}. All rights reserved.", AssemblyInfo.Copyright);
             }
         }
 
@@ -104,7 +104,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return ResourcesManager.GetString("SupportEmail"); //PowerCalc.Properties.Resources.SupportEmail;
+                return ResourcesManager.GetString("SupportEmail");
             }
         }
 
@@ -126,7 +126,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                return ResourcesManager.GetString("HomepageUrl"); // PowerCalc.Properties.Resources.HomepageUrl;
+                return ResourcesManager.GetString("HomepageUrl");
             }
         }
 
@@ -169,9 +169,9 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Constructors
 
-        public AboutWindowViewModel(ApplicationInfo applicationInfo, LicenseBase appLicense)
+        public AboutWindowViewModel(AssemblyInfo assemblyInfo, LicenseBase appLicense)
         {
-            ApplicationInfo = applicationInfo;
+            AssemblyInfo = assemblyInfo;
             AppLicense = appLicense;
             ResourcesManager = new ResourceManager(typeof(Properties.Resources));
         }

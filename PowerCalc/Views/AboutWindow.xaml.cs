@@ -5,7 +5,6 @@ using System.Windows.Data;
 using System.Reflection;
 using System.Diagnostics;
 using System.Windows.Media.Animation;
-using TAlex.Common.Environment;
 
 
 namespace TAlex.PowerCalc.Views

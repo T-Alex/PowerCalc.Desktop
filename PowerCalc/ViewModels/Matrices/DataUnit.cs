@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using TAlex.MathCore;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.LinearAlgebra;
-using TAlex.WPF.Mvvm;
 using TAlex.PowerCalc.Helpers;
 using TAlex.MathCore.ExpressionEvaluation;
+using TAlex.Mvvm.ViewModels;
 
 
 namespace TAlex.PowerCalc.ViewModels.Matrices

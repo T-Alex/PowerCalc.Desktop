@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TAlex.WPF.Mvvm;
+using TAlex.Mvvm.ViewModels;
 
 
 namespace TAlex.PowerCalc.ViewModels.Worksheet

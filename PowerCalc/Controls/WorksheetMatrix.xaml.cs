@@ -14,14 +14,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
 using System.ComponentModel;
-
 using TAlex.PowerCalc.Locators;
 using TAlex.PowerCalc.Helpers;
 using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.Converters;
 using TAlex.PowerCalc.ViewModels.Matrices;
-
-using TAlex.WPF.Mvvm.Extensions;
+using TAlex.Mvvm.Extensions;
 
 
 namespace TAlex.PowerCalc.Controls

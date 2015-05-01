@@ -9,7 +9,9 @@
         <ComponentRef Id="CMP_ProductExecutableConfig" />
         
         <ComponentRef Id="CMP_TAlexCommon" />
-        <ComponentRef Id="CMP_TAlexWPFMvvm" />
+        <ComponentRef Id="CMP_TAlexCommonDiagnostics" />
+        <ComponentRef Id="CMP_TAlexMvvm" />
+        <ComponentRef Id="CMP_TAlexMvvmWpf" />
         <ComponentRef Id="CMP_TAlexWPFControls" />
         <ComponentRef Id="CMP_Ninject" />
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Security.Cryptography;
-using TAlex.Common.Licensing;
+using TAlex.License;
 
 
 namespace TAlex.PowerCalc.Licensing

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using TAlex.Mvvm.Commands;
+using TAlex.Mvvm.ViewModels;
 using TAlex.PowerCalc.Properties;
-using TAlex.WPF.Mvvm;
-using TAlex.WPF.Mvvm.Commands;
 
 
 namespace TAlex.PowerCalc.ViewModels

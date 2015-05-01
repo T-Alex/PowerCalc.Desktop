@@ -4,14 +4,14 @@ using System.Configuration;
 using System.Windows;
 using System.Windows.Threading;
 using System.Diagnostics;
-
+using TAlex.Mvvm.Extensions;
 using TAlex.PowerCalc.Licensing;
 using TAlex.PowerCalc.Locators;
 using TAlex.PowerCalc.Views;
 using TAlex.Common.Diagnostics.ErrorReporting;
-using TAlex.Common.Environment;
-using TAlex.WPF.Mvvm.Extensions;
 using TAlex.WPF.Theming;
+using TAlex.Common.Models;
+using System.Reflection;
 
 
 namespace TAlex.PowerCalc
@@ -49,7 +49,7 @@ namespace TAlex.PowerCalc
             Trace.TraceError(e.ToString());
 
             ErrorReportingWindow reportWindow =
-                new ErrorReportingWindow(new ErrorReport(e), ApplicationInfo.Current);
+                new ErrorReportingWindow(new ErrorReport(e), new AssemblyInfo(Assembly.GetExecutingAssembly()));
 
             reportWindow.Owner = this.GetActiveWindow();
             reportWindow.ShowDialog();
