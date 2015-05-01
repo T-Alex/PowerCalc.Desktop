@@ -33,6 +33,10 @@
       <Component Id="CMP_TAlexMvvmWpf" Guid="4F5F6949-FDEE-49B2-9FE7-B69E386726CD">
         <File Id="FILE_TAlexMvvmWpf" Name="TAlex.Mvvm.Wpf.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
       </Component>
+      <!-- TAlex.License -->
+      <Component Id="CMP_TAlexLicense" Guid="51FA5868-088B-49EE-A53C-145304C0987A">
+        <File Id="FILE_TAlexLicense" Name="TAlex.License.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
+      </Component>
       <!-- Ninject -->
       <Component Id="CMP_Ninject" Guid="C76B9053-F128-4694-A565-5160A179ADAA">
         <File Id="FILE_Ninject" Name="Ninject.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
