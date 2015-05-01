@@ -17,7 +17,7 @@ namespace TAlex.PowerCalc.ViewModels
         #region Fields
 
         private string _variableName;
-        private static readonly Regex _variableNameRegex = new Regex(@"^[^\W\d]\w*$", RegexOptions.Compiled);
+        private static readonly Regex VariableNameRegex = new Regex(@"^[^\W\d]\w*$", RegexOptions.Compiled);
 
         private bool _closeSignal;
 
@@ -34,7 +34,8 @@ namespace TAlex.PowerCalc.ViewModels
 
             set
             {
-                Set(() => VariableName, ref _variableName, value);
+                Set(ref _variableName, value);
+                RaiseCanDefine();
             }
         }
 
@@ -47,7 +48,7 @@ namespace TAlex.PowerCalc.ViewModels
 
             set
             {
-                Set(() => CloseSignal, ref _closeSignal, value);
+                Set(ref _closeSignal, value);
             }
         }
 
@@ -82,7 +83,16 @@ namespace TAlex.PowerCalc.ViewModels
 
         private bool CanDefine()
         {
-            return VariableName != null && _variableNameRegex.IsMatch(VariableName.Trim());
+            return VariableName != null && VariableNameRegex.IsMatch(VariableName.Trim());
+        }
+
+        private void RaiseCanDefine()
+        {
+            var command = DefineCommand as RelayCommand;
+            if (command != null)
+            {
+                command.RaiseCanExecuteChanged();
+            }
         }
 
         #endregion
@@ -104,7 +114,7 @@ namespace TAlex.PowerCalc.ViewModels
                         if (VariableName != null)
                         {
                             if (String.IsNullOrWhiteSpace(VariableName)) return Resources.VALID_VarCannotBeEmpty;
-                            if (!_variableNameRegex.IsMatch(VariableName.Trim())) return Resources.VALID_VarInvalidFormat;
+                            if (!VariableNameRegex.IsMatch(VariableName.Trim())) return Resources.VALID_VarInvalidFormat;
                         }
                         break;
                 }

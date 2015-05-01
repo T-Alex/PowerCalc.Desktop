@@ -12,7 +12,6 @@ namespace TAlex.PowerCalc.ViewModels
     {
         #region Fields
 
-        protected readonly AssemblyInfo AssemblyInfo;
         protected readonly LicenseBase AppLicense;
         internal ResourceManager ResourcesManager;
 
@@ -20,71 +19,7 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Properties
 
-        /// <summary>
-        /// Gets the application's title.
-        /// </summary>
-        public string ProductTitle
-        {
-            get
-            {
-                return AssemblyInfo.Title;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's description.
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                return AssemblyInfo.Description;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's company.
-        /// </summary>
-        public string Company
-        {
-            get
-            {
-                return AssemblyInfo.Company;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's product.
-        /// </summary>
-        public string Product
-        {
-            get
-            {
-                return AssemblyInfo.Product;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's copyright.
-        /// </summary>
-        public string Copyright
-        {
-            get
-            {
-                return String.Format("{0}. All rights reserved.", AssemblyInfo.Copyright);
-            }
-        }
-
-        /// <summary>
-        /// Gets the application's version.
-        /// </summary>
-        public Version Version
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version;
-            }
-        }
+        public virtual AssemblyInfo AssemblyInfo { get; set; }
 
         /// <summary>
         /// Gets the email support title for this product.
@@ -154,14 +89,6 @@ namespace TAlex.PowerCalc.ViewModels
             get
             {
                 return !LicenseInfoVisibility;
-            }
-        }
-
-        public string WindowTitle
-        {
-            get
-            {
-                return "About " + ProductTitle;
             }
         }
 

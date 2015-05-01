@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
     DataContext="{Binding Source={StaticResource viewModelLocator}, Path=AboutWindowViewModel, Mode=OneTime}"
-    Title="{Binding WindowTitle}" Height="300" Width="400"
+    Title="{Binding AssemblyInfo.Title, StringFormat=About {0}}" Height="300" Width="400"
     WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
     Background="{DynamicResource AboutBgBrush}">
     
@@ -17,7 +17,7 @@
         
         <!-- Logo -->
         <Label Margin="0,20,0,0" FontSize="48" FontWeight="600" FontFamily="Segoe UI, Arial" VerticalAlignment="Top" HorizontalContentAlignment="Center"
-               Content="{Binding Mode=OneTime, Path=ProductTitle}" Foreground="{DynamicResource AboutLogoTextBrush}" >
+               Content="{Binding Mode=OneTime, Path=AssemblyInfo.Title}" Foreground="{DynamicResource AboutLogoTextBrush}" >
             <Label.BitmapEffect>
                 <DropShadowBitmapEffect Color="White" Direction="270" ShadowDepth="1" Softness="0" />
             </Label.BitmapEffect>
@@ -26,7 +26,7 @@
         <!-- Version -->
         <Label Margin="0,17,78,0" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="500"
                Foreground="{DynamicResource AboutVersionTextBrush}"
-               Content="{Binding Mode=OneTime, Path=Version}">
+               Content="{Binding Mode=OneTime, Path=AssemblyInfo.Version}">
             <Label.BitmapEffect>
                 <DropShadowBitmapEffect Color="Black" Direction="90" ShadowDepth="1" Softness="0" />
             </Label.BitmapEffect>
@@ -73,24 +73,11 @@
         
         <!-- Copyright -->
         <Label Margin="0,0,0,12" Padding="0" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-               Content="{Binding Mode=OneTime, Path=Copyright}">
+               ContentStringFormat="{}{0}. All rights reserved."
+               Content="{Binding Mode=OneTime, Path=AssemblyInfo.Copyright}">
             <Label.BitmapEffect>
                 <DropShadowBitmapEffect />
             </Label.BitmapEffect>
         </Label>
-        
-        <!-- Easter egg. -->
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Name="dedicatedLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">
-                This product is dedicated to the best lass in the world!
-            </Label>
-            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Name="ILabel" Padding="2" Opacity="0">I</Label>
-                <Label Name="LoveLabel" Padding="2" Opacity="0">Love</Label>
-                <Label Name="YouLabel" Padding="2" Opacity="0">You</Label>
-                <Label Name="KseniaLabel" Padding="2" Opacity="0">Ksenia</Label>
-                <Label Name="SavitskayaLabel" Padding="2" Opacity="0">Savitskaya</Label>
-            </WrapPanel>
-        </Grid>
     </Grid>
 </Window>

@@ -88,8 +88,7 @@
       <HintPath>..\packages\TAlex.MathCore.ComplexExpressions.1.1.1.0\lib\.NETPortable40-Profile344\TAlex.MathCore.ComplexExpressions.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.MathCore.ComplexExpressions.Extensions">
-      <HintPath>..\packages\TAlex.MathCore.ComplexExpressions.Extensions.1.1.1.0\lib\.NETPortable40-Profile344\TAlex.MathCore.ComplexExpressions.Extensions.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\TAlex.MathCore.ComplexExpressions.Extensions.1.1.2.0\lib\portable-net45+win+wpa81\TAlex.MathCore.ComplexExpressions.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.MathCore.ExpressionsBase, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
