@@ -8,7 +8,7 @@ using TAlex.Mvvm.Extensions;
 using TAlex.PowerCalc.Licensing;
 using TAlex.PowerCalc.Locators;
 using TAlex.PowerCalc.Views;
-using TAlex.Common.Diagnostics.ErrorReporting;
+using TAlex.Common.Diagnostics.Reporting;
 using TAlex.WPF.Theming;
 using TAlex.Common.Models;
 using System.Reflection;
