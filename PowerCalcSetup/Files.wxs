@@ -66,11 +66,6 @@
       <Component Id="CMP_TAlexMathCore_Statistics" Guid="27E7D596-E6F6-49A1-B3FA-B9B261729E57">
         <File Id="FILE_TAlexMathCore_Statistics" Name="TAlex.MathCore.Statistics.dll" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
       </Component>
-
-      <!-- License.txt -->
-      <Component Id="CMP_License" Guid="B7A3EA2C-F1BF-449E-9853-9D6AC404BAC8">
-        <File Id="FILE_License" Name="License.txt" Source="$(var.PowerCalc.TargetDir)" DiskId="1" KeyPath="yes" />
-      </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="ExtensionsFolder">

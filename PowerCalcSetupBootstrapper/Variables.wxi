@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
   <?define ProductName = "PowerCalc" ?>
-  <?define ProductVersion="2.1.0" ?>
   <?define Manufacturer = "T-Alex Software" ?>
   <?define UpgradeCode="2ED4675F-A37D-421E-8144-C7DBD55C24C3" ?>
 
