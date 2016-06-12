@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TAlex.Common.Extensions;
 using TAlex.Common.Models;
-using TAlex.License;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.Mvvm.Commands;
 using TAlex.Mvvm.ViewModels;
@@ -22,7 +18,6 @@ namespace TAlex.PowerCalc.ViewModels
         #region Fields
 
         protected readonly AssemblyInfo AssemblyInfo;
-        protected readonly LicenseBase AppLicense;
         protected readonly IThemeManager ThemeManager;
         public readonly IExpressionTreeBuilder<Object> ExpressionTreeBuilder;
 
@@ -38,12 +33,7 @@ namespace TAlex.PowerCalc.ViewModels
         {
             get
             {
-                string productTitle = AssemblyInfo.Title;
-
-                if (AppLicense.IsTrial)
-                    return String.Format("{0} - Evaluation version (days left: {1})", productTitle, AppLicense.TrialDaysLeft);
-                else
-                    return productTitle;
+                return AssemblyInfo.Title;
             }
         }
 
@@ -112,10 +102,9 @@ namespace TAlex.PowerCalc.ViewModels
 
         #region Constructors
 
-        public MainWindowViewModel(AssemblyInfo assemblyInfo, LicenseBase appLicense, IExpressionTreeBuilder<Object> treeBuilder, WorksheetModel worksheetModel, IThemeManager themeManager)
+        public MainWindowViewModel(AssemblyInfo assemblyInfo, IExpressionTreeBuilder<Object> treeBuilder, WorksheetModel worksheetModel, IThemeManager themeManager)
         {
             AssemblyInfo = assemblyInfo;
-            AppLicense = appLicense;
             ExpressionTreeBuilder = treeBuilder;
 
             Worksheet = worksheetModel;

@@ -1,12 +1,4 @@
 ﻿using Ninject;
-using Ninject.Modules;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.PowerCalc.Locators.Modules;
 using TAlex.PowerCalc.ViewModels;
 using TAlex.PowerCalc.ViewModels.Plot2D;
@@ -64,14 +56,6 @@ namespace TAlex.PowerCalc.Locators
             }
         }
 
-        public RegistrationWindowViewModel RegistrationWindowViewModel
-        {
-            get
-            {
-                return _kernel.Get<RegistrationWindowViewModel>();
-            }
-        }
-
         public WorksheetMatrixViewModel WorksheetMatrixViewModel
         {
             get
@@ -112,7 +96,6 @@ namespace TAlex.PowerCalc.Locators
         {
             _kernel = new StandardKernel(
                 new BaseServicesNinjectModule(),
-                new AppLicenseNinjectModule(),
                 new MathCoreNinjectModule(),
                 new ViewModelNinjectModule());
         }

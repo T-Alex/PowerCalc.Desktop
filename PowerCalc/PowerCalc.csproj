@@ -70,16 +70,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
-    <Reference Include="TAlex.Common">
-      <HintPath>..\packages\TAlex.Common.1.0.1.0\lib\portable-net45+win+wpa81+wp80\TAlex.Common.dll</HintPath>
+    <Reference Include="TAlex.Common, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TAlex.Common.1.0.5.0\lib\portable-net45+dnxcore50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\TAlex.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="TAlex.Common.Diagnostics, Version=1.2.2.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\TAlex.Common.Diagnostics.1.2.2.2\lib\net45\TAlex.Common.Diagnostics.dll</HintPath>
-    </Reference>
-    <Reference Include="TAlex.License, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TAlex.License.1.0.1.0\lib\net45\TAlex.License.dll</HintPath>
     </Reference>
     <Reference Include="TAlex.MathCore, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -254,12 +251,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RegistrationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -361,7 +352,6 @@
     <Compile Include="Helpers\DataGridHelper.cs" />
     <Compile Include="Helpers\ExpressionExtensions.cs" />
     <Compile Include="Helpers\VisualHelper.cs" />
-    <Compile Include="Locators\Modules\AppLicenseNinjectModule.cs" />
     <Compile Include="Locators\Modules\BaseServicesNinjectModule.cs" />
     <Compile Include="Locators\Modules\MathCoreNinjectModule.cs" />
     <Compile Include="Locators\Modules\ViewModelNinjectModule.cs" />
@@ -391,7 +381,6 @@
     <Compile Include="ViewModels\Plot2D\Trace2DCollection.cs" />
     <Compile Include="ViewModels\PreferencesWindowViewModel.cs" />
     <Compile Include="ViewModels\ReferencesWindowViewModel.cs" />
-    <Compile Include="ViewModels\RegistrationWindowViewModel.cs" />
     <Compile Include="ViewModels\WorksheetMatrixViewModel.cs" />
     <Compile Include="ViewModels\Matrices\DataArray.cs" />
     <Compile Include="ViewModels\Matrices\DataCell.cs" />
@@ -420,17 +409,11 @@
   <ItemGroup>
     <Compile Include="Controls\Plot2D.cs" />
     <Compile Include="Helpers\A1ReferenceHelper.cs" />
-    <Compile Include="Services\Licensing\AppTrialPeriodDataProvider.cs" />
-    <Compile Include="Services\Licensing\AppLicense.cs" />
-    <Compile Include="Services\Licensing\AppLicenseDataManager.cs" />
     <Compile Include="Views\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReferencesWindow.xaml.cs">
       <DependentUpon>ReferencesWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RegistrationWindow.xaml.cs">
-      <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Snapshot.cs" />
     <Compile Include="Themes\Twilight\TwilightThemeManager.cs" />

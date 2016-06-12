@@ -13,7 +13,6 @@
         <ComponentRef Id="CMP_TAlexMvvm" />
         <ComponentRef Id="CMP_TAlexMvvmWpf" />
         <ComponentRef Id="CMP_TAlexWPFControls" />
-        <ComponentRef Id="CMP_TAlexLicense" />
         <ComponentRef Id="CMP_Ninject" />
 
         <ComponentRef Id="CMP_TAlexMathCore" />

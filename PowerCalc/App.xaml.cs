@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Windows;
 using System.Windows.Threading;
 using System.Diagnostics;
 using TAlex.Mvvm.Extensions;
-using TAlex.PowerCalc.Licensing;
-using TAlex.PowerCalc.Locators;
 using TAlex.PowerCalc.Views;
 using TAlex.Common.Diagnostics.Reporting;
 using TAlex.WPF.Theming;
@@ -61,30 +57,6 @@ namespace TAlex.PowerCalc
             
             // apply theme
             ThemeLocator.Manager.ApplyTheme(PowerCalc.Properties.Settings.Default.ColorScheme);
-
-            // check license
-            CheckTrialExpiration();
-        }
-
-        private void CheckTrialExpiration()
-        {
-            ViewModelLocator locator = Resources["viewModelLocator"] as ViewModelLocator;
-            AppLicense license = locator.Get<AppLicense>();
-
-            if (license.IsTrial && license.TrialHasExpired)
-            {
-                if (MessageBox.Show("Evaluation period has expired, please register.", "Information",
-                    MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                {
-                    RegistrationWindow window = new RegistrationWindow();
-                    window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                    window.ShowDialog();
-                }
-                else
-                {
-                    Shutdown();
-                }
-            }
         }
 
         #endregion

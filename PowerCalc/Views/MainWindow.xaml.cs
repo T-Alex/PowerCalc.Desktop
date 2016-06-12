@@ -168,12 +168,6 @@ namespace TAlex.PowerCalc.Views
             Process.Start(PowerCalc.Properties.Resources.HomepageUrl);
         }
 
-        private void registrationMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            RegistrationWindow window = new RegistrationWindow { Owner = this };
-            window.ShowDialog();
-        }
-
         private void aboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
             AboutWindow window = new AboutWindow(this);

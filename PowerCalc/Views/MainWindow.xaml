@@ -149,7 +149,6 @@
                 <MenuItem Header="How To..." Click="howToMenuItem_Click" />
                 <Separator />
                 <MenuItem Header="T-Alex Software _Homepage" Click="navHomepageMenuItem_Click" />
-                <MenuItem Header="_Registration..." Click="registrationMenuItem_Click" />
                 <Separator />
                 <MenuItem Header="{Binding AboutMenuItemHeader}" Click="aboutMenuItem_Click" />
             </MenuItem>
