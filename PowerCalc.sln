@@ -70,7 +70,4 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1F629F8A-C9B4-4DEE-83FD-6E63C94704B6} = {6C57B8C6-0DB1-4253-86BE-470084E602C7}
 	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = PowerCalc.vsmdi
-	EndGlobalSection
 EndGlobal
