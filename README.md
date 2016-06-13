@@ -16,6 +16,7 @@ Existing three working modes:
 * Worksheet view - interactive mathematical console with history of calculations, ability to define variables and etc.
 * Matrices view - table worksheet which was designed especially for matrix calculations.
 * Plot 2D view - plot for drawing functions in Cartesian coordinates.
+
 Beautiful user-friendly interface with ability to change color scheme and fully support the High DPI displays.
 
 ## License
