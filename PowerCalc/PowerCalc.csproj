@@ -610,7 +610,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>move /Y "$(TargetDir)TAlex.MathCore.ComplexExpressions.Extensions.dll" "$(TargetDir)Extensions\TAlex.MathCore.ComplexExpressions.Extensions.dll"</PostBuildEvent>
+    <PostBuildEvent>md "$(TargetDir)Extensions"
+move /Y "$(TargetDir)TAlex.MathCore.ComplexExpressions.Extensions.dll" "$(TargetDir)Extensions\TAlex.MathCore.ComplexExpressions.Extensions.dll"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
