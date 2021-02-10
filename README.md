@@ -1,7 +1,5 @@
 # PowerCalc Desktop
 
-[![Build status](https://ci.appveyor.com/api/projects/status/uhmvet9a5o8lcntx?svg=true)](https://ci.appveyor.com/project/alex-titarenko/powercalc-desktop)
-
 Powerful lightweight complex system for mathematical calculations.
 
 ## Description
